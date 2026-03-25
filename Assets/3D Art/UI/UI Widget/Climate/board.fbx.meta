@@ -1,0 +1,131 @@
+- !<AssetImportMetadata/0bdd5e7b-5a4c-d76b-0e98-4a3d3b503605>
+  ImportedAssetIds:
+    .hidden/lambert1: !<reference> b98d6375-f221-4990-9c37-c4c136bed780
+    .hidden/white: !<reference> 6b282cdf-0ace-4d90-a59d-772ddbc4c6de
+    2011398052674519: !<reference> a0916a69-116c-4eab-81ae-3c88ef4896a5
+    2028ca51e4a54211: !<reference> d80167b5-0260-44c1-adbe-a49b71d58acc
+    555f96bf7a0f63d7: !<reference> 9530b413-3b5c-4643-8c3f-03f62745468b
+    7a0dd5cd69df73fa: !<reference> fbba8653-8b7f-48da-9375-792996bcc453
+    Animations/BaseLayer: !<reference> dd34814c-953d-4eeb-a62a-4e7dff686963
+    Materials/lambert1: !<reference> ccda6ed6-e771-43cc-bf5e-07981cf12b88
+    Materials/lambert1|lambert1|GraphPassInfo: !<reference> d42824ee-ec81-4919-a8fb-c6952252dfce
+    Meshes/pCube1: !<reference> 75999566-a8fe-4f69-bd57-e7e7a4e519b3
+    Scene: !<reference> 9c1e7d27-e87c-47a2-93e1-2bb8bdc53c37
+  ImporterName: FbxImporter
+  PrimaryAsset: !<reference> 9c1e7d27-e87c-47a2-93e1-2bb8bdc53c37
+  PackageType: LegacyPackage
+  LegacyPackagePolicy: CanBeUnpackedTransparent
+  ExtraData:
+    {}
+  AssetDataMap:
+    Scene: !<own> 28dc8800-13f2-4ebf-b27f-9688231d3f46
+  DependentFiles:
+    []
+  ImporterSettings: !<FbxImporterSettings>
+    UseLegacyImporter: false
+    WithMaterials: true
+    NamingConvention: ByCategorySanitizeV2
+    PersistentIdGenerationAlgorithm: DescriptorBased
+    AnimationCurveOptimization: true
+    CustomAnimationSamplingRate: 30.000000
+    ImportVertexColor: true
+    ImportTangentsAndBinormals: true
+    RegenerateTangentsAndBinormals: false
+    RegenerateNormalsForSkinnedMeshes: true
+    ImportBlendShapeAnimation: true
+    ImportVertexAnimation: true
+    GeneratePivots: true
+    TriangulateNURBS: true
+    UseLegacyFbxLoader: false
+  CompressionSettings: !<ComplexCompressionSettings>
+    Presets:
+      None Compression: !<SingleCompressionSettings>
+        CompressorName: None
+        CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+      Performance Compression: !<SingleCompressionSettings>
+        CompressorName: Performance
+        CompressionSettings: !<TextureCompressionMipmapSettings>
+          Level: Medium
+          Mipmap: false
+    ExtensionMappings:
+      mesh: None Compression
+      jpg: Performance Compression
+    Overrides:
+      {}
+- !<ObjectPrefabAssetData/28dc8800-13f2-4ebf-b27f-9688231d3f46>
+  Prototype: !<ObjectOwner/e6279e14-9dfc-4bb8-8559-853c7dc78643>
+    PackagePath: ""
+    objects:
+      - !<own> fbba8653-8b7f-48da-6c8a-86d669433bac
+- !<SceneObject/9530b413-3b5c-4643-73c0-fc09d8bab974>
+  PrefabRemaps:
+    []
+  Name: pCube1
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> a0916a69-116c-4eab-7e51-c37710b7695a
+- !<RenderMeshVisual/a0916a69-116c-4eab-7e51-c37710b7695a>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> ccda6ed6-e771-43cc-bf5e-07981cf12b88
+  Mesh: !<reference> 75999566-a8fe-4f69-bd57-e7e7a4e519b3
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    pCube2: 0.000000
+    pCube3: 0.000000
+- !<AnimationPlayer/d80167b5-0260-44c1-5241-5b648e2a7533>
+  PrefabRemaps:
+    []
+  Name: component_1
+  Enabled: true
+  Autoplay: true
+  ClipRangeType: Frames
+  AnimationClips:
+    - !<AnimationClip>
+      AnimationAsset: !<reference> dd34814c-953d-4eeb-a62a-4e7dff686963
+      Name: BaseLayer
+      Weight: 1.000000
+      PlaybackSpeed: 1.000000
+      Begin: 0.000000
+      End: 0.000000
+      Offset: 0.000000
+      Reversed: false
+      Disabled: false
+      BlendMode: Default
+      ScaleMode: Multiply
+      PlaybackMode: Loop
+- !<SceneObject/fbba8653-8b7f-48da-6c8a-86d669433bac>
+  PrefabRemaps:
+    []
+  Name: board
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 9530b413-3b5c-4643-73c0-fc09d8bab974
+  Components:
+    - !<own> d80167b5-0260-44c1-5241-5b648e2a7533

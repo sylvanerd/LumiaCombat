@@ -1,0 +1,44 @@
+- !<AssetImportMetadata/52a5525a-07a1-422d-bebc-7fcc34c6aaf5>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> ec9c978a-27d3-4ec8-9fe9-a6552a150bc1
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> ec9c978a-27d3-4ec8-9fe9-a6552a150bc1
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 693f2f70-37cd-409b-ae41-419832b1cd3c
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/693f2f70-37cd-409b-ae41-419832b1cd3c>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: b02a9afe-4af7-467e-a613-025b55b9afe3
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    holdDuration: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - holdDuration: !<float> 2.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input float holdDuration = 2 {"hint":"Minimum seconds to hold pinch before triggering"}'

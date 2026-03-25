@@ -1,0 +1,56 @@
+- !<AssetImportMetadata/b8fb7a91-b4e4-437f-9318-0e74204b8993>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 5f6cc5e8-b85b-4d49-9f92-bc4d2542f87c
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 5f6cc5e8-b85b-4d49-9f92-bc4d2542f87c
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 69f21ed1-a98c-4c10-800c-ddf9ee1f3af4
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/69f21ed1-a98c-4c10-800c-ddf9ee1f3af4>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: f1639b1f-347b-4a28-9b2e-28a9a8cb78e3
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    camModule: false
+    debugSwatchObj: false
+    mainCam: false
+    pinchDetector: false
+    statusText: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - pinchDetector: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      camModule: !<reference.CameraModule> 00000000-0000-0000-0000-000000000000
+      debugSwatchObj: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      mainCam: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      statusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input AssignableType pinchDetector
+    - '// @input Asset.CameraModule camModule {"hint":"Camera Module asset from the scene (same one used by DepthCache)"}'
+    - '// @input SceneObject debugSwatchObj {"hint":"SceneObject with RenderMeshVisual + Unlit material for color swatch"}'
+    - // @input SceneObject mainCam
+    - '// @input Component.Text statusText {"hint":"Optional text component for status messages"}'

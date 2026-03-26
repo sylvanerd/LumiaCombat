@@ -4065,6 +4065,7 @@
     - 4dbdc55d-b2d4-4aac-82d8-9d3ab9cf1f33: 910f2104-ab73-469f-6737-3adb00001b37
     - 515626b2-a600-4fc1-9246-6b38b5ab61a6: 3acb3a50-6cb9-4339-76c0-c6909c26d5cb
     - 5449e0cf-e41c-4b13-a967-7eb08cbc49dd: 0e835237-ca20-4361-65e7-4cef72f0edd3
+    - 57f1c41a-c0d0-44c0-90f2-359f0c70663c: 2df82580-fa3e-4879-ad38-4214a8f47036
     - 592c8233-c59e-4b6f-a935-4b8f9fac7e90: 954688f3-4414-45e9-4225-66ace7545eb1
     - 5a812343-fc02-4954-a042-84621fd8802f: 28434c08-3e90-4090-7729-585c826e59c0
     - 5c8fcde1-49c1-41b2-87ac-884907162bd4: 772f4c57-5bc5-4999-59f6-b4bb73837103
@@ -4132,6 +4133,7 @@
     - !<own> 80d36c97-d6a9-4802-86cf-b2b6690c86fc
     - !<own> d4f79016-0f7b-440d-a176-573470f502fe
     - !<own> 0b52cd7d-e98b-4321-ac5e-d70406d81f92
+    - !<own> 57f1c41a-c0d0-44c0-90f2-359f0c70663c
 - !<SceneObject/43fbba96-49d1-4b4c-ab9e-be6f2bf6e953>
   PrefabRemaps:
     []
@@ -5311,6 +5313,25 @@
       handOccluderMaterial: !<reference.Material> 5d5c762b-f0dd-4c06-b76f-bcb8f8fb525f
       overrides:
         []
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/57f1c41a-c0d0-44c0-90f2-359f0c70663c>
+  PrefabRemaps:
+    []
+  Name: AutoColorCycler
+  Enabled: true
+  ScriptAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
+  ScriptInputsDefault:
+    intervalSeconds: true
+    autoChangeEnabled: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      hueEventEmitter: !<MappingBased.AssignableType> 4dbdc55d-b2d4-4aac-82d8-9d3ab9cf1f33
+      intervalSeconds: !<float> 3.000000
+      autoChangeEnabled: true
   ScriptTypes:
     "":
       {}

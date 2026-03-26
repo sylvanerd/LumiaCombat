@@ -1009,6 +1009,25 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/86c812ed-8d11-419b-a111-8f1499eceba3>
+  PrefabRemaps:
+    []
+  Name: AutoColorCycler
+  Enabled: true
+  ScriptAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
+  ScriptInputsDefault:
+    intervalSeconds: true
+    autoChangeEnabled: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-98c8-c524ffffe4c8
+      intervalSeconds: !<float> 3.000000
+      autoChangeEnabled: true
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/8ab3b965-c626-4ee4-984e-1da4d275763d>
   PrefabRemaps:
     []
@@ -2257,6 +2276,7 @@
     - 841c3c80-bcea-430b-bbbb-b9a9a1093434: 841c3c80-bcea-430b-4444-46565ef6cbcb
     - 869601b0-4752-4b90-b0a6-74ab081b491e: 869601b0-4752-4b90-4f59-8b54f7e4b6e1
     - 86b1a4b3-402b-4312-8164-932e67932e63: 86b1a4b3-402b-4312-7e9b-6cd1986cd19c
+    - 86c812ed-8d11-419b-a111-8f1499eceba3: 2df82580-fa3e-4879-ad38-4214a8f47036
     - 8ab3b965-c626-4ee4-984e-1da4d275763d: 8ab3b965-c626-4ee4-67b1-e25b2d8a89c2
     - 8be3dd68-94b0-4136-98a4-87bd0d6d9811: 8be3dd68-94b0-4136-675b-7842f29267ee
     - 8c53bd1b-8633-4b77-affc-bb8193f65f6f: 8c53bd1b-8633-4b77-5003-447e6c09a090
@@ -2322,6 +2342,7 @@
     - !<own> 8e9638f6-967e-40a1-8ed1-49f948b49c0e
     - !<own> b13f9d4b-622c-488b-8def-0dd79bc4ae49
     - !<own> ac01cc42-afc1-4abc-8def-112233445566
+    - !<own> 86c812ed-8d11-419b-a111-8f1499eceba3
 - !<SceneObject/ffb23643-b650-498e-ad91-93783106b777>
   PrefabRemaps:
     []

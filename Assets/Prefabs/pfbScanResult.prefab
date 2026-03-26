@@ -307,7 +307,7 @@
     - fdc249fa-a74e-42bc-8a8a-4cc743432721: fdc249fa-a74e-42bc-7575-b338bcbcd8de
     - feafb2ac-aff2-43c8-98d4-b66d28558ae6: feafb2ac-aff2-43c8-672b-4992d7aa7519
   Name: pfbScanResult
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.300000, z: 0.000000}

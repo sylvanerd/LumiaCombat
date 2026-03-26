@@ -674,7 +674,7 @@
   PrefabRemaps:
     []
   Name: ColorPinch
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 3.707155, z: -37.999641}
@@ -835,6 +835,24 @@
     CapitalizationOverride: None
   DepthTest: false
   TwoSided: false
+- !<ScriptComponent/0b52cd7d-e98b-4321-ac5e-d70406d81f92>
+  PrefabRemaps:
+    []
+  Name: AutoColorCycler
+  Enabled: true
+  ScriptAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
+  ScriptInputsDefault:
+    autoChangeEnabled: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      hueEventEmitter: !<MappingBased.AssignableType> 4dbdc55d-b2d4-4aac-82d8-9d3ab9cf1f33
+      intervalSeconds: !<float> 2.000000
+      autoChangeEnabled: true
+  ScriptTypes:
+    "":
+      {}
 - !<ColliderComponent/0bf9f933-a88b-4fc6-b091-fde1ac13d881>
   PrefabRemaps:
     []
@@ -4113,6 +4131,7 @@
     - !<own> 4dbdc55d-b2d4-4aac-82d8-9d3ab9cf1f33
     - !<own> 80d36c97-d6a9-4802-86cf-b2b6690c86fc
     - !<own> d4f79016-0f7b-440d-a176-573470f502fe
+    - !<own> 0b52cd7d-e98b-4321-ac5e-d70406d81f92
 - !<SceneObject/43fbba96-49d1-4b4c-ab9e-be6f2bf6e953>
   PrefabRemaps:
     []

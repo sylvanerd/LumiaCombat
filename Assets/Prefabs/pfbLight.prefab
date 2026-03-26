@@ -1271,6 +1271,25 @@
     bottom: 0.000000
     right: 0.000000
     top: 0.000000
+- !<ScriptComponent/ac01cc42-afc1-4abc-8def-112233445566>
+  PrefabRemaps:
+    []
+  Name: AutoColorCycler
+  Enabled: true
+  ScriptAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
+  ScriptInputsDefault:
+    intervalSeconds: true
+    autoChangeEnabled: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-98c8-c524ffffe4c8
+      intervalSeconds: !<float> 3.000000
+      autoChangeEnabled: true
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/b13f9d4b-622c-488b-8def-0dd79bc4ae49>
   PrefabRemaps:
     []
@@ -2302,6 +2321,7 @@
     - !<own> 910f2104-ab73-469f-98c8-c524ffffe4c8
     - !<own> 8e9638f6-967e-40a1-8ed1-49f948b49c0e
     - !<own> b13f9d4b-622c-488b-8def-0dd79bc4ae49
+    - !<own> ac01cc42-afc1-4abc-8def-112233445566
 - !<SceneObject/ffb23643-b650-498e-ad91-93783106b777>
   PrefabRemaps:
     []

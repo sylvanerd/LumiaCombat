@@ -1,0 +1,50 @@
+- !<AssetImportMetadata/08975a9a-9723-4420-8119-6a8fc0a4130c>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> ab0b92a8-6e7a-4028-a420-bb55f07fe600
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/ab0b92a8-6e7a-4028-a420-bb55f07fe600>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 7a47ad0f-6140-43b7-80c6-ba2059e80a53
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoChangeEnabled: false
+    hueEventEmitter: false
+    intervalSeconds: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - hueEventEmitter: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      intervalSeconds: !<float> 3.000000
+      autoChangeEnabled: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input AssignableType hueEventEmitter
+    - // @input float intervalSeconds = 3
+    - // @input bool autoChangeEnabled = true

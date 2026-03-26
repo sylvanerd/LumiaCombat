@@ -13,8 +13,8 @@
     - !<own> d63420e7-a9a5-4824-ac9e-1ab121de3bb0
     - !<own> 78a32601-3fcd-4b55-8a52-d1f113cb30d0
     - !<own> 6d90bc7c-95d3-46e4-bf93-49ab9a0b3526
-    - !<own> 0e1cab31-205e-4036-9020-508d0afa08c5
     - !<own> 09a22389-4981-4452-9b3b-17473341edad
+    - !<own> 0e1cab31-205e-4036-9020-508d0afa08c5
     - !<own> c57b8b65-4d61-4a94-b75e-f477505f8ef3
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
@@ -673,7 +673,7 @@
 - !<SceneObject/09a22389-4981-4452-9b3b-17473341edad>
   PrefabRemaps:
     []
-  Name: Object 0
+  Name: ColorPinch
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>

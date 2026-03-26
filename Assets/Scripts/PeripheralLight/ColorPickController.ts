@@ -2,6 +2,9 @@ import {Gemini} from "RemoteServiceGateway.lspkg/HostedExternal/Gemini"
 import {GeminiTypes} from "RemoteServiceGateway.lspkg/HostedExternal/GeminiTypes"
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {ColorPickPinchDetector} from "./ColorPickPinchDetector"
+import {HueEventEmitter} from "./HueEventEmitter"
+
+let _colorPickInstance: ColorPickController = null
 
 const LOG_TAG = "[ColorPick]"
 const GEMINI_MODEL = "gemini-2.0-flash"
@@ -11,7 +14,6 @@ const SYSTEM_PROMPT =
   "The user is pinching their fingers near a real-world object. " +
   "Identify the dominant color of the object closest to the fingertips. " +
   "Ignore the fingers/hand themselves and focus on the object they are touching or pointing at. " +
-  "If no clear object is near the fingers, identify the dominant color of the scene background. " +
   "Return ONLY a JSON object, no other text."
 
 const CAM_DISTANCE = 60
@@ -37,6 +39,17 @@ export class ColorPickController extends BaseScriptComponent {
   @hint("Optional text component for status messages")
   statusText: Text
 
+  private hueEventEmitter: HueEventEmitter = null
+
+  static getInstance(): ColorPickController {
+    return _colorPickInstance
+  }
+
+  setHueEventEmitter(emitter: HueEventEmitter) {
+    this.hueEventEmitter = emitter
+    print(`${LOG_TAG} HueEventEmitter registered dynamically`)
+  }
+
   get onColorDetected() {
     return this._onColorDetected.publicApi()
   }
@@ -54,6 +67,7 @@ export class ColorPickController extends BaseScriptComponent {
   private lastDetectedColor: vec4 = null
 
   onAwake() {
+    _colorPickInstance = this
     this.createEvent("OnStartEvent").bind(() => this.onStart())
   }
 
@@ -280,6 +294,22 @@ export class ColorPickController extends BaseScriptComponent {
 
     this.setStatus(`Color: ${hex} (${colorName})`)
 
+    if (!this.hueEventEmitter) {
+      print(`${LOG_TAG} HueEventEmitter not cached, searching scene...`)
+      this.hueEventEmitter = this.findHueEventEmitterInScene()
+    }
+
+    if (this.hueEventEmitter) {
+      try {
+        this.hueEventEmitter.setColorUI(color)
+        print(`${LOG_TAG} Sent color ${hex} to Hue lamp`)
+      } catch (hueError) {
+        print(`${LOG_TAG} ERROR: Failed to send color to Hue lamp: ${hueError}`)
+      }
+    } else {
+      print(`${LOG_TAG} No HueEventEmitter found in scene (is a Hue light connected?)`)
+    }
+
     this._onColorDetected.invoke(color)
     print(`${LOG_TAG} onColorDetected event fired with color ${hex}`)
 
@@ -303,6 +333,37 @@ export class ColorPickController extends BaseScriptComponent {
     this.swatchTrans.setWorldRotation(
       quat.slerp(this.swatchTrans.getWorldRotation(), desiredRot, getDeltaTime() * 5)
     )
+  }
+
+  private findHueEventEmitterInScene(): HueEventEmitter {
+    const rootCount = global.scene.getRootObjectsCount()
+    for (let i = 0; i < rootCount; i++) {
+      const found = this.searchForHue(global.scene.getRootObject(i))
+      if (found) {
+        print(`${LOG_TAG} Found HueEventEmitter on: ${found.getSceneObject().name}`)
+        return found
+      }
+    }
+    return null
+  }
+
+  private searchForHue(obj: SceneObject): HueEventEmitter {
+    try {
+      const scripts = obj.getComponents("Component.ScriptComponent")
+      for (let s = 0; s < scripts.length; s++) {
+        const script = scripts[s] as any
+        if (script && typeof script.setColorUI === "function") {
+          return script as HueEventEmitter
+        }
+      }
+    } catch (e) { /* skip objects with no scripts */ }
+
+    const childCount = obj.getChildrenCount()
+    for (let c = 0; c < childCount; c++) {
+      const found = this.searchForHue(obj.getChild(c))
+      if (found) return found
+    }
+    return null
   }
 
   private setStatus(msg: string) {

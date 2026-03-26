@@ -1,0 +1,44 @@
+- !<AssetImportMetadata/0c9b245b-8397-41e9-a6c3-19b6652cfd4e>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 59a3be51-08ca-4884-8347-a10e9d1625bc
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 59a3be51-08ca-4884-8347-a10e9d1625bc
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> df4d9111-d81d-47fe-bca0-c4fbd82e229d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/df4d9111-d81d-47fe-bca0-c4fbd82e229d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 72f587b9-2991-44bd-b0e3-7d94fcf7a32f
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    hueEventEmitter: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - hueEventEmitter: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input AssignableType hueEventEmitter

@@ -383,25 +383,6 @@
   BlendShapes:
     pCube2: 0.310000
     pCube3: 0.030000
-- !<ScriptComponent/2df82580-fa3e-4879-ad38-4214a8f47036>
-  PrefabRemaps:
-    []
-  Name: AutoColorCycler
-  Enabled: true
-  ScriptAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
-  ScriptInputsDefault:
-    intervalSeconds: true
-    autoChangeEnabled: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-6737-3adb00001b37
-      intervalSeconds: !<float> 3.000000
-      autoChangeEnabled: true
-  ScriptTypes:
-    "":
-      {}
 - !<ScriptComponent/3a2007ce-668f-44fa-45c3-9ff89caaf816>
   PrefabRemaps:
     []
@@ -691,6 +672,25 @@
   BlendShapes:
     Pinch: 0.000000
     Z depth: 0.000000
+- !<ScriptComponent/5c318d9f-270e-41b4-a9b1-c63eb56210b8>
+  PrefabRemaps:
+    []
+  Name: AutoColorCycler
+  Enabled: false
+  ScriptAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
+  ScriptInputsDefault:
+    intervalSeconds: true
+    autoChangeEnabled: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-6737-3adb00001b37
+      intervalSeconds: !<float> 3.000000
+      autoChangeEnabled: true
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/6966878a-372c-42f2-77cd-827660450ab2>
   PrefabRemaps:
     []
@@ -2261,7 +2261,7 @@
     - !<own> 910f2104-ab73-469f-6737-3adb00001b37
     - !<own> 8e9638f6-967e-40a1-712e-b606b74b63f1
     - !<own> b13f9d4b-622c-488b-7210-f228643b51b6
-    - !<own> 2df82580-fa3e-4879-ad38-4214a8f47036
+    - !<own> 5c318d9f-270e-41b4-a9b1-c63eb56210b8
 - !<SceneObject/ffb23643-b650-498e-526e-6c87cef94888>
   PrefabRemaps:
     []

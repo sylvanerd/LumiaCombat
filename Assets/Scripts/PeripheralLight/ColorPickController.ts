@@ -1,5 +1,6 @@
 import {Gemini} from "RemoteServiceGateway.lspkg/HostedExternal/Gemini"
 import {GeminiTypes} from "RemoteServiceGateway.lspkg/HostedExternal/GeminiTypes"
+import TrackedHand from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/TrackedHand"
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {ColorPickPinchDetector} from "./ColorPickPinchDetector"
 import {HueEventEmitter} from "./HueEventEmitter"
@@ -39,6 +40,30 @@ export class ColorPickController extends BaseScriptComponent {
   @hint("Optional text component for status messages")
   statusText: Text
 
+  @input
+  @hint("Sphere prefab with Unlit alpha-blend material")
+  ballPrefab: ObjectPrefab
+
+  @input
+  @hint("Scale units per second the ball grows")
+  growSpeed: number = 1.0
+
+  @input
+  @hint("Target uniform scale of the fully grown ball")
+  finalBallSize: number = 3.0
+
+  @input
+  @hint("How quickly the ball follows the fingertips (higher = snappier)")
+  ballFollowSpeed: number = 15.0
+
+  @input
+  @hint("Minimum hand speed (units/sec) to trigger a throw vs. freeze")
+  throwVelocityThreshold: number = 5.0
+
+  @input
+  @hint("Multiplier applied to hand velocity when throwing")
+  throwForceMultiplier: number = 1.0
+
   private hueEventEmitter: HueEventEmitter = null
 
   static getInstance(): ColorPickController {
@@ -66,6 +91,15 @@ export class ColorPickController extends BaseScriptComponent {
   private swatchMat: Material
   private lastDetectedColor: vec4 = null
 
+  private activeBall: SceneObject = null
+  private activeBallMat: Material = null
+  private activeHand: TrackedHand = null
+  private currentBallScale: number = 0
+
+  private handVelocity: vec3 = vec3.zero()
+  private previousHandPos: vec3 = null
+  private wasPinching: boolean = false
+
   onAwake() {
     _colorPickInstance = this
     this.createEvent("OnStartEvent").bind(() => this.onStart())
@@ -81,7 +115,7 @@ export class ColorPickController extends BaseScriptComponent {
     if (this.swatchRmv) {
       this.swatchMat = this.swatchRmv.mainMaterial.clone()
       this.swatchRmv.mainMaterial = this.swatchMat
-      this.swatchMat.mainPass.baseColor = new vec4(0.2, 0.2, 0.2, 1)
+      this.swatchMat.mainPass.baseColor = new vec4(0.1, 0.1, 0.1, 1)
       print(`${LOG_TAG} Debug swatch material cloned and ready`)
     } else {
       print(`${LOG_TAG} WARNING: No RenderMeshVisual found on debugSwatchObj`)
@@ -89,7 +123,7 @@ export class ColorPickController extends BaseScriptComponent {
 
     this.startCamera()
 
-    this.pinchDetector.onPinchHeld.add(() => this.onPinchHeld())
+    this.pinchDetector.onPinchHeld.add((hand: TrackedHand) => this.onPinchHeld(hand))
 
     this.createEvent("UpdateEvent").bind(() => this.onUpdate())
 
@@ -111,7 +145,7 @@ export class ColorPickController extends BaseScriptComponent {
     print(`${LOG_TAG} Camera started with CameraId.Left_Color, buffering frames via onNewFrame`)
   }
 
-  private onPinchHeld() {
+  private onPinchHeld(hand: TrackedHand) {
     if (this.isRequestRunning) {
       print(`${LOG_TAG} Request already in progress, ignoring pinch`)
       this.setStatus("Already analyzing... please wait")
@@ -122,6 +156,8 @@ export class ColorPickController extends BaseScriptComponent {
     print(`${LOG_TAG} Pinch hold triggered! Using latest buffered frame...`)
     this.setStatus("Capturing...")
     this.isRequestRunning = true
+
+    this.spawnBall(hand)
 
     if (!this.latestFrame) {
       print(`${LOG_TAG} ERROR: No camera frame buffered yet, camera may still be starting`)
@@ -154,6 +190,43 @@ export class ColorPickController extends BaseScriptComponent {
       CompressionQuality.LowQuality,
       EncodingType.Jpg
     )
+  }
+
+  private getPinchMidpoint(hand: TrackedHand): vec3 {
+    const thumbPos = hand.thumbTip.position
+    const indexPos = hand.indexTip.position
+    return vec3.lerp(thumbPos, indexPos, 0.5)
+  }
+
+  private spawnBall(hand: TrackedHand) {
+    if (this.activeBall) {
+      this.activeBall.destroy()
+      print(`${LOG_TAG} Destroyed previous ball`)
+    }
+
+    this.activeHand = hand
+    this.currentBallScale = 0.1
+
+    if (!this.ballPrefab) {
+      print(`${LOG_TAG} WARNING: ballPrefab not assigned, skipping ball spawn`)
+      return
+    }
+
+    const spawnPos = this.getPinchMidpoint(hand)
+    this.activeBall = this.ballPrefab.instantiate(null)
+    const tr = this.activeBall.getTransform()
+    tr.setWorldPosition(spawnPos)
+    tr.setLocalScale(vec3.one().uniformScale(this.currentBallScale))
+
+    const rmv = this.activeBall.getComponent("RenderMeshVisual") as RenderMeshVisual
+    if (rmv) {
+      this.activeBallMat = rmv.mainMaterial.clone()
+      rmv.mainMaterial = this.activeBallMat
+      this.activeBallMat.mainPass.baseColor = new vec4(0.5, 0.5, 0.5, 0.4)
+      print(`${LOG_TAG} Ball spawned at (${spawnPos.x.toFixed(1)}, ${spawnPos.y.toFixed(1)}, ${spawnPos.z.toFixed(1)}) with transparent grey`)
+    } else {
+      print(`${LOG_TAG} WARNING: No RenderMeshVisual on ball prefab`)
+    }
   }
 
   private geminiStartTime: number = 0
@@ -292,6 +365,11 @@ export class ColorPickController extends BaseScriptComponent {
       print(`${LOG_TAG} Debug swatch updated with color ${hex} (${colorName})`)
     }
 
+    if (this.activeBallMat) {
+      this.activeBallMat.mainPass.baseColor = new vec4(color.r, color.g, color.b, 1.0)
+      print(`${LOG_TAG} Ball color set to ${hex} (${colorName})`)
+    }
+
     this.setStatus(`Color: ${hex} (${colorName})`)
 
     if (!this.hueEventEmitter) {
@@ -333,6 +411,66 @@ export class ColorPickController extends BaseScriptComponent {
     this.swatchTrans.setWorldRotation(
       quat.slerp(this.swatchTrans.getWorldRotation(), desiredRot, getDeltaTime() * 5)
     )
+
+    this.updateBall()
+  }
+
+  private updateBall() {
+    if (!this.activeBall || !this.activeHand) return
+
+    if (this.activeHand.isTracked() && this.activeHand.isPinching()) {
+      const midpoint = this.getPinchMidpoint(this.activeHand)
+      const currentPos = this.activeBall.getTransform().getWorldPosition()
+      const smoothed = vec3.lerp(currentPos, midpoint, getDeltaTime() * this.ballFollowSpeed)
+      this.activeBall.getTransform().setWorldPosition(smoothed)
+
+      // Track hand velocity via index tip position delta each frame (mirrors Throw Lab)
+      const currentHandPos = this.activeHand.indexTip.position
+      if (this.previousHandPos !== null && getDeltaTime() > 0) {
+        this.handVelocity = currentHandPos.sub(this.previousHandPos).uniformScale(1 / getDeltaTime())
+      }
+      this.previousHandPos = currentHandPos
+      this.wasPinching = true
+    }
+
+    // Detect the exact frame pinch drops after the ball has been spawned
+    if (this.wasPinching && (!this.activeHand.isTracked() || !this.activeHand.isPinching())) {
+      this.onPinchRelease()
+      this.wasPinching = false
+      this.previousHandPos = null
+    }
+
+    if (this.currentBallScale < this.finalBallSize) {
+      this.currentBallScale = Math.min(
+        this.currentBallScale + this.growSpeed * getDeltaTime(),
+        this.finalBallSize
+      )
+      this.activeBall.getTransform().setLocalScale(
+        vec3.one().uniformScale(this.currentBallScale)
+      )
+    }
+  }
+
+  private onPinchRelease() {
+    const speed = this.handVelocity.length
+    print(`${LOG_TAG} Pinch released. Hand speed: ${speed.toFixed(2)} units/s (threshold: ${this.throwVelocityThreshold})`)
+
+    if (speed >= this.throwVelocityThreshold) {
+      const body = this.activeBall.getComponent("Physics.BodyComponent") as BodyComponent
+      if (body) {
+        body.dynamic = true
+        const impulse = this.handVelocity.uniformScale(this.throwForceMultiplier)
+        body.addForce(impulse, Physics.ForceMode.Impulse)
+        print(`${LOG_TAG} Ball THROWN with impulse (${impulse.x.toFixed(1)}, ${impulse.y.toFixed(1)}, ${impulse.z.toFixed(1)})`)
+      } else {
+        print(`${LOG_TAG} WARNING: No Physics.BodyComponent on ball prefab — add one with dynamic=false`)
+      }
+    } else {
+      print(`${LOG_TAG} Ball FROZEN at release point (speed ${speed.toFixed(2)} < threshold ${this.throwVelocityThreshold})`)
+    }
+
+    this.activeHand = null
+    this.handVelocity = vec3.zero()
   }
 
   private findHueEventEmitterInScene(): HueEventEmitter {

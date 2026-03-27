@@ -26,11 +26,17 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    ballFollowSpeed: false
+    ballPrefab: false
     camModule: false
     debugSwatchObj: false
+    finalBallSize: false
+    growSpeed: false
     mainCam: false
     pinchDetector: false
     statusText: false
+    throwForceMultiplier: false
+    throwVelocityThreshold: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -45,6 +51,12 @@
       debugSwatchObj: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       mainCam: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       statusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      ballPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      growSpeed: !<float> 1.000000
+      finalBallSize: !<float> 3.000000
+      ballFollowSpeed: !<float> 15.000000
+      throwVelocityThreshold: !<float> 5.000000
+      throwForceMultiplier: !<float> 1.000000
   ScriptTypes:
     -
       {}
@@ -54,3 +66,9 @@
     - '// @input SceneObject debugSwatchObj {"hint":"SceneObject with RenderMeshVisual + Unlit material for color swatch"}'
     - // @input SceneObject mainCam
     - '// @input Component.Text statusText {"hint":"Optional text component for status messages"}'
+    - '// @input Asset.ObjectPrefab ballPrefab {"hint":"Sphere prefab with Unlit alpha-blend material"}'
+    - '// @input float growSpeed = 1 {"hint":"Scale units per second the ball grows"}'
+    - '// @input float finalBallSize = 3 {"hint":"Target uniform scale of the fully grown ball"}'
+    - '// @input float ballFollowSpeed = 15 {"hint":"How quickly the ball follows the fingertips (higher = snappier)"}'
+    - '// @input float throwVelocityThreshold = 5 {"hint":"Minimum hand speed (units/sec) to trigger a throw vs. freeze"}'
+    - '// @input float throwForceMultiplier = 1 {"hint":"Multiplier applied to hand velocity when throwing"}'

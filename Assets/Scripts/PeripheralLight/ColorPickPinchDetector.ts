@@ -15,7 +15,7 @@ export class ColorPickPinchDetector extends BaseScriptComponent {
     return this._onPinchHeld.publicApi()
   }
 
-  private _onPinchHeld: Event = new Event()
+  private _onPinchHeld: Event<TrackedHand> = new Event<TrackedHand>()
 
   private leftHand: TrackedHand
   private rightHand: TrackedHand
@@ -64,7 +64,7 @@ export class ColorPickPinchDetector extends BaseScriptComponent {
       if (!hasFired && elapsed >= this.holdDuration) {
         print(`${LOG_TAG} Pinch hold complete on ${label} hand! (held ${elapsed.toFixed(2)}s)`)
         this.setHasFired(label, true)
-        this._onPinchHeld.invoke()
+        this._onPinchHeld.invoke(hand)
       }
     } else {
       if (this.getPinchStartTime(label) < 0) return

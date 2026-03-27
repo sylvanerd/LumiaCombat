@@ -1,0 +1,67 @@
+- !<ObjectPrefab/9a570ba6-c4cc-4de6-8097-6334d54685b9>
+  PackagePath: ""
+  objects:
+    - !<own> d010b405-e43c-4f82-8d8e-fd1306803480
+  LazyLoading: false
+  RetainAssets: true
+- !<RenderMeshVisual/0760e032-be47-4236-9cd1-9351aaa4d229>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> a0fae9f5-59cb-4996-a994-692ea36f922a
+  Mesh: !<reference> 46873735-fb82-46c8-9043-058da12c7a1d
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<BodyComponent/425b49f0-8910-416a-9629-1018a0a3f244>
+  PrefabRemaps:
+    []
+  Name: Physics Body
+  Enabled: true
+  Shape: !<Sphere>
+    FitVisual: true
+    Radius: 4.000000
+  Matter: !<reference> adcfd91a-7aa4-4923-8eea-942e1313db75
+  Filter: !<reference> 00000000-0000-0000-0000-000000000000
+  OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
+  WorldSettings: !<reference> 83e00c3d-6899-4e16-8b7d-7abcd2814cc7
+  EnableSmoothing: false
+  PositionTension: 30.000000
+  RotationTension: 30.000000
+  ForceCompound: false
+  Intangible: false
+  ShowCollider: false
+  Dynamic: false
+  BodySetting: Density
+  BodySettingValue: 1.000000
+  Damping: 0.000000
+  AngularDamping: 0.000000
+- !<SceneObject/d010b405-e43c-4f82-8d8e-fd1306803480>
+  PrefabRemaps:
+    - 0760e032-be47-4236-9cd1-9351aaa4d229: 0760e032-be47-4236-632e-6cae555b2dd6
+    - 425b49f0-8910-416a-9629-1018a0a3f244: 8bf79e64-3faa-4044-ac4f-b56e9e38c708
+    - d010b405-e43c-4f82-8d8e-fd1306803480: d010b405-e43c-4f82-7271-02ecf97fcb7f
+  Name: Sphere
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 0760e032-be47-4236-9cd1-9351aaa4d229
+    - !<own> 425b49f0-8910-416a-9629-1018a0a3f244

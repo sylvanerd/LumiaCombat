@@ -1,0 +1,89 @@
+- !<ObjectPrefab/3174424a-bf13-466c-a335-41a3cd99478a>
+  PackagePath: ""
+  objects:
+    - !<own> f14135fc-934d-4ae0-bb63-836a53d9a1fc
+  LazyLoading: false
+  RetainAssets: true
+- !<BodyComponent/197678e9-51b5-4157-9cc1-c087990a53a3>
+  PrefabRemaps:
+    []
+  Name: Physics Body
+  Enabled: true
+  Shape: !<Sphere>
+    FitVisual: false
+    Radius: 1.200000
+  Matter: !<reference> adcfd91a-7aa4-4923-8eea-942e1313db75
+  Filter: !<reference> 00000000-0000-0000-0000-000000000000
+  OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
+  WorldSettings: !<reference> 83e00c3d-6899-4e16-8b7d-7abcd2814cc7
+  EnableSmoothing: false
+  PositionTension: 30.000000
+  RotationTension: 30.000000
+  ForceCompound: false
+  Intangible: true
+  ShowCollider: false
+  Dynamic: false
+  BodySetting: Density
+  BodySettingValue: 1.000000
+  Damping: 0.000000
+  AngularDamping: 0.000000
+- !<RenderMeshVisual/a5dc0426-22f1-4b5e-a929-b793c8379134>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 736f9b0b-4e02-49af-862c-c02bd53670e5
+  Mesh: !<reference> 46873735-fb82-46c8-9043-058da12c7a1d
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<RenderMeshVisual/e63d2435-5091-4f81-94c1-12626fb363cd>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    []
+  Mesh: !<reference> 00000000-0000-0000-0000-000000000000
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<SceneObject/f14135fc-934d-4ae0-bb63-836a53d9a1fc>
+  PrefabRemaps:
+    - 197678e9-51b5-4157-9cc1-c087990a53a3: 197678e9-51b5-4157-633e-3f7866f5ac5c
+    - a5dc0426-22f1-4b5e-a929-b793c8379134: a5dc0426-22f1-4b5e-56d6-486c37c86ecb
+    - e63d2435-5091-4f81-94c1-12626fb363cd: 5064ca89-6141-4670-97a5-45a9037fb450
+    - f14135fc-934d-4ae0-bb63-836a53d9a1fc: f14135fc-934d-4ae0-449c-7c95ac265e03
+  Name: LampTriggerCollider
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> a5dc0426-22f1-4b5e-a929-b793c8379134
+    - !<own> 197678e9-51b5-4157-9cc1-c087990a53a3
+    - !<own> e63d2435-5091-4f81-94c1-12626fb363cd

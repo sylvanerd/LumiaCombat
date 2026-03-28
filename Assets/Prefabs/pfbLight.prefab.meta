@@ -168,6 +168,23 @@
     - !<own> b8c2b2ce-b741-4bc0-5575-6ed3fc2313e4
   Components:
     - !<own> bc4d560d-c31a-4ae3-601b-d8d858c574a6
+- !<ScriptComponent/157859c3-4cf5-4a3d-bda4-3bfba6e90247>
+  PrefabRemaps:
+    []
+  Name: LampColliderSpawner
+  Enabled: true
+  ScriptAsset: !<reference> 3a042650-8ffb-4f7b-a554-de8d96eae63d
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      lightHandEventListener: !<MappingBased.AssignableType> 8e9638f6-967e-40a1-712e-b606b74b63f1
+      colliderPrefab: !<reference.ObjectPrefab> 3174424a-bf13-466c-a335-41a3cd99478a
+  ScriptTypes:
+    "":
+      {}
 - !<BodyComponent/173a3a22-5fa1-4d28-48c0-9c8a35b4914c>
   PrefabRemaps:
     []
@@ -802,6 +819,25 @@
       persistentPinchedState: false
       defaultIcon: !<reference.Texture> bf750ce5-f833-47a9-8581-9fadffea7fba
       onIcon: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/7521ee8e-b7e3-4651-b1eb-29adb877be5e>
+  PrefabRemaps:
+    []
+  Name: ColorBallCollisionGate
+  Enabled: true
+  ScriptAsset: !<reference> 54618fcf-58fa-45ee-9ca0-1badb4a97c3a
+  ScriptInputsDefault:
+    hideBallOnHit: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-6737-3adb00001b37
+      lampColliderSpawner: !<MappingBased.AssignableType_1> 157859c3-4cf5-4a3d-bda4-3bfba6e90247
+      lightStatusVisual: !<MappingBased.AssignableType_2> 0f0e3d48-d53c-4322-a15d-25622e9d5985
+      hideBallOnHit: true
   ScriptTypes:
     "":
       {}
@@ -2262,6 +2298,8 @@
     - !<own> 8e9638f6-967e-40a1-712e-b606b74b63f1
     - !<own> b13f9d4b-622c-488b-7210-f228643b51b6
     - !<own> 5c318d9f-270e-41b4-a9b1-c63eb56210b8
+    - !<own> 157859c3-4cf5-4a3d-bda4-3bfba6e90247
+    - !<own> 7521ee8e-b7e3-4651-b1eb-29adb877be5e
 - !<SceneObject/ffb23643-b650-498e-526e-6c87cef94888>
   PrefabRemaps:
     []

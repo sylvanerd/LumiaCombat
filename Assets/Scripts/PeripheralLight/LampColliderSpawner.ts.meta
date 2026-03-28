@@ -1,0 +1,47 @@
+- !<AssetImportMetadata/d4bee2e3-485b-429a-9dee-cf638a4a0696>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 3a042650-8ffb-4f7b-a554-de8d96eae63d
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 3a042650-8ffb-4f7b-a554-de8d96eae63d
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 03ecdcf2-6d44-4a22-900e-1576b3a6a95c
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/03ecdcf2-6d44-4a22-900e-1576b3a6a95c>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 3e27833a-a203-4189-9513-eef7a6411f29
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    colliderPrefab: false
+    lightHandEventListener: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - lightHandEventListener: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      colliderPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input AssignableType lightHandEventListener {"hint":"The LightHandEventListener on this prefab, used to poll surfaceDetectionPosition"}'
+    - '// @input Asset.ObjectPrefab colliderPrefab {"hint":"Prefab with a sphere ColliderComponent (intangible=true, FitVisual=true) and optional transparent mesh"}'

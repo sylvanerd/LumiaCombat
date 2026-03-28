@@ -13,7 +13,7 @@ metaInfo:
     []
   tags:
     []
-  lensName: BLE Playground
+  lensName: Lumia Combat
   lensDescriptors:
     - EXPERIMENTAL_API
   lensApplicability:
@@ -24,7 +24,7 @@ metaInfo:
     - Web
     - Spectacles
   platformBundlesEnabled: false
-  iconHash: 782f11acbed14e270647461e295886d2
+  iconHash: 3459f0f3fb58ff2415ef6a89c6280da1
   videoPreviewHash: ""
   fromTemplateName: Default
   fromTemplateUrl: Lens Studio 5.8.0.25032603

@@ -433,8 +433,8 @@ export class ColorPickController extends BaseScriptComponent {
       this.wasPinching = true
     }
 
-    // Detect the exact frame pinch drops after the ball has been spawned
-    if (this.wasPinching && (!this.activeHand.isTracked() || !this.activeHand.isPinching())) {
+    // Detect the exact frame pinch drops — only on deliberate release, not tracking loss
+    if (this.wasPinching && this.activeHand.isTracked() && !this.activeHand.isPinching()) {
       this.onPinchRelease()
       this.wasPinching = false
       this.previousHandPos = null

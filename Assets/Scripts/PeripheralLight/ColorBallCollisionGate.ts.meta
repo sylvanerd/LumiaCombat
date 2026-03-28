@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/4a43b015-ae6f-4aaa-b52e-231fadf83613>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 54618fcf-58fa-45ee-9ca0-1badb4a97c3a
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 54618fcf-58fa-45ee-9ca0-1badb4a97c3a
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 967c4b5c-c8c1-48be-88e3-dfcb9a12c787
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/967c4b5c-c8c1-48be-88e3-dfcb9a12c787>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 807055c3-c92f-4bec-8246-5e5ad4a7b24b
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    hideBallOnHit: false
+    hueEventEmitter: false
+    lampColliderSpawner: false
+    lightStatusVisual: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - hueEventEmitter: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      lampColliderSpawner: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      lightStatusVisual: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      hideBallOnHit: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input AssignableType hueEventEmitter
+    - // @input AssignableType_1 lampColliderSpawner
+    - // @input AssignableType_2 lightStatusVisual
+    - '// @input bool hideBallOnHit = true {"hint":"Hide the ball on collision with the lamp"}'

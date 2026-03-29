@@ -16,7 +16,6 @@
     - !<own> 09a22389-4981-4452-9b3b-17473341edad
     - !<own> 0e1cab31-205e-4036-9020-508d0afa08c5
     - !<own> c57b8b65-4d61-4a94-b75e-f477505f8ef3
-    - !<own> 0f8c2a2a-bbfa-4a1a-86bd-35667795eabb
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -1047,26 +1046,6 @@
     bottom: -1.300000
     right: 0.300000
     top: 1.300000
-- !<SceneObject/0f8c2a2a-bbfa-4a1a-86bd-35667795eabb>
-  PrefabRemaps:
-    - 0f8c2a2a-bbfa-4a1a-86bd-35667795eabb: f14135fc-934d-4ae0-449c-7c95ac265e03
-    - 739591f7-088f-4c69-a8bb-84bece29032e: a5dc0426-22f1-4b5e-56d6-486c37c86ecb
-    - 950cc989-9875-48d7-89e9-5efac407251d: 197678e9-51b5-4157-633e-3f7866f5ac5c
-    - dd50987e-1358-437c-8211-20a8e75f68a2: 5064ca89-6141-4670-97a5-45a9037fb450
-  Name: LampTriggerCollider
-  Enabled: false
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 739591f7-088f-4c69-a8bb-84bece29032e
-    - !<own> 950cc989-9875-48d7-89e9-5efac407251d
-    - !<own> dd50987e-1358-437c-8211-20a8e75f68a2
 - !<RenderMeshVisual/101fbd50-9a39-4b3a-8f84-375685f41c87>
   PrefabRemaps:
     []
@@ -2218,7 +2197,7 @@
   PrefabRemaps:
     []
   Name: LampColliderSpawner
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> 3a042650-8ffb-4f7b-a554-de8d96eae63d
   ScriptInputsDefault:
     {}
@@ -4100,6 +4079,7 @@
     - 78541e08-88be-4863-a119-386274977668: df3533a6-3e1d-4d6b-7be3-a0436bef13c7
     - 78abd131-df57-4913-8534-6a3b2d1b93c4: 7521ee8e-b7e3-4651-b1eb-29adb877be5e
     - 79640a5d-5ab9-4caa-a85a-57ec0a141d93: b8c2b2ce-b741-4bc0-5575-6ed3fc2313e4
+    - 7bde9410-aaa2-4087-9adf-5ed1294c9a8b: 3ce3b516-7e99-41d9-8993-d3bab6bdb033
     - 80143d70-2f90-48c7-87a3-584a61ba4689: c53268ce-b35f-45a6-4387-17c819206d3e
     - 80d36c97-d6a9-4802-86cf-b2b6690c86fc: 8e9638f6-967e-40a1-712e-b606b74b63f1
     - 85425b3d-e970-4e9e-871e-a4f9b672f3b8: 75a67dff-56a5-4bbd-55d7-d78ed9b24554
@@ -4157,6 +4137,7 @@
     - !<own> cb03a1dc-4420-48c6-b22f-9057bf4c4e1e
     - !<own> 2bba8f7f-1680-4acf-a6dd-6de2a8a637f4
     - !<own> 78abd131-df57-4913-8534-6a3b2d1b93c4
+    - !<own> 7bde9410-aaa2-4087-9adf-5ed1294c9a8b
 - !<SceneObject/43fbba96-49d1-4b4c-ab9e-be6f2bf6e953>
   PrefabRemaps:
     []
@@ -7332,26 +7313,6 @@
   ScriptTypes:
     "":
       {}
-- !<RenderMeshVisual/739591f7-088f-4c69-a8bb-84bece29032e>
-  PrefabRemaps:
-    []
-  Name: Render Mesh Visual
-  Enabled: true
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  Materials:
-    - !<reference> 736f9b0b-4e02-49af-862c-c02bd53670e5
-  Mesh: !<reference> 46873735-fb82-46c8-9043-058da12c7a1d
-  Skin: !<reference> 00000000-0000-0000-0000-000000000000
-  BlendShapesEnabled: true
-  BlendNormals: false
-  BlendShapes:
-    {}
 - !<SceneObject/73a9f1a0-3cbb-4815-bc9e-8c2dd9fd8772>
   PrefabRemaps:
     []
@@ -7584,7 +7545,7 @@
   PrefabRemaps:
     []
   Name: ColorBallCollisionGate
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> 54618fcf-58fa-45ee-9ca0-1badb4a97c3a
   ScriptInputsDefault:
     hideBallOnHit: true
@@ -7720,6 +7681,36 @@
       instructions: You are a helpful assistant that loves to make puns
       audioOutput: false
       voice: ash
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/7bde9410-aaa2-4087-9adf-5ed1294c9a8b>
+  PrefabRemaps:
+    []
+  Name: AutoBallShooter
+  Enabled: true
+  ScriptAsset: !<reference> 12e2ba06-cf34-4fba-8277-d12e3e7c3633
+  ScriptInputsDefault:
+    arcHeight: true
+    speedMultiplier: true
+    ballScale: true
+    maxActiveBalls: true
+    shootingEnabled: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      autoColorCycler: !<MappingBased.AssignableType> cb03a1dc-4420-48c6-b22f-9057bf4c4e1e
+      lightHandEventListener: !<MappingBased.AssignableType_1> 80d36c97-d6a9-4802-86cf-b2b6690c86fc
+      mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      ballPrefab: !<reference.ObjectPrefab> 9a570ba6-c4cc-4de6-8097-6334d54685b9
+      delayThrowTime: 0.500000
+      arcHeight: !<float> 30.000000
+      flightTime: !<float> 2.000000
+      speedMultiplier: !<float> 1.000000
+      ballScale: !<float> 5.000000
+      maxActiveBalls: !<float> 5.000000
+      shootingEnabled: true
   ScriptTypes:
     "":
       {}
@@ -9149,29 +9140,6 @@
   ScriptTypes:
     "":
       {}
-- !<BodyComponent/950cc989-9875-48d7-89e9-5efac407251d>
-  PrefabRemaps:
-    []
-  Name: Physics Body
-  Enabled: true
-  Shape: !<Sphere>
-    FitVisual: false
-    Radius: 1.200000
-  Matter: !<reference> adcfd91a-7aa4-4923-8eea-942e1313db75
-  Filter: !<reference> 00000000-0000-0000-0000-000000000000
-  OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
-  WorldSettings: !<reference> 83e00c3d-6899-4e16-8b7d-7abcd2814cc7
-  EnableSmoothing: false
-  PositionTension: 30.000000
-  RotationTension: 30.000000
-  ForceCompound: false
-  Intangible: true
-  ShowCollider: false
-  Dynamic: false
-  BodySetting: Density
-  BodySettingValue: 1.000000
-  Damping: 0.000000
-  AngularDamping: 0.000000
 - !<ScriptComponent/953533dd-4d84-4152-a596-06e5e21b42f0>
   PrefabRemaps:
     []
@@ -13486,7 +13454,7 @@
   PrefabRemaps:
     []
   Name: AutoColorCycler
-  Enabled: false
+  Enabled: true
   ScriptAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
   ScriptInputsDefault:
     intervalSeconds: true
@@ -14939,26 +14907,6 @@
     []
   Components:
     - !<own> 23452e3c-0597-486c-86b5-2f3daaf792c5
-- !<RenderMeshVisual/dd50987e-1358-437c-8211-20a8e75f68a2>
-  PrefabRemaps:
-    []
-  Name: Render Mesh Visual
-  Enabled: true
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  Materials:
-    []
-  Mesh: !<reference> 00000000-0000-0000-0000-000000000000
-  Skin: !<reference> 00000000-0000-0000-0000-000000000000
-  BlendShapesEnabled: true
-  BlendNormals: false
-  BlendShapes:
-    {}
 - !<SceneObject/dda75551-73aa-4d44-8bbb-19cbeadd6e13>
   PrefabRemaps:
     - 01436cb0-d11f-430a-8ced-043a3f39cb49: 7b545c21-569f-42ee-5743-987756d828cf

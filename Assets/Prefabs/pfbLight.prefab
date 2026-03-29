@@ -110,7 +110,7 @@
   PrefabRemaps:
     []
   Name: LampColliderSpawner
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> 3a042650-8ffb-4f7b-a554-de8d96eae63d
   ScriptInputsDefault:
     {}
@@ -1292,7 +1292,7 @@
   PrefabRemaps:
     []
   Name: AutoColorCycler
-  Enabled: false
+  Enabled: true
   ScriptAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
   ScriptInputsDefault:
     intervalSeconds: true
@@ -1339,6 +1339,37 @@
     - !<own> ffb23643-b650-498e-ad91-93783106b777
   Components:
     - !<own> eadbb083-91b9-4881-8ba0-c56cae9d7321
+- !<ScriptComponent/b3457aaf-6caf-4b1a-ab18-c1bdf1bf262d>
+  PrefabRemaps:
+    []
+  Name: AutoBallShooter
+  Enabled: true
+  ScriptAsset: !<reference> 12e2ba06-cf34-4fba-8277-d12e3e7c3633
+  ScriptInputsDefault:
+    arcHeight: true
+    flightTime: true
+    speedMultiplier: true
+    ballScale: true
+    maxActiveBalls: true
+    shootingEnabled: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      autoColorCycler: !<MappingBased.AssignableType> ac01cc42-afc1-4abc-8def-112233445566
+      lightHandEventListener: !<MappingBased.AssignableType_1> 8e9638f6-967e-40a1-8ed1-49f948b49c0e
+      mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      ballPrefab: !<reference.ObjectPrefab> 9a570ba6-c4cc-4de6-8097-6334d54685b9
+      delayThrowTime: 0.500000
+      arcHeight: !<float> 30.000000
+      flightTime: 1.500000
+      speedMultiplier: !<float> 1.000000
+      ballScale: !<float> 5.000000
+      maxActiveBalls: !<float> 5.000000
+      shootingEnabled: true
+  ScriptTypes:
+    "":
+      {}
 - !<Text/b735badb-85c7-49b9-8a3f-bcdbab811c18>
   PrefabRemaps:
     []
@@ -2125,7 +2156,7 @@
   PrefabRemaps:
     []
   Name: ColorBallCollisionGate
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> 54618fcf-58fa-45ee-9ca0-1badb4a97c3a
   ScriptInputsDefault:
     hideBallOnHit: true
@@ -2309,6 +2340,7 @@
     - ac01cc42-afc1-4abc-8def-112233445566: 5c318d9f-270e-41b4-a9b1-c63eb56210b8
     - b13f9d4b-622c-488b-8def-0dd79bc4ae49: b13f9d4b-622c-488b-7210-f228643b51b6
     - b28486c6-a363-4557-8efc-a81d36a15745: b28486c6-a363-4557-7103-57e2c95ea8ba
+    - b3457aaf-6caf-4b1a-ab18-c1bdf1bf262d: 3ce3b516-7e99-41d9-8993-d3bab6bdb033
     - b735badb-85c7-49b9-8a3f-bcdbab811c18: b735badb-85c7-49b9-75c0-4324547ee3e7
     - b7e83f27-56bf-4f29-9d55-3ad97d8a5675: b7e83f27-56bf-4f29-62aa-c5268275a98a
     - b8c2b2ce-b741-4bc0-aa8a-912c03dcec1b: b8c2b2ce-b741-4bc0-5575-6ed3fc2313e4
@@ -2363,6 +2395,7 @@
     - !<own> ac01cc42-afc1-4abc-8def-112233445566
     - !<own> 100aef53-8e66-4705-b4ea-be118228aeb6
     - !<own> f5e47bb3-c022-4d9c-9cac-a5c9ea207ea0
+    - !<own> b3457aaf-6caf-4b1a-ab18-c1bdf1bf262d
 - !<SceneObject/ffb23643-b650-498e-ad91-93783106b777>
   PrefabRemaps:
     []

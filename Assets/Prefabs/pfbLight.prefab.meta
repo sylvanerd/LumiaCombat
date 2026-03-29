@@ -172,7 +172,7 @@
   PrefabRemaps:
     []
   Name: LampColliderSpawner
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> 3a042650-8ffb-4f7b-a554-de8d96eae63d
   ScriptInputsDefault:
     {}
@@ -431,6 +431,37 @@
     []
   Components:
     - !<own> 2b7ff7af-79fc-49ce-5570-0af3188530a9
+- !<ScriptComponent/3ce3b516-7e99-41d9-8993-d3bab6bdb033>
+  PrefabRemaps:
+    []
+  Name: AutoBallShooter
+  Enabled: true
+  ScriptAsset: !<reference> 12e2ba06-cf34-4fba-8277-d12e3e7c3633
+  ScriptInputsDefault:
+    arcHeight: true
+    flightTime: true
+    speedMultiplier: true
+    ballScale: true
+    maxActiveBalls: true
+    shootingEnabled: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      autoColorCycler: !<MappingBased.AssignableType> 5c318d9f-270e-41b4-a9b1-c63eb56210b8
+      lightHandEventListener: !<MappingBased.AssignableType_1> 8e9638f6-967e-40a1-712e-b606b74b63f1
+      mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      ballPrefab: !<reference.ObjectPrefab> 9a570ba6-c4cc-4de6-8097-6334d54685b9
+      delayThrowTime: 0.500000
+      arcHeight: !<float> 30.000000
+      flightTime: 1.500000
+      speedMultiplier: !<float> 1.000000
+      ballScale: !<float> 5.000000
+      maxActiveBalls: !<float> 5.000000
+      shootingEnabled: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/3d90115c-c3fe-4b58-5d0f-87ae5a408378>
   PrefabRemaps:
     []
@@ -693,7 +724,7 @@
   PrefabRemaps:
     []
   Name: AutoColorCycler
-  Enabled: false
+  Enabled: true
   ScriptAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
   ScriptInputsDefault:
     intervalSeconds: true
@@ -826,7 +857,7 @@
   PrefabRemaps:
     []
   Name: ColorBallCollisionGate
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> 54618fcf-58fa-45ee-9ca0-1badb4a97c3a
   ScriptInputsDefault:
     hideBallOnHit: true
@@ -2300,6 +2331,7 @@
     - !<own> 5c318d9f-270e-41b4-a9b1-c63eb56210b8
     - !<own> 157859c3-4cf5-4a3d-bda4-3bfba6e90247
     - !<own> 7521ee8e-b7e3-4651-b1eb-29adb877be5e
+    - !<own> 3ce3b516-7e99-41d9-8993-d3bab6bdb033
 - !<SceneObject/ffb23643-b650-498e-526e-6c87cef94888>
   PrefabRemaps:
     []

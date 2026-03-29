@@ -1,0 +1,74 @@
+- !<AssetImportMetadata/85bb7523-f342-43a8-a822-43b16b41870d>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 12e2ba06-cf34-4fba-8277-d12e3e7c3633
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 12e2ba06-cf34-4fba-8277-d12e3e7c3633
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> eb74bb33-6aaa-4e98-8b54-dc7d1cbb9936
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/eb74bb33-6aaa-4e98-8b54-dc7d1cbb9936>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: bdc795cd-6666-4b8d-92bc-b395c2ffad4e
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    arcHeight: false
+    autoColorCycler: false
+    ballPrefab: false
+    ballScale: false
+    delayThrowTime: false
+    flightTime: false
+    lightHandEventListener: false
+    mainCam: false
+    maxActiveBalls: false
+    shootingEnabled: false
+    speedMultiplier: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - autoColorCycler: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      lightHandEventListener: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      mainCam: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      ballPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      delayThrowTime: 0.300000
+      arcHeight: !<float> 30.000000
+      flightTime: 1.500000
+      speedMultiplier: !<float> 1.000000
+      ballScale: !<float> 5.000000
+      maxActiveBalls: !<float> 5.000000
+      shootingEnabled: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input AssignableType autoColorCycler
+    - // @input AssignableType_1 lightHandEventListener
+    - // @input SceneObject mainCam
+    - // @input Asset.ObjectPrefab ballPrefab
+    - '// @input float delayThrowTime = 0.3 {"hint":"Seconds to wait after color change before launching the ball"}'
+    - '// @input float arcHeight = 30 {"hint":"Peak height (cm) of the arc above the straight line between lamp and player"}'
+    - '// @input float flightTime = 1.5 {"hint":"Seconds for the ball to fly from lamp to player; longer = slower, gentler arc"}'
+    - '// @input float speedMultiplier = 1 {"hint":"Scales flight speed; >1 = faster, <1 = slower"}'
+    - '// @input float ballScale = 5 {"hint":"Uniform scale of the spawned ball"}'
+    - '// @input float maxActiveBalls = 5 {"hint":"Oldest ball is destroyed when this cap is exceeded"}'
+    - '// @input bool shootingEnabled = true {"hint":"Master on/off toggle for ball shooting"}'

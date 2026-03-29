@@ -1,3 +1,4 @@
+import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {HueEventEmitter} from "./HueEventEmitter"
 
 const LOG_TAG = "[AutoColorCycler]"
@@ -12,6 +13,9 @@ export class AutoColorCycler extends BaseScriptComponent {
 
   @input
   autoChangeEnabled: boolean = true
+
+  private _onColorCycled: Event<vec4> = new Event<vec4>()
+  get onColorCycled() { return this._onColorCycled.publicApi() }
 
   private lastCycleTime: number = -1
   private initialized: boolean = false
@@ -59,6 +63,7 @@ export class AutoColorCycler extends BaseScriptComponent {
 
     try {
       this.hueEventEmitter.setColorUI(color)
+      this._onColorCycled.invoke(color)
       print(`${LOG_TAG} setColorUI called successfully`)
     } catch (e) {
       print(`${LOG_TAG} ERROR calling setColorUI: ${e}`)

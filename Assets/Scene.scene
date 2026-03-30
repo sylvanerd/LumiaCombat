@@ -7692,6 +7692,7 @@
   ScriptAsset: !<reference> 12e2ba06-cf34-4fba-8277-d12e3e7c3633
   ScriptInputsDefault:
     arcHeight: true
+    flightTime: true
     speedMultiplier: true
     ballScale: true
     maxActiveBalls: true
@@ -7706,7 +7707,7 @@
       ballPrefab: !<reference.ObjectPrefab> 9a570ba6-c4cc-4de6-8097-6334d54685b9
       delayThrowTime: 0.500000
       arcHeight: !<float> 30.000000
-      flightTime: !<float> 2.000000
+      flightTime: 1.500000
       speedMultiplier: !<float> 1.000000
       ballScale: !<float> 5.000000
       maxActiveBalls: !<float> 5.000000
@@ -8055,7 +8056,7 @@
   Enabled: true
   ScriptAsset: !<reference> 5f6cc5e8-b85b-4d49-9f92-bc4d2542f87c
   ScriptInputsDefault:
-    {}
+    minPinchStrength: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -8065,12 +8066,13 @@
       debugSwatchObj: !<reference.SceneObject> 9835a8b9-a7fd-4f86-90eb-bb5dcadfd253
       mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       statusText: !<reference.Text> 7de0285c-dd7e-43b6-af97-278ae72261eb
-      ballPrefab: !<reference.ObjectPrefab> 9a570ba6-c4cc-4de6-8097-6334d54685b9
+      ballPrefab: !<reference.ObjectPrefab> cb9a91d7-983d-46e5-9f22-5b73de1fe641
       growSpeed: !<float> 4.000000
       finalBallSize: !<float> 8.000000
-      ballFollowSpeed: !<float> 25.000000
-      throwVelocityThreshold: 1.500000
-      throwForceMultiplier: !<float> 2.000000
+      ballFollowSpeed: !<float> 30.000000
+      handVelocityMultiplier: 1.500000
+      baseThrowForce: 1.200000
+      minPinchStrength: 0.300000
   ScriptTypes:
     "":
       {}

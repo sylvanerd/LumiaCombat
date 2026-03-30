@@ -57,12 +57,16 @@ export class ColorPickController extends BaseScriptComponent {
   ballFollowSpeed: number = 15.0
 
   @input
-  @hint("Minimum hand speed (units/sec) to trigger a throw vs. freeze")
-  throwVelocityThreshold: number = 5.0
+  @hint("Multiplier for hand velocity (higher = more responsive to hand movement)")
+  handVelocityMultiplier: number = 0.3
 
   @input
-  @hint("Multiplier applied to hand velocity when throwing")
-  throwForceMultiplier: number = 1.0
+  @hint("Base forward force added to throws (guided by camera forward direction)")
+  baseThrowForce: number = 800.0
+
+  @input
+  @hint("Pinch strength below this triggers a freeze-release (0-1)")
+  minPinchStrength: number = 0.3
 
   private hueEventEmitter: HueEventEmitter = null
 
@@ -98,7 +102,10 @@ export class ColorPickController extends BaseScriptComponent {
 
   private handVelocity: vec3 = vec3.zero()
   private previousHandPos: vec3 = null
-  private wasPinching: boolean = false
+  private ballActive: boolean = false
+  private gestureModule: GestureModule = require("LensStudio:GestureModule") as GestureModule
+  private lastPinchStrengthLeft: number = 1.0
+  private lastPinchStrengthRight: number = 1.0
 
   onAwake() {
     _colorPickInstance = this
@@ -125,6 +132,8 @@ export class ColorPickController extends BaseScriptComponent {
 
     this.pinchDetector.onPinchHeld.add((hand: TrackedHand) => this.onPinchHeld(hand))
 
+    this.setupGestureEvents()
+
     this.createEvent("UpdateEvent").bind(() => this.onUpdate())
 
     this.setStatus("Color Pick ready. Pinch and hold to sample.")
@@ -143,6 +152,67 @@ export class ColorPickController extends BaseScriptComponent {
     })
 
     print(`${LOG_TAG} Camera started with CameraId.Left_Color, buffering frames via onNewFrame`)
+  }
+
+  private setupGestureEvents() {
+    this.gestureModule.getFilteredPinchUpEvent(GestureModule.HandType.Left).add(() => {
+      this.handlePinchUp(GestureModule.HandType.Left)
+    })
+    this.gestureModule.getFilteredPinchUpEvent(GestureModule.HandType.Right).add(() => {
+      this.handlePinchUp(GestureModule.HandType.Right)
+    })
+
+    this.gestureModule.getPinchStrengthEvent(GestureModule.HandType.Left).add((args: PinchStrengthArgs) => {
+      this.lastPinchStrengthLeft = args.strength
+      this.checkPinchStrengthDrop()
+    })
+    this.gestureModule.getPinchStrengthEvent(GestureModule.HandType.Right).add((args: PinchStrengthArgs) => {
+      this.lastPinchStrengthRight = args.strength
+      this.checkPinchStrengthDrop()
+    })
+
+    print(`${LOG_TAG} GestureModule events wired (FilteredPinchUp + PinchStrength for both hands)`)
+  }
+
+  /** Pinch strength for the hand currently holding the ball (not min of both — avoids false freezes when one hand is open). */
+  private getActiveHandPinchStrength(): number {
+    if (!this.activeHand) return 1.0
+    return this.activeHand.handType === "right"
+      ? this.lastPinchStrengthRight
+      : this.lastPinchStrengthLeft
+  }
+
+  private isBallFullyGrown(): boolean {
+    return this.currentBallScale >= this.finalBallSize - 0.001
+  }
+
+  private handlePinchUp(releasedHand: GestureModule.HandType) {
+    if (!this.ballActive || !this.activeBall || !this.activeHand) return
+
+    const activeGestureHand =
+      this.activeHand.handType === "right" ? GestureModule.HandType.Right : GestureModule.HandType.Left
+    if (releasedHand !== activeGestureHand) {
+      return
+    }
+
+    print(`${LOG_TAG} PinchUp on active hand — evaluating throw`)
+    this.onPinchRelease()
+  }
+
+  private checkPinchStrengthDrop() {
+    if (!this.ballActive || !this.activeBall || !this.activeHand) return
+
+    const strength = this.getActiveHandPinchStrength()
+    if (strength < this.minPinchStrength) {
+      print(`${LOG_TAG} Active hand pinch strength dropped to ${strength.toFixed(2)} — freezing ball`)
+      this.freezeBall()
+    }
+  }
+
+  private freezeBall() {
+    if (!this.ballActive || !this.activeBall) return
+    print(`${LOG_TAG} Ball frozen in place (tracking/pinch edge case or release before full growth). Next pinch replaces it.`)
+    this.cleanupAfterRelease()
   }
 
   private onPinchHeld(hand: TrackedHand) {
@@ -206,6 +276,9 @@ export class ColorPickController extends BaseScriptComponent {
 
     this.activeHand = hand
     this.currentBallScale = 0.1
+    this.ballActive = true
+    this.previousHandPos = null
+    this.handVelocity = vec3.zero()
 
     if (!this.ballPrefab) {
       print(`${LOG_TAG} WARNING: ballPrefab not assigned, skipping ball spawn`)
@@ -416,31 +489,28 @@ export class ColorPickController extends BaseScriptComponent {
   }
 
   private updateBall() {
-    if (!this.activeBall || !this.activeHand) return
+    if (!this.activeBall) return
 
-    if (this.activeHand.isTracked() && this.activeHand.isPinching()) {
+    if (this.ballActive && this.activeHand && !this.activeHand.isTracked()) {
+      print(`${LOG_TAG} Hand tracking lost while ball is active — freezing (no throw)`)
+      this.freezeBall()
+      return
+    }
+
+    if (this.activeHand && this.activeHand.isTracked() && this.ballActive) {
       const midpoint = this.getPinchMidpoint(this.activeHand)
       const currentPos = this.activeBall.getTransform().getWorldPosition()
       const smoothed = vec3.lerp(currentPos, midpoint, getDeltaTime() * this.ballFollowSpeed)
       this.activeBall.getTransform().setWorldPosition(smoothed)
 
-      // Track hand velocity via index tip position delta each frame (mirrors Throw Lab)
       const currentHandPos = this.activeHand.indexTip.position
       if (this.previousHandPos !== null && getDeltaTime() > 0) {
         this.handVelocity = currentHandPos.sub(this.previousHandPos).uniformScale(1 / getDeltaTime())
       }
       this.previousHandPos = currentHandPos
-      this.wasPinching = true
     }
 
-    // Detect the exact frame pinch drops — only on deliberate release, not tracking loss
-    if (this.wasPinching && this.activeHand.isTracked() && !this.activeHand.isPinching()) {
-      this.onPinchRelease()
-      this.wasPinching = false
-      this.previousHandPos = null
-    }
-
-    if (this.currentBallScale < this.finalBallSize) {
+    if (this.ballActive && this.currentBallScale < this.finalBallSize) {
       this.currentBallScale = Math.min(
         this.currentBallScale + this.growSpeed * getDeltaTime(),
         this.finalBallSize
@@ -452,25 +522,50 @@ export class ColorPickController extends BaseScriptComponent {
   }
 
   private onPinchRelease() {
-    const speed = this.handVelocity.length
-    print(`${LOG_TAG} Pinch released. Hand speed: ${speed.toFixed(2)} units/s (threshold: ${this.throwVelocityThreshold})`)
+    if (!this.ballActive || !this.activeBall) return
 
-    if (speed >= this.throwVelocityThreshold) {
-      const body = this.activeBall.getComponent("Physics.BodyComponent") as BodyComponent
-      if (body) {
-        body.dynamic = true
-        const impulse = this.handVelocity.uniformScale(this.throwForceMultiplier)
-        body.addForce(impulse, Physics.ForceMode.Impulse)
-        print(`${LOG_TAG} Ball THROWN with impulse (${impulse.x.toFixed(1)}, ${impulse.y.toFixed(1)}, ${impulse.z.toFixed(1)})`)
-      } else {
-        print(`${LOG_TAG} WARNING: No Physics.BodyComponent on ball prefab — add one with dynamic=false`)
-      }
-    } else {
-      print(`${LOG_TAG} Ball FROZEN at release point (speed ${speed.toFixed(2)} < threshold ${this.throwVelocityThreshold})`)
+    if (!this.isBallFullyGrown()) {
+      print(`${LOG_TAG} Pinch release before ball finished growing — freeze in place (no throw)`)
+      this.freezeBall()
+      return
     }
 
+    const body = this.activeBall.getComponent("Physics.BodyComponent") as BodyComponent
+    if (!body) {
+      print(`${LOG_TAG} WARNING: No Physics.BodyComponent on ball prefab`)
+      this.cleanupAfterRelease()
+      return
+    }
+
+    body.dynamic = true
+    body.angularVelocity = vec3.zero()
+    body.angularDamping = 0.95
+
+    const ballPos = this.activeBall.getTransform().getWorldPosition()
+    const camForward = this.mainCamTrans.forward.uniformScale(-1)
+    const throwDirection = camForward.normalize()
+
+    let throwStrength = this.handVelocity.length * this.handVelocityMultiplier
+
+    if (throwStrength < 2) {
+      throwStrength = this.baseThrowForce
+    } else {
+      throwStrength += this.baseThrowForce
+    }
+
+    const forceVector = throwDirection.uniformScale(throwStrength)
+
+    body.addForce(forceVector, Physics.ForceMode.Impulse)
+    print(`${LOG_TAG} Ball THROWN — strength: ${throwStrength.toFixed(1)}, direction: (${throwDirection.x.toFixed(2)}, ${throwDirection.y.toFixed(2)}, ${throwDirection.z.toFixed(2)}), hand speed: ${this.handVelocity.length.toFixed(1)}`)
+
+    this.cleanupAfterRelease()
+  }
+
+  private cleanupAfterRelease() {
     this.activeHand = null
     this.handVelocity = vec3.zero()
+    this.previousHandPos = null
+    this.ballActive = false
   }
 
   private findHueEventEmitterInScene(): HueEventEmitter {

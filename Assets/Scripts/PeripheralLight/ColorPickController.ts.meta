@@ -28,15 +28,16 @@
   ScriptInputsHidden:
     ballFollowSpeed: false
     ballPrefab: false
+    baseThrowForce: false
     camModule: false
     debugSwatchObj: false
     finalBallSize: false
     growSpeed: false
+    handVelocityMultiplier: false
     mainCam: false
+    minPinchStrength: false
     pinchDetector: false
     statusText: false
-    throwForceMultiplier: false
-    throwVelocityThreshold: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -55,8 +56,9 @@
       growSpeed: !<float> 1.000000
       finalBallSize: !<float> 3.000000
       ballFollowSpeed: !<float> 15.000000
-      throwVelocityThreshold: !<float> 5.000000
-      throwForceMultiplier: !<float> 1.000000
+      handVelocityMultiplier: 0.300000
+      baseThrowForce: !<float> 150.000000
+      minPinchStrength: 0.300000
   ScriptTypes:
     -
       {}
@@ -70,5 +72,6 @@
     - '// @input float growSpeed = 1 {"hint":"Scale units per second the ball grows"}'
     - '// @input float finalBallSize = 3 {"hint":"Target uniform scale of the fully grown ball"}'
     - '// @input float ballFollowSpeed = 15 {"hint":"How quickly the ball follows the fingertips (higher = snappier)"}'
-    - '// @input float throwVelocityThreshold = 5 {"hint":"Minimum hand speed (units/sec) to trigger a throw vs. freeze"}'
-    - '// @input float throwForceMultiplier = 1 {"hint":"Multiplier applied to hand velocity when throwing"}'
+    - '// @input float handVelocityMultiplier = 0.3 {"hint":"Multiplier for hand velocity (higher = more responsive to hand movement)"}'
+    - '// @input float baseThrowForce = 800 {"hint":"Base forward force added to throws (guided by camera forward direction)"}'
+    - '// @input float minPinchStrength = 0.3 {"hint":"Pinch strength below this triggers a freeze-release (0-1)"}'

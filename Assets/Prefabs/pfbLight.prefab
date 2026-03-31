@@ -110,7 +110,7 @@
   PrefabRemaps:
     []
   Name: LampColliderSpawner
-  Enabled: false
+  Enabled: true
   ScriptAsset: !<reference> 3a042650-8ffb-4f7b-a554-de8d96eae63d
   ScriptInputsDefault:
     {}
@@ -120,6 +120,7 @@
     "":
       lightHandEventListener: !<MappingBased.AssignableType> 8e9638f6-967e-40a1-8ed1-49f948b49c0e
       colliderPrefab: !<reference.ObjectPrefab> 3174424a-bf13-466c-a335-41a3cd99478a
+      hitSound: !<reference.AudioComponent> 7fb898b5-9641-469a-ad31-e7126ac92a4a
   ScriptTypes:
     "":
       {}
@@ -819,6 +820,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/75b8fa8b-6d36-40f1-9895-508eb83561fa>
+  PrefabRemaps:
+    []
+  Name: CameraClick
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 7fb898b5-9641-469a-ad31-e7126ac92a4a
 - !<SceneObject/772f4c57-5bc5-4999-a609-4b448c7c8efc>
   PrefabRemaps:
     []
@@ -914,6 +930,23 @@
   ScriptTypes:
     "":
       {}
+- !<AudioComponent/7fb898b5-9641-469a-ad31-e7126ac92a4a>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> 5c2e936c-018d-436a-9403-1a1c670f87e5
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<SceneObject/7fc93a5c-3a28-4e28-a0ff-3657dded22d6>
   PrefabRemaps:
     []
@@ -1026,6 +1059,23 @@
   ScriptTypes:
     "":
       {}
+- !<AudioComponent/8882d3d6-423f-42c1-adac-d557a22fc619>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> a8a9219d-1d36-44b1-9893-a29d8002e614
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<ScriptComponent/8ab3b965-c626-4ee4-984e-1da4d275763d>
   PrefabRemaps:
     []
@@ -1161,6 +1211,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/949f2fa5-f967-4df4-accb-ebdf56527e19>
+  PrefabRemaps:
+    []
+  Name: beinghittemp
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 8882d3d6-423f-42c1-adac-d557a22fc619
 - !<ScriptComponent/954688f3-4414-45e9-bdda-995318aba14e>
   PrefabRemaps:
     []
@@ -1352,6 +1417,7 @@
     ballScale: true
     maxActiveBalls: true
     shootingEnabled: true
+    overshootMultiplier: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1367,6 +1433,9 @@
       ballScale: !<float> 5.000000
       maxActiveBalls: !<float> 5.000000
       shootingEnabled: true
+      hitSound: !<reference.AudioComponent> 8882d3d6-423f-42c1-adac-d557a22fc619
+      playerCollider: !<reference.ColliderComponent> 6ac2351a-1ea6-4a43-8201-2688abf16ffe
+      overshootMultiplier: 1.500000
   ScriptTypes:
     "":
       {}
@@ -2166,7 +2235,7 @@
     "":
       hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-98c8-c524ffffe4c8
       lampColliderSpawner: !<MappingBased.AssignableType_1> 100aef53-8e66-4705-b4ea-be118228aeb6
-      lightStatusVisual: !<MappingBased.AssignableType_2> 0f0e3d48-d53c-4322-a15d-25622e9d5985
+      lightStatusVisual: !<MappingBased.AssignableType_2> 901678ab-eb66-4e0f-bc1f-46a00a9f979f
       hideBallOnHit: true
   ScriptTypes:
     "":
@@ -2315,16 +2384,19 @@
     - 736c4210-66f0-4ab4-8ef0-87ec7dd254b2: 736c4210-66f0-4ab4-710f-7813822dab4d
     - 755e52e3-b8f9-400b-869f-ff1fe2855b97: 755e52e3-b8f9-400b-7960-00e01d7aa468
     - 75a67dff-56a5-4bbd-aa28-2871264dbaab: 75a67dff-56a5-4bbd-55d7-d78ed9b24554
+    - 75b8fa8b-6d36-40f1-9895-508eb83561fa: ea6ba4dd-3a9c-4c5e-880b-fa4b0007f853
     - 772f4c57-5bc5-4999-a609-4b448c7c8efc: 772f4c57-5bc5-4999-59f6-b4bb73837103
     - 77fd4cfa-3825-426d-8307-0db664f618e8: 77fd4cfa-3825-426d-7cf8-f2499b09e717
     - 7b970118-eb57-404f-9353-f91496179382: 7b970118-eb57-404f-6cac-06eb69e86c7d
     - 7d997d9e-3377-4a3d-b665-41e566b0e0a1: 7d997d9e-3377-4a3d-499a-be1a994f1f5e
+    - 7fb898b5-9641-469a-ad31-e7126ac92a4a: 6ea8b61a-8714-48b3-a193-03b110daa0e2
     - 7fc93a5c-3a28-4e28-a0ff-3657dded22d6: 7fc93a5c-3a28-4e28-5f00-c9a82212dd29
     - 80a8c107-2c61-456c-8490-ffded7e9cc9a: 80a8c107-2c61-456c-7b6f-002128163365
     - 8150d2e6-3774-4466-8227-56dcec595d07: 8150d2e6-3774-4466-7dd8-a92313a6a2f8
     - 841c3c80-bcea-430b-bbbb-b9a9a1093434: 841c3c80-bcea-430b-4444-46565ef6cbcb
     - 869601b0-4752-4b90-b0a6-74ab081b491e: 869601b0-4752-4b90-4f59-8b54f7e4b6e1
     - 86b1a4b3-402b-4312-8164-932e67932e63: 86b1a4b3-402b-4312-7e9b-6cd1986cd19c
+    - 8882d3d6-423f-42c1-adac-d557a22fc619: 4761041c-e30e-481a-9b7e-4bf00c6579a2
     - 8ab3b965-c626-4ee4-984e-1da4d275763d: 8ab3b965-c626-4ee4-67b1-e25b2d8a89c2
     - 8be3dd68-94b0-4136-98a4-87bd0d6d9811: 8be3dd68-94b0-4136-675b-7842f29267ee
     - 8c53bd1b-8633-4b77-affc-bb8193f65f6f: 8c53bd1b-8633-4b77-5003-447e6c09a090
@@ -2332,6 +2404,7 @@
     - 901678ab-eb66-4e0f-bc1f-46a00a9f979f: 901678ab-eb66-4e0f-43e0-b95ff5606860
     - 910f2104-ab73-469f-98c8-c524ffffe4c8: 910f2104-ab73-469f-6737-3adb00001b37
     - 92381b14-ed4a-425d-a4f1-8c39b3ec9454: 92381b14-ed4a-425d-5b0e-73c64c136bab
+    - 949f2fa5-f967-4df4-accb-ebdf56527e19: fbec1766-c91a-49ed-b369-9b9ca870405a
     - 954688f3-4414-45e9-bdda-995318aba14e: 954688f3-4414-45e9-4225-66ace7545eb1
     - 954f678c-c236-440a-9f86-bc5d10fa8277: 954f678c-c236-440a-6079-43a2ef057d88
     - 97960dc4-b7d3-42c6-928c-0ade86c8ad1c: 97960dc4-b7d3-42c6-6d73-f521793752e3
@@ -2387,6 +2460,8 @@
     - !<own> 984f2baf-4fca-44cc-8751-426ec1bda5d4
     - !<own> 3d90115c-c3fe-4b58-a2f0-7851a5bf7c87
     - !<own> 77fd4cfa-3825-426d-8307-0db664f618e8
+    - !<own> 949f2fa5-f967-4df4-accb-ebdf56527e19
+    - !<own> 75b8fa8b-6d36-40f1-9895-508eb83561fa
   Components:
     - !<own> 80a8c107-2c61-456c-8490-ffded7e9cc9a
     - !<own> 910f2104-ab73-469f-98c8-c524ffffe4c8

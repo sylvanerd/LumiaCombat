@@ -1,4 +1,5 @@
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
+import {GameLogicManager} from "Scripts/GameLogicManager"
 import {HueEventEmitter} from "./HueEventEmitter"
 
 const LOG_TAG = "[AutoColorCycler]"
@@ -26,7 +27,18 @@ export class AutoColorCycler extends BaseScriptComponent {
     print(`${LOG_TAG} intervalSeconds: ${this.intervalSeconds}`)
     print(`${LOG_TAG} autoChangeEnabled: ${this.autoChangeEnabled}`)
 
+    this.createEvent("OnStartEvent").bind(() => this.onStart())
     this.createEvent("UpdateEvent").bind(() => this.onUpdate())
+  }
+
+  private onStart() {
+    const manager = GameLogicManager.getInstance()
+    if (manager) {
+      manager.registerCycler(this)
+      print(`${LOG_TAG} Registered with GameLogicManager`)
+    } else {
+      print(`${LOG_TAG} GameLogicManager not found in scene -- contrasting color will not be computed`)
+    }
   }
 
   private onUpdate() {

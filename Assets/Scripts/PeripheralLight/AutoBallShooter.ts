@@ -10,6 +10,7 @@ interface FlyingBall {
   endPos: vec3
   startTime: number
   duration: number
+  hit: boolean
 }
 
 @component
@@ -54,6 +55,20 @@ export class AutoBallShooter extends BaseScriptComponent {
   @hint("Master on/off toggle for ball shooting")
   shootingEnabled: boolean = true
 
+  @input
+  @allowUndefined
+  @hint("Sound played when a ball hits the player. Wire an AudioComponent with your desired clip.")
+  hitSound: AudioComponent
+
+  @input
+  @allowUndefined
+  @hint("ColliderComponent on the player (camera child). Ball must overlap this to count as a hit. If not wired, every ball is a guaranteed hit.")
+  playerCollider: ColliderComponent
+
+  @input
+  @hint("How far past the player (as a multiplier of flightTime) the ball continues before being destroyed. E.g. 1.5 = ball flies 50% beyond the target.")
+  overshootMultiplier: number = 1.5
+
   private flyingBalls: FlyingBall[] = []
   private pendingThrowToken: CancelToken = null
   private mainCamTrans: Transform
@@ -75,6 +90,15 @@ export class AutoBallShooter extends BaseScriptComponent {
     })
 
     this.createEvent("UpdateEvent").bind(() => this.onUpdate())
+
+    if (this.playerCollider) {
+      this.playerCollider.onOverlapEnter.add((args: OverlapEnterEventArgs) => {
+        this.onPlayerOverlap(args)
+      })
+      print(`${LOG_TAG} Player collider wired, dodge mode enabled`)
+    } else {
+      print(`${LOG_TAG} No player collider wired, every ball is a guaranteed hit`)
+    }
 
     print(`${LOG_TAG} Initialized. delayThrowTime=${this.delayThrowTime}s, flightTime=${this.flightTime}s, arcHeight=${this.arcHeight}`)
   }
@@ -105,6 +129,7 @@ export class AutoBallShooter extends BaseScriptComponent {
     }
 
     const ball = this.ballPrefab.instantiate(null)
+    ball.name = "LampBall"
     const tr = ball.getTransform()
     tr.setWorldPosition(startPos)
     tr.setLocalScale(vec3.one().uniformScale(this.ballScale))
@@ -129,7 +154,8 @@ export class AutoBallShooter extends BaseScriptComponent {
       startPos: startPos,
       endPos: endPos,
       startTime: getTime(),
-      duration: duration
+      duration: duration,
+      hit: false
     })
 
     print(`${LOG_TAG} Ball launched toward player, duration=${duration.toFixed(2)}s, arcHeight=${this.arcHeight}`)
@@ -144,22 +170,49 @@ export class AutoBallShooter extends BaseScriptComponent {
 
   private onUpdate() {
     const now = getTime()
+    const maxS = this.playerCollider ? this.overshootMultiplier : 1.0
     let i = 0
 
     while (i < this.flyingBalls.length) {
       const fb = this.flyingBalls[i]
       const elapsed = now - fb.startTime
-      const s = Math.min(elapsed / fb.duration, 1.0)
+      const s = elapsed / fb.duration
+
+      if (s >= maxS) {
+        if (!this.playerCollider && !fb.hit) {
+          this.onBallHitPlayer()
+        }
+        fb.obj.destroy()
+        this.flyingBalls.splice(i, 1)
+        continue
+      }
 
       const pos = this.evaluateParabola(fb.startPos, fb.endPos, s)
       fb.obj.getTransform().setWorldPosition(pos)
+      i++
+    }
+  }
 
-      if (s >= 1.0) {
-        fb.obj.destroy()
+  private onPlayerOverlap(args: OverlapEnterEventArgs) {
+    const otherName = args.overlap.collider.getSceneObject().name
+    if (otherName !== "LampBall") return
+
+    const ballObj = args.overlap.collider.getSceneObject()
+    for (let i = 0; i < this.flyingBalls.length; i++) {
+      if (this.flyingBalls[i].obj === ballObj && !this.flyingBalls[i].hit) {
+        this.flyingBalls[i].hit = true
+        this.onBallHitPlayer()
+        ballObj.destroy()
         this.flyingBalls.splice(i, 1)
-      } else {
-        i++
+        print(`${LOG_TAG} Player HIT by lamp ball!`)
+        return
       }
+    }
+  }
+
+  private onBallHitPlayer() {
+    if (this.hitSound) {
+      this.hitSound.play(1)
     }
   }
 

@@ -32,9 +32,12 @@
     ballScale: false
     delayThrowTime: false
     flightTime: false
+    hitSound: false
     lightHandEventListener: false
     mainCam: false
     maxActiveBalls: false
+    overshootMultiplier: false
+    playerCollider: false
     shootingEnabled: false
     speedMultiplier: false
   ScriptTypesHidden:
@@ -57,6 +60,9 @@
       ballScale: !<float> 5.000000
       maxActiveBalls: !<float> 5.000000
       shootingEnabled: true
+      hitSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
+      playerCollider: !<reference.ColliderComponent> 00000000-0000-0000-0000-000000000000
+      overshootMultiplier: 1.500000
   ScriptTypes:
     -
       {}
@@ -72,3 +78,6 @@
     - '// @input float ballScale = 5 {"hint":"Uniform scale of the spawned ball"}'
     - '// @input float maxActiveBalls = 5 {"hint":"Oldest ball is destroyed when this cap is exceeded"}'
     - '// @input bool shootingEnabled = true {"hint":"Master on/off toggle for ball shooting"}'
+    - '// @input Component.AudioComponent hitSound {"hint":"Sound played when a ball hits the player. Wire an AudioComponent with your desired clip."}'
+    - '// @input Component.ColliderComponent playerCollider {"hint":"ColliderComponent on the player (camera child). Ball must overlap this to count as a hit. If not wired, every ball is a guaranteed hit."}'
+    - '// @input float overshootMultiplier = 1.5 {"hint":"How far past the player (as a multiplier of flightTime) the ball continues before being destroyed. E.g. 1.5 = ball flies 50% beyond the target."}'

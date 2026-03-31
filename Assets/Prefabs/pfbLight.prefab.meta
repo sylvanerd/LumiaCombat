@@ -172,7 +172,7 @@
   PrefabRemaps:
     []
   Name: LampColliderSpawner
-  Enabled: false
+  Enabled: true
   ScriptAsset: !<reference> 3a042650-8ffb-4f7b-a554-de8d96eae63d
   ScriptInputsDefault:
     {}
@@ -182,6 +182,7 @@
     "":
       lightHandEventListener: !<MappingBased.AssignableType> 8e9638f6-967e-40a1-712e-b606b74b63f1
       colliderPrefab: !<reference.ObjectPrefab> 3174424a-bf13-466c-a335-41a3cd99478a
+      hitSound: !<reference.AudioComponent> 6ea8b61a-8714-48b3-a193-03b110daa0e2
   ScriptTypes:
     "":
       {}
@@ -444,6 +445,7 @@
     ballScale: true
     maxActiveBalls: true
     shootingEnabled: true
+    overshootMultiplier: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -459,6 +461,9 @@
       ballScale: !<float> 5.000000
       maxActiveBalls: !<float> 5.000000
       shootingEnabled: true
+      hitSound: !<reference.AudioComponent> 4761041c-e30e-481a-9b7e-4bf00c6579a2
+      playerCollider: !<reference.ColliderComponent> 6ac2351a-1ea6-4a43-8201-2688abf16ffe
+      overshootMultiplier: 1.500000
   ScriptTypes:
     "":
       {}
@@ -543,6 +548,23 @@
     bottom: 0.000000
     right: 0.000000
     top: 0.000000
+- !<AudioComponent/4761041c-e30e-481a-9b7e-4bf00c6579a2>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> a8a9219d-1d36-44b1-9893-a29d8002e614
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<SceneObject/478c257e-37c6-4f62-7942-80d37ae7ce1d>
   PrefabRemaps:
     []
@@ -803,6 +825,23 @@
   ScriptTypes:
     "":
       {}
+- !<AudioComponent/6ea8b61a-8714-48b3-a193-03b110daa0e2>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> 5c2e936c-018d-436a-9403-1a1c670f87e5
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<ScriptComponent/736c4210-66f0-4ab4-710f-7813822dab4d>
   PrefabRemaps:
     []
@@ -867,7 +906,7 @@
     "":
       hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-6737-3adb00001b37
       lampColliderSpawner: !<MappingBased.AssignableType_1> 157859c3-4cf5-4a3d-bda4-3bfba6e90247
-      lightStatusVisual: !<MappingBased.AssignableType_2> 0f0e3d48-d53c-4322-a15d-25622e9d5985
+      lightStatusVisual: !<MappingBased.AssignableType_2> 901678ab-eb66-4e0f-43e0-b95ff5606860
       hideBallOnHit: true
   ScriptTypes:
     "":
@@ -2112,6 +2151,21 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/ea6ba4dd-3a9c-4c5e-880b-fa4b0007f853>
+  PrefabRemaps:
+    []
+  Name: CameraClick
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 6ea8b61a-8714-48b3-a193-03b110daa0e2
 - !<Image/eadbb083-91b9-4881-745f-3a9351628cde>
   PrefabRemaps:
     []
@@ -2323,6 +2377,8 @@
     - !<own> 984f2baf-4fca-44cc-78ae-bd913e425a2b
     - !<own> 3d90115c-c3fe-4b58-5d0f-87ae5a408378
     - !<own> 77fd4cfa-3825-426d-7cf8-f2499b09e717
+    - !<own> fbec1766-c91a-49ed-b369-9b9ca870405a
+    - !<own> ea6ba4dd-3a9c-4c5e-880b-fa4b0007f853
   Components:
     - !<own> 80a8c107-2c61-456c-7b6f-002128163365
     - !<own> 910f2104-ab73-469f-6737-3adb00001b37
@@ -2332,6 +2388,21 @@
     - !<own> 157859c3-4cf5-4a3d-bda4-3bfba6e90247
     - !<own> 7521ee8e-b7e3-4651-b1eb-29adb877be5e
     - !<own> 3ce3b516-7e99-41d9-8993-d3bab6bdb033
+- !<SceneObject/fbec1766-c91a-49ed-b369-9b9ca870405a>
+  PrefabRemaps:
+    []
+  Name: beinghittemp
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 4761041c-e30e-481a-9b7e-4bf00c6579a2
 - !<SceneObject/ffb23643-b650-498e-526e-6c87cef94888>
   PrefabRemaps:
     []

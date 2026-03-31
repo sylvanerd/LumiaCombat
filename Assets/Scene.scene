@@ -14,6 +14,7 @@
     - !<own> 78a32601-3fcd-4b55-8a52-d1f113cb30d0
     - !<own> 6d90bc7c-95d3-46e4-bf93-49ab9a0b3526
     - !<own> 09a22389-4981-4452-9b3b-17473341edad
+    - !<own> 321d8ea5-b9f0-46d3-9329-e47f21f3e667
     - !<own> 0e1cab31-205e-4036-9020-508d0afa08c5
     - !<own> c57b8b65-4d61-4a94-b75e-f477505f8ef3
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
@@ -46,6 +47,7 @@
     - !<own> 45f2f9d5-5110-4e60-a232-d7069ff46d1c
     - !<own> 23a799f2-5d09-4314-9943-6f51bb468f37
     - !<own> 9835a8b9-a7fd-4f86-90eb-bb5dcadfd253
+    - !<own> 2d6eceaa-4586-4baf-8e32-77eb28a1b4d9
   Components:
     - !<own> 00000000-0000-0065-0000-000000000065
     - !<own> 9228bd9b-5113-4e9a-a7c5-bb6945cb0bc4
@@ -2197,7 +2199,7 @@
   PrefabRemaps:
     []
   Name: LampColliderSpawner
-  Enabled: false
+  Enabled: true
   ScriptAsset: !<reference> 3a042650-8ffb-4f7b-a554-de8d96eae63d
   ScriptInputsDefault:
     {}
@@ -2207,6 +2209,7 @@
     "":
       lightHandEventListener: !<MappingBased.AssignableType> 80d36c97-d6a9-4802-86cf-b2b6690c86fc
       colliderPrefab: !<reference.ObjectPrefab> 3174424a-bf13-466c-a335-41a3cd99478a
+      hitSound: !<reference.AudioComponent> eff66de5-b9d6-4c98-bda7-0c86f4dabedc
   ScriptTypes:
     "":
       {}
@@ -2307,6 +2310,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/2d6eceaa-4586-4baf-8e32-77eb28a1b4d9>
+  PrefabRemaps:
+    []
+  Name: Object 0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 6ac2351a-1ea6-4a43-8201-2688abf16ffe
 - !<SceneObject/2d7085cc-9f43-4f9a-96e2-228bda909d7d>
   PrefabRemaps:
     []
@@ -2564,6 +2582,21 @@
     - !<own> c862838e-c279-4eac-8e51-fb744cfe1e86
   Components:
     []
+- !<SceneObject/321d8ea5-b9f0-46d3-9329-e47f21f3e667>
+  PrefabRemaps:
+    []
+  Name: GameLogicManager
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> afc6a902-6a2e-43d1-99e9-e6bd227549e9
 - !<SceneObject/3255cf27-3400-47b1-8a78-f6aea08c8fe5>
   PrefabRemaps:
     []
@@ -4085,6 +4118,7 @@
     - 85425b3d-e970-4e9e-871e-a4f9b672f3b8: 75a67dff-56a5-4bbd-55d7-d78ed9b24554
     - 86f47a3a-d600-46c5-a0a1-29dbed74dd03: f720be62-66e0-43a5-64e1-75fbb0b6006c
     - 8c97741a-8694-4dff-86af-a71d56922e4c: 7d997d9e-3377-4a3d-499a-be1a994f1f5e
+    - 93c1adfb-f3fd-4ff7-8558-21024f9389a0: fbec1766-c91a-49ed-b369-9b9ca870405a
     - 96ae11ff-6e9b-404e-8a11-e9b7fb30a69c: 11534fc2-e68d-4d60-46a9-85608e4ffa05
     - 97122f02-0183-4160-b2fa-8482b856abea: 4035f4c4-7e55-4e86-6f5f-84a4dae5c946
     - 97480093-56ae-492c-878b-e35f3ff9bd91: 8ab3b965-c626-4ee4-67b1-e25b2d8a89c2
@@ -4099,6 +4133,8 @@
     - ba215326-ac74-49c2-992f-8e90585e9545: 22c0962a-cc50-4e9b-5fbd-dc45548466e0
     - c282c5b8-7f82-4554-a80a-94b374adc249: b735badb-85c7-49b9-75c0-4324547ee3e7
     - cb03a1dc-4420-48c6-b22f-9057bf4c4e1e: 5c318d9f-270e-41b4-a9b1-c63eb56210b8
+    - cf097c80-87fc-4964-9c87-95bdf7143dc2: 4761041c-e30e-481a-9b7e-4bf00c6579a2
+    - d18a5f78-7cda-4438-845c-a249caf73c2b: ea6ba4dd-3a9c-4c5e-880b-fa4b0007f853
     - d4f79016-0f7b-440d-a176-573470f502fe: b13f9d4b-622c-488b-7210-f228643b51b6
     - d5dee63a-596f-4616-a79d-dcee1215bad2: d6495697-07d0-42a5-4f41-3b1c14e61fda
     - d658fe9a-bba6-4626-abb6-49ee3a4057b6: c756303a-6d49-4507-691c-04e017b311d6
@@ -4107,6 +4143,7 @@
     - e8e4ad01-2560-43bd-8642-0b3c7b6019d0: 80a8c107-2c61-456c-7b6f-002128163365
     - e90057bf-9528-49e4-ad9c-0c92b8b8a5a4: d8d0172b-8954-47a7-78d4-7184edd72dee
     - e930e13e-a879-46bf-8926-d12b04d151d2: 51c995aa-91f1-4289-45e3-f72083aed8b4
+    - eff66de5-b9d6-4c98-bda7-0c86f4dabedc: 6ea8b61a-8714-48b3-a193-03b110daa0e2
     - f40e4067-2239-4783-8b03-1ae31e4ef377: cb73dff7-7c9f-4145-6a34-75299895507c
     - f5bf5049-872d-4698-a084-364013461e45: 478c257e-37c6-4f62-7942-80d37ae7ce1d
   Name: pfbLight
@@ -4129,6 +4166,8 @@
     - !<own> 2bb43e07-3a72-4386-9894-e2801851e2a9
     - !<own> e2da461c-2865-4586-93c6-8f489082f6dc
     - !<own> 00dde0be-4829-4dc4-9687-1aeb98a0a116
+    - !<own> 93c1adfb-f3fd-4ff7-8558-21024f9389a0
+    - !<own> d18a5f78-7cda-4438-845c-a249caf73c2b
   Components:
     - !<own> e8e4ad01-2560-43bd-8642-0b3c7b6019d0
     - !<own> 4dbdc55d-b2d4-4aac-82d8-9d3ab9cf1f33
@@ -6537,6 +6576,29 @@
   ScriptTypes:
     "":
       {}
+- !<BodyComponent/6ac2351a-1ea6-4a43-8201-2688abf16ffe>
+  PrefabRemaps:
+    []
+  Name: Physics Body
+  Enabled: true
+  Shape: !<Sphere>
+    FitVisual: true
+    Radius: 6.000000
+  Matter: !<reference> adcfd91a-7aa4-4923-8eea-942e1313db75
+  Filter: !<reference> 00000000-0000-0000-0000-000000000000
+  OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
+  WorldSettings: !<reference> 83e00c3d-6899-4e16-8b7d-7abcd2814cc7
+  EnableSmoothing: false
+  PositionTension: 30.000000
+  RotationTension: 30.000000
+  ForceCompound: false
+  Intangible: true
+  ShowCollider: false
+  Dynamic: false
+  BodySetting: Density
+  BodySettingValue: 1.000000
+  Damping: 0.000000
+  AngularDamping: 0.000000
 - !<SceneObject/6b326ebc-e206-4b0c-96ff-c53eebbc2703>
   PrefabRemaps:
     []
@@ -7697,6 +7759,7 @@
     ballScale: true
     maxActiveBalls: true
     shootingEnabled: true
+    overshootMultiplier: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -7712,6 +7775,9 @@
       ballScale: !<float> 5.000000
       maxActiveBalls: !<float> 5.000000
       shootingEnabled: true
+      hitSound: !<reference.AudioComponent> cf097c80-87fc-4964-9c87-95bdf7143dc2
+      playerCollider: !<reference.ColliderComponent> 6ac2351a-1ea6-4a43-8201-2688abf16ffe
+      overshootMultiplier: 1.500000
   ScriptTypes:
     "":
       {}
@@ -8070,7 +8136,7 @@
       growSpeed: !<float> 4.000000
       finalBallSize: !<float> 8.000000
       ballFollowSpeed: !<float> 30.000000
-      handVelocityMultiplier: 1.500000
+      handVelocityMultiplier: 1.100000
       baseThrowForce: 1.200000
       minPinchStrength: 0.300000
   ScriptTypes:
@@ -9026,6 +9092,21 @@
     bottom: 0.000000
     right: 0.000000
     top: 0.000000
+- !<SceneObject/93c1adfb-f3fd-4ff7-8558-21024f9389a0>
+  PrefabRemaps:
+    []
+  Name: beinghittemp
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> cf097c80-87fc-4964-9c87-95bdf7143dc2
 - !<SceneObject/94672720-73d2-4f4c-b517-0d320dae323b>
   PrefabRemaps:
     []
@@ -9455,7 +9536,7 @@
   PrefabRemaps:
     []
   Name: Box
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 3.707155, z: -37.999641}
@@ -11142,6 +11223,22 @@
   ScriptInputs:
     "":
       camModule: !<reference.CameraModule> b5286bef-9ea5-4895-85b1-331e9f2b4abf
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/afc6a902-6a2e-43d1-99e9-e6bd227549e9>
+  PrefabRemaps:
+    []
+  Name: GameLogicManager
+  Enabled: true
+  ScriptAsset: !<reference> f44d9200-ee1a-4ed8-a784-88487a217e4f
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      debugMesh: !<reference.RenderMeshVisual> 5be6d33a-d05b-4f27-b51c-4ddebcb5118c
   ScriptTypes:
     "":
       {}
@@ -13727,6 +13824,23 @@
   RotationAngle: 0
   Pivot: {x: 0.000000, y: 0.000000}
   ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+- !<AudioComponent/cf097c80-87fc-4964-9c87-95bdf7143dc2>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> a8a9219d-1d36-44b1-9893-a29d8002e614
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<SceneObject/cf6cc4e8-a38a-4a19-b854-9bbbb7c3c6df>
   PrefabRemaps:
     []
@@ -13906,6 +14020,21 @@
     - !<own> bd8d4d86-cb96-46e0-bec2-a2b07cda13ff
   Components:
     - !<own> 727f0b15-31e2-4961-a1e8-8cb7d0dcbc10
+- !<SceneObject/d18a5f78-7cda-4438-845c-a249caf73c2b>
+  PrefabRemaps:
+    []
+  Name: CameraClick
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> eff66de5-b9d6-4c98-bda7-0c86f4dabedc
 - !<SceneObject/d1e2b2bd-a767-4c9c-910f-12f5ecf9b4e8>
   PrefabRemaps:
     - 0201c883-50ec-4f20-b5d5-8638c38dca40: 2aab121c-405e-43e6-4228-383949fddc78
@@ -15792,6 +15921,23 @@
   ScriptTypes:
     "":
       {}
+- !<AudioComponent/eff66de5-b9d6-4c98-bda7-0c86f4dabedc>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> 5c2e936c-018d-436a-9403-1a1c670f87e5
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<ScreenTransform/f02ba1db-d753-4ace-a27f-77500d336648>
   PrefabRemaps:
     []

@@ -13,6 +13,11 @@ export class LampColliderSpawner extends BaseScriptComponent {
   @hint("Prefab with a sphere ColliderComponent (intangible=true, FitVisual=true) and optional transparent mesh")
   colliderPrefab: ObjectPrefab
 
+  @input
+  @allowUndefined
+  @hint("Sound effect played when the ball hits the lamp collider")
+  hitSound: AudioComponent
+
   get onBallCollision() {
     return this._onBallCollision.publicApi()
   }
@@ -75,6 +80,9 @@ export class LampColliderSpawner extends BaseScriptComponent {
 
     if (otherName === "Sphere") {
       print(`${LOG_TAG} Ball collision confirmed!`)
+      if (this.hitSound) {
+        this.hitSound.play(1)
+      }
       this._onBallCollision.invoke(otherCollider)
     }
   }

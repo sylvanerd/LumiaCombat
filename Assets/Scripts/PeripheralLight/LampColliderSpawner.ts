@@ -1,4 +1,5 @@
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
+import {GameLogicManager} from "Scripts/GameLogicManager"
 import {LightHandEventListener} from "./LightHandEventListener"
 
 const LOG_TAG = "[LampCollider]"
@@ -75,10 +76,25 @@ export class LampColliderSpawner extends BaseScriptComponent {
 
   private onOverlap(args: OverlapEnterEventArgs) {
     const otherCollider = args.overlap.collider
-    const otherName = otherCollider.getSceneObject().name
+    const fingerBallObj = otherCollider.getSceneObject()
+    const otherName = fingerBallObj.name
     print(`${LOG_TAG} Overlap detected with: ${otherName}`)
 
     if (otherName === "Sphere") {
+      const manager = GameLogicManager.getInstance()
+      const fingerBallColor = GameLogicManager.getObjectColor(fingerBallObj)
+
+      if (manager && fingerBallColor) {
+        const lampColor = manager.getCurrentLampColor()
+        const hueDist = manager.getHueDistance(fingerBallColor, lampColor)
+
+        if (!manager.areColorsContrasting(fingerBallColor, lampColor)) {
+          print(`${LOG_TAG} Finger ball color NOT contrasting with lamp (hueDist=${hueDist.toFixed(3)}), suppressing sound`)
+          return
+        }
+        print(`${LOG_TAG} Finger ball color IS contrasting (hueDist=${hueDist.toFixed(3)}), allowing hit`)
+      }
+
       print(`${LOG_TAG} Ball collision confirmed!`)
       if (this.hitSound) {
         this.hitSound.play(1)

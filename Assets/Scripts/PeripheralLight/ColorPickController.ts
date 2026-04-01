@@ -445,22 +445,6 @@ export class ColorPickController extends BaseScriptComponent {
 
     this.setStatus(`Color: ${hex} (${colorName})`)
 
-    if (!this.hueEventEmitter) {
-      print(`${LOG_TAG} HueEventEmitter not cached, searching scene...`)
-      this.hueEventEmitter = this.findHueEventEmitterInScene()
-    }
-
-    if (this.hueEventEmitter) {
-      try {
-        this.hueEventEmitter.setColorUI(color)
-        print(`${LOG_TAG} Sent color ${hex} to Hue lamp`)
-      } catch (hueError) {
-        print(`${LOG_TAG} ERROR: Failed to send color to Hue lamp: ${hueError}`)
-      }
-    } else {
-      print(`${LOG_TAG} No HueEventEmitter found in scene (is a Hue light connected?)`)
-    }
-
     this._onColorDetected.invoke(color)
     print(`${LOG_TAG} onColorDetected event fired with color ${hex}`)
 

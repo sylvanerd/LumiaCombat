@@ -26,7 +26,9 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    contrastThreshold: false
     debugMesh: false
+    similarityThreshold: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -37,8 +39,12 @@
     []
   DefaultScriptInputs:
     - debugMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      contrastThreshold: 0.300000
+      similarityThreshold: 0.150000
   ScriptTypes:
     -
       {}
   InputLines:
     - // @input Component.RenderMeshVisual debugMesh
+    - '// @input float contrastThreshold = 0.3 {"hint":"Hue distance (0-0.5) the finger ball must exceed vs lamp color to count as contrasting"}'
+    - '// @input float similarityThreshold = 0.15 {"hint":"Hue distance (0-0.5) below which finger ball and lamp ball colors count as similar"}'

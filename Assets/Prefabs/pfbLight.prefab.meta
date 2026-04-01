@@ -749,14 +749,13 @@
   Enabled: true
   ScriptAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
   ScriptInputsDefault:
-    intervalSeconds: true
     autoChangeEnabled: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-6737-3adb00001b37
-      intervalSeconds: !<float> 3.000000
+      intervalSeconds: !<float> 5.000000
       autoChangeEnabled: true
   ScriptTypes:
     "":
@@ -899,7 +898,7 @@
   Enabled: false
   ScriptAsset: !<reference> 54618fcf-58fa-45ee-9ca0-1badb4a97c3a
   ScriptInputsDefault:
-    hideBallOnHit: true
+    {}
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -907,7 +906,7 @@
       hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-6737-3adb00001b37
       lampColliderSpawner: !<MappingBased.AssignableType_1> 157859c3-4cf5-4a3d-bda4-3bfba6e90247
       lightStatusVisual: !<MappingBased.AssignableType_2> 901678ab-eb66-4e0f-43e0-b95ff5606860
-      hideBallOnHit: true
+      hideBallOnHit: false
   ScriptTypes:
     "":
       {}

@@ -7,12 +7,25 @@ export class GameLogicManager extends BaseScriptComponent {
   @input
   debugMesh: RenderMeshVisual
 
+  @input
+  @hint("Hue distance (0-0.5) the finger ball must exceed vs lamp color to count as contrasting")
+  contrastThreshold: number = 0.3
+
+  @input
+  @hint("Hue distance (0-0.5) below which finger ball and lamp ball colors count as similar")
+  similarityThreshold: number = 0.15
+
   private static instance: GameLogicManager
 
   private debugMat: Material
+  private currentLampColor: vec4 = new vec4(1, 1, 1, 1)
 
   static getInstance(): GameLogicManager | undefined {
     return GameLogicManager.instance
+  }
+
+  getCurrentLampColor(): vec4 {
+    return this.currentLampColor
   }
 
   onAwake() {
@@ -43,6 +56,8 @@ export class GameLogicManager extends BaseScriptComponent {
   }
 
   private onColorCycled(color: vec4) {
+    this.currentLampColor = color
+
     const contrasting = this.getContrastingColor(color)
     print(`${LOG_TAG} Original rgb(${color.r.toFixed(2)}, ${color.g.toFixed(2)}, ${color.b.toFixed(2)}) -> Contrasting rgb(${contrasting.r.toFixed(2)}, ${contrasting.g.toFixed(2)}, ${contrasting.b.toFixed(2)})`)
 
@@ -80,6 +95,29 @@ export class GameLogicManager extends BaseScriptComponent {
     const v = max
 
     return {h, s, v}
+  }
+
+  getHueDistance(a: vec4, b: vec4): number {
+    const hsvA = this.rgbToHsv(a.r, a.g, a.b)
+    const hsvB = this.rgbToHsv(b.r, b.g, b.b)
+    const diff = Math.abs(hsvA.h - hsvB.h)
+    return Math.min(diff, 1.0 - diff)
+  }
+
+  areColorsContrasting(a: vec4, b: vec4): boolean {
+    return this.getHueDistance(a, b) > this.contrastThreshold
+  }
+
+  areColorsSimilar(a: vec4, b: vec4): boolean {
+    return this.getHueDistance(a, b) < this.similarityThreshold
+  }
+
+  static getObjectColor(obj: SceneObject): vec4 | null {
+    const rmv = obj.getComponent("RenderMeshVisual") as RenderMeshVisual
+    if (rmv && rmv.mainMaterial) {
+      return rmv.mainMaterial.mainPass.baseColor
+    }
+    return null
   }
 
   private hsvToRgb(h: number, s: number, v: number): {r: number; g: number; b: number} {

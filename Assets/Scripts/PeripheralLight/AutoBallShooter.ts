@@ -1,4 +1,5 @@
 import {CancelToken, clearTimeout, setTimeout} from "SpectaclesInteractionKit.lspkg/Utils/FunctionTimingUtils"
+import {GameLogicManager} from "Scripts/GameLogicManager"
 import {AutoColorCycler} from "./AutoColorCycler"
 import {LightHandEventListener} from "./LightHandEventListener"
 
@@ -158,6 +159,13 @@ export class AutoBallShooter extends BaseScriptComponent {
       hit: false
     })
 
+    const ballCollider = ball.getComponent("Physics.ColliderComponent") as ColliderComponent
+    if (ballCollider) {
+      ballCollider.onOverlapEnter.add((args: OverlapEnterEventArgs) => {
+        this.onLampBallOverlap(ball, args)
+      })
+    }
+
     print(`${LOG_TAG} Ball launched toward player, duration=${duration.toFixed(2)}s, arcHeight=${this.arcHeight}`)
 
     while (this.flyingBalls.length > this.maxActiveBalls) {
@@ -207,6 +215,34 @@ export class AutoBallShooter extends BaseScriptComponent {
         print(`${LOG_TAG} Player HIT by lamp ball!`)
         return
       }
+    }
+  }
+
+  private onLampBallOverlap(lampBallObj: SceneObject, args: OverlapEnterEventArgs) {
+    const fingerBallObj = args.overlap.collider.getSceneObject()
+    if (fingerBallObj.name !== "Sphere") return
+
+    const manager = GameLogicManager.getInstance()
+    if (!manager) return
+
+    const fingerBallColor = GameLogicManager.getObjectColor(fingerBallObj)
+    const lampBallColor = GameLogicManager.getObjectColor(lampBallObj)
+    if (!fingerBallColor || !lampBallColor) return
+
+    const hueDist = manager.getHueDistance(fingerBallColor, lampBallColor)
+
+    if (manager.areColorsSimilar(fingerBallColor, lampBallColor)) {
+      for (let i = 0; i < this.flyingBalls.length; i++) {
+        if (this.flyingBalls[i].obj === lampBallObj && !this.flyingBalls[i].hit) {
+          this.flyingBalls[i].hit = true
+          lampBallObj.destroy()
+          this.flyingBalls.splice(i, 1)
+          print(`${LOG_TAG} Lamp ball NEUTRALIZED by finger ball (similar color, hueDist=${hueDist.toFixed(3)})`)
+          return
+        }
+      }
+    } else {
+      print(`${LOG_TAG} Finger ball touched lamp ball but colors not similar (hueDist=${hueDist.toFixed(3)}), ball continues`)
     }
   }
 

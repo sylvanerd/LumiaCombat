@@ -1,0 +1,56 @@
+- !<AssetImportMetadata/5e4d7a8b-235f-5e56-1087-d9ca757f962e>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> 8e0ab02a-f651-48e1-b5bc-699482e9333c
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> 8e0ab02a-f651-48e1-b5bc-699482e9333c
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    AssetLibraryId: 19adTBsbyai6cZB0NW7u4V
+  AssetDataMap:
+    JavaScriptAsset: !<own> 089843b6-fc6a-495e-9678-baacf059fb21
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/089843b6-fc6a-495e-9678-baacf059fb21>
+  SvgIcon: |
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9287 1.24275C10.8384 1.09215 10.6756 1 10.5 1C10.3244 1 10.1616 1.09215 10.0713 1.24275L8.63557 3.63557L6.24275 5.07125C6.09215 5.16162 6 5.32437 6 5.5C6 5.67563 6.09215 5.83838 6.24275 5.92875L8.63557 7.36443L10.0713 9.75725C10.1616 9.90785 10.3244 10 10.5 10C10.6756 10 10.8384 9.90785 10.9287 9.75725L12.3644 7.36443L14.7572 5.92875C14.9079 5.83838 15 5.67563 15 5.5C15 5.32437 14.9079 5.16162 14.7572 5.07125L12.3644 3.63557L10.9287 1.24275ZM9.42875 4.25725L10.5 2.47183L11.5713 4.25725C11.6135 4.32762 11.6724 4.38652 11.7428 4.42875L13.5282 5.5L11.7428 6.57125C11.6724 6.61348 11.6135 6.67238 11.5713 6.74275L10.5 8.52817L9.42875 6.74275C9.38652 6.67238 9.32762 6.61348 9.25725 6.57125L7.47183 5.5L9.25725 4.42875C9.32762 4.38652 9.38652 4.32762 9.42875 4.25725ZM5.85355 7.85355C6.04882 7.65829 6.04882 7.34171 5.85355 7.14645C5.65829 6.95118 5.34171 6.95118 5.14645 7.14645L1.14645 11.1464C0.951184 11.3417 0.951184 11.6583 1.14645 11.8536C1.34171 12.0488 1.65829 12.0488 1.85355 11.8536L5.85355 7.85355ZM7.85355 8.14645C8.04882 8.34171 8.04882 8.65829 7.85355 8.85355L1.85355 14.8536C1.65829 15.0488 1.34171 15.0488 1.14645 14.8536C0.951184 14.6583 0.951184 14.3417 1.14645 14.1464L7.14645 8.14645C7.34171 7.95118 7.65829 7.95118 7.85355 8.14645ZM8.85355 10.8536C9.04882 10.6583 9.04882 10.3417 8.85355 10.1464C8.65829 9.95118 8.34171 9.95118 8.14645 10.1464L4.14645 14.1464C3.95118 14.3417 3.95118 14.6583 4.14645 14.8536C4.34171 15.0488 4.65829 15.0488 4.85355 14.8536L8.85355 10.8536Z" fill="#FCE94E"/>
+    </svg>
+
+  SetupScript:
+    code: ""
+  Description: |-
+    Creates a trail mesh for GPU Particles material that uses Trails.
+    
+    This script is useful for when you need a different amount of segments than the default GPU Particles Trails mesh, which has 100 segments.
+    - lowering the segment count helps with performance by reducing the amount of vertices used.
+    - increasing segment count fixes visual artifacts such as noticeable segmentation or ends of trails popping in or out.
+    - for best results, try to use as few segments as needed to create your effect. Particles with shorter and straighter paths require less segments, while particles with longer or curved paths require more.
+  VersionMajor: 1
+  VersionMinor: 0
+  VersionPatch: 3
+  ComponentUid: b4425ca6-5916-411a-a86a-3cdda7637a36
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    addHead: false
+    particleTrailsMaterial: false
+    segmentCount: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - particleTrailsMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      segmentCount: 20
+      addHead: false
+  ScriptTypes:
+    -
+      {}

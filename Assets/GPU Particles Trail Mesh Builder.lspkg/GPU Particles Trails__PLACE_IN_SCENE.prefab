@@ -1,0 +1,40 @@
+- !<ObjectPrefab/d879e9d7-29e1-4181-b26c-bbb1cd0fa630>
+  PackagePath: ""
+  objects:
+    - !<own> 2d7abd50-d708-4cf6-9257-2ac5a42fe861
+  LazyLoading: false
+  RetainAssets: true
+- !<SceneObject/2d7abd50-d708-4cf6-9257-2ac5a42fe861>
+  PrefabRemaps:
+    - 2d7abd50-d708-4cf6-9257-2ac5a42fe861: 2d7abd50-d708-4cf6-6da8-d53a5bd0179e
+    - 48db6653-fe17-4058-afa2-fd297d0c94bf: 48db6653-fe17-4058-505d-02d682f36b40
+  Name: GPU Particles Trails__PLACE_IN_SCENE
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 48db6653-fe17-4058-afa2-fd297d0c94bf
+- !<ScriptComponent/48db6653-fe17-4058-afa2-fd297d0c94bf>
+  PrefabRemaps:
+    []
+  Name: GPU Particles Trail Mesh Builder
+  Enabled: true
+  ScriptAsset: !<reference> 8e0ab02a-f651-48e1-b5bc-699482e9333c
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      particleTrailsMaterial: !<reference.Material> 0fb13147-d949-40d7-b83f-bbdc1e87cb72
+      segmentCount: 25
+      addHead: true
+  ScriptTypes:
+    "":
+      {}

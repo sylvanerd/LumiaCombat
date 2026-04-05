@@ -1,0 +1,66 @@
+- !<AssetImportMetadata/2b487b44-10ff-49ef-93b7-46ff463ca3d5>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 4bb1ca9c-54cb-4382-ae09-f897b2588e8d
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 4bb1ca9c-54cb-4382-ae09-f897b2588e8d
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 7ff408d9-3e06-4433-a3de-7664ea292606
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/7ff408d9-3e06-4433-a3de-7664ea292606>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: cc231716-6ae1-48a6-9015-4293d02a4f4a
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    idleEmission: false
+    latticeMaterial: false
+    leftHandMeshFull: false
+    pulseEmission: false
+    pulseFrequency: false
+    rightHandMeshFull: false
+    transitionDuration: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - latticeMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      leftHandMeshFull: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      rightHandMeshFull: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      idleEmission: 1.200000
+      pulseEmission: !<float> 2.000000
+      pulseFrequency: !<float> 3.000000
+      transitionDuration: 0.500000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Material latticeMaterial {"hint":"The HandContour material asset (cloned per hand at startup)"}'
+    - "// @input Component.RenderMeshVisual leftHandMeshFull {\"hint\":\"Left hand's handMeshFull RenderMeshVisual from SIK HandVisual\"}"
+    - "// @input Component.RenderMeshVisual rightHandMeshFull {\"hint\":\"Right hand's handMeshFull RenderMeshVisual from SIK HandVisual\"}"
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"Emission"}'
+    - '// @input float idleEmission = 1.5 {"hint":"HDR emission intensity at idle (>1.0 for glow)"}'
+    - '// @input float pulseEmission = 2.5 {"hint":"Peak HDR emission intensity during pulse"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"Pulse & Transition"}'
+    - '// @input float pulseFrequency = 3 {"hint":"Pulse oscillation frequency in Hz during extraction"}'
+    - '// @input float transitionDuration = 0.5 {"hint":"Duration in seconds for color transition after detection"}'

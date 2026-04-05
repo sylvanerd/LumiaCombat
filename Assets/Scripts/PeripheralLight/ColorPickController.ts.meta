@@ -34,10 +34,12 @@
     finalBallSize: false
     growSpeed: false
     handVelocityMultiplier: false
+    latticeVFX: false
     mainCam: false
     minPinchStrength: false
     pinchDetector: false
     statusText: false
+    use25LiteModel: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -59,6 +61,8 @@
       handVelocityMultiplier: 0.300000
       baseThrowForce: !<float> 150.000000
       minPinchStrength: 0.300000
+      use25LiteModel: false
+      latticeVFX: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -75,3 +79,5 @@
     - '// @input float handVelocityMultiplier = 0.3 {"hint":"Multiplier for hand velocity (higher = more responsive to hand movement)"}'
     - '// @input float baseThrowForce = 800 {"hint":"Base forward force added to throws (guided by camera forward direction)"}'
     - '// @input float minPinchStrength = 0.3 {"hint":"Pinch strength below this triggers a freeze-release (0-1)"}'
+    - '// @input bool use25LiteModel {"hint":"Use gemini-2.5-flash-lite instead of gemini-2.0-flash"}'
+    - '// @input AssignableType_1 latticeVFX {"hint":"Hand lattice VFX controller for visual feedback on hand mesh"}'

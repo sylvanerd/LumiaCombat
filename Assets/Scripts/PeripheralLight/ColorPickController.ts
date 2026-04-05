@@ -3,19 +3,18 @@ import {GeminiTypes} from "RemoteServiceGateway.lspkg/HostedExternal/GeminiTypes
 import TrackedHand from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/TrackedHand"
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {ColorPickPinchDetector} from "./ColorPickPinchDetector"
+import {HandLatticeVFXController} from "./HandLatticeVFXController"
 import {HueEventEmitter} from "./HueEventEmitter"
 
 let _colorPickInstance: ColorPickController = null
 
 const LOG_TAG = "[ColorPick]"
-const GEMINI_MODEL = "gemini-2.0-flash"
+const GEMINI_MODEL_DEFAULT = "gemini-2.0-flash"
+const GEMINI_MODEL_LITE = "gemini-2.5-flash-lite"
 
 const SYSTEM_PROMPT =
-  "You are a color detection assistant. " +
-  "The user is pinching their fingers near a real-world object. " +
-  "Identify the dominant color of the object closest to the fingertips. " +
-  "Ignore the fingers/hand themselves and focus on the object they are touching or pointing at. " +
-  "Return ONLY a JSON object, no other text."
+  "Detect the dominant color of the object nearest the pinched index and thumb fingertips. " +
+  "Ignore hands/fingers. Return ONLY JSON."
 
 const CAM_DISTANCE = 60
 const CAM_HEIGHT = -5
@@ -68,10 +67,23 @@ export class ColorPickController extends BaseScriptComponent {
   @hint("Pinch strength below this triggers a freeze-release (0-1)")
   minPinchStrength: number = 0.3
 
+  @input
+  @hint("Use gemini-2.5-flash-lite instead of gemini-2.0-flash")
+  use25LiteModel: boolean = false
+
+  @input
+  @hint("Hand lattice VFX controller for visual feedback on hand mesh")
+  @allowUndefined
+  latticeVFX: HandLatticeVFXController
+
   private hueEventEmitter: HueEventEmitter = null
 
   static getInstance(): ColorPickController {
     return _colorPickInstance
+  }
+
+  private get geminiModel(): string {
+    return this.use25LiteModel ? GEMINI_MODEL_LITE : GEMINI_MODEL_DEFAULT
   }
 
   setHueEventEmitter(emitter: HueEventEmitter) {
@@ -137,7 +149,7 @@ export class ColorPickController extends BaseScriptComponent {
     this.createEvent("UpdateEvent").bind(() => this.onUpdate())
 
     this.setStatus("Color Pick ready. Pinch and hold to sample.")
-    print(`${LOG_TAG} Controller initialized. Model: ${GEMINI_MODEL}`)
+    print(`${LOG_TAG} Controller initialized. Model: ${this.geminiModel}`)
   }
 
   private startCamera() {
@@ -227,6 +239,8 @@ export class ColorPickController extends BaseScriptComponent {
     this.setStatus("Capturing...")
     this.isRequestRunning = true
 
+    if (this.latticeVFX) this.latticeVFX.startExtraction()
+
     this.spawnBall(hand)
 
     if (!this.latestFrame) {
@@ -305,7 +319,7 @@ export class ColorPickController extends BaseScriptComponent {
   private geminiStartTime: number = 0
 
   private sendGeminiColorRequest(imageBase64: string) {
-    print(`${LOG_TAG} Sending Gemini request with model: ${GEMINI_MODEL}...`)
+    print(`${LOG_TAG} Sending Gemini request with model: ${this.geminiModel}...`)
     this.setStatus("Analyzing color with AI...")
     this.geminiStartTime = getTime()
 
@@ -322,7 +336,7 @@ export class ColorPickController extends BaseScriptComponent {
     }
 
     const reqObj: GeminiTypes.Models.GenerateContentRequest = {
-      model: GEMINI_MODEL,
+      model: this.geminiModel,
       type: "generateContent",
       body: {
         contents: [
@@ -352,7 +366,7 @@ export class ColorPickController extends BaseScriptComponent {
           temperature: 0.1,
           responseMimeType: "application/json",
           response_schema: respSchema,
-          maxOutputTokens: 200
+          maxOutputTokens: 150
         }
       }
     }
@@ -446,6 +460,7 @@ export class ColorPickController extends BaseScriptComponent {
     this.setStatus(`Color: ${hex} (${colorName})`)
 
     this._onColorDetected.invoke(color)
+    if (this.latticeVFX) this.latticeVFX.applyColor(color)
     print(`${LOG_TAG} onColorDetected event fired with color ${hex}`)
 
     this.isRequestRunning = false
@@ -550,6 +565,7 @@ export class ColorPickController extends BaseScriptComponent {
     this.handVelocity = vec3.zero()
     this.previousHandPos = null
     this.ballActive = false
+    if (this.latticeVFX) this.latticeVFX.cancelExtraction()
   }
 
   private findHueEventEmitterInScene(): HueEventEmitter {

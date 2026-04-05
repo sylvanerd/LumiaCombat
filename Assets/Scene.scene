@@ -16,8 +16,6 @@
     - !<own> 09a22389-4981-4452-9b3b-17473341edad
     - !<own> 321d8ea5-b9f0-46d3-9329-e47f21f3e667
     - !<own> 0e1cab31-205e-4036-9020-508d0afa08c5
-    - !<own> 655fd357-43bc-4ebc-9942-efd2dbadf69c
-    - !<own> 1e80fc1f-1dcf-4d6f-b290-21f580550d7b
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -48,6 +46,7 @@
     - !<own> 45f2f9d5-5110-4e60-a232-d7069ff46d1c
     - !<own> 23a799f2-5d09-4314-9943-6f51bb468f37
     - !<own> 9835a8b9-a7fd-4f86-90eb-bb5dcadfd253
+    - !<own> 1ff9755b-db91-4b9b-a233-b721a94864be
     - !<own> 2d6eceaa-4586-4baf-8e32-77eb28a1b4d9
   Components:
     - !<own> 00000000-0000-0065-0000-000000000065
@@ -575,6 +574,7 @@
   Components:
     - !<own> 84468f5e-0d0e-4df4-8950-d45950e250a0
     - !<own> ebc93f35-0c87-4f5d-b849-80f8c2df8c9a
+    - !<own> ef5cb7cd-04b5-41bf-bc68-7f961158f305
 - !<ScreenTransform/0a49f0d1-6e09-400a-8d31-f5af9e8d3fe1>
   PrefabRemaps:
     []
@@ -1390,22 +1390,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<SceneObject/1e80fc1f-1dcf-4d6f-b290-21f580550d7b>
-  PrefabRemaps:
-    - 1e80fc1f-1dcf-4d6f-b290-21f580550d7b: 42097c26-3524-4adf-66bc-6ff796171de0
-    - d5871e84-83c6-42ec-8f89-9e7bbbc0f432: 939c6dc1-71bc-425f-6656-f29f8322054a
-  Name: TrailsVFX
-  Enabled: false
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> d5871e84-83c6-42ec-8f89-9e7bbbc0f432
 - !<SceneObject/1eefb992-d2f2-440c-b85c-d658793dee9d>
   PrefabRemaps:
     []
@@ -1489,6 +1473,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/1ff9755b-db91-4b9b-a233-b721a94864be>
+  PrefabRemaps:
+    []
+  Name: Plane
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 3.707155, z: -37.999641}
+    Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> d18b0c82-5e01-4e1f-ab04-9e17457c14c1
 - !<ColliderComponent/1ffc9929-02bb-4942-9b1f-3ccd2701b8f8>
   PrefabRemaps:
     []
@@ -2021,7 +2020,7 @@
 - !<SceneObject/2d6eceaa-4586-4baf-8e32-77eb28a1b4d9>
   PrefabRemaps:
     []
-  Name: Object 0
+  Name: Player
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -5275,22 +5274,6 @@
     - !<own> 3a285fd4-bea8-4bec-93fb-0ee2d2bfea46
     - !<own> 339dd10d-b722-485a-9221-96f38df092db
     - !<own> 515d4752-5e50-487c-a3a8-18e6629c6413
-- !<SceneObject/655fd357-43bc-4ebc-9942-efd2dbadf69c>
-  PrefabRemaps:
-    - 655fd357-43bc-4ebc-9942-efd2dbadf69c: 2d7abd50-d708-4cf6-6da8-d53a5bd0179e
-    - 92ecf453-fe09-4b7d-b783-e9d67ba373e9: 48db6653-fe17-4058-505d-02d682f36b40
-  Name: GPU Particles Trails
-  Enabled: false
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 92ecf453-fe09-4b7d-b783-e9d67ba373e9
 - !<SceneObject/658bb0f4-adaa-4521-a954-211c03caebc4>
   PrefabRemaps:
     []
@@ -5793,8 +5776,6 @@
   ScriptAsset: !<reference> f9b29b39-ec8c-41bd-8b53-769ae9b818b8
   ScriptInputsDefault:
     debugModeEnabled: true
-    selectVisual: true
-    handMeshPin: true
     handMeshRenderOrder: true
     autoJointMapping: true
     wrist: true
@@ -5845,12 +5826,12 @@
     "":
       debugModeEnabled: false
       handType: right
-      _meshType: IndexThumb
-      selectVisual: Default
+      _meshType: Full
+      selectVisual: AlwaysOn
       handInteractor: !<MappingBased.AssignableType> da45f908-5c4d-4488-ab93-1b5a74d72f4a
       handMeshFull: !<reference.RenderMeshVisual> 8056f8dd-3b8d-48ff-8087-055ddaa9b4f9
       handMeshIndexThumb: !<reference.RenderMeshVisual> 89fc79df-d0d0-4c43-93fd-e328cc3ee768
-      handMeshPin: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      handMeshPin: !<reference.RenderMeshVisual> 94965389-50b7-4477-855d-b9a74179d4f4
       handMeshRenderOrder: !<float> 9999.000000
       root: !<reference.SceneObject> c583058b-7f73-4dbf-8925-af01f67f14ed
       autoJointMapping: true
@@ -6949,7 +6930,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> c71dde88-df6c-46a6-8426-d07b956a747e
+    - !<reference> cdf1341d-cb2e-4d36-b7d1-96577dfe0e1c
   Mesh: !<reference> b65568f8-3141-4fc6-b034-96009f5bfd8f
   Skin: !<reference> 66bfec33-e048-421a-9187-a1095eb94324
   BlendShapesEnabled: true
@@ -7123,12 +7104,14 @@
       mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       statusText: !<reference.Text> 7de0285c-dd7e-43b6-af97-278ae72261eb
       ballPrefab: !<reference.ObjectPrefab> cb9a91d7-983d-46e5-9f22-5b73de1fe641
-      growSpeed: !<float> 4.000000
-      finalBallSize: !<float> 8.000000
+      growSpeed: 4.500000
+      finalBallSize: !<float> 7.000000
       ballFollowSpeed: !<float> 30.000000
       handVelocityMultiplier: 1.100000
-      baseThrowForce: 1.200000
+      baseThrowForce: 1.100000
       minPinchStrength: 0.300000
+      use25LiteModel: true
+      latticeVFX: !<MappingBased.AssignableType_1> ef5cb7cd-04b5-41bf-bc68-7f961158f305
   ScriptTypes:
     "":
       {}
@@ -7824,7 +7807,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> c71dde88-df6c-46a6-8426-d07b956a747e
+    - !<reference> cdf1341d-cb2e-4d36-b7d1-96577dfe0e1c
   Mesh: !<reference> a46c7bf7-85ad-42c1-a389-bcdbe17a135f
   Skin: !<reference> fab74b8d-b941-419d-a12f-413b8610cdcb
   BlendShapesEnabled: true
@@ -7881,24 +7864,6 @@
     bottom: 0.000000
     right: 0.000000
     top: 0.000000
-- !<ScriptComponent/92ecf453-fe09-4b7d-b783-e9d67ba373e9>
-  PrefabRemaps:
-    []
-  Name: GPU Particles Trail Mesh Builder
-  Enabled: true
-  ScriptAsset: !<reference> 8e0ab02a-f651-48e1-b5bc-699482e9333c
-  ScriptInputsDefault:
-    {}
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      particleTrailsMaterial: !<reference.Material> 0fb13147-d949-40d7-b83f-bbdc1e87cb72
-      segmentCount: 25
-      addHead: true
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/93c1adfb-f3fd-4ff7-8558-21024f9389a0>
   PrefabRemaps:
     []
@@ -8313,7 +8278,7 @@
   PrefabRemaps:
     []
   Name: Box
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 3.707155, z: -37.999641}
@@ -11845,6 +11810,26 @@
     []
   Components:
     - !<own> eff66de5-b9d6-4c98-bda7-0c86f4dabedc
+- !<RenderMeshVisual/d18b0c82-5e01-4e1f-ab04-9e17457c14c1>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> cdf1341d-cb2e-4d36-b7d1-96577dfe0e1c
+  Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<SceneObject/d1e2b2bd-a767-4c9c-910f-12f5ecf9b4e8>
   PrefabRemaps:
     - 0201c883-50ec-4f20-b5d5-8638c38dca40: 2aab121c-405e-43e6-4228-383949fddc78
@@ -12173,19 +12158,6 @@
     []
   Components:
     - !<own> 33cfaee2-3f99-4aaa-a3d8-5c63c33b7943
-- !<VFXComponent/d5871e84-83c6-42ec-8f89-9e7bbbc0f432>
-  PrefabRemaps:
-    []
-  Name: VFX
-  Enabled: true
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  VFXAsset: !<reference> 33932599-ac0a-41ce-a7d1-c2be1c4bac79
 - !<SceneObject/d5dee63a-596f-4616-a79d-dcee1215bad2>
   PrefabRemaps:
     []
@@ -13005,7 +12977,7 @@
   PrefabRemaps:
     []
   Name: RightHandPinMesh
-  Enabled: false
+  Enabled: true
   Layers: 2
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -13514,7 +13486,7 @@
     {}
   ScriptInputs:
     "":
-      holdDuration: 0.800000
+      holdDuration: 0.750000
   ScriptTypes:
     "":
       {}
@@ -13624,6 +13596,28 @@
   ScriptInputs:
     "":
       text: !<reference.Text> 3f5656c4-3672-46a3-ac05-dba7f3580fba
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/ef5cb7cd-04b5-41bf-bc68-7f961158f305>
+  PrefabRemaps:
+    []
+  Name: HandLatticeVFXController
+  Enabled: true
+  ScriptAsset: !<reference> 4bb1ca9c-54cb-4382-ae09-f897b2588e8d
+  ScriptInputsDefault:
+    pulseEmission: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      latticeMaterial: !<reference.Material> cdf1341d-cb2e-4d36-b7d1-96577dfe0e1c
+      leftHandMeshFull: !<reference.RenderMeshVisual> 92644e06-aa0a-45c5-b507-9e8745c52c72
+      rightHandMeshFull: !<reference.RenderMeshVisual> 8056f8dd-3b8d-48ff-8087-055ddaa9b4f9
+      idleEmission: 1.600000
+      pulseEmission: !<float> 2.000000
+      pulseFrequency: !<float> 2.000000
+      transitionDuration: 0.800000
   ScriptTypes:
     "":
       {}

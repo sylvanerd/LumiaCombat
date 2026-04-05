@@ -1,10 +1,57 @@
-- !<Material/2cd5def1-a6a1-4a19-82bc-01ed4ed93331>
+- !<Material/5dc9b799-832d-4732-a686-11ae5a1976d6>
   PackagePath: ""
   PassesInfo:
-    - !<own> 843e4b3a-c4c0-4739-a2a9-644332488306
-- !<PassInfo/843e4b3a-c4c0-4739-a2a9-644332488306>
+    - !<own> 0a56b339-2944-4912-9387-5df090633dbe
+- !<PassInfo/0a56b339-2944-4912-9387-5df090633dbe>
   CachedProperties:
-    []
+    - Port_Depth_N004:
+        typeIdx: 1
+        value: 1.000000
+    - Port_FinalColor1_N004:
+        typeIdx: 5
+        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    - Port_FinalColor2_N004:
+        typeIdx: 5
+        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    - Port_FinalColor3_N004:
+        typeIdx: 5
+        value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    - Port_GSplatPointSize_N004:
+        typeIdx: 1
+        value: 0.000000
+    - Port_GSplatRotation_N004:
+        typeIdx: 5
+        value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+    - Port_GSplatScale_N004:
+        typeIdx: 4
+        value: {x: 0.000000, y: 0.000000, z: 0.000000}
+    - Port_LODValue_N001:
+        typeIdx: 1
+        value: 0.000000
+    - Port_LODValue_N002:
+        typeIdx: 1
+        value: 0.000000
+    - Port_LODValue_N009:
+        typeIdx: 1
+        value: 0.000000
+    - Port_PrevWorldPosition_N004:
+        typeIdx: 4
+        value: {x: 0.000000, y: 0.000000, z: 0.000000}
+    - Port_RayDirection_N004:
+        typeIdx: 4
+        value: {x: 0.000000, y: 1.000000, z: 0.000000}
+    - Port_RayOrigin_N004:
+        typeIdx: 4
+        value: {x: 0.000000, y: 0.000000, z: 0.000000}
+    - Port_WorldNormal_N004:
+        typeIdx: 4
+        value: {x: 0.000000, y: 1.000000, z: 0.000000}
+    - Port_WorldPosition_N004:
+        typeIdx: 4
+        value: {x: 0.000000, y: 0.000000, z: 0.000000}
+    - Port_WorldTangent_N004:
+        typeIdx: 4
+        value: {x: 0.000000, y: 0.000000, z: 1.000000}
   DepthWrite: true
   DepthTest: true
   DepthFunction: LessEqual
@@ -23,10 +70,10 @@
   Properties:
     Port_Center_N016:
       typeIdx: 3
-      value: {x: 1.000000, y: 1.000000}
+      value: {x: 0.000000, y: 0.000000}
     Port_Emissive_N006:
       typeIdx: 4
-      value: {x: 1.000000, y: 1.000000, z: 1.000000}
+      value: {x: 0.000000, y: 0.000000, z: 0.000000}
     Port_SpecularAO_N006:
       typeIdx: 4
       value: {x: 1.000000, y: 1.000000, z: 1.000000}

@@ -1,0 +1,68 @@
+- !<AssetImportMetadata/8566ecbe-25be-4fc2-9f82-167d8e0d5649>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> c301c455-c3cd-431e-88d9-b66454ac8a32
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> c301c455-c3cd-431e-88d9-b66454ac8a32
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 27e999fd-cb91-4ceb-b023-9b287bfd3562
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/27e999fd-cb91-4ceb-b023-9b287bfd3562>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 2cb6faeb-c841-4770-9daa-28abd3242107
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    colorFadeDuration: false
+    coreAlpha: false
+    emissionBoost: false
+    finalEmission: false
+    fresnelPower: false
+    materializeDuration: false
+    peakEmissionIntensity: false
+    residualEmission: false
+    vfxComponent: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - vfxComponent: !<reference.VFXComponent> 00000000-0000-0000-0000-000000000000
+      materializeDuration: 0.800000
+      fresnelPower: !<float> 3.000000
+      peakEmissionIntensity: 2.500000
+      emissionBoost: 1.500000
+      residualEmission: 0.300000
+      colorFadeDuration: 0.350000
+      coreAlpha: 0.600000
+      finalEmission: 0.400000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Component.VFXComponent vfxComponent {"hint":"VFXComponent on child SceneObject for surrounding particle burst"}'
+    - '// @input float materializeDuration = 0.8 {"hint":"Seconds for the full dissolve reveal (0 = instant)"}'
+    - '// @input float fresnelPower = 3 {"hint":"Fresnel edge falloff exponent (higher = thinner rim)"}'
+    - '// @input float peakEmissionIntensity = 2.5 {"hint":"Peak HDR emission glow during reveal"}'
+    - '// @input float emissionBoost = 1.5 {"hint":"Multiplier to brighten baseColor into emissionColor"}'
+    - '// @input float residualEmission = 0.3 {"hint":"Fraction of peak emission kept while awaiting color (0-1)"}'
+    - '// @input float colorFadeDuration = 0.35 {"hint":"Seconds for Fresnel glow to fade after color arrives"}'
+    - '// @input float coreAlpha = 0.6 {"hint":"Base alpha for the ball core (lower = more see-through center)"}'
+    - '// @input float finalEmission = 0.4 {"hint":"Emission kept on the final colored ball (0 = no rim, 0.5 = subtle glow)"}'

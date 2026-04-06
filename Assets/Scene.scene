@@ -7118,7 +7118,7 @@
       finalBallSize: !<float> 7.000000
       ballFollowSpeed: !<float> 30.000000
       handVelocityMultiplier: 1.100000
-      baseThrowForce: 1.100000
+      baseThrowForce: 1.060000
       minPinchStrength: 0.300000
       use25LiteModel: true
       latticeVFX: !<MappingBased.AssignableType_1> ef5cb7cd-04b5-41bf-bc68-7f961158f305

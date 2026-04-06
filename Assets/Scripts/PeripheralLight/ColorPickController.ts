@@ -2,6 +2,7 @@ import {Gemini} from "RemoteServiceGateway.lspkg/HostedExternal/Gemini"
 import {GeminiTypes} from "RemoteServiceGateway.lspkg/HostedExternal/GeminiTypes"
 import TrackedHand from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/TrackedHand"
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
+import {BallSpawnVFXController} from "./BallSpawnVFXController"
 import {ColorPickPinchDetector} from "./ColorPickPinchDetector"
 import {HandLatticeVFXController} from "./HandLatticeVFXController"
 import {HueEventEmitter} from "./HueEventEmitter"
@@ -109,6 +110,7 @@ export class ColorPickController extends BaseScriptComponent {
 
   private activeBall: SceneObject = null
   private activeBallMat: Material = null
+  private activeBallVFX: BallSpawnVFXController = null
   private activeHand: TrackedHand = null
   private currentBallScale: number = 0
 
@@ -293,6 +295,7 @@ export class ColorPickController extends BaseScriptComponent {
     this.ballActive = true
     this.previousHandPos = null
     this.handVelocity = vec3.zero()
+    this.activeBallVFX = null
 
     if (!this.ballPrefab) {
       print(`${LOG_TAG} WARNING: ballPrefab not assigned, skipping ball spawn`)
@@ -305,14 +308,22 @@ export class ColorPickController extends BaseScriptComponent {
     tr.setWorldPosition(spawnPos)
     tr.setLocalScale(vec3.one().uniformScale(this.currentBallScale))
 
+    const placeholderColor = new vec4(0.9, 0.9, 0.9, 0.3)
+
     const rmv = this.activeBall.getComponent("RenderMeshVisual") as RenderMeshVisual
     if (rmv) {
       this.activeBallMat = rmv.mainMaterial.clone()
       rmv.mainMaterial = this.activeBallMat
-      this.activeBallMat.mainPass.baseColor = new vec4(0.5, 0.5, 0.5, 0.4)
+      this.activeBallMat.mainPass.baseColor = placeholderColor
       print(`${LOG_TAG} Ball spawned at (${spawnPos.x.toFixed(1)}, ${spawnPos.y.toFixed(1)}, ${spawnPos.z.toFixed(1)}) with transparent grey`)
     } else {
       print(`${LOG_TAG} WARNING: No RenderMeshVisual on ball prefab`)
+    }
+
+    this.activeBallVFX = this.activeBall.getComponent("ScriptComponent") as BallSpawnVFXController
+    if (this.activeBallVFX && this.activeBallMat) {
+      this.activeBallVFX.startMaterialize(this.activeBallMat, placeholderColor)
+      print(`${LOG_TAG} Materialize VFX started`)
     }
   }
 
@@ -452,9 +463,12 @@ export class ColorPickController extends BaseScriptComponent {
       print(`${LOG_TAG} Debug swatch updated with color ${hex} (${colorName})`)
     }
 
-    if (this.activeBallMat) {
-      this.activeBallMat.mainPass.baseColor = new vec4(color.r, color.g, color.b, 1.0)
+    if (this.activeBallVFX) {
+      this.activeBallVFX.updateColor(color)
       print(`${LOG_TAG} Ball color set to ${hex} (${colorName})`)
+    } else if (this.activeBallMat) {
+      this.activeBallMat.mainPass.baseColor = new vec4(color.r, color.g, color.b, 1.0)
+      print(`${LOG_TAG} Ball color set to ${hex} (${colorName}) (no VFX controller)`)
     }
 
     this.setStatus(`Color: ${hex} (${colorName})`)
@@ -536,6 +550,10 @@ export class ColorPickController extends BaseScriptComponent {
       return
     }
 
+    if (this.activeBallVFX && !this.activeBallVFX.isMaterialized) {
+      this.activeBallVFX.forceComplete()
+    }
+
     body.dynamic = true
     body.angularVelocity = vec3.zero()
     body.angularDamping = 0.95
@@ -565,6 +583,7 @@ export class ColorPickController extends BaseScriptComponent {
     this.handVelocity = vec3.zero()
     this.previousHandPos = null
     this.ballActive = false
+    this.activeBallVFX = null
     if (this.latticeVFX) this.latticeVFX.cancelExtraction()
   }
 

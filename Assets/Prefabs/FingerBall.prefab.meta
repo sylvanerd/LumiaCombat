@@ -14,6 +14,58 @@
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptComponent/33466c32-8093-44c7-9263-3567e0d4e719>
+  PrefabRemaps:
+    []
+  Name: BallSpawnVFXController
+  Enabled: true
+  ScriptAsset: !<reference> c301c455-c3cd-431e-88d9-b66454ac8a32
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      vfxComponent: !<reference.VFXComponent> 8016cd5c-5e7d-4910-8dc3-e2559ff3c817
+      materializeDuration: 1.500000
+      fresnelPower: !<float> 4.000000
+      peakEmissionIntensity: 0.300000
+      emissionBoost: !<float> 0.000000
+      residualEmission: !<float> 0.000000
+      colorFadeDuration: !<float> 5.000000
+      coreAlpha: !<float> 1.000000
+      finalEmission: 0.500000
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/6dea2454-0775-4b3d-a76d-dc5de65e0158>
+  PrefabRemaps:
+    []
+  Name: SpawnVFX
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 8016cd5c-5e7d-4910-8dc3-e2559ff3c817
+- !<VFXComponent/8016cd5c-5e7d-4910-8dc3-e2559ff3c817>
+  PrefabRemaps:
+    []
+  Name: VFX Component
+  Enabled: false
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  VFXAsset: !<reference> df98d679-cce4-46db-ac4c-debbc0df7e3d
 - !<BodyComponent/c0710684-088e-4cc6-b684-6d7531de75d2>
   PrefabRemaps:
     []
@@ -55,7 +107,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> a0fae9f5-59cb-4996-a994-692ea36f922a
+    - !<reference> 502b7f6f-3c03-4803-a66a-42ad8a2a237c
   Mesh: !<reference> 46873735-fb82-46c8-9043-058da12c7a1d
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -74,7 +126,8 @@
     Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
     HasSegmentScaleCompensation: false
   Children:
-    []
+    - !<own> 6dea2454-0775-4b3d-a76d-dc5de65e0158
   Components:
     - !<own> ce14ee42-5248-4c83-be7e-2819d0a8aa2f
     - !<own> c0710684-088e-4cc6-b684-6d7531de75d2
+    - !<own> 33466c32-8093-44c7-9263-3567e0d4e719

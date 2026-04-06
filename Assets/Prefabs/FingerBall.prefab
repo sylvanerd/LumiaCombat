@@ -82,8 +82,8 @@
   ScriptInputs:
     "":
       vfxComponent: !<reference.VFXComponent> f3d7e2eb-41ae-4c43-9e44-e26330318b77
-      materializeDuration: 1.500000
-      fresnelPower: !<float> 4.000000
+      materializeDuration: !<float> 3.000000
+      fresnelPower: !<float> 2.000000
       peakEmissionIntensity: 0.300000
       emissionBoost: !<float> 0.000000
       residualEmission: !<float> 0.000000

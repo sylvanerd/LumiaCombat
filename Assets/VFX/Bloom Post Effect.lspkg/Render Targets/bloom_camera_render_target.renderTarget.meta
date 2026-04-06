@@ -1,0 +1,16 @@
+- !<AssetImportMetadata/c7123d18-4f0c-b78f-2d7d-3ffc5e3b2867>
+  ImportedAssetIds:
+    RenderTarget: !<reference> 17c6c840-1e05-4b9d-8bc6-5559ae1ba9a0
+  ImporterName: RenderTargetImporter
+  PrimaryAsset: !<reference> 17c6c840-1e05-4b9d-8bc6-5559ae1ba9a0
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    AssetLibraryId: 1DlikLL8DonWv66vRR9w4l
+  AssetDataMap:
+    {}
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000

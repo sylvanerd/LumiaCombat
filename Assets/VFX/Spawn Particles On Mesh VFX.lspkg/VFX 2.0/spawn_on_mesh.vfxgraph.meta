@@ -1,0 +1,97 @@
+- !<AssetImportMetadata/e7c77197-2e64-e440-4352-fe2c7e30ea16>
+  ImportedAssetIds:
+    VFXGraph: !<reference> d538f8cf-d282-4003-af87-0e8eac5b31c5
+  ImporterName: VFXAssetImporter
+  PrimaryAsset: !<reference> d538f8cf-d282-4003-af87-0e8eac5b31c5
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    AssetLibraryId: 6nOBYGLmkWRFw9QbSXqLdC
+  AssetDataMap:
+    VFXGraph: !<own> f500a5bc-be3f-4c45-a257-0e672c0f7ef3
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<VFXAssetData/f500a5bc-be3f-4c45-a257-0e672c0f7ef3>
+  Mesh: !<reference> 00000000-0000-0000-0000-000000000000
+  SystemPassProperties:
+    39: !<VFXSystemPassProperties/7f3e02e7-76e0-4a4a-8fb0-f995121286af>
+      FeedbackProperties:
+        {}
+      SimulateProperties:
+        spawnTex:
+          typeIdx: 9
+          value:
+            id: 21e979a4-3bc2-4bc9-b3bc-de84efc5c547
+            sampler:
+              filteringMode: Trilinear
+              wrapModeU: Repeat
+              wrapModeV: Repeat
+              wrapModeW: ClampToEdge
+              borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+              mipmaps: false
+            type: Texture2D
+        meshData0:
+          typeIdx: 9
+          value:
+            id: 00000000-0000-0000-0000-000000000000
+            sampler:
+              filteringMode: Nearest
+              wrapModeU: Repeat
+              wrapModeV: Repeat
+              wrapModeW: Repeat
+              borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+              mipmaps: false
+            type: Texture2D
+        meshData1:
+          typeIdx: 9
+          value:
+            id: 00000000-0000-0000-0000-000000000000
+            sampler:
+              filteringMode: Nearest
+              wrapModeU: Repeat
+              wrapModeV: Repeat
+              wrapModeW: Repeat
+              borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+              mipmaps: false
+            type: Texture2D
+        meshData2:
+          typeIdx: 9
+          value:
+            id: 00000000-0000-0000-0000-000000000000
+            sampler:
+              filteringMode: Nearest
+              wrapModeU: Repeat
+              wrapModeV: Repeat
+              wrapModeW: Repeat
+              borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+              mipmaps: false
+            type: Texture2D
+        meshData3:
+          typeIdx: 9
+          value:
+            id: 00000000-0000-0000-0000-000000000000
+            sampler:
+              filteringMode: Nearest
+              wrapModeU: Repeat
+              wrapModeV: Repeat
+              wrapModeW: Repeat
+              borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+              mipmaps: false
+            type: Texture2D
+        objectBoundsMin:
+          typeIdx: 4
+          value: {x: 1.000000, y: 1.000000, z: 1.000000}
+        objectBoundsMax:
+          typeIdx: 4
+          value: {x: 1.000000, y: 1.000000, z: 1.000000}
+      RenderProperties:
+        {}
+      FeedbackDefines:
+        []
+      SimulateDefines:
+        []
+      RenderDefines:
+        []

@@ -23,6 +23,16 @@
         name: Layer 1
         color: 0
 
+      - |
+        id: 2
+        name: Layer 2
+        color: 1
+
+      - |
+        id: 7
+        name: Layer 3
+        color: 2
+
     HasOrtho: true
   RenderOutput: !<reference> 923415f5-4245-4675-ade1-6d69d6d23e71
   RenderPreviewOutput: !<reference> 923415f5-4245-4675-ade1-6d69d6d23e71

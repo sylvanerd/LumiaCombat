@@ -1,0 +1,37 @@
+- !<NativePackageDescriptor/fe1f4800-def5-49f7-ac52-522596a8f873>
+  PackagePath: ""
+  StudioVersion:
+    major: 5
+    minor: 15
+    patch: 3
+    build: 26011319
+    type: Unset
+    buildFlavor: ""
+    timestamp: 0
+    commit: ""
+  Description: 'Spawn Particles On MeshAllows you to spawn particles on any mesh using VFX Editor.To use this VFX, make sure your model has proper UV’s.For a detailed explanation of this effect, check out the“Spawn On Mesh Example" section of theVFX asset documentation. Click here to learn more about VFX Editor'
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  VersionMajor: 1
+  VersionMinor: 0
+  VersionPatch: 0
+  UpdateCheckpoint: 76
+  ExportUid: a8df6652-7242-440a-8e9f-e64db81dabf9
+  ComponentUid: 1f1de753-e168-4133-a7e4-12330dd0d4cc
+  PackagePolicy: CanBeUnpackedTransparent
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  Instantiable: !<reference> 00000000-0000-0000-0000-000000000000
+  AssetLibraryDependencyStructure: !<AssetLibraryDependencyStructure>
+    Name: ""
+    AssetId: ""
+    Hash: ""
+    Version:
+      major: 0
+      minor: 0
+      patch: 0
+      build: 0

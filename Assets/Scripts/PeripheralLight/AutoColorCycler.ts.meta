@@ -28,7 +28,8 @@
   ScriptInputsHidden:
     autoChangeEnabled: false
     hueEventEmitter: false
-    intervalSeconds: false
+    intervalSecondsMax: false
+    intervalSecondsMin: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -39,12 +40,14 @@
     []
   DefaultScriptInputs:
     - hueEventEmitter: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
-      intervalSeconds: !<float> 3.000000
+      intervalSecondsMin: !<float> 2.000000
+      intervalSecondsMax: !<float> 5.000000
       autoChangeEnabled: true
   ScriptTypes:
     -
       {}
   InputLines:
     - // @input AssignableType hueEventEmitter
-    - // @input float intervalSeconds = 3
+    - '// @input float intervalSecondsMin = 2 {"hint":"Minimum seconds between color cycles"}'
+    - '// @input float intervalSecondsMax = 5 {"hint":"Maximum seconds between color cycles"}'
     - // @input bool autoChangeEnabled = true

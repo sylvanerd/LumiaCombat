@@ -6734,9 +6734,7 @@
   Enabled: true
   ScriptAsset: !<reference> 12e2ba06-cf34-4fba-8277-d12e3e7c3633
   ScriptInputsDefault:
-    arcHeight: true
-    flightTime: true
-    speedMultiplier: true
+    arcHeightMax: true
     ballScale: true
     maxActiveBalls: true
     shootingEnabled: true
@@ -6750,9 +6748,10 @@
       mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       ballPrefab: !<reference.ObjectPrefab> 9a570ba6-c4cc-4de6-8097-6334d54685b9
       delayThrowTime: 0.500000
-      arcHeight: !<float> 30.000000
-      flightTime: 1.500000
-      speedMultiplier: !<float> 1.000000
+      arcHeightMin: !<float> 10.000000
+      arcHeightMax: !<float> 45.000000
+      flightTimeMin: 0.500000
+      flightTimeMax: !<float> 3.000000
       ballScale: !<float> 5.000000
       maxActiveBalls: !<float> 5.000000
       shootingEnabled: true
@@ -8288,7 +8287,7 @@
   PrefabRemaps:
     []
   Name: Box
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 3.707155, z: -37.999641}
@@ -9808,7 +9807,7 @@
   ScriptInputs:
     "":
       debugMesh: !<reference.RenderMeshVisual> 5be6d33a-d05b-4f27-b51c-4ddebcb5118c
-      contrastThreshold: 0.450000
+      contrastThreshold: 0.400000
       similarityThreshold: 0.080000
   ScriptTypes:
     "":
@@ -11525,7 +11524,8 @@
   ScriptInputs:
     "":
       hueEventEmitter: !<MappingBased.AssignableType> 4dbdc55d-b2d4-4aac-82d8-9d3ab9cf1f33
-      intervalSeconds: !<float> 5.000000
+      intervalSecondsMin: !<float> 3.000000
+      intervalSecondsMax: !<float> 4.000000
       autoChangeEnabled: true
   ScriptTypes:
     "":

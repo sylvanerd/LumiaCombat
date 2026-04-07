@@ -26,12 +26,14 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    arcHeight: false
+    arcHeightMax: false
+    arcHeightMin: false
     autoColorCycler: false
     ballPrefab: false
     ballScale: false
     delayThrowTime: false
-    flightTime: false
+    flightTimeMax: false
+    flightTimeMin: false
     hitSound: false
     lightHandEventListener: false
     mainCam: false
@@ -39,7 +41,6 @@
     overshootMultiplier: false
     playerCollider: false
     shootingEnabled: false
-    speedMultiplier: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -54,9 +55,10 @@
       mainCam: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       ballPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       delayThrowTime: 0.300000
-      arcHeight: !<float> 30.000000
-      flightTime: 1.500000
-      speedMultiplier: !<float> 1.000000
+      arcHeightMin: !<float> 15.000000
+      arcHeightMax: !<float> 45.000000
+      flightTimeMin: !<float> 1.000000
+      flightTimeMax: 2.500000
       ballScale: !<float> 5.000000
       maxActiveBalls: !<float> 5.000000
       shootingEnabled: true
@@ -72,9 +74,10 @@
     - // @input SceneObject mainCam
     - // @input Asset.ObjectPrefab ballPrefab
     - '// @input float delayThrowTime = 0.3 {"hint":"Seconds to wait after color change before launching the ball"}'
-    - '// @input float arcHeight = 30 {"hint":"Peak height (cm) of the arc above the straight line between lamp and player"}'
-    - '// @input float flightTime = 1.5 {"hint":"Seconds for the ball to fly from lamp to player; longer = slower, gentler arc"}'
-    - '// @input float speedMultiplier = 1 {"hint":"Scales flight speed; >1 = faster, <1 = slower"}'
+    - '// @input float arcHeightMin = 15 {"hint":"Minimum peak height (cm) of the arc above the straight line"}'
+    - '// @input float arcHeightMax = 45 {"hint":"Maximum peak height (cm) of the arc above the straight line"}'
+    - '// @input float flightTimeMin = 1 {"hint":"Minimum seconds for the ball to fly from lamp to player"}'
+    - '// @input float flightTimeMax = 2.5 {"hint":"Maximum seconds for the ball to fly from lamp to player"}'
     - '// @input float ballScale = 5 {"hint":"Uniform scale of the spawned ball"}'
     - '// @input float maxActiveBalls = 5 {"hint":"Oldest ball is destroyed when this cap is exceeded"}'
     - '// @input bool shootingEnabled = true {"hint":"Master on/off toggle for ball shooting"}'

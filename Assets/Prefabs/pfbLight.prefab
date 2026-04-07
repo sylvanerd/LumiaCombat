@@ -1366,7 +1366,8 @@
   ScriptInputs:
     "":
       hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-98c8-c524ffffe4c8
-      intervalSeconds: !<float> 5.000000
+      intervalSecondsMin: !<float> 3.000000
+      intervalSecondsMax: !<float> 4.000000
       autoChangeEnabled: true
   ScriptTypes:
     "":
@@ -1410,9 +1411,7 @@
   Enabled: true
   ScriptAsset: !<reference> 12e2ba06-cf34-4fba-8277-d12e3e7c3633
   ScriptInputsDefault:
-    arcHeight: true
-    flightTime: true
-    speedMultiplier: true
+    arcHeightMax: true
     ballScale: true
     maxActiveBalls: true
     shootingEnabled: true
@@ -1426,9 +1425,10 @@
       mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       ballPrefab: !<reference.ObjectPrefab> 9a570ba6-c4cc-4de6-8097-6334d54685b9
       delayThrowTime: 0.500000
-      arcHeight: !<float> 30.000000
-      flightTime: 1.500000
-      speedMultiplier: !<float> 1.000000
+      arcHeightMin: !<float> 10.000000
+      arcHeightMax: !<float> 45.000000
+      flightTimeMin: 0.500000
+      flightTimeMax: !<float> 3.000000
       ballScale: !<float> 5.000000
       maxActiveBalls: !<float> 5.000000
       shootingEnabled: true

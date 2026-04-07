@@ -10,7 +10,12 @@ export class AutoColorCycler extends BaseScriptComponent {
   hueEventEmitter: HueEventEmitter
 
   @input
-  intervalSeconds: number = 3
+  @hint("Minimum seconds between color cycles")
+  intervalSecondsMin: number = 2
+
+  @input
+  @hint("Maximum seconds between color cycles")
+  intervalSecondsMax: number = 5
 
   @input
   autoChangeEnabled: boolean = true
@@ -19,12 +24,13 @@ export class AutoColorCycler extends BaseScriptComponent {
   get onColorCycled() { return this._onColorCycled.publicApi() }
 
   private lastCycleTime: number = -1
+  private currentInterval: number = 0
   private initialized: boolean = false
 
   onAwake() {
     print(`${LOG_TAG} onAwake called`)
     print(`${LOG_TAG} hueEventEmitter wired: ${this.hueEventEmitter != null}`)
-    print(`${LOG_TAG} intervalSeconds: ${this.intervalSeconds}`)
+    print(`${LOG_TAG} intervalSeconds: [${this.intervalSecondsMin}-${this.intervalSecondsMax}]`)
     print(`${LOG_TAG} autoChangeEnabled: ${this.autoChangeEnabled}`)
 
     this.createEvent("OnStartEvent").bind(() => this.onStart())
@@ -56,13 +62,15 @@ export class AutoColorCycler extends BaseScriptComponent {
     if (!this.initialized) {
       this.initialized = true
       this.lastCycleTime = now
-      print(`${LOG_TAG} Initialized at time ${now.toFixed(2)}, waiting ${this.intervalSeconds}s for first cycle`)
+      this.currentInterval = this.randomInterval()
+      print(`${LOG_TAG} Initialized at time ${now.toFixed(2)}, waiting ${this.currentInterval.toFixed(2)}s for first cycle`)
       return
     }
 
     const elapsed = now - this.lastCycleTime
-    if (elapsed >= this.intervalSeconds) {
+    if (elapsed >= this.currentInterval) {
       this.lastCycleTime = now
+      this.currentInterval = this.randomInterval()
       this.cycleColor()
     }
   }
@@ -80,6 +88,10 @@ export class AutoColorCycler extends BaseScriptComponent {
     } catch (e) {
       print(`${LOG_TAG} ERROR calling setColorUI: ${e}`)
     }
+  }
+
+  private randomInterval(): number {
+    return this.intervalSecondsMin + Math.random() * (this.intervalSecondsMax - this.intervalSecondsMin)
   }
 
   private hsvToRgb(h: number, s: number, v: number): {r: number; g: number; b: number} {

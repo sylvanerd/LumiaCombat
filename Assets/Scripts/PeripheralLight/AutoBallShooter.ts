@@ -11,6 +11,7 @@ interface FlyingBall {
   endPos: vec3
   startTime: number
   duration: number
+  arcHeight: number
   hit: boolean
 }
 
@@ -33,16 +34,20 @@ export class AutoBallShooter extends BaseScriptComponent {
   delayThrowTime: number = 0.3
 
   @input
-  @hint("Peak height (cm) of the arc above the straight line between lamp and player")
-  arcHeight: number = 30
+  @hint("Minimum peak height (cm) of the arc above the straight line")
+  arcHeightMin: number = 15
 
   @input
-  @hint("Seconds for the ball to fly from lamp to player; longer = slower, gentler arc")
-  flightTime: number = 1.5
+  @hint("Maximum peak height (cm) of the arc above the straight line")
+  arcHeightMax: number = 45
 
   @input
-  @hint("Scales flight speed; >1 = faster, <1 = slower")
-  speedMultiplier: number = 1.0
+  @hint("Minimum seconds for the ball to fly from lamp to player")
+  flightTimeMin: number = 1.0
+
+  @input
+  @hint("Maximum seconds for the ball to fly from lamp to player")
+  flightTimeMax: number = 2.5
 
   @input
   @hint("Uniform scale of the spawned ball")
@@ -101,7 +106,7 @@ export class AutoBallShooter extends BaseScriptComponent {
       print(`${LOG_TAG} No player collider wired, every ball is a guaranteed hit`)
     }
 
-    print(`${LOG_TAG} Initialized. delayThrowTime=${this.delayThrowTime}s, flightTime=${this.flightTime}s, arcHeight=${this.arcHeight}`)
+    print(`${LOG_TAG} Initialized. delayThrowTime=${this.delayThrowTime}s, flightTime=[${this.flightTimeMin}-${this.flightTimeMax}]s, arcHeight=[${this.arcHeightMin}-${this.arcHeightMax}]`)
   }
 
   private onColorCycled(color: vec4) {
@@ -148,7 +153,8 @@ export class AutoBallShooter extends BaseScriptComponent {
     }
 
     const endPos = this.mainCamTrans.getWorldPosition()
-    const duration = Math.max(0.1, this.flightTime / Math.max(0.01, this.speedMultiplier))
+    const duration = Math.max(0.1, this.randomRange(this.flightTimeMin, this.flightTimeMax))
+    const arcHeight = this.randomRange(this.arcHeightMin, this.arcHeightMax)
 
     this.flyingBalls.push({
       obj: ball,
@@ -156,6 +162,7 @@ export class AutoBallShooter extends BaseScriptComponent {
       endPos: endPos,
       startTime: getTime(),
       duration: duration,
+      arcHeight: arcHeight,
       hit: false
     })
 
@@ -166,7 +173,7 @@ export class AutoBallShooter extends BaseScriptComponent {
       })
     }
 
-    print(`${LOG_TAG} Ball launched toward player, duration=${duration.toFixed(2)}s, arcHeight=${this.arcHeight}`)
+    print(`${LOG_TAG} Ball launched toward player, duration=${duration.toFixed(2)}s, arcHeight=${arcHeight.toFixed(1)}`)
 
     while (this.flyingBalls.length > this.maxActiveBalls) {
       const oldest = this.flyingBalls.shift()
@@ -195,7 +202,7 @@ export class AutoBallShooter extends BaseScriptComponent {
         continue
       }
 
-      const pos = this.evaluateParabola(fb.startPos, fb.endPos, s)
+      const pos = this.evaluateParabola(fb.startPos, fb.endPos, fb.arcHeight, s)
       fb.obj.getTransform().setWorldPosition(pos)
       i++
     }
@@ -252,9 +259,13 @@ export class AutoBallShooter extends BaseScriptComponent {
     }
   }
 
-  private evaluateParabola(start: vec3, end: vec3, s: number): vec3 {
+  private randomRange(min: number, max: number): number {
+    return min + Math.random() * (max - min)
+  }
+
+  private evaluateParabola(start: vec3, end: vec3, arcHeight: number, s: number): vec3 {
     const linear = vec3.lerp(start, end, s)
-    const arcOffset = this.arcHeight * 4.0 * s * (1.0 - s)
+    const arcOffset = arcHeight * 4.0 * s * (1.0 - s)
     return new vec3(linear.x, linear.y + arcOffset, linear.z)
   }
 }

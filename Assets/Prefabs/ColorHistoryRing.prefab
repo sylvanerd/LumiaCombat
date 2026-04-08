@@ -1,0 +1,47 @@
+- !<ObjectPrefab/e2c160c1-95f0-4c35-ae67-baad7371f622>
+  PackagePath: ""
+  objects:
+    - !<own> 376f88ba-b9c2-4bfe-9872-a946ed931373
+  LazyLoading: false
+  RetainAssets: true
+- !<ScriptComponent/27b3e91e-3a66-4be0-bd39-c9ce0187ab9f>
+  PrefabRemaps:
+    []
+  Name: ColorHistoryRing
+  Enabled: true
+  ScriptAsset: !<reference> 7594184f-9fef-4d81-91df-8c5342716930
+  ScriptInputsDefault:
+    releaseDistance: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      spherePrefab: !<reference.ObjectPrefab> 694ef353-6eb9-41f7-a278-1027b90b09a8
+      ringRadius: 3.400000
+      sphereScale: 2.800000
+      sphereColliderRadius: 2.800000
+      defaultColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.100000}
+      latticeVFX: !<MappingBased.AssignableType> ef5cb7cd-04b5-41bf-bc68-7f961158f305
+      pinchDetector: !<MappingBased.AssignableType_1> ebc93f35-0c87-4f5d-b849-80f8c2df8c9a
+      leftIndexProbe: !<reference.SceneObject> 3e71be83-83af-4aa0-a26a-2aef10f6d522
+      rightIndexProbe: !<reference.SceneObject> e8ebe0ea-8d61-4caf-a012-b7405c15303b
+      releaseDistance: 1.500000
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/376f88ba-b9c2-4bfe-9872-a946ed931373>
+  PrefabRemaps:
+    - 27b3e91e-3a66-4be0-bd39-c9ce0187ab9f: 27b3e91e-3a66-4be0-42c6-3631fe785460
+    - 376f88ba-b9c2-4bfe-9872-a946ed931373: 376f88ba-b9c2-4bfe-678d-56b9126cec8c
+  Name: ColorHistoryRing
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 27b3e91e-3a66-4be0-bd39-c9ce0187ab9f

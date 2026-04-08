@@ -1,10 +1,10 @@
-- !<ObjectPrefab/4bbe274c-5613-4d08-8818-cd792be1a112>
+- !<ObjectPrefab/97f8401a-3ec3-4321-833e-dbb6070d47ba>
   PackagePath: ""
   objects:
-    - !<own> 1ba32b32-d928-4827-81bb-9b4a54d06f8f
+    - !<own> acf8f676-ee17-4985-82f1-f63893bef785
   LazyLoading: false
   RetainAssets: true
-- !<RenderMeshVisual/10015fe9-1068-47c6-8be1-70c6403db772>
+- !<RenderMeshVisual/81200dbb-ea51-40d7-b49e-9bce0ec87b0c>
   PrefabRemaps:
     []
   Name: Render Mesh Visual
@@ -24,19 +24,19 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<SceneObject/1ba32b32-d928-4827-81bb-9b4a54d06f8f>
+- !<SceneObject/acf8f676-ee17-4985-82f1-f63893bef785>
   PrefabRemaps:
-    - 10015fe9-1068-47c6-8be1-70c6403db772: 10015fe9-1068-47c6-741e-8f39bfc2488d
-    - 1ba32b32-d928-4827-81bb-9b4a54d06f8f: 1ba32b32-d928-4827-7e44-64b5ab2f9070
-  Name: Box
-  Enabled: false
+    - 81200dbb-ea51-40d7-b49e-9bce0ec87b0c: 81200dbb-ea51-40d7-4b61-6431f13784f3
+    - acf8f676-ee17-4985-82f1-f63893bef785: acf8f676-ee17-4985-7d0e-09c76c41087a
+  Name: ColorHintCube
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 3.707155, z: -37.999641}
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
+    Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
     HasSegmentScaleCompensation: false
   Children:
     []
   Components:
-    - !<own> 10015fe9-1068-47c6-8be1-70c6403db772
+    - !<own> 81200dbb-ea51-40d7-b49e-9bce0ec87b0c

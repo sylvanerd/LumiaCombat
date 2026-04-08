@@ -27,7 +27,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> cc38a768-c36d-4eb3-8bec-a81a34d4b101
+    - !<reference> a0fae9f5-59cb-4996-a994-692ea36f922a
   Mesh: !<reference> 46873735-fb82-46c8-9043-058da12c7a1d
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -38,11 +38,11 @@
   PrefabRemaps:
     []
   Name: Physics Body
-  Enabled: true
+  Enabled: false
   Shape: !<Sphere>
     FitVisual: true
     Radius: 4.000000
-  Matter: !<reference> adcfd91a-7aa4-4923-8eea-942e1313db75
+  Matter: !<reference> 00000000-0000-0000-0000-000000000000
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
   WorldSettings: !<reference> 83e00c3d-6899-4e16-8b7d-7abcd2814cc7
@@ -50,7 +50,7 @@
   PositionTension: 30.000000
   RotationTension: 30.000000
   ForceCompound: false
-  Intangible: false
+  Intangible: true
   ShowCollider: false
   Dynamic: false
   BodySetting: Density

@@ -27,6 +27,9 @@ export class ColorPickPinchDetector extends BaseScriptComponent {
   private leftPinchLostTime: number = -1
   private rightPinchLostTime: number = -1
 
+  suppressed: boolean = false
+  private wasSuppressed: boolean = false
+
   onAwake() {
     this.createEvent("OnStartEvent").bind(() => this.onStart())
   }
@@ -41,12 +44,18 @@ export class ColorPickPinchDetector extends BaseScriptComponent {
   }
 
   private onUpdate() {
+    if (this.suppressed && !this.wasSuppressed) {
+      this.resetHand("left")
+      this.resetHand("right")
+    }
+    this.wasSuppressed = this.suppressed
+
     this.trackHand(this.leftHand, "left")
     this.trackHand(this.rightHand, "right")
   }
 
   private trackHand(hand: TrackedHand, label: string) {
-    const isActive = hand && hand.isTracked() && hand.isPinching()
+    const isActive = !this.suppressed && hand && hand.isTracked() && hand.isPinching()
 
     if (isActive) {
       this.setPinchLostTime(label, -1)

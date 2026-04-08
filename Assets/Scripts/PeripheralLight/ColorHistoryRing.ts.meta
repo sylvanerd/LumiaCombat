@@ -1,0 +1,71 @@
+- !<AssetImportMetadata/1574f36c-5028-4e01-a95f-b8c88baa561e>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 7594184f-9fef-4d81-91df-8c5342716930
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 7594184f-9fef-4d81-91df-8c5342716930
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 5940d5c1-4315-4e99-9c92-444000dd4206
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/5940d5c1-4315-4e99-9c92-444000dd4206>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 6a100bfd-1b70-48f0-8651-0f1d963dc42e
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    defaultColor: false
+    latticeVFX: false
+    leftIndexProbe: false
+    pinchDetector: false
+    releaseDistance: false
+    rightIndexProbe: false
+    ringRadius: false
+    sphereColliderRadius: false
+    spherePrefab: false
+    sphereScale: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - spherePrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      ringRadius: 1.500000
+      sphereScale: 0.500000
+      sphereColliderRadius: 0.400000
+      defaultColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.150000}
+      latticeVFX: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      pinchDetector: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      leftIndexProbe: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      rightIndexProbe: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      releaseDistance: 1.500000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.ObjectPrefab spherePrefab {"hint":"Small sphere prefab (with RenderMeshVisual + material)"}'
+    - '// @input float ringRadius = 1.5 {"hint":"Radius of the hexagonal ring"}'
+    - '// @input float sphereScale = 0.5 {"hint":"Uniform scale of each sphere"}'
+    - '// @input float sphereColliderRadius = 0.4 {"hint":"Sphere collider radius (only used if prefab has no collider)"}'
+    - '// @input vec4 defaultColor = {1,1,1,0.15} {"hint":"Initial dimmed transparent white color"}'
+    - '// @input AssignableType latticeVFX {"hint":"HandLatticeVFXController for applying sphere color to hand mesh"}'
+    - '// @input AssignableType_1 pinchDetector {"hint":"ColorPickPinchDetector to suppress during sphere touch"}'
+    - '// @input SceneObject leftIndexProbe {"hint":"Left index finger probe (SceneObject with intangible ColliderComponent, attached to hand tracking index-3)"}'
+    - '// @input SceneObject rightIndexProbe {"hint":"Right index finger probe (SceneObject with intangible ColliderComponent, attached to hand tracking index-3)"}'
+    - '// @input float releaseDistance = 1.5 {"hint":"Distance threshold for suppression release safety check"}'

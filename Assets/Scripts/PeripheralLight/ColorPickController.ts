@@ -30,8 +30,8 @@ export class ColorPickController extends BaseScriptComponent {
   camModule: CameraModule
 
   @input
-  @hint("SceneObject with RenderMeshVisual + Unlit material for color swatch")
-  debugSwatchObj: SceneObject
+  @hint("Prefab with RenderMeshVisual + Unlit material for color swatch")
+  swatchPrefab: ObjectPrefab
 
   @input
   mainCam: SceneObject
@@ -103,6 +103,7 @@ export class ColorPickController extends BaseScriptComponent {
   private isRequestRunning: boolean = false
   private pipelineStartTime: number = 0
   private mainCamTrans: Transform
+  private swatchObj: SceneObject = null
   private swatchTrans: Transform
   private swatchRmv: RenderMeshVisual
   private swatchMat: Material
@@ -130,16 +131,22 @@ export class ColorPickController extends BaseScriptComponent {
     print(`${LOG_TAG} Controller initializing...`)
 
     this.mainCamTrans = this.mainCam.getTransform()
-    this.swatchTrans = this.debugSwatchObj.getTransform()
 
-    this.swatchRmv = this.debugSwatchObj.getComponent("RenderMeshVisual") as RenderMeshVisual
-    if (this.swatchRmv) {
-      this.swatchMat = this.swatchRmv.mainMaterial.clone()
-      this.swatchRmv.mainMaterial = this.swatchMat
-      this.swatchMat.mainPass.baseColor = new vec4(0.1, 0.1, 0.1, 1)
-      print(`${LOG_TAG} Debug swatch material cloned and ready`)
+    if (this.swatchPrefab) {
+      this.swatchObj = this.swatchPrefab.instantiate(null)
+      this.swatchTrans = this.swatchObj.getTransform()
+
+      this.swatchRmv = this.swatchObj.getComponent("RenderMeshVisual") as RenderMeshVisual
+      if (this.swatchRmv) {
+        this.swatchMat = this.swatchRmv.mainMaterial.clone()
+        this.swatchRmv.mainMaterial = this.swatchMat
+        this.swatchMat.mainPass.baseColor = new vec4(0.1, 0.1, 0.1, 1)
+        print(`${LOG_TAG} Swatch prefab instantiated, material cloned and ready`)
+      } else {
+        print(`${LOG_TAG} WARNING: No RenderMeshVisual found on swatch prefab`)
+      }
     } else {
-      print(`${LOG_TAG} WARNING: No RenderMeshVisual found on debugSwatchObj`)
+      print(`${LOG_TAG} WARNING: swatchPrefab not assigned, swatch display disabled`)
     }
 
     this.startCamera()
@@ -483,20 +490,22 @@ export class ColorPickController extends BaseScriptComponent {
   }
 
   private onUpdate() {
-    if (!this.mainCamTrans || !this.swatchTrans) return
+    if (!this.mainCamTrans) return
 
-    const camPos = this.mainCamTrans.getWorldPosition()
-    let desiredPos = camPos.add(this.mainCamTrans.forward.uniformScale(-CAM_DISTANCE))
-    desiredPos = desiredPos.add(this.mainCamTrans.up.uniformScale(CAM_HEIGHT))
+    if (this.swatchTrans) {
+      const camPos = this.mainCamTrans.getWorldPosition()
+      let desiredPos = camPos.add(this.mainCamTrans.forward.uniformScale(-CAM_DISTANCE))
+      desiredPos = desiredPos.add(this.mainCamTrans.up.uniformScale(CAM_HEIGHT))
 
-    this.swatchTrans.setWorldPosition(
-      vec3.lerp(this.swatchTrans.getWorldPosition(), desiredPos, getDeltaTime() * 5)
-    )
+      this.swatchTrans.setWorldPosition(
+        vec3.lerp(this.swatchTrans.getWorldPosition(), desiredPos, getDeltaTime() * 5)
+      )
 
-    const desiredRot = quat.lookAt(this.mainCamTrans.forward, vec3.up())
-    this.swatchTrans.setWorldRotation(
-      quat.slerp(this.swatchTrans.getWorldRotation(), desiredRot, getDeltaTime() * 5)
-    )
+      const desiredRot = quat.lookAt(this.mainCamTrans.forward, vec3.up())
+      this.swatchTrans.setWorldRotation(
+        quat.slerp(this.swatchTrans.getWorldRotation(), desiredRot, getDeltaTime() * 5)
+      )
+    }
 
     this.updateBall()
   }

@@ -11,21 +11,18 @@
   Enabled: true
   ScriptAsset: !<reference> 7594184f-9fef-4d81-91df-8c5342716930
   ScriptInputsDefault:
-    releaseDistance: true
+    touchRadius: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       spherePrefab: !<reference.ObjectPrefab> 694ef353-6eb9-41f7-a278-1027b90b09a8
-      ringRadius: 3.400000
+      ringRadius: 3.600000
       sphereScale: 2.800000
-      sphereColliderRadius: 2.800000
       defaultColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.100000}
       latticeVFX: !<MappingBased.AssignableType> ef5cb7cd-04b5-41bf-bc68-7f961158f305
       pinchDetector: !<MappingBased.AssignableType_1> ebc93f35-0c87-4f5d-b849-80f8c2df8c9a
-      leftIndexProbe: !<reference.SceneObject> 3e71be83-83af-4aa0-a26a-2aef10f6d522
-      rightIndexProbe: !<reference.SceneObject> e8ebe0ea-8d61-4caf-a012-b7405c15303b
-      releaseDistance: 1.500000
+      touchRadius: !<float> 1.000000
   ScriptTypes:
     "":
       {}

@@ -38,7 +38,6 @@
     minPinchStrength: false
     pinchDetector: false
     statusText: false
-    swatchPrefab: false
     use25LiteModel: false
   ScriptTypesHidden:
     {}
@@ -51,7 +50,6 @@
   DefaultScriptInputs:
     - pinchDetector: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       camModule: !<reference.CameraModule> 00000000-0000-0000-0000-000000000000
-      swatchPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       mainCam: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       statusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       ballPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
@@ -69,7 +67,6 @@
   InputLines:
     - // @input AssignableType pinchDetector
     - '// @input Asset.CameraModule camModule {"hint":"Camera Module asset from the scene (same one used by DepthCache)"}'
-    - '// @input Asset.ObjectPrefab swatchPrefab {"hint":"Prefab with RenderMeshVisual + Unlit material for color swatch"}'
     - // @input SceneObject mainCam
     - '// @input Component.Text statusText {"hint":"Optional text component for status messages"}'
     - '// @input Asset.ObjectPrefab ballPrefab {"hint":"Sphere prefab with Unlit alpha-blend material"}'

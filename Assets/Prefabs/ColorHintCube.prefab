@@ -2,7 +2,7 @@
   PackagePath: ""
   objects:
     - !<own> acf8f676-ee17-4985-82f1-f63893bef785
-  LazyLoading: false
+  LazyLoading: true
   RetainAssets: true
 - !<RenderMeshVisual/81200dbb-ea51-40d7-b49e-9bce0ec87b0c>
   PrefabRemaps:

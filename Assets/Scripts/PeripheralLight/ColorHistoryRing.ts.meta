@@ -28,14 +28,11 @@
   ScriptInputsHidden:
     defaultColor: false
     latticeVFX: false
-    leftIndexProbe: false
     pinchDetector: false
-    releaseDistance: false
-    rightIndexProbe: false
     ringRadius: false
-    sphereColliderRadius: false
     spherePrefab: false
     sphereScale: false
+    touchRadius: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -48,13 +45,10 @@
     - spherePrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       ringRadius: 1.500000
       sphereScale: 0.500000
-      sphereColliderRadius: 0.400000
       defaultColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.150000}
       latticeVFX: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       pinchDetector: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
-      leftIndexProbe: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      rightIndexProbe: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      releaseDistance: 1.500000
+      touchRadius: !<float> 1.000000
   ScriptTypes:
     -
       {}
@@ -62,10 +56,7 @@
     - '// @input Asset.ObjectPrefab spherePrefab {"hint":"Small sphere prefab (with RenderMeshVisual + material)"}'
     - '// @input float ringRadius = 1.5 {"hint":"Radius of the hexagonal ring"}'
     - '// @input float sphereScale = 0.5 {"hint":"Uniform scale of each sphere"}'
-    - '// @input float sphereColliderRadius = 0.4 {"hint":"Sphere collider radius (only used if prefab has no collider)"}'
     - '// @input vec4 defaultColor = {1,1,1,0.15} {"hint":"Initial dimmed transparent white color"}'
     - '// @input AssignableType latticeVFX {"hint":"HandLatticeVFXController for applying sphere color to hand mesh"}'
     - '// @input AssignableType_1 pinchDetector {"hint":"ColorPickPinchDetector to suppress during sphere touch"}'
-    - '// @input SceneObject leftIndexProbe {"hint":"Left index finger probe (SceneObject with intangible ColliderComponent, attached to hand tracking index-3)"}'
-    - '// @input SceneObject rightIndexProbe {"hint":"Right index finger probe (SceneObject with intangible ColliderComponent, attached to hand tracking index-3)"}'
-    - '// @input float releaseDistance = 1.5 {"hint":"Distance threshold for suppression release safety check"}'
+    - '// @input float touchRadius = 1 {"hint":"Max distance from index fingertip to sphere center to count as a touch"}'

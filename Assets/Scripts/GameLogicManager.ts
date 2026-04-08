@@ -5,7 +5,8 @@ const LOG_TAG = "[GameLogicManager]"
 @component
 export class GameLogicManager extends BaseScriptComponent {
   @input
-  debugMesh: RenderMeshVisual
+  @hint("Prefab with RenderMeshVisual for debug color display")
+  debugMeshPrefab: ObjectPrefab
 
   @input
   @hint("Hue distance (0-0.5) the finger ball must exceed vs lamp color to count as contrasting")
@@ -17,6 +18,7 @@ export class GameLogicManager extends BaseScriptComponent {
 
   private static instance: GameLogicManager
 
+  private debugMesh: RenderMeshVisual
   private debugMat: Material
   private currentLampColor: vec4 = new vec4(1, 1, 1, 1)
 
@@ -39,14 +41,18 @@ export class GameLogicManager extends BaseScriptComponent {
   }
 
   private onStart() {
-    print(`${LOG_TAG} onStart - debugMesh wired: ${this.debugMesh != null}`)
-
-    if (this.debugMesh) {
-      this.debugMat = this.debugMesh.mainMaterial.clone()
-      this.debugMesh.mainMaterial = this.debugMat
-      print(`${LOG_TAG} Cloned debug material`)
+    if (this.debugMeshPrefab) {
+      const obj = this.debugMeshPrefab.instantiate(null)
+      this.debugMesh = obj.getComponent("RenderMeshVisual") as RenderMeshVisual
+      if (this.debugMesh) {
+        this.debugMat = this.debugMesh.mainMaterial.clone()
+        this.debugMesh.mainMaterial = this.debugMat
+        print(`${LOG_TAG} Debug prefab instantiated, material cloned`)
+      } else {
+        print(`${LOG_TAG} WARNING: No RenderMeshVisual found on debug prefab`)
+      }
     } else {
-      print(`${LOG_TAG} WARNING: debugMesh not wired -- wire it to your box RenderMeshVisual in the Inspector`)
+      print(`${LOG_TAG} WARNING: debugMeshPrefab not assigned`)
     }
   }
 

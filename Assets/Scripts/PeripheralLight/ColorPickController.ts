@@ -17,9 +17,6 @@ const SYSTEM_PROMPT =
   "Detect the dominant color of the object nearest the pinched index and thumb fingertips. " +
   "Ignore hands/fingers. Return ONLY JSON."
 
-const CAM_DISTANCE = 60
-const CAM_HEIGHT = -5
-
 @component
 export class ColorPickController extends BaseScriptComponent {
   @input
@@ -28,10 +25,6 @@ export class ColorPickController extends BaseScriptComponent {
   @input
   @hint("Camera Module asset from the scene (same one used by DepthCache)")
   camModule: CameraModule
-
-  @input
-  @hint("Prefab with RenderMeshVisual + Unlit material for color swatch")
-  swatchPrefab: ObjectPrefab
 
   @input
   mainCam: SceneObject
@@ -103,10 +96,6 @@ export class ColorPickController extends BaseScriptComponent {
   private isRequestRunning: boolean = false
   private pipelineStartTime: number = 0
   private mainCamTrans: Transform
-  private swatchObj: SceneObject = null
-  private swatchTrans: Transform
-  private swatchRmv: RenderMeshVisual
-  private swatchMat: Material
   private lastDetectedColor: vec4 = null
 
   private activeBall: SceneObject = null
@@ -131,23 +120,6 @@ export class ColorPickController extends BaseScriptComponent {
     print(`${LOG_TAG} Controller initializing...`)
 
     this.mainCamTrans = this.mainCam.getTransform()
-
-    if (this.swatchPrefab) {
-      this.swatchObj = this.swatchPrefab.instantiate(null)
-      this.swatchTrans = this.swatchObj.getTransform()
-
-      this.swatchRmv = this.swatchObj.getComponent("RenderMeshVisual") as RenderMeshVisual
-      if (this.swatchRmv) {
-        this.swatchMat = this.swatchRmv.mainMaterial.clone()
-        this.swatchRmv.mainMaterial = this.swatchMat
-        this.swatchMat.mainPass.baseColor = new vec4(0.1, 0.1, 0.1, 1)
-        print(`${LOG_TAG} Swatch prefab instantiated, material cloned and ready`)
-      } else {
-        print(`${LOG_TAG} WARNING: No RenderMeshVisual found on swatch prefab`)
-      }
-    } else {
-      print(`${LOG_TAG} WARNING: swatchPrefab not assigned, swatch display disabled`)
-    }
 
     this.startCamera()
 
@@ -465,11 +437,6 @@ export class ColorPickController extends BaseScriptComponent {
   private applyColor(color: vec4, hex: string, colorName: string) {
     this.lastDetectedColor = color
 
-    if (this.swatchMat) {
-      this.swatchMat.mainPass.baseColor = color
-      print(`${LOG_TAG} Debug swatch updated with color ${hex} (${colorName})`)
-    }
-
     if (this.activeBallVFX) {
       this.activeBallVFX.updateColor(color)
       print(`${LOG_TAG} Ball color set to ${hex} (${colorName})`)
@@ -490,23 +457,6 @@ export class ColorPickController extends BaseScriptComponent {
   }
 
   private onUpdate() {
-    if (!this.mainCamTrans) return
-
-    if (this.swatchTrans) {
-      const camPos = this.mainCamTrans.getWorldPosition()
-      let desiredPos = camPos.add(this.mainCamTrans.forward.uniformScale(-CAM_DISTANCE))
-      desiredPos = desiredPos.add(this.mainCamTrans.up.uniformScale(CAM_HEIGHT))
-
-      this.swatchTrans.setWorldPosition(
-        vec3.lerp(this.swatchTrans.getWorldPosition(), desiredPos, getDeltaTime() * 5)
-      )
-
-      const desiredRot = quat.lookAt(this.mainCamTrans.forward, vec3.up())
-      this.swatchTrans.setWorldRotation(
-        quat.slerp(this.swatchTrans.getWorldRotation(), desiredRot, getDeltaTime() * 5)
-      )
-    }
-
     this.updateBall()
   }
 

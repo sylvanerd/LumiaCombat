@@ -18,9 +18,10 @@ export class GameLogicManager extends BaseScriptComponent {
 
   private static instance: GameLogicManager
 
-  private debugMesh: RenderMeshVisual
-  private debugMat: Material
+  private debugMeshes: RenderMeshVisual[] = []
+  private debugMats: Material[] = []
   private currentLampColor: vec4 = new vec4(1, 1, 1, 1)
+  private lastContrastingColor: vec4 = new vec4(1, 1, 1, 1)
 
   static getInstance(): GameLogicManager | undefined {
     return GameLogicManager.instance
@@ -41,19 +42,22 @@ export class GameLogicManager extends BaseScriptComponent {
   }
 
   private onStart() {
-    if (this.debugMeshPrefab) {
-      const obj = this.debugMeshPrefab.instantiate(null)
-      this.debugMesh = obj.getComponent("RenderMeshVisual") as RenderMeshVisual
-      if (this.debugMesh) {
-        this.debugMat = this.debugMesh.mainMaterial.clone()
-        this.debugMesh.mainMaterial = this.debugMat
-        print(`${LOG_TAG} Debug prefab instantiated, material cloned`)
-      } else {
-        print(`${LOG_TAG} WARNING: No RenderMeshVisual found on debug prefab`)
-      }
-    } else {
-      print(`${LOG_TAG} WARNING: debugMeshPrefab not assigned`)
+    print(`${LOG_TAG} Ready — call registerDebugObject() to wire color display meshes`)
+  }
+
+  registerDebugObject(obj: SceneObject) {
+    if (!obj) return
+    const rmv = obj.getComponent("RenderMeshVisual") as RenderMeshVisual
+    if (!rmv) {
+      print(`${LOG_TAG} WARNING: No RenderMeshVisual on registered debug object "${obj.name}"`)
+      return
     }
+    const mat = rmv.mainMaterial.clone()
+    rmv.mainMaterial = mat
+    mat.mainPass.baseColor = this.lastContrastingColor
+    this.debugMeshes.push(rmv)
+    this.debugMats.push(mat)
+    print(`${LOG_TAG} Debug object registered: "${obj.name}" (total: ${this.debugMeshes.length})`)
   }
 
   registerCycler(cycler: AutoColorCycler) {
@@ -65,10 +69,13 @@ export class GameLogicManager extends BaseScriptComponent {
     this.currentLampColor = color
 
     const contrasting = this.getContrastingColor(color)
+    this.lastContrastingColor = contrasting
     print(`${LOG_TAG} Original rgb(${color.r.toFixed(2)}, ${color.g.toFixed(2)}, ${color.b.toFixed(2)}) -> Contrasting rgb(${contrasting.r.toFixed(2)}, ${contrasting.g.toFixed(2)}, ${contrasting.b.toFixed(2)})`)
 
-    if (this.debugMat) {
-      this.debugMat.mainPass.baseColor = contrasting
+    for (let i = 0; i < this.debugMats.length; i++) {
+      if (this.debugMats[i]) {
+        this.debugMats[i].mainPass.baseColor = contrasting
+      }
     }
   }
 

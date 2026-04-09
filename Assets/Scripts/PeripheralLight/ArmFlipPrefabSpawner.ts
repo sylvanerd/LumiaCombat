@@ -1,5 +1,6 @@
 import TrackedHand from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/TrackedHand"
 import {SIK} from "SpectaclesInteractionKit.lspkg/SIK"
+import {GameLogicManager} from "Scripts/GameLogicManager"
 
 const LOG_TAG = "[ArmFlipSpawner]"
 const EPS = 0.0001
@@ -169,6 +170,7 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
       this.frontObj = this.prefabFront.instantiate(this.anchor)
       this.frontBaseScale = vec3.one().uniformScale(this.prefabFrontScale)
       this.frontObj.getTransform().setLocalScale(this.frontBaseScale)
+      this.registerWithGameLogicManager(this.frontObj)
     }
 
     if (this.prefabBack) {
@@ -189,6 +191,24 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
     }
 
     this.applyBlendScale(0)
+  }
+
+  private registerWithGameLogicManager(obj: SceneObject) {
+    const mgr = GameLogicManager.getInstance()
+    if (mgr) {
+      mgr.registerDebugObject(obj)
+    } else {
+      const delayed = this.createEvent("DelayedCallbackEvent")
+      delayed.bind(() => {
+        const mgrRetry = GameLogicManager.getInstance()
+        if (mgrRetry) {
+          mgrRetry.registerDebugObject(obj)
+        } else {
+          print(`${LOG_TAG} WARNING: GameLogicManager not found, color updates won't reach front prefab`)
+        }
+      })
+      delayed.reset(1.0)
+    }
   }
 
   private warnMissingPrefabs(msg: string) {

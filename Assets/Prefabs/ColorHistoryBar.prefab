@@ -33,14 +33,14 @@
   ScriptInputs:
     "":
       spherePrefab: !<reference.ObjectPrefab> 694ef353-6eb9-41f7-a278-1027b90b09a8
-      gapDistance: 3.600000
+      gapDistance: 3.400000
       pinkyOffsetDistance: -8.500000
       wristToFingerOffset: !<float> 3.000000
-      sphereScale: !<float> 3.000000
+      sphereScale: 2.800000
       defaultColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.100000}
       latticeVFX: !<MappingBased.AssignableType> ef5cb7cd-04b5-41bf-bc68-7f961158f305
       pinchDetector: !<MappingBased.AssignableType_1> ebc93f35-0c87-4f5d-b849-80f8c2df8c9a
-      touchRadius: !<float> 3.000000
+      touchRadius: 2.500000
   ScriptTypes:
     "":
       {}

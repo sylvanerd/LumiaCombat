@@ -2,6 +2,7 @@ import {CancelToken, clearTimeout, setTimeout} from "SpectaclesInteractionKit.ls
 import {GameLogicManager} from "Scripts/GameLogicManager"
 import {AutoColorCycler} from "./AutoColorCycler"
 import {LightHandEventListener} from "./LightHandEventListener"
+import {PlayerHealthManager} from "./PlayerHealthManager"
 
 const LOG_TAG = "[AutoBallShooter]"
 
@@ -244,6 +245,10 @@ export class AutoBallShooter extends BaseScriptComponent {
           this.flyingBalls[i].hit = true
           lampBallObj.destroy()
           this.flyingBalls.splice(i, 1)
+          const health = PlayerHealthManager.getInstance()
+          if (health) {
+            health.heal(health.healPerNeutralize)
+          }
           print(`${LOG_TAG} Lamp ball NEUTRALIZED by finger ball (similar color, hueDist=${hueDist.toFixed(3)})`)
           return
         }
@@ -256,6 +261,10 @@ export class AutoBallShooter extends BaseScriptComponent {
   private onBallHitPlayer() {
     if (this.hitSound) {
       this.hitSound.play(1)
+    }
+    const health = PlayerHealthManager.getInstance()
+    if (health) {
+      health.takeDamage()
     }
   }
 

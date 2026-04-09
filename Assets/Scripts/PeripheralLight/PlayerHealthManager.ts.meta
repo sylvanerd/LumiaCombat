@@ -1,0 +1,59 @@
+- !<AssetImportMetadata/59838117-fde2-4fab-83d4-a823a412dba4>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 8a1171ac-53d2-475e-8b35-ad03a1f1dba0
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 8a1171ac-53d2-475e-8b35-ad03a1f1dba0
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 14e3b780-2e4c-495c-823f-1630e7699fc2
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/14e3b780-2e4c-495c-823f-1630e7699fc2>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: ab8df11c-7393-4c2c-a565-8fa9a38c0ab0
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    damagePerHit: false
+    failText: false
+    healPerNeutralize: false
+    invincibilityDuration: false
+    lowHealthThreshold: false
+    maxHealth: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - maxHealth: !<float> 100.000000
+      damagePerHit: !<float> 10.000000
+      invincibilityDuration: 0.500000
+      healPerNeutralize: !<float> 5.000000
+      lowHealthThreshold: !<float> 25.000000
+      failText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input float maxHealth = 100 {"hint":"Total health points"}'
+    - '// @input float damagePerHit = 10 {"hint":"Percentage of maxHealth lost per lamp ball hit"}'
+    - '// @input float invincibilityDuration = 0.5 {"hint":"Seconds of invincibility after taking a hit (prevents rapid multi-hits)"}'
+    - '// @input float healPerNeutralize = 5 {"hint":"Health % restored when a lamp ball is neutralized by colour-matching"}'
+    - '// @input float lowHealthThreshold = 25 {"hint":"Health % threshold for low-health state (exposed for future warning hooks)"}'
+    - "// @input Component.Text failText {\"hint\":\"Text component for 'You Failed' message (attached to camera, initially disabled)\"}"

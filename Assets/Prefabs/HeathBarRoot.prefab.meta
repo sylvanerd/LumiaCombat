@@ -1,0 +1,221 @@
+- !<AssetImportMetadata/e42e0aa0-6f72-4011-93a7-05b699bb2ce2>
+  ImportedAssetIds:
+    ObjectPrefab: !<reference> edcebd70-3205-4179-8325-1d82de4cb7ef
+  ImporterName: ObjectPrefabImporter
+  PrimaryAsset: !<reference> edcebd70-3205-4179-8325-1d82de4cb7ef
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    ObjectPrefab: !<own> 752ad1fe-5d48-4ed1-9c32-4f62db5edc33
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<Text/22dfce6c-c8b9-44ad-5a52-3b2cfc8b0d2e>
+  PrefabRemaps:
+    []
+  Name: Text
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Text: "HP: 100%"
+  Editable: false
+  ShowEditingPreview: true
+  TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
+  SizeToFit: false
+  FontSize: 5
+  Font: !<reference> 00000000-0000-0000-0000-000000000000
+  LayoutRect:
+    left: -7.500000
+    bottom: -2.250000
+    right: 7.500000
+    top: 2.250000
+  OverflowVertical: Overflow
+  OverflowHorizontal: Overflow
+  Fill: !<TextFill>
+    Mode: Solid
+    Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    Texture: !<reference> 00000000-0000-0000-0000-000000000000
+    ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    TileCount: 5.000000
+    TileZone: Rect
+    TextureStretch: FitWidth
+  BlendMode: PremultipliedAlpha
+  Outline: !<OutlineSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Size: 0.250000
+  Dropshadow: !<DropshadowSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    OffsetX: 0.250000
+    OffsetY: 0.250000
+  Background: !<BackgroundSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Margins:
+      left: 0.000000
+      bottom: 0.000000
+      right: 0.000000
+      top: 0.000000
+    CornerRadius: 0.000000
+  AdvancedLayout: !<TextAdvancedLayout>
+    ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+    LetterSpacing: 0.000000
+    LineSpacing: 1.000000
+    CapitalizationOverride: None
+  DepthTest: false
+  TwoSided: false
+- !<SceneObject/4a097df6-bc0b-4f47-791d-b2e7152ebf26>
+  PrefabRemaps:
+    []
+  Name: DebugHealth
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -0.626229}
+    Rotation: {x: -90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 22dfce6c-c8b9-44ad-5a52-3b2cfc8b0d2e
+- !<ObjectPrefabAssetData/752ad1fe-5d48-4ed1-9c32-4f62db5edc33>
+  Prototype: !<ObjectOwner/9fb91b93-4cad-4062-8b09-0a543c715204>
+    PackagePath: ""
+    objects:
+      - !<own> b27e8484-9773-4617-7db7-9ea18a2122ea
+- !<SceneObject/7765f5bd-6488-4df8-6e13-74cff9284a2c>
+  PrefabRemaps:
+    []
+  Name: DamageOverlay
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.070000, z: 0.800000}
+    Rotation: {x: 0.000000, y: 180.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 8800bd1b-babe-47ad-58e0-b798fc292de0
+- !<RenderMeshVisual/78102288-e44b-4d0a-4d51-81bed165892a>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 18594472-0504-482f-a850-c0198ef27833
+  Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<RenderMeshVisual/8800bd1b-babe-47ad-58e0-b798fc292de0>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 1
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 74b545e9-03f2-4573-b189-efb620629e31
+  Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<SceneObject/8fc35b62-bda1-4ae8-7ddc-095621d29aad>
+  PrefabRemaps:
+    []
+  Name: ColorWheel
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.050000, z: 0.800000}
+    Rotation: {x: 0.000000, y: 180.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 4a097df6-bc0b-4f47-791d-b2e7152ebf26
+  Components:
+    - !<own> 78102288-e44b-4d0a-4d51-81bed165892a
+- !<SceneObject/b27e8484-9773-4617-7db7-9ea18a2122ea>
+  PrefabRemaps:
+    []
+  Name: HeathBarRoot
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -6.501375}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 8fc35b62-bda1-4ae8-7ddc-095621d29aad
+    - !<own> 7765f5bd-6488-4df8-6e13-74cff9284a2c
+  Components:
+    - !<own> ffc5a77b-dcf6-4477-5292-f2e5b58a5481
+- !<ScriptComponent/ffc5a77b-dcf6-4477-5292-f2e5b58a5481>
+  PrefabRemaps:
+    []
+  Name: CircularHealthBar
+  Enabled: true
+  ScriptAsset: !<reference> 61a03d63-8fd4-4585-bca8-fa180773faea
+  ScriptInputsDefault:
+    fillPropertyName: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      damageOverlay: !<reference.RenderMeshVisual> 8800bd1b-babe-47ad-58e0-b798fc292de0
+      debugScoreText: !<reference.Text> 22dfce6c-c8b9-44ad-5a52-3b2cfc8b0d2e
+      fillPropertyName: fillAmount
+  ScriptTypes:
+    "":
+      {}

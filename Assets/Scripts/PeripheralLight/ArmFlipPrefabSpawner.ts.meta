@@ -31,11 +31,16 @@
     cameraObject: false
     disableTinyObjects: false
     frontEnterThreshold: false
+    lockToFlipAxis: false
     lowAngleIsFront: false
     minVisibleScale: false
     positionLerpSpeed: false
     prefabBack: false
+    prefabBackScale: false
     prefabFront: false
+    prefabFront2: false
+    prefabFront2Scale: false
+    prefabFrontScale: false
     rotationLerpSpeed: false
     trackedHand: false
     wristOffsetDistance: false
@@ -53,6 +58,7 @@
     - trackedHand: left
       prefabFront: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       prefabBack: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      prefabFront2: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       cameraObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       wristOffsetDistance: !<float> 2.000000
       wristOffsetForward: !<float> 0.000000
@@ -63,6 +69,10 @@
       backEnterThreshold: 0.200000
       frontEnterThreshold: -0.200000
       lowAngleIsFront: true
+      lockToFlipAxis: true
+      prefabFrontScale: !<float> 1.000000
+      prefabBackScale: !<float> 1.000000
+      prefabFront2Scale: !<float> 1.000000
       disableTinyObjects: true
       minVisibleScale: 0.020000
   ScriptTypes:
@@ -72,6 +82,7 @@
     - '// @input string trackedHand = "left" {"hint":"Hand to track: left or right"}'
     - '// @input Asset.ObjectPrefab prefabFront {"hint":"Prefab A: shown when palm/front side faces user"}'
     - '// @input Asset.ObjectPrefab prefabBack {"hint":"Prefab B: shown when back side faces user"}'
+    - '// @input Asset.ObjectPrefab prefabFront2 {"hint":"Prefab A2: additional prefab shown when palm/front side faces user"}'
     - '// @input SceneObject cameraObject {"hint":"Optional camera object. If empty, uses world camera from scene"}'
     - '// @input float wristOffsetDistance = 2 {"hint":"Distance from wrist along the user-facing normal (always toward the camera)"}'
     - '// @input float wristOffsetForward {"hint":"Extra offset along hand forward direction (wrist-to-fingers axis)"}'
@@ -82,5 +93,9 @@
     - '// @input float backEnterThreshold = 0.2 {"hint":"Enter back-facing state when score > this value"}'
     - '// @input float frontEnterThreshold = -0.2 {"hint":"Return to front-facing state when score < this value"}'
     - '// @input bool lowAngleIsFront = true {"hint":"Treat low angle as front-facing (recommended default)"}'
+    - '// @input bool lockToFlipAxis = true {"hint":"Only respond to forearm roll (flip), ignore arm pitch/tilt toward camera"}'
+    - '// @input float prefabFrontScale = 1 {"hint":"Uniform scale for the front prefab at full visibility"}'
+    - '// @input float prefabBackScale = 1 {"hint":"Uniform scale for the back prefab at full visibility"}'
+    - '// @input float prefabFront2Scale = 1 {"hint":"Uniform scale for the second front prefab at full visibility"}'
     - '// @input bool disableTinyObjects = true {"hint":"Auto-hide tiny scaled objects for performance"}'
     - '// @input float minVisibleScale = 0.02 {"hint":"Disable child object when its normalized scale is below this value"}'

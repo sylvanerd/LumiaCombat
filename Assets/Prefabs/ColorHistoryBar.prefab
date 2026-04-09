@@ -1,0 +1,46 @@
+- !<ObjectPrefab/6ffb1271-3270-4b6f-938b-562f70223b8c>
+  PackagePath: ""
+  objects:
+    - !<own> ac83541a-ee3e-4465-b3ac-84b62721a267
+  LazyLoading: false
+  RetainAssets: true
+- !<SceneObject/ac83541a-ee3e-4465-b3ac-84b62721a267>
+  PrefabRemaps:
+    - ac83541a-ee3e-4465-b3ac-84b62721a267: 2067e378-0088-4b25-9f84-4ba21bf0b0d9
+    - f1a171cf-caaf-46cd-8685-cae2c30ca496: 59ee3087-c146-4f76-9f2a-1d31fefdc5f3
+  Name: ColorHistoryRing
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> f1a171cf-caaf-46cd-8685-cae2c30ca496
+- !<ScriptComponent/f1a171cf-caaf-46cd-8685-cae2c30ca496>
+  PrefabRemaps:
+    []
+  Name: ColorHistoryBar
+  Enabled: true
+  ScriptAsset: !<reference> a44c9fb3-1ac2-4bbf-b5ba-61d5a4536ab6
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      spherePrefab: !<reference.ObjectPrefab> 694ef353-6eb9-41f7-a278-1027b90b09a8
+      gapDistance: 3.600000
+      pinkyOffsetDistance: -8.500000
+      wristToFingerOffset: !<float> 3.000000
+      sphereScale: !<float> 3.000000
+      defaultColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.100000}
+      latticeVFX: !<MappingBased.AssignableType> ef5cb7cd-04b5-41bf-bc68-7f961158f305
+      pinchDetector: !<MappingBased.AssignableType_1> ebc93f35-0c87-4f5d-b849-80f8c2df8c9a
+      touchRadius: !<float> 3.000000
+  ScriptTypes:
+    "":
+      {}

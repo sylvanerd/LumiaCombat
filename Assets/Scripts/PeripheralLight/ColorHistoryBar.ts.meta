@@ -1,0 +1,68 @@
+- !<AssetImportMetadata/3a6bc991-e0d0-47e3-9729-faab5bfc465c>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> a44c9fb3-1ac2-4bbf-b5ba-61d5a4536ab6
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> a44c9fb3-1ac2-4bbf-b5ba-61d5a4536ab6
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> f72c9b58-7eaa-47f4-8915-8e8365dc9c8d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/f72c9b58-7eaa-47f4-8915-8e8365dc9c8d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 91a2feae-2ead-4406-a18e-f9f21664fbe3
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    defaultColor: false
+    gapDistance: false
+    latticeVFX: false
+    pinchDetector: false
+    pinkyOffsetDistance: false
+    spherePrefab: false
+    sphereScale: false
+    touchRadius: false
+    wristToFingerOffset: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - spherePrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      gapDistance: 1.200000
+      pinkyOffsetDistance: !<float> 2.000000
+      wristToFingerOffset: !<float> 0.000000
+      sphereScale: 0.500000
+      defaultColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.150000}
+      latticeVFX: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      pinchDetector: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      touchRadius: !<float> 1.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.ObjectPrefab spherePrefab {"hint":"Small sphere prefab (with RenderMeshVisual + material)"}'
+    - '// @input float gapDistance = 1.2 {"hint":"Spacing between sphere centers along the arm (local Z)"}'
+    - '// @input float pinkyOffsetDistance = 2 {"hint":"Signed offset along local X toward the pinky side (positive = +X, negative = -X)"}'
+    - '// @input float wristToFingerOffset {"hint":"Shifts the entire bar along local Z (positive = toward fingers, negative = toward elbow)"}'
+    - '// @input float sphereScale = 0.5 {"hint":"Uniform scale of each sphere"}'
+    - '// @input vec4 defaultColor = {1,1,1,0.15} {"hint":"Initial dimmed transparent white color"}'
+    - '// @input AssignableType latticeVFX {"hint":"HandLatticeVFXController for applying sphere color to hand mesh"}'
+    - '// @input AssignableType_1 pinchDetector {"hint":"ColorPickPinchDetector to suppress during sphere touch"}'
+    - '// @input float touchRadius = 1 {"hint":"Max distance from index fingertip to sphere center to count as a touch"}'

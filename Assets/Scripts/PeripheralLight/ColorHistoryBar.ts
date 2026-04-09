@@ -4,19 +4,26 @@ import {ColorPickController} from "./ColorPickController"
 import {ColorPickPinchDetector} from "./ColorPickPinchDetector"
 import {HandLatticeVFXController} from "./HandLatticeVFXController"
 
-const LOG_TAG = "[ColorRing]"
+const LOG_TAG = "[ColorBar]"
 const SPHERE_COUNT = 5
-const TWO_PI = 2 * Math.PI
 
 @component
-export class ColorHistoryRing extends BaseScriptComponent {
+export class ColorHistoryBar extends BaseScriptComponent {
   @input
   @hint("Small sphere prefab (with RenderMeshVisual + material)")
   spherePrefab: ObjectPrefab
 
   @input
-  @hint("Radius of the hexagonal ring")
-  ringRadius: number = 1.5
+  @hint("Spacing between sphere centers along the arm (local Z)")
+  gapDistance: number = 1.2
+
+  @input
+  @hint("Signed offset along local X toward the pinky side (positive = +X, negative = -X)")
+  pinkyOffsetDistance: number = 2.0
+
+  @input
+  @hint("Shifts the entire bar along local Z (positive = toward fingers, negative = toward elbow)")
+  wristToFingerOffset: number = 0
 
   @input
   @hint("Uniform scale of each sphere")
@@ -75,15 +82,16 @@ export class ColorHistoryRing extends BaseScriptComponent {
       return
     }
 
+    const totalLength = (SPHERE_COUNT - 1) * this.gapDistance
+    const endZ = totalLength / 2
+
     for (let i = 0; i < SPHERE_COUNT; i++) {
-      const angle = i * (TWO_PI / SPHERE_COUNT)
-      const x = this.ringRadius * Math.cos(angle)
-      const z = this.ringRadius * Math.sin(angle)
+      const z = endZ - i * this.gapDistance + this.wristToFingerOffset
 
       const sphere = this.spherePrefab.instantiate(this.getSceneObject())
-      sphere.name = `ColorSphere_${i}`
+      sphere.name = `ColorBarSphere_${i}`
       const tr = sphere.getTransform()
-      tr.setLocalPosition(new vec3(x, 0, z))
+      tr.setLocalPosition(new vec3(this.pinkyOffsetDistance, 0, z))
       tr.setLocalScale(vec3.one().uniformScale(this.sphereScale))
 
       const rmv = sphere.getComponent("RenderMeshVisual") as RenderMeshVisual
@@ -99,7 +107,7 @@ export class ColorHistoryRing extends BaseScriptComponent {
       this.colorSlots.push(null)
     }
 
-    print(`${LOG_TAG} Created ${SPHERE_COUNT} spheres in hexagonal ring (radius=${this.ringRadius})`)
+    print(`${LOG_TAG} Created ${SPHERE_COUNT} spheres in bar (gap=${this.gapDistance}, offset=${this.pinkyOffsetDistance})`)
   }
 
   private subscribeToColorEvents() {

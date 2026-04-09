@@ -19,6 +19,11 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
   prefabBack: ObjectPrefab
 
   @input
+  @hint("Prefab A2: additional prefab shown when palm/front side faces user")
+  @allowUndefined
+  prefabFront2: ObjectPrefab
+
+  @input
   @hint("Optional camera object. If empty, uses world camera from scene")
   @allowUndefined
   cameraObject: SceneObject
@@ -60,6 +65,22 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
   lowAngleIsFront: boolean = true
 
   @input
+  @hint("Only respond to forearm roll (flip), ignore arm pitch/tilt toward camera")
+  lockToFlipAxis: boolean = true
+
+  @input
+  @hint("Uniform scale for the front prefab at full visibility")
+  prefabFrontScale: number = 1.0
+
+  @input
+  @hint("Uniform scale for the back prefab at full visibility")
+  prefabBackScale: number = 1.0
+
+  @input
+  @hint("Uniform scale for the second front prefab at full visibility")
+  prefabFront2Scale: number = 1.0
+
+  @input
   @hint("Auto-hide tiny scaled objects for performance")
   disableTinyObjects: boolean = true
 
@@ -70,10 +91,12 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
   private hand: TrackedHand | null = null
   private anchor: SceneObject | null = null
   private frontObj: SceneObject | null = null
+  private frontObj2: SceneObject | null = null
   private backObj: SceneObject | null = null
 
   private frontBaseScale: vec3 = vec3.one()
   private backBaseScale: vec3 = vec3.one()
+  private frontBaseScale2: vec3 = vec3.one()
 
   private smoothedScore: number = 0
   private smoothedBlend: number = 0
@@ -144,12 +167,20 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
 
     if (this.prefabFront) {
       this.frontObj = this.prefabFront.instantiate(this.anchor)
-      this.frontBaseScale = this.frontObj.getTransform().getLocalScale()
+      this.frontBaseScale = vec3.one().uniformScale(this.prefabFrontScale)
+      this.frontObj.getTransform().setLocalScale(this.frontBaseScale)
     }
 
     if (this.prefabBack) {
       this.backObj = this.prefabBack.instantiate(this.anchor)
-      this.backBaseScale = this.backObj.getTransform().getLocalScale()
+      this.backBaseScale = vec3.one().uniformScale(this.prefabBackScale)
+      this.backObj.getTransform().setLocalScale(this.backBaseScale)
+    }
+
+    if (this.prefabFront2) {
+      this.frontObj2 = this.prefabFront2.instantiate(this.anchor)
+      this.frontBaseScale2 = vec3.one().uniformScale(this.prefabFront2Scale)
+      this.frontObj2.getTransform().setLocalScale(this.frontBaseScale2)
     }
 
     if (!this.prefabFront || !this.prefabBack) {
@@ -240,12 +271,14 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
   private computeFacingScore(): number {
     if (!this.hand) return -1
 
-    const angle = this.hand.getFacingCameraAngle()
-    if (angle !== null) {
-      const front = this.lowAngleIsFront
-        ? this.clamp01((90 - angle) / 90)
-        : this.clamp01((angle - 90) / 90)
-      return this.clamp(front * 2 - 1, -1, 1)
+    if (!this.lockToFlipAxis) {
+      const angle = this.hand.getFacingCameraAngle()
+      if (angle !== null) {
+        const front = this.lowAngleIsFront
+          ? this.clamp01((90 - angle) / 90)
+          : this.clamp01((angle - 90) / 90)
+        return this.clamp(front * 2 - 1, -1, 1)
+      }
     }
 
     if (!this.worldCameraTransform) {
@@ -253,12 +286,26 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
     }
 
     const wristPos = this.hand.wrist.position
-    const handForward = this.hand.middleMidJoint.position.sub(wristPos).normalize()
+    const armAxis = this.hand.middleMidJoint.position.sub(wristPos).normalize()
     const handRight = this.hand.indexMidJoint.position.sub(this.hand.middleMidJoint.position).normalize()
-    const handUp = handRight.cross(handForward).normalize()
+    const handUp = handRight.cross(armAxis).normalize()
     const handToCamera = this.worldCameraTransform.getWorldPosition().sub(wristPos).normalize()
 
-    let dot = handUp.dot(handToCamera)
+    let dot: number
+    if (this.lockToFlipAxis) {
+      // Project handToCamera onto the plane perpendicular to the arm axis,
+      // so only forearm roll (pronation/supination) affects the score.
+      const alongArm = armAxis.uniformScale(handToCamera.dot(armAxis))
+      const projected = handToCamera.sub(alongArm)
+      const projLen = projected.length
+      if (projLen < EPS) {
+        return this.smoothedScore
+      }
+      dot = handUp.dot(projected.normalize())
+    } else {
+      dot = handUp.dot(handToCamera)
+    }
+
     if (!this.lowAngleIsFront) {
       dot *= -1
     }
@@ -281,6 +328,14 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
       this.backObj.getTransform().setLocalScale(backScale)
       if (this.disableTinyObjects) {
         this.backObj.enabled = backBlend > this.minVisibleScale
+      }
+    }
+
+    if (this.frontObj2) {
+      const frontScale2 = this.frontBaseScale2.uniformScale(frontBlend)
+      this.frontObj2.getTransform().setLocalScale(frontScale2)
+      if (this.disableTinyObjects) {
+        this.frontObj2.enabled = frontBlend > this.minVisibleScale
       }
     }
   }

@@ -27,7 +27,6 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     colliderPrefab: false
-    hitSound: false
     lightHandEventListener: false
   ScriptTypesHidden:
     {}
@@ -40,11 +39,9 @@
   DefaultScriptInputs:
     - lightHandEventListener: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       colliderPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
-      hitSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
   InputLines:
     - '// @input AssignableType lightHandEventListener {"hint":"The LightHandEventListener on this prefab, used to poll surfaceDetectionPosition"}'
     - '// @input Asset.ObjectPrefab colliderPrefab {"hint":"Prefab with a sphere ColliderComponent (intangible=true, FitVisual=true) and optional transparent mesh"}'
-    - '// @input Component.AudioComponent hitSound {"hint":"Sound effect played when the ball hits the lamp collider"}'

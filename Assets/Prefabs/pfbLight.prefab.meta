@@ -14,6 +14,33 @@
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptComponent/028377a9-b6ce-443b-80e3-b22e598565ce>
+  PrefabRemaps:
+    []
+  Name: LampHealthManager
+  Enabled: true
+  ScriptAsset: !<reference> 72cdee78-ed2c-4a48-84af-0d2c7c785eea
+  ScriptInputsDefault:
+    maxHealth: true
+    damagePerHit: true
+    invincibilityDuration: true
+    lowHealthThreshold: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      colliderSpawner: !<MappingBased.AssignableType> 157859c3-4cf5-4a3d-bda4-3bfba6e90247
+      hueEventEmitter: !<MappingBased.AssignableType_1> 910f2104-ab73-469f-6737-3adb00001b37
+      autoColorCycler: !<MappingBased.AssignableType_2> 5c318d9f-270e-41b4-a9b1-c63eb56210b8
+      maxHealth: !<float> 100.000000
+      damagePerHit: !<float> 10.000000
+      invincibilityDuration: 0.500000
+      lowHealthThreshold: !<float> 25.000000
+      hitSound: !<reference.AudioComponent> eff66de5-b9d6-4c98-bda7-0c86f4dabedc
+      winText: !<reference.Text> 7e46947a-4dad-4cb3-8874-c995411f1b9c
+  ScriptTypes:
+    "":
+      {}
 - !<RenderMeshVisual/036a81a2-c790-43ff-7217-db37822a2ec3>
   PrefabRemaps:
     []
@@ -182,7 +209,6 @@
     "":
       lightHandEventListener: !<MappingBased.AssignableType> 8e9638f6-967e-40a1-712e-b606b74b63f1
       colliderPrefab: !<reference.ObjectPrefab> 3174424a-bf13-466c-a335-41a3cd99478a
-      hitSound: !<reference.AudioComponent> 6ea8b61a-8714-48b3-a193-03b110daa0e2
   ScriptTypes:
     "":
       {}
@@ -795,6 +821,28 @@
       acceptableYDirections: !<float> 0.000000
       acceptableZDirections: !<float> 1.000000
       useFilteredPinch: false
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/6ccf6ff2-f353-4099-815f-5e37d46d98ad>
+  PrefabRemaps:
+    []
+  Name: LampCircularHealthBar
+  Enabled: true
+  ScriptAsset: !<reference> acaca947-ab43-4117-86ff-7a7f69b2da07
+  ScriptInputsDefault:
+    overlayChildName: true
+    fillPropertyName: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      lampHealthManager: !<MappingBased.AssignableType> 028377a9-b6ce-443b-80e3-b22e598565ce
+      lightHandEventListener: !<MappingBased.AssignableType_1> 8e9638f6-967e-40a1-712e-b606b74b63f1
+      healthUIPrefab: !<reference.ObjectPrefab> 561175f4-6f44-4651-ae87-1fef6597d0d9
+      yOffset: !<float> 20.000000
+      overlayChildName: DamageOverlay
+      fillPropertyName: fillAmount
   ScriptTypes:
     "":
       {}
@@ -2387,6 +2435,8 @@
     - !<own> 157859c3-4cf5-4a3d-bda4-3bfba6e90247
     - !<own> 7521ee8e-b7e3-4651-b1eb-29adb877be5e
     - !<own> 3ce3b516-7e99-41d9-8993-d3bab6bdb033
+    - !<own> 028377a9-b6ce-443b-80e3-b22e598565ce
+    - !<own> 6ccf6ff2-f353-4099-815f-5e37d46d98ad
 - !<SceneObject/fbec1766-c91a-49ed-b369-9b9ca870405a>
   PrefabRemaps:
     []

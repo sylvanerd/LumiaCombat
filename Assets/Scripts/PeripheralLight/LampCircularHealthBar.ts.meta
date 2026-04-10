@@ -1,0 +1,59 @@
+- !<AssetImportMetadata/8efab80d-3a16-42a7-88aa-703aa0a191a1>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> acaca947-ab43-4117-86ff-7a7f69b2da07
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> acaca947-ab43-4117-86ff-7a7f69b2da07
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 8b89b4a6-1c15-4982-8e19-e9e2c0fd6873
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/8b89b4a6-1c15-4982-8e19-e9e2c0fd6873>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: c9839ba3-7664-4a0b-bac8-6c3adda28008
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    fillPropertyName: false
+    healthUIPrefab: false
+    lampHealthManager: false
+    lightHandEventListener: false
+    overlayChildName: false
+    yOffset: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - lampHealthManager: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      lightHandEventListener: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      healthUIPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      yOffset: !<float> 30.000000
+      overlayChildName: DamageOverlay
+      fillPropertyName: fillAmount
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input AssignableType lampHealthManager {"hint":"The LampHealthManager driving this health bar"}'
+    - '// @input AssignableType_1 lightHandEventListener {"hint":"LightHandEventListener on the lamp prefab, used to detect when the light has been placed"}'
+    - '// @input Asset.ObjectPrefab healthUIPrefab {"hint":"Prefab containing the health UI (colour wheel + damage overlay). Instantiated at anchor position after placement."}'
+    - '// @input float yOffset = 30 {"hint":"Y offset above the anchor position to spawn the health UI"}'
+    - '// @input string overlayChildName = "DamageOverlay" {"hint":"Name of the RenderMeshVisual child inside the prefab used as damage overlay"}'
+    - '// @input string fillPropertyName = "fillAmount" {"hint":"Name of the float parameter on the Graph Material that controls radial fill (0=no damage, 1=full black)"}'

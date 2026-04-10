@@ -16,6 +16,10 @@ export class GameLogicManager extends BaseScriptComponent {
   @hint("Hue distance (0-0.5) below which finger ball and lamp ball colors count as similar")
   similarityThreshold: number = 0.15
 
+  @input
+  @hint("Bypass color filters -- all collisions play sound regardless of color")
+  quickTestMode: boolean = false
+
   private static instance: GameLogicManager
 
   private debugMeshes: RenderMeshVisual[] = []
@@ -118,10 +122,12 @@ export class GameLogicManager extends BaseScriptComponent {
   }
 
   areColorsContrasting(a: vec4, b: vec4): boolean {
+    if (this.quickTestMode) return true
     return this.getHueDistance(a, b) > this.contrastThreshold
   }
 
   areColorsSimilar(a: vec4, b: vec4): boolean {
+    if (this.quickTestMode) return true
     return this.getHueDistance(a, b) < this.similarityThreshold
   }
 

@@ -11,7 +11,7 @@
   Enabled: true
   Shape: !<Sphere>
     FitVisual: false
-    Radius: 1.800000
+    Radius: 2.000000
   Matter: !<reference> adcfd91a-7aa4-4923-8eea-942e1313db75
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
@@ -47,31 +47,10 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<RenderMeshVisual/e63d2435-5091-4f81-94c1-12626fb363cd>
-  PrefabRemaps:
-    []
-  Name: Render Mesh Visual
-  Enabled: true
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  Materials:
-    []
-  Mesh: !<reference> 00000000-0000-0000-0000-000000000000
-  Skin: !<reference> 00000000-0000-0000-0000-000000000000
-  BlendShapesEnabled: true
-  BlendNormals: false
-  BlendShapes:
-    {}
 - !<SceneObject/f14135fc-934d-4ae0-bb63-836a53d9a1fc>
   PrefabRemaps:
     - 197678e9-51b5-4157-9cc1-c087990a53a3: 197678e9-51b5-4157-633e-3f7866f5ac5c
     - a5dc0426-22f1-4b5e-a929-b793c8379134: a5dc0426-22f1-4b5e-56d6-486c37c86ecb
-    - e63d2435-5091-4f81-94c1-12626fb363cd: 5064ca89-6141-4670-97a5-45a9037fb450
     - f14135fc-934d-4ae0-bb63-836a53d9a1fc: f14135fc-934d-4ae0-449c-7c95ac265e03
   Name: LampTriggerCollider
   Enabled: true
@@ -86,4 +65,3 @@
   Components:
     - !<own> a5dc0426-22f1-4b5e-a929-b793c8379134
     - !<own> 197678e9-51b5-4157-9cc1-c087990a53a3
-    - !<own> e63d2435-5091-4f81-94c1-12626fb363cd

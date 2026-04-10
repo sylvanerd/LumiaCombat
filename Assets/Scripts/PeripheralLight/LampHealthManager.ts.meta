@@ -1,0 +1,68 @@
+- !<AssetImportMetadata/877854a0-c604-423a-98d4-7f731e612da1>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 72cdee78-ed2c-4a48-84af-0d2c7c785eea
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 72cdee78-ed2c-4a48-84af-0d2c7c785eea
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 84fb2291-3bcb-43e6-ba66-04ac3239e6ac
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/84fb2291-3bcb-43e6-ba66-04ac3239e6ac>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 2a2f6d19-c57a-4b94-8110-21d8050eaf99
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoColorCycler: false
+    colliderSpawner: false
+    damagePerHit: false
+    hitSound: false
+    hueEventEmitter: false
+    invincibilityDuration: false
+    lowHealthThreshold: false
+    maxHealth: false
+    winText: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - colliderSpawner: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      hueEventEmitter: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      autoColorCycler: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      maxHealth: !<float> 100.000000
+      damagePerHit: !<float> 10.000000
+      invincibilityDuration: 0.500000
+      lowHealthThreshold: !<float> 25.000000
+      hitSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
+      winText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input AssignableType colliderSpawner {"hint":"The LampColliderSpawner on this prefab, source of raw collision events"}'
+    - '// @input AssignableType_1 hueEventEmitter {"hint":"HueEventEmitter on this prefab, used to turn the light off on defeat"}'
+    - '// @input AssignableType_2 autoColorCycler {"hint":"AutoColorCycler on this prefab, stopped on defeat"}'
+    - '// @input float maxHealth = 100 {"hint":"Total health points"}'
+    - '// @input float damagePerHit = 10 {"hint":"Percentage of maxHealth lost per finger ball hit"}'
+    - '// @input float invincibilityDuration = 0.5 {"hint":"Seconds of invincibility after taking a hit (prevents rapid multi-hits)"}'
+    - '// @input float lowHealthThreshold = 25 {"hint":"Health % threshold for low-health state (exposed for future warning hooks)"}'
+    - '// @input Component.AudioComponent hitSound {"hint":"Sound effect played when the finger ball hits the lamp"}'
+    - "// @input Component.Text winText {\"hint\":\"Text component for 'You Win' message (initially disabled)\"}"

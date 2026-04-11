@@ -1560,7 +1560,7 @@
       prefabBackScale: !<float> 6.000000
       prefabFront2Scale: !<float> 1.000000
       disableTinyObjects: true
-      minVisibleScale: !<float> 0.000000
+      minVisibleScale: 0.030000
   ScriptTypes:
     "":
       {}

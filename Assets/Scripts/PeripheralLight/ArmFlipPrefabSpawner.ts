@@ -282,8 +282,9 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
       this.isBackState = false
     }
 
-    // Continuous blend controls visual smoothness independent from binary state.
-    const targetBlend = this.clamp01((this.smoothedScore + 1) * 0.5)
+    // Drive blend from the binary hysteresis state for pitch-invariant visuals.
+    // The lerp provides a smooth scale transition during actual flips.
+    const targetBlend = this.isBackState ? 1.0 : 0.0
     this.smoothedBlend = this.lerpNumber(this.smoothedBlend, targetBlend, smoothT)
     this.applyBlendScale(this.smoothedBlend)
   }
@@ -313,15 +314,24 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
 
     let dot: number
     if (this.lockToFlipAxis) {
-      // Project handToCamera onto the plane perpendicular to the arm axis,
-      // so only forearm roll (pronation/supination) affects the score.
-      const alongArm = armAxis.uniformScale(handToCamera.dot(armAxis))
-      const projected = handToCamera.sub(alongArm)
-      const projLen = projected.length
-      if (projLen < EPS) {
+      // Project both handUp and handToCamera onto the plane perpendicular
+      // to the arm axis. This isolates forearm roll (pronation/supination)
+      // and ensures the dot product can reach the full ±1 range.
+      const camAlongArm = armAxis.uniformScale(handToCamera.dot(armAxis))
+      const camProj = handToCamera.sub(camAlongArm)
+      const camProjLen = camProj.length
+      if (camProjLen < EPS) {
         return this.smoothedScore
       }
-      dot = handUp.dot(projected.normalize())
+
+      const upAlongArm = armAxis.uniformScale(handUp.dot(armAxis))
+      const upProj = handUp.sub(upAlongArm)
+      const upProjLen = upProj.length
+      if (upProjLen < EPS) {
+        return this.smoothedScore
+      }
+
+      dot = upProj.normalize().dot(camProj.normalize())
     } else {
       dot = handUp.dot(handToCamera)
     }

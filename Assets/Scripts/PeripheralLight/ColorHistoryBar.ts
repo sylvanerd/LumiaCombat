@@ -55,6 +55,7 @@ export class ColorHistoryBar extends BaseScriptComponent {
 
   private isSuppressing: boolean = false
   private activeSphereIndex: number = -1
+  private hasPinchSpawned: boolean = false
 
   onAwake() {
     this.createEvent("OnStartEvent").bind(() => this.onStart())
@@ -183,6 +184,55 @@ export class ColorHistoryBar extends BaseScriptComponent {
         this.setSuppressed(false)
       }
     }
+
+    this.checkPinchSpawn()
+  }
+
+  private checkPinchSpawn() {
+    const hands: TrackedHand[] = []
+    if (this.leftHand && this.leftHand.isTracked() && this.leftHand.isPinching()) {
+      hands.push(this.leftHand)
+    }
+    if (this.rightHand && this.rightHand.isTracked() && this.rightHand.isPinching()) {
+      hands.push(this.rightHand)
+    }
+
+    if (hands.length === 0) {
+      this.hasPinchSpawned = false
+      return
+    }
+
+    if (this.hasPinchSpawned) return
+
+    let bestSphere = -1
+    let bestDist = Infinity
+    let bestHand: TrackedHand = null
+
+    for (let h = 0; h < hands.length; h++) {
+      const hand = hands[h]
+      const midpoint = vec3.lerp(hand.thumbTip.position, hand.indexTip.position, 0.5)
+      for (let i = 0; i < this.sphereObjects.length; i++) {
+        if (!this.sphereObjects[i] || !this.sphereObjects[i].enabled) continue
+        if (!this.colorSlots[i]) continue
+        const dist = midpoint.sub(
+          this.sphereObjects[i].getTransform().getWorldPosition()
+        ).length
+        if (dist < bestDist) {
+          bestDist = dist
+          bestSphere = i
+          bestHand = hand
+        }
+      }
+    }
+
+    if (bestSphere < 0 || bestDist >= this.touchRadius) return
+
+    const controller = ColorPickController.getInstance()
+    if (!controller) return
+
+    this.hasPinchSpawned = true
+    controller.spawnPresetBall(bestHand, this.colorSlots[bestSphere], this.sphereScale)
+    print(`${LOG_TAG} Pinch on sphere ${bestSphere} — spawned preset ball`)
   }
 
   private setSuppressed(value: boolean) {

@@ -54,7 +54,7 @@
       defaultColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 0.100000}
       latticeVFX: !<MappingBased.AssignableType> ef5cb7cd-04b5-41bf-bc68-7f961158f305
       pinchDetector: !<MappingBased.AssignableType_1> ebc93f35-0c87-4f5d-b849-80f8c2df8c9a
-      touchRadius: 2.500000
+      touchRadius: 2.800000
   ScriptTypes:
     "":
       {}

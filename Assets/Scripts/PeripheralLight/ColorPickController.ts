@@ -209,8 +209,8 @@ export class ColorPickController extends BaseScriptComponent {
   }
 
   private onPinchHeld(hand: TrackedHand) {
-    if (this.isRequestRunning) {
-      print(`${LOG_TAG} Request already in progress, ignoring pinch`)
+    if (this.isRequestRunning || this.ballActive) {
+      print(`${LOG_TAG} Request already in progress or ball active, ignoring pinch`)
       this.setStatus("Already analyzing... please wait")
       return
     }
@@ -304,6 +304,37 @@ export class ColorPickController extends BaseScriptComponent {
       this.activeBallVFX.startMaterialize(this.activeBallMat, placeholderColor)
       print(`${LOG_TAG} Materialize VFX started`)
     }
+  }
+
+  public spawnPresetBall(hand: TrackedHand, color: vec4, presetScale: number) {
+    if (this.ballActive || this.isRequestRunning) return
+
+    this.spawnBall(hand)
+
+    if (!this.activeBall) return
+
+    this.currentBallScale = presetScale
+    this.activeBall.getTransform().setLocalScale(
+      vec3.one().uniformScale(presetScale)
+    )
+
+    this.lastDetectedColor = color
+
+    if (this.activeBallVFX) {
+      this.activeBallVFX.updateColor(color)
+    } else if (this.activeBallMat) {
+      this.activeBallMat.mainPass.baseColor = new vec4(color.r, color.g, color.b, 1.0)
+    }
+
+    if (this.latticeVFX) this.latticeVFX.applyColor(color)
+
+    const hex = "#" +
+      Math.round(color.r * 255).toString(16).padStart(2, "0") +
+      Math.round(color.g * 255).toString(16).padStart(2, "0") +
+      Math.round(color.b * 255).toString(16).padStart(2, "0")
+
+    this.setStatus(`Color: ${hex} (preset)`)
+    print(`${LOG_TAG} Preset ball spawned with color ${hex}, scale=${presetScale}`)
   }
 
   private geminiStartTime: number = 0

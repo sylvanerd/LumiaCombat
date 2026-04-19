@@ -1,0 +1,37 @@
+- !<AssetImportMetadata/fee56d83-ebb0-4dea-94e4-ad433b161491>
+  ImportedAssetIds:
+    VFXGraph: !<reference> 02a2b5c1-3448-4675-8ee4-73410578c059
+  ImporterName: VFXAssetImporter
+  PrimaryAsset: !<reference> 02a2b5c1-3448-4675-8ee4-73410578c059
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    VFXGraph: !<own> 2700cd1c-532e-410c-807d-43840a3af1c6
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<VFXAssetData/2700cd1c-532e-410c-807d-43840a3af1c6>
+  Mesh: !<reference> 00000000-0000-0000-0000-000000000000
+  SystemPassProperties:
+    39: !<VFXSystemPassProperties/5f35195d-2506-4c18-974f-a2e650e91301>
+      FeedbackProperties:
+        {}
+      SimulateProperties:
+        trailColor:
+          typeIdx: 5
+          value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+        emissionIntensity:
+          typeIdx: 1
+          value: 2.000000
+      RenderProperties:
+        {}
+      FeedbackDefines:
+        []
+      SimulateDefines:
+        []
+      RenderDefines:
+        []

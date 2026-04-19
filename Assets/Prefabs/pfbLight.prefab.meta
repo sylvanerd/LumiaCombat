@@ -466,7 +466,6 @@
   ScriptAsset: !<reference> 12e2ba06-cf34-4fba-8277-d12e3e7c3633
   ScriptInputsDefault:
     arcHeightMax: true
-    ballScale: true
     maxActiveBalls: true
     shootingEnabled: true
     overshootMultiplier: true
@@ -478,12 +477,12 @@
       lightHandEventListener: !<MappingBased.AssignableType_1> 8e9638f6-967e-40a1-712e-b606b74b63f1
       mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       ballPrefab: !<reference.ObjectPrefab> 9a570ba6-c4cc-4de6-8097-6334d54685b9
-      delayThrowTime: 0.500000
+      delayThrowTime: 0.200000
       arcHeightMin: !<float> 10.000000
       arcHeightMax: !<float> 45.000000
       flightTimeMin: 0.500000
       flightTimeMax: !<float> 3.000000
-      ballScale: !<float> 5.000000
+      ballScale: !<float> 7.000000
       maxActiveBalls: !<float> 5.000000
       shootingEnabled: true
       hitSound: !<reference.AudioComponent> 4761041c-e30e-481a-9b7e-4bf00c6579a2
@@ -780,8 +779,8 @@
   ScriptInputs:
     "":
       hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-6737-3adb00001b37
-      intervalSecondsMin: !<float> 3.000000
-      intervalSecondsMax: !<float> 4.000000
+      intervalSecondsMin: !<float> 4.000000
+      intervalSecondsMax: !<float> 6.000000
       autoChangeEnabled: true
   ScriptTypes:
     "":

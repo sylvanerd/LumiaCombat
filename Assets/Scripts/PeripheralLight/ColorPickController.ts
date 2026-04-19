@@ -3,6 +3,7 @@ import {GeminiTypes} from "RemoteServiceGateway.lspkg/HostedExternal/GeminiTypes
 import TrackedHand from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/TrackedHand"
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {BallSpawnVFXController} from "./BallSpawnVFXController"
+import {BallTrailVFXController} from "./BallTrailVFXController"
 import {ColorPickPinchDetector} from "./ColorPickPinchDetector"
 import {HandLatticeVFXController} from "./HandLatticeVFXController"
 import {HueEventEmitter} from "./HueEventEmitter"
@@ -101,6 +102,7 @@ export class ColorPickController extends BaseScriptComponent {
   private activeBall: SceneObject = null
   private activeBallMat: Material = null
   private activeBallVFX: BallSpawnVFXController = null
+  private activeBallTrailVFX: BallTrailVFXController = null
   private activeHand: TrackedHand = null
   private currentBallScale: number = 0
 
@@ -275,6 +277,7 @@ export class ColorPickController extends BaseScriptComponent {
     this.previousHandPos = null
     this.handVelocity = vec3.zero()
     this.activeBallVFX = null
+    this.activeBallTrailVFX = null
 
     if (!this.ballPrefab) {
       print(`${LOG_TAG} WARNING: ballPrefab not assigned, skipping ball spawn`)
@@ -304,6 +307,8 @@ export class ColorPickController extends BaseScriptComponent {
       this.activeBallVFX.startMaterialize(this.activeBallMat, placeholderColor)
       print(`${LOG_TAG} Materialize VFX started`)
     }
+
+    this.activeBallTrailVFX = this.findTrailController(this.activeBall)
   }
 
   public spawnPresetBall(hand: TrackedHand, color: vec4, presetScale: number) {
@@ -565,6 +570,14 @@ export class ColorPickController extends BaseScriptComponent {
     body.addForce(forceVector, Physics.ForceMode.Impulse)
     print(`${LOG_TAG} Ball THROWN — strength: ${throwStrength.toFixed(1)}, direction: (${throwDirection.x.toFixed(2)}, ${throwDirection.y.toFixed(2)}, ${throwDirection.z.toFixed(2)}), hand speed: ${this.handVelocity.length.toFixed(1)}`)
 
+    if (this.activeBallTrailVFX) {
+      const ballColor = this.activeBallMat
+        ? this.activeBallMat.mainPass.baseColor
+        : new vec4(1, 1, 1, 1)
+      this.activeBallTrailVFX.startTrail(ballColor)
+      print(`${LOG_TAG} Trail VFX activated on thrown ball`)
+    }
+
     this.cleanupAfterRelease()
   }
 
@@ -574,7 +587,19 @@ export class ColorPickController extends BaseScriptComponent {
     this.previousHandPos = null
     this.ballActive = false
     this.activeBallVFX = null
+    this.activeBallTrailVFX = null
     if (this.latticeVFX) this.latticeVFX.cancelExtraction()
+  }
+
+  private findTrailController(ball: SceneObject): BallTrailVFXController | null {
+    const scripts = ball.getComponents("Component.ScriptComponent")
+    for (let i = 0; i < scripts.length; i++) {
+      const s = scripts[i] as any
+      if (s && typeof s.startTrail === "function") {
+        return s as BallTrailVFXController
+      }
+    }
+    return null
   }
 
   private findHueEventEmitterInScene(): HueEventEmitter {

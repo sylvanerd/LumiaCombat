@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/006361c6-085d-4ba9-b7d1-1c4fe5375d70>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 45dae48f-623b-4b4f-ae20-d8be80fb41b7
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 45dae48f-623b-4b4f-ae20-d8be80fb41b7
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 07125599-f7c8-475c-adc7-0d7962c9068d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/07125599-f7c8-475c-adc7-0d7962c9068d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 213231a7-6556-45a4-b1b3-b40c5413c021
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoStart: false
+    fadeInDuration: false
+    fadeOutDuration: false
+    introCard: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - introCard: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      fadeInDuration: !<float> 1000.000000
+      fadeOutDuration: !<float> 1000.000000
+      autoStart: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input SceneObject introCard {"hint":"The intro card SceneObject in the scene"}'
+    - '// @input float fadeInDuration = 1 {"hint":"Fade-in duration in seconds"}'
+    - '// @input float fadeOutDuration = 1 {"hint":"Fade-out duration in seconds"}'
+    - '// @input bool autoStart = true {"hint":"Start the onboarding sequence automatically when the lens opens"}'

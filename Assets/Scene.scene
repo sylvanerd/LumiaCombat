@@ -18,6 +18,8 @@
     - !<own> 321d8ea5-b9f0-46d3-9329-e47f21f3e667
     - !<own> 52fd50fd-3025-4749-a0bb-587dafb28ea1
     - !<own> b0d1bd00-6edc-4481-b397-5d678f0124e6
+    - !<own> aabd5500-c275-44ac-8ae0-d1803da6698c
+    - !<own> ac3a992c-780f-4289-a289-1191af42cfa7
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -62,6 +64,7 @@
     - !<own> 9835a8b9-a7fd-4f86-90eb-bb5dcadfd253
     - !<own> 1ff9755b-db91-4b9b-a233-b721a94864be
     - !<own> 2d6eceaa-4586-4baf-8e32-77eb28a1b4d9
+    - !<own> d2864524-1fe7-43c4-b442-6e4ab274508a
   Components:
     - !<own> 00000000-0000-0065-0000-000000000065
     - !<own> 9228bd9b-5113-4e9a-a7c5-bb6945cb0bc4
@@ -1494,7 +1497,7 @@
   Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 3.707155, z: -37.999641}
+    Position: {x: 0.000000, y: 0.000000, z: -37.999641}
     Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
     HasSegmentScaleCompensation: false
@@ -4727,6 +4730,25 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/5778e353-f5f5-47d1-b923-5bdee3e70808>
+  PrefabRemaps:
+    []
+  Name: GameOnboardingManager
+  Enabled: true
+  ScriptAsset: !<reference> 45dae48f-623b-4b4f-ae20-d8be80fb41b7
+  ScriptInputsDefault:
+    autoStart: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      introCard: !<reference.SceneObject> 7f556d43-b922-42aa-af86-59a5f4fb81c6
+      fadeInDuration: !<float> 1.000000
+      fadeOutDuration: !<float> 1.000000
+      autoStart: true
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/592c8233-c59e-4b6f-a935-4b8f9fac7e90>
   PrefabRemaps:
     []
@@ -7120,6 +7142,22 @@
     bottom: -2.500000
     right: -0.000001
     top: 2.500000
+- !<SceneObject/7f556d43-b922-42aa-af86-59a5f4fb81c6>
+  PrefabRemaps:
+    []
+  Name: GameIntro
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -50.000000}
+    Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 18.000000, y: 24.000000, z: 24.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> a0d9ffd6-9bc5-4c50-82f0-e03a4885b123
+    - !<own> c5c716b8-0fa1-4f3c-a5e5-c2255d75f308
 - !<RenderMeshVisual/7f7ae0a2-d91c-4896-a914-22067f771a55>
   PrefabRemaps:
     []
@@ -8951,6 +8989,26 @@
   ForceCompound: false
   Intangible: false
   ShowCollider: false
+- !<RenderMeshVisual/a0d9ffd6-9bc5-4c50-82f0-e03a4885b123>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> f6604740-ceda-4b05-b779-805e91075b07
+  Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<SceneObject/a11fc77f-774d-434e-86bb-975b8b384b26>
   PrefabRemaps:
     []
@@ -9934,6 +9992,36 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/aabd5500-c275-44ac-8ae0-d1803da6698c>
+  PrefabRemaps:
+    []
+  Name: "---------------------------"
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
+- !<SceneObject/ac3a992c-780f-4289-a289-1191af42cfa7>
+  PrefabRemaps:
+    []
+  Name: GameOnboardingManager
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 5778e353-f5f5-47d1-b923-5bdee3e70808
 - !<SceneObject/ac4e8d2a-5fb5-4abf-8b8f-117872815091>
   PrefabRemaps:
     []
@@ -11496,6 +11584,22 @@
     - !<own> e18e58b2-17e8-4c38-80cd-7ed0c8c8eb56
   Components:
     - !<own> 66bfec33-e048-421a-9187-a1095eb94324
+- !<ScriptComponent/c5c716b8-0fa1-4f3c-a5e5-c2255d75f308>
+  PrefabRemaps:
+    []
+  Name: SmoothFollowCamera
+  Enabled: true
+  ScriptAsset: !<reference> 1ee63573-19bb-4933-8ef9-b0a0f2ecc45d
+  ScriptInputsDefault:
+    followSpeed: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      followSpeed: !<float> 10.000000
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/c81ede0d-888e-4b7a-835d-1b2c37c517d0>
   PrefabRemaps:
     []
@@ -12350,6 +12454,21 @@
     []
   Components:
     - !<own> 92644e06-aa0a-45c5-b507-9e8745c52c72
+- !<SceneObject/d2864524-1fe7-43c4-b442-6e4ab274508a>
+  PrefabRemaps:
+    []
+  Name: GameOnboarding
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 7f556d43-b922-42aa-af86-59a5f4fb81c6
+  Components:
+    []
 - !<SceneObject/d2c36c00-be98-4b1f-b634-2138fb993767>
   PrefabRemaps:
     []

@@ -1,0 +1,44 @@
+- !<AssetImportMetadata/d4252dc4-adec-4acb-8866-60528c62d92d>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 1ee63573-19bb-4933-8ef9-b0a0f2ecc45d
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 1ee63573-19bb-4933-8ef9-b0a0f2ecc45d
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 349f2f47-3d4d-4680-bf9f-2da1b486e8c5
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/349f2f47-3d4d-4680-bf9f-2da1b486e8c5>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 65a37d58-1478-4eee-9333-12aafa531727
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    followSpeed: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - followSpeed: !<float> 10.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input float followSpeed = 10 {"hint":"How quickly the card catches up (higher = snappier)"}'

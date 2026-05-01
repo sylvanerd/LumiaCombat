@@ -1,0 +1,47 @@
+- !<AssetImportMetadata/662cd908-81b8-4bd8-938a-7f08dfa3b99b>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> ace10e46-bcf4-4188-bdf5-7ac0cd702734
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> ace10e46-bcf4-4188-bdf5-7ac0cd702734
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 8ce4b485-507e-4d6d-9e8d-85c6d8729de2
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/8ce4b485-507e-4d6d-9e8d-85c6d8729de2>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 424dd51f-901e-4078-bcf5-a2e9cf501f61
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    apiKey: false
+    internetModule: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - apiKey: ""
+      internetModule: !<reference.InternetModule> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input string apiKey {"hint":"Gemini API key. Prefer a backend proxy instead for published lenses."}'
+    - '// @input Asset.InternetModule internetModule {"hint":"Asset.InternetModule used for direct HTTPS requests."}'

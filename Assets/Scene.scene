@@ -20,6 +20,7 @@
     - !<own> b0d1bd00-6edc-4481-b397-5d678f0124e6
     - !<own> aabd5500-c275-44ac-8ae0-d1803da6698c
     - !<own> ac3a992c-780f-4289-a289-1191af42cfa7
+    - !<own> ffa964fc-3acc-419b-af14-bc86833740bd
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -10343,6 +10344,24 @@
     []
   Components:
     []
+- !<ScriptComponent/b30e01ba-e1af-47fa-b8d3-1acf37cd350a>
+  PrefabRemaps:
+    []
+  Name: GeminiDirectClient
+  Enabled: true
+  ScriptAsset: !<reference> ace10e46-bcf4-4188-bdf5-7ac0cd702734
+  ScriptInputsDefault:
+    apiKey: true
+    internetModule: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      apiKey: ""
+      internetModule: !<reference.InternetModule> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/b327ce4a-231d-4b71-9b37-75879a6b96e8>
   PrefabRemaps:
     []
@@ -14982,6 +15001,21 @@
     - !<own> 01436cb0-d11f-430a-8ced-043a3f39cb49
   Components:
     []
+- !<SceneObject/ffa964fc-3acc-419b-af14-bc86833740bd>
+  PrefabRemaps:
+    []
+  Name: GeminiDirectClient
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> b30e01ba-e1af-47fa-b8d3-1acf37cd350a
 - !<RenderMeshVisual/ffbef57f-0fe1-440e-b532-0fa58e2cba39>
   PrefabRemaps:
     []

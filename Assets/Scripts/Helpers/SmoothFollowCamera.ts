@@ -1,6 +1,11 @@
 @component
 export class SmoothFollowCamera extends BaseScriptComponent {
   @input
+  @allowUndefined
+  @hint("Optional camera object to follow. If empty, this uses the object's parent at startup.")
+  cameraObject: SceneObject
+
+  @input
   @hint("How quickly the card catches up (higher = snappier)")
   followSpeed: number = 10
 
@@ -14,12 +19,12 @@ export class SmoothFollowCamera extends BaseScriptComponent {
     this.localOffset = this.tr.getLocalPosition()
     this.localRotOffset = this.tr.getLocalRotation()
 
-    const parent = this.getSceneObject().getParent()
-    if (!parent) {
-      print("[SmoothFollowCamera] Must be a child of the camera at start.")
+    const camera = this.cameraObject ? this.cameraObject : this.getSceneObject().getParent()
+    if (!camera) {
+      print("[SmoothFollowCamera] Missing cameraObject input and no parent was available.")
       return
     }
-    this.camTr = parent.getTransform()
+    this.camTr = camera.getTransform()
 
     this.getSceneObject().setParent(null)
 

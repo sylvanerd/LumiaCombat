@@ -27,8 +27,6 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     node: false
-    pfbClimateController: false
-    pfbHeartRateMonitorController: false
     pfbLightController: false
     pfbWidget: false
   ScriptTypesHidden:
@@ -42,8 +40,6 @@
   DefaultScriptInputs:
     - pfbWidget: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       pfbLightController: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
-      pfbHeartRateMonitorController: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
-      pfbClimateController: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       node: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
@@ -51,6 +47,4 @@
   InputLines:
     - // @input Asset.ObjectPrefab pfbWidget
     - // @input Asset.ObjectPrefab pfbLightController
-    - // @input Asset.ObjectPrefab pfbHeartRateMonitorController
-    - // @input Asset.ObjectPrefab pfbClimateController
     - // @input SceneObject node

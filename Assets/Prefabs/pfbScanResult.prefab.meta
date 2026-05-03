@@ -752,8 +752,6 @@
       iconImage: !<reference.Image> f002febb-bf5d-4fae-6735-a7d839529bd4
       backgroundImage: !<reference.Image> 0b0a7d05-6501-4add-43ec-c1c243dfc8f3
       lightTex: !<reference.Texture> bf750ce5-f833-47a9-8581-9fadffea7fba
-      hrmTex: !<reference.Texture> ac89f1f1-a1cf-4580-abca-5e8b1b24b1d3
-      climateTex: !<reference.Texture> fd46306c-0bd3-4ca7-90c0-919d9bcd6ab2
       unknownTex: !<reference.Texture> e5746630-f3cb-473e-bd67-1d686e6fd0ba
       connectionOnTex: !<reference.Texture> 8b953f1b-9294-42be-889f-2cf61c77be13
       connectionOffTex: !<reference.Texture> a2bfbdb4-38b4-4e44-92db-cf9328a144e7

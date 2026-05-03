@@ -72,6 +72,7 @@ export class LightController extends BaseScriptComponent {
     // Init
     this.roomLightsUI.init()
     this.hueEventEmitter.init(bluetoothGatt, startColor)
+
     this.lightHandEventListener.init()
 
     this.containerFrame.onTranslationStart.add(() => this.hueEventEmitter.setFlash(true))

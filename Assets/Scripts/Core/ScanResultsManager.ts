@@ -10,7 +10,8 @@ import {Logger} from "../Helpers/Logger"
 import {BleServiceHandler} from "./BleServiceHandler"
 import {ControllerFactory} from "./ControllerFactory"
 import {LensInitializer} from "./LensInitializer"
-import {HeartRateMonitorData, HueLightData, Thingy52Data} from "./PeripheralTypeData"
+import {HueLightData} from "./PeripheralTypeData"
+// import {HeartRateMonitorData, Thingy52Data} from "./PeripheralTypeData"
 import {ScanResult, ScanResultType} from "./ScanResult"
 
 @component
@@ -34,8 +35,8 @@ export class ScanResultsManager extends BaseScriptComponent {
   // Active = assigned a value, by not necessarily show.
   // If filtering by known results, we hide the unknown results
   private lightScanResults: ScanResult[] // light type
-  private hrmScanResults: ScanResult[] // hrm type
-  private climateScanResults: ScanResult[] // climate type
+  // private hrmScanResults: ScanResult[] // hrm type
+  // private climateScanResults: ScanResult[] // climate type
   private unknownScanResults: ScanResult[] // unknown type
   private untypedScanResults: ScanResult[] // preconnection
 
@@ -47,8 +48,8 @@ export class ScanResultsManager extends BaseScriptComponent {
     this.scanResultSpots = []
 
     this.lightScanResults = []
-    this.hrmScanResults = []
-    this.climateScanResults = []
+    // this.hrmScanResults = []
+    // this.climateScanResults = []
     this.unknownScanResults = []
     this.untypedScanResults = []
 
@@ -111,9 +112,9 @@ export class ScanResultsManager extends BaseScriptComponent {
     for (let i = 0; i < this.untypedScanResults.length; i++) {
       if (
         HelperFuntions.strIncludes(this.untypedScanResults[i].deviceName, [
-          HueLightData._commonDeviceNameSubstring,
-          HeartRateMonitorData._commonDeviceNameSubstring,
-          Thingy52Data._commonDeviceNameSubstring
+          HueLightData._commonDeviceNameSubstring
+          // HeartRateMonitorData._commonDeviceNameSubstring,
+          // Thingy52Data._commonDeviceNameSubstring
         ])
       ) {
         this.autoConnectScanResults.push(this.untypedScanResults[i])
@@ -148,7 +149,8 @@ export class ScanResultsManager extends BaseScriptComponent {
   }
 
   private getNextScanResultSpot() {
-    let count = this.lightScanResults.length + this.hrmScanResults.length + this.climateScanResults.length
+    let count = this.lightScanResults.length
+    // let count = this.lightScanResults.length + this.hrmScanResults.length + this.climateScanResults.length
 
     if (!this.filterButtonToggle.isToggledOn) {
       count += this.unknownScanResults.length + this.untypedScanResults.length
@@ -183,57 +185,63 @@ export class ScanResultsManager extends BaseScriptComponent {
     // Put lights and hrms at the begining and show them
     for (let i = 0; i < this.scanResultSpots.length; i++) {
       const lightEndIndex = this.lightScanResults.length - 1
-      const hrmEndIndex = this.lightScanResults.length + this.hrmScanResults.length - 1
-      const climateEndIndex =
-        this.lightScanResults.length + this.hrmScanResults.length + this.climateScanResults.length - 1
+      // const hrmEndIndex = this.lightScanResults.length + this.hrmScanResults.length - 1
+      // const climateEndIndex =
+      //   this.lightScanResults.length + this.hrmScanResults.length + this.climateScanResults.length - 1
       if (i <= lightEndIndex) {
         this.lightScanResults[i].reparent(this.scanResultSpots[i])
         this.lightScanResults[i].show(true)
       }
       // Then place hrm
-      else if (i <= hrmEndIndex) {
-        const hrmIndex = i - this.lightScanResults.length
-        this.hrmScanResults[hrmIndex].reparent(this.scanResultSpots[i])
-        this.hrmScanResults[hrmIndex].show(true)
-      }
+      // else if (i <= hrmEndIndex) {
+      //   const hrmIndex = i - this.lightScanResults.length
+      //   this.hrmScanResults[hrmIndex].reparent(this.scanResultSpots[i])
+      //   this.hrmScanResults[hrmIndex].show(true)
+      // }
       // Then place climate
-      else if (i <= climateEndIndex) {
-        const climateIndex = i - (this.lightScanResults.length + this.hrmScanResults.length)
-        this.climateScanResults[climateIndex].reparent(this.scanResultSpots[i])
-        this.climateScanResults[climateIndex].show(true)
-      }
+      // else if (i <= climateEndIndex) {
+      //   const climateIndex = i - (this.lightScanResults.length + this.hrmScanResults.length)
+      //   this.climateScanResults[climateIndex].reparent(this.scanResultSpots[i])
+      //   this.climateScanResults[climateIndex].show(true)
+      // }
     }
 
     // Place the unknowns and untyped after lights and hrm
     for (let i = 0; i < this.scanResultSpots.length; i++) {
-      const unknownStartIndex = this.lightScanResults.length + this.hrmScanResults.length + this.climateScanResults.length
+      const unknownStartIndex = this.lightScanResults.length
+      // const unknownStartIndex = this.lightScanResults.length + this.hrmScanResults.length + this.climateScanResults.length
       if (i >= unknownStartIndex) {
-        const unknownEndIndex =
-          this.lightScanResults.length +
-          this.hrmScanResults.length +
-          this.climateScanResults.length +
-          this.unknownScanResults.length -
-          1
+        const unknownEndIndex = this.lightScanResults.length + this.unknownScanResults.length - 1
+        // const unknownEndIndex =
+        //   this.lightScanResults.length +
+        //   this.hrmScanResults.length +
+        //   this.climateScanResults.length +
+        //   this.unknownScanResults.length -
+        //   1
         const untypedEndIndex =
-          this.lightScanResults.length +
-          this.hrmScanResults.length +
-          this.climateScanResults.length +
-          this.unknownScanResults.length +
-          this.untypedScanResults.length -
-          1
+          this.lightScanResults.length + this.unknownScanResults.length + this.untypedScanResults.length - 1
+        // const untypedEndIndex =
+        //   this.lightScanResults.length +
+        //   this.hrmScanResults.length +
+        //   this.climateScanResults.length +
+        //   this.unknownScanResults.length +
+        //   this.untypedScanResults.length -
+        //   1
         if (i <= unknownEndIndex) {
-          const unknownIndex =
-            i - this.lightScanResults.length - this.hrmScanResults.length - this.climateScanResults.length
+          const unknownIndex = i - this.lightScanResults.length
+          // const unknownIndex =
+          //   i - this.lightScanResults.length - this.hrmScanResults.length - this.climateScanResults.length
           this.unknownScanResults[unknownIndex].reparent(this.scanResultSpots[i])
           // Deciding to actually show unknowns, since they're still connected
           this.unknownScanResults[unknownIndex].show(true)
         } else if (i <= untypedEndIndex) {
-          const untypedIndex =
-            i -
-            this.lightScanResults.length -
-            this.hrmScanResults.length -
-            this.climateScanResults.length -
-            this.unknownScanResults.length
+          const untypedIndex = i - this.lightScanResults.length - this.unknownScanResults.length
+          // const untypedIndex =
+          //   i -
+          //   this.lightScanResults.length -
+          //   this.hrmScanResults.length -
+          //   this.climateScanResults.length -
+          //   this.unknownScanResults.length
           this.untypedScanResults[untypedIndex].reparent(this.scanResultSpots[i])
           // Hide untyped if filtering
           this.untypedScanResults[untypedIndex].show(!this.filterButtonToggle.isToggledOn)
@@ -269,10 +277,10 @@ export class ScanResultsManager extends BaseScriptComponent {
 
     if (type === ScanResultType.Light) {
       this.lightScanResults.push(scanResult)
-    } else if (type === ScanResultType.Hrm) {
-      this.hrmScanResults.push(scanResult)
-    } else if (type === ScanResultType.Climate) {
-      this.climateScanResults.push(scanResult)
+    // } else if (type === ScanResultType.Hrm) {
+    //   this.hrmScanResults.push(scanResult)
+    // } else if (type === ScanResultType.Climate) {
+    //   this.climateScanResults.push(scanResult)
     } else if (type === ScanResultType.Unknown) {
       this.unknownScanResults.push(scanResult)
     } else {
@@ -286,8 +294,8 @@ export class ScanResultsManager extends BaseScriptComponent {
 
   selectMeAndDeselectOthers(selectedScanResult: ScanResult) {
     const allScanResults = this.lightScanResults
-      .concat(this.hrmScanResults)
-      .concat(this.climateScanResults)
+      // .concat(this.hrmScanResults)
+      // .concat(this.climateScanResults)
       .concat(this.unknownScanResults)
       .concat(this.untypedScanResults)
     // Logger.getInstance().log("ScanResultsHandler deselectAllExceptMe " + allScanResults.length);

@@ -27,9 +27,11 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     autoStart: false
-    fadeInDuration: false
-    fadeOutDuration: false
+    autoStartScanOnPhysical: false
+    bluetoothMenuRoot: false
     introCard: false
+    scanToggle: false
+    tutorialIntroRoot: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -40,14 +42,18 @@
     []
   DefaultScriptInputs:
     - introCard: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      fadeInDuration: !<float> 1000.000000
-      fadeOutDuration: !<float> 1000.000000
+      bluetoothMenuRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      tutorialIntroRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      scanToggle: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       autoStart: true
+      autoStartScanOnPhysical: false
   ScriptTypes:
     -
       {}
   InputLines:
-    - '// @input SceneObject introCard {"hint":"The intro card SceneObject in the scene"}'
-    - '// @input float fadeInDuration = 1 {"hint":"Fade-in duration in seconds"}'
-    - '// @input float fadeOutDuration = 1 {"hint":"Fade-out duration in seconds"}'
+    - '// @input SceneObject introCard {"hint":"The intro card or intro canvas root SceneObject in the scene"}'
+    - '// @input SceneObject bluetoothMenuRoot {"hint":"Existing Bluetooth menu/canvas visual root to reveal after Go Physical"}'
+    - '// @input SceneObject tutorialIntroRoot {"hint":"Optional game rules/tutorial intro root shown after Bluetooth setup"}'
+    - '// @input AssignableType scanToggle {"hint":"Optional existing Bluetooth scan toggle to start when Go Physical is pressed"}'
     - '// @input bool autoStart = true {"hint":"Start the onboarding sequence automatically when the lens opens"}'
+    - '// @input bool autoStartScanOnPhysical {"hint":"Automatically start Bluetooth scanning when Go Physical is pressed"}'

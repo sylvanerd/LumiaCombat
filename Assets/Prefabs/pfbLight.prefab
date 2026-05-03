@@ -410,7 +410,7 @@
   PrefabRemaps:
     []
   Name: Panel
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000008, y: 0.000008, z: 0.700001}
@@ -425,7 +425,7 @@
   PrefabRemaps:
     []
   Name: Brightness
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -2.992120, y: -5.863769, z: 0.700001}
@@ -838,7 +838,7 @@
   PrefabRemaps:
     []
   Name: StatusVisual
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -7.559993, y: 12.799999, z: 0.700001}
@@ -854,7 +854,7 @@
   PrefabRemaps:
     []
   Name: PlaceLight
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -0.381367, y: -12.089778, z: 0.699993}
@@ -1288,7 +1288,7 @@
   PrefabRemaps:
     []
   Name: ToggleButton - Power
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 7.560008, y: 12.799999, z: 0.700001}
@@ -1309,7 +1309,7 @@
   PrefabRemaps:
     []
   Name: Slider_Brightness
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000008, y: -7.880344, z: 1.420002}
@@ -1330,7 +1330,7 @@
   PrefabRemaps:
     []
   Name: Color
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -6.650008, y: 9.914912, z: 0.700001}
@@ -1381,7 +1381,7 @@
   Enabled: true
   ScriptAsset: !<reference> 8012dfae-237c-43ac-93fb-26d686fe2410
   ScriptInputsDefault:
-    autoChangeEnabled: true
+    {}
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1389,7 +1389,7 @@
       hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-98c8-c524ffffe4c8
       intervalSecondsMin: !<float> 4.000000
       intervalSecondsMax: !<float> 6.000000
-      autoChangeEnabled: true
+      autoChangeEnabled: false
   ScriptTypes:
     "":
       {}
@@ -1414,7 +1414,7 @@
   PrefabRemaps:
     []
   Name: Image_ColorWheel
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000008, y: 3.560000, z: 0.700001}
@@ -1805,7 +1805,7 @@
   PrefabRemaps:
     []
   Name: SmartLight
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000008, y: 12.799999, z: 0.700001}
@@ -1840,7 +1840,7 @@
   PrefabRemaps:
     []
   Name: LightColorWheelInputManager
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000008, y: 3.560000, z: 0.700001}
@@ -1909,7 +1909,7 @@
   PrefabRemaps:
     []
   Name: Pinch Button - Manual Placement
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -2.993822, y: -12.089778, z: 0.700001}
@@ -2166,6 +2166,33 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/e912aa80-5968-4c59-aa8e-7ddf336a63d8>
+  PrefabRemaps:
+    []
+  Name: _Samples_
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 3acb3a50-6cb9-4339-893f-396f63d92a34
+    - !<own> 772f4c57-5bc5-4999-a609-4b448c7c8efc
+    - !<own> d8d0172b-8954-47a7-872b-8e7b1228d211
+    - !<own> 954f678c-c236-440a-9f86-bc5d10fa8277
+    - !<own> 97960dc4-b7d3-42c6-928c-0ade86c8ad1c
+    - !<own> b28486c6-a363-4557-8efc-a81d36a15745
+    - !<own> d6495697-07d0-42a5-b0be-c4e3eb19e025
+    - !<own> cb73dff7-7c9f-4145-95cb-8ad6676aaf83
+    - !<own> 984f2baf-4fca-44cc-8751-426ec1bda5d4
+    - !<own> 3d90115c-c3fe-4b58-a2f0-7851a5bf7c87
+    - !<own> 77fd4cfa-3825-426d-8307-0db664f618e8
+    - !<own> 949f2fa5-f967-4df4-accb-ebdf56527e19
+    - !<own> 75b8fa8b-6d36-40f1-9895-508eb83561fa
+  Components:
+    []
 - !<Image/eadbb083-91b9-4881-8ba0-c56cae9d7321>
   PrefabRemaps:
     []
@@ -2479,6 +2506,7 @@
     - df3533a6-3e1d-4d6b-841c-5fbc9410ec38: df3533a6-3e1d-4d6b-7be3-a0436bef13c7
     - e192810b-786c-4ebd-8920-0624852c7fe6: e192810b-786c-4ebd-76df-f9db7ad38019
     - e8bf3513-6853-4772-951a-e139376cc45e: e8bf3513-6853-4772-6ae5-1ec6c8933ba1
+    - e912aa80-5968-4c59-aa8e-7ddf336a63d8: 008a8a42-395a-40d8-af09-63c325eb10e6
     - eadbb083-91b9-4881-8ba0-c56cae9d7321: eadbb083-91b9-4881-745f-3a9351628cde
     - eb7cf7ad-5128-44f8-9bdb-fa45004fd830: eb7cf7ad-5128-44f8-6424-05baffb027cf
     - f4bd93b4-db35-46ac-8d8a-b37a17c435a9: f4bd93b4-db35-46ac-7275-4c85e83bca56
@@ -2497,19 +2525,7 @@
     Scale: {x: 0.750000, y: 0.750000, z: 0.750000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 3acb3a50-6cb9-4339-893f-396f63d92a34
-    - !<own> 772f4c57-5bc5-4999-a609-4b448c7c8efc
-    - !<own> d8d0172b-8954-47a7-872b-8e7b1228d211
-    - !<own> 954f678c-c236-440a-9f86-bc5d10fa8277
-    - !<own> 97960dc4-b7d3-42c6-928c-0ade86c8ad1c
-    - !<own> b28486c6-a363-4557-8efc-a81d36a15745
-    - !<own> d6495697-07d0-42a5-b0be-c4e3eb19e025
-    - !<own> cb73dff7-7c9f-4145-95cb-8ad6676aaf83
-    - !<own> 984f2baf-4fca-44cc-8751-426ec1bda5d4
-    - !<own> 3d90115c-c3fe-4b58-a2f0-7851a5bf7c87
-    - !<own> 77fd4cfa-3825-426d-8307-0db664f618e8
-    - !<own> 949f2fa5-f967-4df4-accb-ebdf56527e19
-    - !<own> 75b8fa8b-6d36-40f1-9895-508eb83561fa
+    - !<own> e912aa80-5968-4c59-aa8e-7ddf336a63d8
   Components:
     - !<own> 80a8c107-2c61-456c-8490-ffded7e9cc9a
     - !<own> 910f2104-ab73-469f-98c8-c524ffffe4c8

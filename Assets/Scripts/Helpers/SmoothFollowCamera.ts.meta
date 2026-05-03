@@ -26,6 +26,7 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    cameraObject: false
     followSpeed: false
   ScriptTypesHidden:
     {}
@@ -36,9 +37,11 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - followSpeed: !<float> 10.000000
+    - cameraObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      followSpeed: !<float> 10.000000
   ScriptTypes:
     -
       {}
   InputLines:
+    - "// @input SceneObject cameraObject {\"hint\":\"Optional camera object to follow. If empty, this uses the object's parent at startup.\"}"
     - '// @input float followSpeed = 10 {"hint":"How quickly the card catches up (higher = snappier)"}'

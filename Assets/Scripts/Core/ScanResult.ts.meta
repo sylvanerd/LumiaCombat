@@ -27,13 +27,11 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     backgroundImage: false
-    climateTex: false
     connectionImage: false
     connectionOffTex: false
     connectionOnTex: false
     connectionTryTex: false
     detailsText: false
-    hrmTex: false
     iconImage: false
     lightTex: false
     nameText: false
@@ -57,8 +55,6 @@
       iconImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
       backgroundImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
       lightTex: !<reference.Texture> 00000000-0000-0000-0000-000000000000
-      hrmTex: !<reference.Texture> 00000000-0000-0000-0000-000000000000
-      climateTex: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       unknownTex: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       connectionOnTex: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       connectionOffTex: !<reference.Texture> 00000000-0000-0000-0000-000000000000
@@ -75,8 +71,6 @@
     - // @input Component.Image iconImage
     - // @input Component.Image backgroundImage
     - // @input Asset.Texture lightTex
-    - // @input Asset.Texture hrmTex
-    - // @input Asset.Texture climateTex
     - // @input Asset.Texture unknownTex
     - // @input Asset.Texture connectionOnTex
     - // @input Asset.Texture connectionOffTex

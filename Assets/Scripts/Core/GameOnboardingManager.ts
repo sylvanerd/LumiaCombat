@@ -1,4 +1,3 @@
-import {ToggleButton} from "SpectaclesInteractionKit.lspkg/Components/UI/ToggleButton/ToggleButton"
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 
 @component
@@ -13,22 +12,8 @@ export class GameOnboardingManager extends BaseScriptComponent {
   bluetoothMenuRoot: SceneObject
 
   @input
-  @allowUndefined
-  @hint("Optional game rules/tutorial intro root shown after Bluetooth setup")
-  tutorialIntroRoot: SceneObject
-
-  @input
-  @allowUndefined
-  @hint("Optional existing Bluetooth scan toggle to start when Go Physical is pressed")
-  scanToggle: ToggleButton
-
-  @input
   @hint("Start the onboarding sequence automatically when the lens opens")
   autoStart: boolean = true
-
-  @input
-  @hint("Automatically start Bluetooth scanning when Go Physical is pressed")
-  autoStartScanOnPhysical: boolean = false
 
   public readonly onSequenceComplete: Event<void> = new Event<void>()
 
@@ -37,7 +22,6 @@ export class GameOnboardingManager extends BaseScriptComponent {
   onAwake() {
     this.setRootEnabled(this.introCard, false)
     this.setRootEnabled(this.bluetoothMenuRoot, false)
-    this.setRootEnabled(this.tutorialIntroRoot, false)
 
     this.createEvent("OnStartEvent").bind(() => this.onStart())
   }
@@ -58,7 +42,6 @@ export class GameOnboardingManager extends BaseScriptComponent {
     this.isShowing = true
     this.setRootEnabled(this.introCard, true)
     this.setRootEnabled(this.bluetoothMenuRoot, false)
-    this.setRootEnabled(this.tutorialIntroRoot, false)
   }
 
   dismiss() {
@@ -76,10 +59,6 @@ export class GameOnboardingManager extends BaseScriptComponent {
 
     this.transitionFromIntro(() => {
       this.setRootEnabled(this.bluetoothMenuRoot, true)
-
-      if (this.autoStartScanOnPhysical && this.scanToggle) {
-        this.scanToggle.isToggledOn = true
-      }
     })
   }
 
@@ -87,15 +66,9 @@ export class GameOnboardingManager extends BaseScriptComponent {
     // Intentionally empty: the virtual option is presented as Coming Soon in the UI.
   }
 
-  onShowTutorialIntroPressed() {
-    this.setRootEnabled(this.bluetoothMenuRoot, false)
-    this.setRootEnabled(this.tutorialIntroRoot, true)
-  }
-
   onSkipPressed() {
     this.setRootEnabled(this.introCard, false)
     this.setRootEnabled(this.bluetoothMenuRoot, false)
-    this.setRootEnabled(this.tutorialIntroRoot, false)
     this.isShowing = false
     this.onSequenceComplete.invoke()
   }

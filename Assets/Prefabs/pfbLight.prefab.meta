@@ -18,7 +18,7 @@
   PrefabRemaps:
     []
   Name: _Samples_
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -36,7 +36,6 @@
     - !<own> cb73dff7-7c9f-4145-6a34-75299895507c
     - !<own> 984f2baf-4fca-44cc-78ae-bd913e425a2b
     - !<own> 3d90115c-c3fe-4b58-5d0f-87ae5a408378
-    - !<own> 77fd4cfa-3825-426d-7cf8-f2499b09e717
     - !<own> fbec1766-c91a-49ed-b369-9b9ca870405a
     - !<own> ea6ba4dd-3a9c-4c5e-880b-fa4b0007f853
   Components:
@@ -1035,12 +1034,12 @@
   PrefabRemaps:
     []
   Name: PlaceLight
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -0.381367, y: -12.089778, z: 0.699993}
+    Position: {x: 2.177046, y: 0.000001, z: -0.000011}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 21.600002, y: 21.818184, z: 21.818184}
+    Scale: {x: 18.000002, y: 18.181820, z: 18.181820}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -1967,15 +1966,15 @@
   PrefabRemaps:
     []
   Name: Pinch Button - Manual Placement
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -2.993822, y: -12.089778, z: 0.700001}
+    Position: {x: -27.000000, y: 12.000000, z: 0.700001}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.200000, y: 1.200000, z: 1.200000}
     HasSegmentScaleCompensation: false
   Children:
-    []
+    - !<own> 77fd4cfa-3825-426d-7cf8-f2499b09e717
   Components:
     - !<own> 8150d2e6-3774-4466-7dd8-a92313a6a2f8
     - !<own> 51c995aa-91f1-4289-45e3-f72083aed8b4
@@ -2470,7 +2469,7 @@
   PrefabRemaps:
     []
   Name: Marker
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.300000}

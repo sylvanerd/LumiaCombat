@@ -50,4 +50,4 @@
     - // @input AssignableType hueEventEmitter
     - '// @input float intervalSecondsMin = 2 {"hint":"Minimum seconds between color cycles"}'
     - '// @input float intervalSecondsMax = 5 {"hint":"Maximum seconds between color cycles"}'
-    - // @input bool autoChangeEnabled = true
+    - // @input bool autoChangeEnabled

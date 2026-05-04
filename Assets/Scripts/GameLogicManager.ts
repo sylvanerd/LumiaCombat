@@ -1,3 +1,4 @@
+import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {AutoColorCycler} from "Scripts/PeripheralLight/AutoColorCycler"
 
 const LOG_TAG = "[GameLogicManager]"
@@ -26,6 +27,14 @@ export class GameLogicManager extends BaseScriptComponent {
   private debugMats: Material[] = []
   private currentLampColor: vec4 = new vec4(1, 1, 1, 1)
   private lastContrastingColor: vec4 = new vec4(1, 1, 1, 1)
+  private cyclers: AutoColorCycler[] = []
+  private gameStarted: boolean = false
+
+  private _onGameStarted: Event<void> = new Event<void>()
+
+  get onGameStarted() {
+    return this._onGameStarted.publicApi()
+  }
 
   static getInstance(): GameLogicManager | undefined {
     return GameLogicManager.instance
@@ -65,8 +74,33 @@ export class GameLogicManager extends BaseScriptComponent {
   }
 
   registerCycler(cycler: AutoColorCycler) {
-    print(`${LOG_TAG} AutoColorCycler registered`)
-    cycler.onColorCycled.add((color: vec4) => this.onColorCycled(color))
+    if (this.cyclers.indexOf(cycler) < 0) {
+      this.cyclers.push(cycler)
+      cycler.onColorCycled.add((color: vec4) => this.onColorCycled(color))
+      print(`${LOG_TAG} AutoColorCycler registered`)
+    } else {
+      print(`${LOG_TAG} AutoColorCycler already registered`)
+    }
+
+    if (this.gameStarted) {
+      cycler.startCycling()
+    }
+  }
+
+  startGame() {
+    if (this.gameStarted) {
+      print(`${LOG_TAG} startGame ignored; game already started`)
+      return
+    }
+
+    this.gameStarted = true
+    print(`${LOG_TAG} Game started; enabling ${this.cyclers.length} color cycler(s)`)
+
+    for (let i = 0; i < this.cyclers.length; i++) {
+      this.cyclers[i].startCycling()
+    }
+
+    this._onGameStarted.invoke()
   }
 
   private onColorCycled(color: vec4) {

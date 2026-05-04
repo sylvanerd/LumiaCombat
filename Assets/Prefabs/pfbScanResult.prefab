@@ -588,9 +588,9 @@
   ForceBasic: true
   Anchor:
     left: -1.000000
-    bottom: 0.150000
+    bottom: 0.100000
     right: 1.000000
-    top: 0.150000
+    top: 0.100000
   Offset:
     left: 0.000001
     bottom: -2.500000

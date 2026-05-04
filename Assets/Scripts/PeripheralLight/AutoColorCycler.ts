@@ -18,7 +18,7 @@ export class AutoColorCycler extends BaseScriptComponent {
   intervalSecondsMax: number = 5
 
   @input
-  autoChangeEnabled: boolean = true
+  autoChangeEnabled: boolean = false
 
   private _onColorCycled: Event<vec4> = new Event<vec4>()
   get onColorCycled() { return this._onColorCycled.publicApi() }
@@ -45,6 +45,18 @@ export class AutoColorCycler extends BaseScriptComponent {
     } else {
       print(`${LOG_TAG} GameLogicManager not found in scene -- contrasting color will not be computed`)
     }
+  }
+
+  startCycling() {
+    this.autoChangeEnabled = true
+    this.initialized = false
+    print(`${LOG_TAG} Color cycling started`)
+  }
+
+  stopCycling() {
+    this.autoChangeEnabled = false
+    this.initialized = false
+    print(`${LOG_TAG} Color cycling stopped`)
   }
 
   private onUpdate() {

@@ -201,12 +201,12 @@
   PrefabRemaps:
     []
   Name: PlaceLight
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -0.381367, y: -12.089778, z: 0.699993}
+    Position: {x: 2.177046, y: 0.000001, z: -0.000011}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 21.600002, y: 21.818184, z: 21.818184}
+    Scale: {x: 18.000002, y: 18.181820, z: 18.181820}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -1061,7 +1061,6 @@
   Enabled: true
   ScriptAsset: !<reference> 43a76931-9bde-4e06-95b3-e9128537f344
   ScriptInputsDefault:
-    _isToggledOn: true
     isSynced: true
   ScriptTypesDefault:
     {}
@@ -1069,7 +1068,7 @@
     "":
       _onIcon: !<reference.SceneObject> d23e4010-e26f-4431-a9cf-c916d0d701fd
       _offIcon: !<reference.SceneObject> f35a510b-47b8-4f1f-8aad-2b6c18027923
-      _isToggledOn: false
+      _isToggledOn: true
       editEventCallbacks: true
       customFunctionForOnStateChanged: !<reference.ScriptComponent> 4ba42aff-efae-4df5-a127-203a607ac3ff
       onStateChangedFunctionNames: !<string[]>
@@ -4931,10 +4930,7 @@
     "":
       introCard: !<reference.SceneObject> 7f556d43-b922-42aa-af86-59a5f4fb81c6
       bluetoothMenuRoot: !<reference.SceneObject> f70c54da-3770-4f7d-a7f5-fd39b0e8e1bd
-      tutorialIntroRoot: !<reference.SceneObject> 82114997-ccca-47ac-8587-e6a9c36b34b5
-      scanToggle: !<MappingBased.AssignableType> 339dd10d-b722-485a-9221-96f38df092db
       autoStart: true
-      autoStartScanOnPhysical: true
   ScriptTypes:
     "":
       {}
@@ -5124,7 +5120,7 @@
   PrefabRemaps:
     []
   Name: _Samples_
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -5142,7 +5138,6 @@
     - !<own> f40e4067-2239-4783-8b03-1ae31e4ef377
     - !<own> 2bb43e07-3a72-4386-9894-e2801851e2a9
     - !<own> e2da461c-2865-4586-93c6-8f489082f6dc
-    - !<own> 00dde0be-4829-4dc4-9687-1aeb98a0a116
     - !<own> 93c1adfb-f3fd-4ff7-8558-21024f9389a0
     - !<own> d18a5f78-7cda-4438-845c-a249caf73c2b
   Components:
@@ -5640,11 +5635,11 @@
 - !<SceneObject/65492144-593c-435b-8fdf-0272f8267348>
   PrefabRemaps:
     []
-  Name: scanButton
+  Name: connectButton
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -5.000000, y: 13.500000, z: 0.000000}
+    Position: {x: -7.000000, y: 15.000000, z: -0.000005}
     Rotation: {x: 30.000008, y: -0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -6467,7 +6462,7 @@
   PrefabRemaps:
     []
   Name: Marker
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.300000}
@@ -7467,9 +7462,9 @@
   ForceBasic: true
   Anchor:
     left: -1.000000
-    bottom: 0.150000
+    bottom: 0.100000
     right: 1.000000
-    top: 0.150000
+    top: 0.100000
   Offset:
     left: 0.000001
     bottom: -2.500000
@@ -7973,7 +7968,7 @@
   PrefabRemaps:
     []
   Name: ScrollBar
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 18.000000, y: 0.000000, z: 0.000000}
@@ -10639,7 +10634,7 @@
   Enabled: true
   ScriptAsset: !<reference> f44d9200-ee1a-4ed8-a784-88487a217e4f
   ScriptInputsDefault:
-    quickTestMode: true
+    {}
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -10647,7 +10642,7 @@
       debugMeshPrefab: !<reference.ObjectPrefab> 97f8401a-3ec3-4321-833e-dbb6070d47ba
       contrastThreshold: 0.400000
       similarityThreshold: 0.100000
-      quickTestMode: false
+      quickTestMode: true
   ScriptTypes:
     "":
       {}
@@ -10731,9 +10726,9 @@
   SortingType: Hierarchy
   WorldSpaceRect:
     left: -14.000000
-    bottom: -20.000000
+    bottom: -15.000000
     right: 14.000000
-    top: 20.000000
+    top: 15.000000
 - !<ColliderComponent/b2d0ff76-4dbd-47e8-a76f-461a7c6de3f0>
   PrefabRemaps:
     []
@@ -12261,7 +12256,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Scanning
+  Text: Connecting...
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -13008,7 +13003,7 @@
   PrefabRemaps:
     []
   Name: ScrollBarSlider
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 18.000000, y: -7.000000, z: -0.250000}
@@ -13073,7 +13068,7 @@
   PrefabRemaps:
     []
   Name: filterButton
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 11.000000, y: 13.500000, z: 0.000000}
@@ -14429,15 +14424,15 @@
   PrefabRemaps:
     []
   Name: Pinch Button - Manual Placement
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -2.993822, y: -12.089778, z: 0.700001}
+    Position: {x: -27.000000, y: 12.000000, z: 0.700001}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.200000, y: 1.200000, z: 1.200000}
     HasSegmentScaleCompensation: false
   Children:
-    []
+    - !<own> 00dde0be-4829-4dc4-9687-1aeb98a0a116
   Components:
     - !<own> b9babc05-d72d-4fcd-b691-aa4e11b919f1
     - !<own> e930e13e-a879-46bf-8926-d12b04d151d2
@@ -14825,7 +14820,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Scan
+  Text: Connect
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000

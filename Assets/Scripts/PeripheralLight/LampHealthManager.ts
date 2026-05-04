@@ -131,7 +131,7 @@ export class LampHealthManager extends BaseScriptComponent {
     print(`${LOG_TAG} Lamp defeated!`)
 
     this.hueEventEmitter.togglePower(false)
-    this.autoColorCycler.autoChangeEnabled = false
+    this.autoColorCycler.stopCycling()
 
     if (this.winText) {
       this.winText.getSceneObject().enabled = true

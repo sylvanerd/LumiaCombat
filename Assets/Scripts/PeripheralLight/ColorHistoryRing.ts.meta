@@ -57,6 +57,6 @@
     - '// @input float ringRadius = 1.5 {"hint":"Radius of the hexagonal ring"}'
     - '// @input float sphereScale = 0.5 {"hint":"Uniform scale of each sphere"}'
     - '// @input vec4 defaultColor = {1,1,1,0.15} {"hint":"Initial dimmed transparent white color"}'
-    - '// @input AssignableType latticeVFX {"hint":"HandLatticeVFXController for applying sphere color to hand mesh"}'
+    - '// @input AssignableType latticeVFX {"hint":"HandVFXController for applying sphere color to hand mesh"}'
     - '// @input AssignableType_1 pinchDetector {"hint":"ColorPickPinchDetector to suppress during sphere touch"}'
     - '// @input float touchRadius = 1 {"hint":"Max distance from index fingertip to sphere center to count as a touch"}'

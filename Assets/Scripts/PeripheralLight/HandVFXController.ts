@@ -8,7 +8,7 @@ enum ContourState {
 }
 
 @component
-export class HandLatticeVFXController extends BaseScriptComponent {
+export class HandVFXController extends BaseScriptComponent {
   @input
   @hint("The HandContour material asset (cloned per hand at startup)")
   latticeMaterial: Material

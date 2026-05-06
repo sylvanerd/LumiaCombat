@@ -7589,7 +7589,7 @@
       camModule: !<reference.CameraModule> b5286bef-9ea5-4895-85b1-331e9f2b4abf
       useCenterCrop: true
       centerCropTexture: !<reference.Texture> 97934d4d-522e-4381-8187-3ebe9f3306b3
-      centerCropScale: 0.400000
+      centerCropScale: 0.600000
       mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       ballPrefab: !<reference.ObjectPrefab> cb9a91d7-983d-46e5-9f22-5b73de1fe641
       growSpeed: !<float> 6.000000
@@ -14559,7 +14559,7 @@
 - !<ScriptComponent/ef5cb7cd-04b5-41bf-bc68-7f961158f305>
   PrefabRemaps:
     []
-  Name: HandLatticeVFXController
+  Name: HandVFXController
   Enabled: true
   ScriptAsset: !<reference> 4bb1ca9c-54cb-4382-ae09-f897b2588e8d
   ScriptInputsDefault:
@@ -14574,7 +14574,7 @@
       idleEmission: 1.600000
       pulseEmission: !<float> 2.000000
       pulseFrequency: !<float> 2.000000
-      transitionDuration: 0.200000
+      transitionDuration: 0.100000
   ScriptTypes:
     "":
       {}

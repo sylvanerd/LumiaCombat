@@ -2,7 +2,7 @@ import TrackedHand from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/
 import {SIK} from "SpectaclesInteractionKit.lspkg/SIK"
 import {ColorPickController} from "./ColorPickController"
 import {ColorPickPinchDetector} from "./ColorPickPinchDetector"
-import {HandLatticeVFXController} from "./HandLatticeVFXController"
+import {HandVFXController} from "./HandVFXController"
 
 const LOG_TAG = "[ColorBar]"
 const SPHERE_COUNT = 5
@@ -34,8 +34,8 @@ export class ColorHistoryBar extends BaseScriptComponent {
   defaultColor: vec4 = new vec4(1, 1, 1, 0.15)
 
   @input
-  @hint("HandLatticeVFXController for applying sphere color to hand mesh")
-  latticeVFX: HandLatticeVFXController
+  @hint("HandVFXController for applying sphere color to hand mesh")
+  latticeVFX: HandVFXController
 
   @input
   @hint("ColorPickPinchDetector to suppress during sphere touch")

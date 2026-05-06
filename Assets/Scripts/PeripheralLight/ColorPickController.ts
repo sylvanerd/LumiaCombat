@@ -4,7 +4,7 @@ import TrackedHand from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {BallSpawnVFXController} from "./BallSpawnVFXController"
 import {ColorPickPinchDetector} from "./ColorPickPinchDetector"
-import {HandLatticeVFXController} from "./HandLatticeVFXController"
+import {HandVFXController} from "./HandVFXController"
 import {HueEventEmitter} from "./HueEventEmitter"
 
 let _colorPickInstance: ColorPickController = null
@@ -14,9 +14,8 @@ const GEMINI_MODEL_DEFAULT = "gemini-2.5-flash"
 const GEMINI_MODEL_LITE = "gemini-2.5-flash-lite"
 
 const SYSTEM_PROMPT =
-  "Detect the dominant color of the object nearest the pinched index and thumb fingertips. " +
-  "Ignore hands/fingers. Return exactly one JSON object with integer r, g, and b values from 0 to 255. " +
-  "Do not include markdown, code fences, explanation, or any text outside the JSON object."
+  "Detect the color of the object nearest the pinched index and thumb fingertips. " +
+  "Ignore hands and fingers. Return only JSON with integer r, g, and b values from 0 to 255."
 
 @component
 export class ColorPickController extends BaseScriptComponent {
@@ -90,7 +89,7 @@ export class ColorPickController extends BaseScriptComponent {
   @input
   @hint("Hand lattice VFX controller for visual feedback on hand mesh")
   @allowUndefined
-  latticeVFX: HandLatticeVFXController
+  latticeVFX: HandVFXController
 
   private hueEventEmitter: HueEventEmitter = null
 
@@ -115,6 +114,7 @@ export class ColorPickController extends BaseScriptComponent {
 
   private cameraTexture: Texture
   private latestFrame: Texture = null
+  private cameraReady: boolean = false
   private isRequestRunning: boolean = false
   private pipelineStartTime: number = 0
   private mainCamTrans: Transform
@@ -163,10 +163,13 @@ export class ColorPickController extends BaseScriptComponent {
 
     const camTexControl = this.cameraTexture.control as CameraTextureProvider
     camTexControl.onNewFrame.add(() => {
-      this.latestFrame = this.cameraTexture.copyFrame()
+      if (!this.cameraReady) {
+        this.cameraReady = true
+        print(`${LOG_TAG} Camera ready (first frame received)`)
+      }
     })
 
-    print(`${LOG_TAG} Camera started with CameraId.Left_Color, buffering frames via onNewFrame`)
+    print(`${LOG_TAG} Camera started with CameraId.Left_Color`)
   }
 
   private setupGestureEvents() {
@@ -244,9 +247,18 @@ export class ColorPickController extends BaseScriptComponent {
 
     this.spawnBall(hand)
 
-    if (!this.latestFrame) {
-      print(`${LOG_TAG} ERROR: No camera frame buffered yet, camera may still be starting`)
+    if (!this.cameraReady) {
+      print(`${LOG_TAG} ERROR: Camera not ready yet, ignoring pinch`)
       this.isRequestRunning = false
+      if (this.latticeVFX) this.latticeVFX.cancelExtraction()
+      return
+    }
+
+    this.latestFrame = this.cameraTexture.copyFrame()
+    if (!this.latestFrame) {
+      print(`${LOG_TAG} ERROR: copyFrame() returned null`)
+      this.isRequestRunning = false
+      if (this.latticeVFX) this.latticeVFX.cancelExtraction()
       return
     }
 
@@ -418,7 +430,7 @@ export class ColorPickController extends BaseScriptComponent {
                 }
               },
               {
-                text: "What is the dominant color of the object nearest to the fingertips in this image?"
+                text: "What exact visible surface color is directly behind the pinched index and thumb fingertips in this image?"
               }
             ]
           }
@@ -434,7 +446,7 @@ export class ColorPickController extends BaseScriptComponent {
           temperature: 0,
           responseMimeType: "application/json",
           response_schema: respSchema,
-          maxOutputTokens: 150
+          maxOutputTokens: 100
         }
       }
     }
@@ -445,7 +457,6 @@ export class ColorPickController extends BaseScriptComponent {
       .then((response) => {
         const geminiMs = ((getTime() - this.geminiStartTime) * 1000).toFixed(0)
         print(`${LOG_TAG} Gemini response received in ${geminiMs}ms!`)
-        print(`${LOG_TAG} Gemini full response: ${JSON.stringify(response)}`)
 
         try {
           if (!response || !response.candidates || response.candidates.length === 0) {

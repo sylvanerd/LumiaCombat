@@ -1,4 +1,6 @@
 const VFX_LOG = "[BallVFX]"
+const EMISSION_BOOST = 1.5
+const RESIDUAL_EMISSION = 0.3
 
 
 /**
@@ -17,8 +19,7 @@ const VFX_LOG = "[BallVFX]"
  * Lifecycle:
  *   1. Materializing  -- dissolve reveals sphere, emission fades to residual
  *   2. AwaitingColor  -- ball solid, subtle Fresnel glow persists
- *   3. ColorFadeOut   -- color received, Fresnel flashes new color then fades
- *   4. Done           -- emission off
+ *   3. Done           -- color received, final Fresnel emission persists
  */
 @component
 export class BallSpawnVFXController extends BaseScriptComponent {
@@ -26,6 +27,10 @@ export class BallSpawnVFXController extends BaseScriptComponent {
   @allowUndefined
   @hint("VFXComponent on child SceneObject for surrounding particle burst")
   vfxComponent: VFXComponent
+
+  @input
+  @hint("Emission multiplier for spawn particles only")
+  particleEmissionBoost: number = 2.0
 
   @input
   @hint("Seconds for the full dissolve reveal (0 = instant)")
@@ -40,32 +45,25 @@ export class BallSpawnVFXController extends BaseScriptComponent {
   peakEmissionIntensity: number = 2.5
 
   @input
-  @hint("Multiplier to brighten baseColor into emissionColor")
-  emissionBoost: number = 1.5
-
-  @input
-  @hint("Fraction of peak emission kept while awaiting color (0-1)")
-  residualEmission: number = 0.3
-
-  @input
-  @hint("Seconds for Fresnel glow to fade after color arrives")
-  colorFadeDuration: number = 0.35
-
-  @input
-  @hint("Base alpha for the ball core (lower = more see-through center)")
-  coreAlpha: number = 0.6
+  @hint("Final alpha for the ball core after materialization")
+  coreAlpha: number = 1.0
 
   @input
   @hint("Emission kept on the final colored ball (0 = no rim, 0.5 = subtle glow)")
   finalEmission: number = 0.4
 
+  @input
+  @hint("Seconds for extracted color to blend from placeholder to final color")
+  colorFillDuration: number = 0.5
+
   private ballMat: Material = null
   private progress: number = 0
   private animating: boolean = false
   private awaitingColor: boolean = false
-  private fadingOut: boolean = false
-  private fadeProgress: number = 0
-  private residualIntensity: number = 0
+  private colorFilling: boolean = false
+  private colorFillProgress: number = 0
+  private colorFillStartColor: vec4 = new vec4(0.5, 0.5, 0.5, 1)
+  private colorFillTargetColor: vec4 = new vec4(0.5, 0.5, 0.5, 1)
   private color: vec4 = new vec4(0.5, 0.5, 0.5, 1)
   private updateBound: boolean = false
 
@@ -75,18 +73,18 @@ export class BallSpawnVFXController extends BaseScriptComponent {
     this.progress = 0
     this.animating = true
     this.awaitingColor = false
-    this.fadingOut = false
-    this.fadeProgress = 0
+    this.colorFilling = false
+    this.colorFillProgress = 0
 
     const pass = mat.mainPass
     pass.materializeProgress = 0
+    pass.baseColor = new vec4(initialColor.r, initialColor.g, initialColor.b, 0)
     pass.fresnelPower = this.fresnelPower
     pass.emissionColor = this.buildEmission(initialColor)
     pass.emissionIntensity = this.peakEmissionIntensity
 
     if (this.vfxComponent) {
-      this.pushVfxColor(initialColor)
-      this.vfxComponent.enabled = true
+      this.vfxComponent.enabled = false
     }
 
     if (!this.updateBound) {
@@ -98,27 +96,37 @@ export class BallSpawnVFXController extends BaseScriptComponent {
   }
 
   updateColor(newColor: vec4) {
-    this.color = newColor
     if (this.ballMat) {
-      this.ballMat.mainPass.baseColor = new vec4(newColor.r, newColor.g, newColor.b, this.coreAlpha)
-      this.ballMat.mainPass.emissionColor = this.buildEmission(newColor)
+      const current = this.ballMat.mainPass.baseColor
+      this.colorFillStartColor = new vec4(current.r, current.g, current.b, current.a)
+      this.colorFillTargetColor = new vec4(newColor.r, newColor.g, newColor.b, this.coreAlpha)
+      this.colorFillProgress = 0
+      this.colorFilling = this.colorFillDuration > 0
+
+      if (!this.colorFilling) {
+        this.color = newColor
+        this.ballMat.mainPass.baseColor = new vec4(newColor.r, newColor.g, newColor.b, current.a)
+        this.ballMat.mainPass.emissionColor = this.buildEmission(newColor)
+      }
     }
     this.pushVfxColor(newColor)
+    if (this.vfxComponent) {
+      this.vfxComponent.enabled = true
+    }
 
     if (this.awaitingColor) {
       this.awaitingColor = false
-      this.fadingOut = true
-      this.fadeProgress = 0
-      this.residualIntensity = this.peakEmissionIntensity * this.residualEmission
-      print(`${VFX_LOG} Color received, fading Fresnel to final level`)
+      if (this.ballMat) {
+        this.ballMat.mainPass.emissionIntensity = this.peakEmissionIntensity * this.finalEmission
+      }
+      print(`${VFX_LOG} Color received, Fresnel settled at final emission`)
     }
   }
 
   forceComplete() {
-    if (!this.animating && !this.awaitingColor && !this.fadingOut) return
+    if (!this.animating && !this.awaitingColor) return
     this.animating = false
     this.awaitingColor = false
-    this.fadingOut = false
     this.progress = 1
     this.killEmission()
   }
@@ -132,11 +140,10 @@ export class BallSpawnVFXController extends BaseScriptComponent {
 
     if (this.animating) {
       this.tickMaterialize()
-      return
     }
 
-    if (this.fadingOut) {
-      this.tickColorFade()
+    if (this.colorFilling) {
+      this.tickColorFill()
     }
   }
 
@@ -147,33 +154,16 @@ export class BallSpawnVFXController extends BaseScriptComponent {
     const smooth = t * t * (3 - 2 * t)
 
     this.ballMat.mainPass.materializeProgress = smooth
+    this.ballMat.mainPass.baseColor = new vec4(this.color.r, this.color.g, this.color.b, smooth * this.coreAlpha)
     this.ballMat.mainPass.fresnelPower = this.fresnelPower * (1.0 - smooth * 0.6)
 
-    const minEmission = this.peakEmissionIntensity * this.residualEmission
+    const minEmission = this.peakEmissionIntensity * RESIDUAL_EMISSION
     const emFade = 1.0 - smooth * smooth
     const emValue = minEmission + (this.peakEmissionIntensity - minEmission) * emFade
     this.ballMat.mainPass.emissionIntensity = emValue
 
     if (this.progress >= 1.0) {
       this.finalizeMaterialize()
-    }
-  }
-
-  private tickColorFade() {
-    this.fadeProgress = Math.min(this.fadeProgress + getDeltaTime() / this.colorFadeDuration, 1.0)
-
-    const t = this.fadeProgress
-    const smooth = t * t * (3 - 2 * t)
-    const target = this.peakEmissionIntensity * this.finalEmission
-    this.ballMat.mainPass.emissionIntensity = target + (this.residualIntensity - target) * (1.0 - smooth)
-
-    if (this.fadeProgress >= 1.0) {
-      this.fadingOut = false
-      this.ballMat.mainPass.emissionIntensity = target
-      if (this.vfxComponent) {
-        this.vfxComponent.enabled = false
-      }
-      print(`${VFX_LOG} Fresnel settled at final emission`)
     }
   }
 
@@ -184,11 +174,42 @@ export class BallSpawnVFXController extends BaseScriptComponent {
     if (this.ballMat) {
       this.ballMat.mainPass.materializeProgress = 1.0
       this.ballMat.mainPass.fresnelPower = this.fresnelPower * 0.4
-      this.ballMat.mainPass.emissionIntensity = this.peakEmissionIntensity * this.residualEmission
+      this.ballMat.mainPass.emissionIntensity = this.peakEmissionIntensity * RESIDUAL_EMISSION
       this.applyAlpha(this.coreAlpha)
     }
 
     print(`${VFX_LOG} Materialize complete, awaiting color`)
+  }
+
+  private tickColorFill() {
+    this.colorFillProgress = Math.min(this.colorFillProgress + getDeltaTime() / this.colorFillDuration, 1.0)
+
+    const t = this.colorFillProgress
+    const smooth = t * t * (3 - 2 * t)
+    const currentAlpha = this.ballMat.mainPass.baseColor.a
+    const blended = new vec4(
+      this.colorFillStartColor.r + (this.colorFillTargetColor.r - this.colorFillStartColor.r) * smooth,
+      this.colorFillStartColor.g + (this.colorFillTargetColor.g - this.colorFillStartColor.g) * smooth,
+      this.colorFillStartColor.b + (this.colorFillTargetColor.b - this.colorFillStartColor.b) * smooth,
+      currentAlpha
+    )
+
+    this.color = blended
+    this.ballMat.mainPass.baseColor = blended
+    this.ballMat.mainPass.emissionColor = this.buildEmission(blended)
+
+    if (this.colorFillProgress >= 1.0) {
+      this.colorFilling = false
+      this.color = this.colorFillTargetColor
+      this.ballMat.mainPass.baseColor = new vec4(
+        this.colorFillTargetColor.r,
+        this.colorFillTargetColor.g,
+        this.colorFillTargetColor.b,
+        currentAlpha
+      )
+      this.ballMat.mainPass.emissionColor = this.buildEmission(this.colorFillTargetColor)
+      print(`${VFX_LOG} Extracted color fill complete`)
+    }
   }
 
   private killEmission() {
@@ -209,11 +230,10 @@ export class BallSpawnVFXController extends BaseScriptComponent {
   }
 
   private buildEmission(c: vec4): vec4 {
-    const b = this.emissionBoost
     return new vec4(
-      Math.min(1, c.r * b),
-      Math.min(1, c.g * b),
-      Math.min(1, c.b * b),
+      Math.min(1, c.r * EMISSION_BOOST),
+      Math.min(1, c.g * EMISSION_BOOST),
+      Math.min(1, c.b * EMISSION_BOOST),
       1
     )
   }
@@ -221,7 +241,9 @@ export class BallSpawnVFXController extends BaseScriptComponent {
   private pushVfxColor(c: vec4) {
     if (!this.vfxComponent || !this.vfxComponent.asset) return
     try {
-      ;(this.vfxComponent.asset.properties as any)["particleColor"] = c
+      const props = this.vfxComponent.asset.properties as any
+      props["particleColor"] = c
+      props["particleEmissionBoost"] = this.particleEmissionBoost
     } catch (_) {
       // property may not exist on the VFX graph yet
     }

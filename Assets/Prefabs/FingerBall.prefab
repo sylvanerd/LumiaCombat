@@ -10,8 +10,6 @@
     - 28d03338-ccc1-4e85-902d-ea60b73df3b8: ce14ee42-5248-4c83-be7e-2819d0a8aa2f
     - 3e66f9c1-2c41-4af0-8b01-7544cc9f8a45: c0710684-088e-4cc6-b684-6d7531de75d2
     - 7988fdf6-fc20-4de4-ac16-8bfe2f54a985: 33466c32-8093-44c7-9263-3567e0d4e719
-    - a3b4c5d6-e7f8-4901-a2b3-c4d5e6f7a8b9: 75e31938-d9df-459d-8f19-3fc67554c5e0
-    - b4c5d6e7-f8a9-4012-b3c4-d5e6f7a8b9c0: f5fd18ff-1268-47fa-9fa7-2082d9f3d105
     - cf89afe5-4ab3-4f90-8e0b-6df5b50e092f: 6dea2454-0775-4b3d-a76d-dc5de65e0158
     - f3d7e2eb-41ae-4c43-9e44-e26330318b77: 8016cd5c-5e7d-4910-8dc3-e2559ff3c817
   Name: Sphere
@@ -24,7 +22,6 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> cf89afe5-4ab3-4f90-8e0b-6df5b50e092f
-    - !<own> a3b4c5d6-e7f8-4901-a2b3-c4d5e6f7a8b9
   Components:
     - !<own> 28d03338-ccc1-4e85-902d-ea60b73df3b8
     - !<own> 3e66f9c1-2c41-4af0-8b01-7544cc9f8a45
@@ -79,51 +76,22 @@
   Enabled: true
   ScriptAsset: !<reference> c301c455-c3cd-431e-88d9-b66454ac8a32
   ScriptInputsDefault:
-    {}
+    finalEmission: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       vfxComponent: !<reference.VFXComponent> f3d7e2eb-41ae-4c43-9e44-e26330318b77
-      materializeDuration: 0.500000
-      fresnelPower: !<float> 2.000000
-      peakEmissionIntensity: 0.300000
-      emissionBoost: !<float> 0.000000
-      residualEmission: !<float> 0.000000
-      colorFadeDuration: !<float> 5.000000
+      particleEmissionBoost: !<float> 1.000000
+      materializeDuration: 2.500000
+      fresnelPower: 0.800000
+      peakEmissionIntensity: !<float> 1.000000
       coreAlpha: !<float> 1.000000
-      finalEmission: 0.500000
+      finalEmission: 0.400000
+      colorFillDuration: 0.300000
   ScriptTypes:
     "":
       {}
-- !<SceneObject/a3b4c5d6-e7f8-4901-a2b3-c4d5e6f7a8b9>
-  PrefabRemaps:
-    []
-  Name: TrailVFX
-  Enabled: false
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> b4c5d6e7-f8a9-4012-b3c4-d5e6f7a8b9c0
-- !<VFXComponent/b4c5d6e7-f8a9-4012-b3c4-d5e6f7a8b9c0>
-  PrefabRemaps:
-    []
-  Name: Trail VFX Component
-  Enabled: false
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  VFXAsset: !<reference> 33932599-ac0a-41ce-a7d1-c2be1c4bac79
 - !<SceneObject/cf89afe5-4ab3-4f90-8e0b-6df5b50e092f>
   PrefabRemaps:
     []

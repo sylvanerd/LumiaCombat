@@ -21,20 +21,19 @@
   Enabled: true
   ScriptAsset: !<reference> c301c455-c3cd-431e-88d9-b66454ac8a32
   ScriptInputsDefault:
-    {}
+    finalEmission: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       vfxComponent: !<reference.VFXComponent> 8016cd5c-5e7d-4910-8dc3-e2559ff3c817
-      materializeDuration: 0.500000
-      fresnelPower: !<float> 2.000000
-      peakEmissionIntensity: 0.300000
-      emissionBoost: !<float> 0.000000
-      residualEmission: !<float> 0.000000
-      colorFadeDuration: !<float> 5.000000
+      particleEmissionBoost: !<float> 1.000000
+      materializeDuration: 2.500000
+      fresnelPower: 0.800000
+      peakEmissionIntensity: !<float> 1.000000
       coreAlpha: !<float> 1.000000
-      finalEmission: 0.500000
+      finalEmission: 0.400000
+      colorFillDuration: 0.300000
   ScriptTypes:
     "":
       {}
@@ -53,21 +52,6 @@
     []
   Components:
     - !<own> 8016cd5c-5e7d-4910-8dc3-e2559ff3c817
-- !<SceneObject/75e31938-d9df-459d-8f19-3fc67554c5e0>
-  PrefabRemaps:
-    []
-  Name: TrailVFX
-  Enabled: false
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> f5fd18ff-1268-47fa-9fa7-2082d9f3d105
 - !<VFXComponent/8016cd5c-5e7d-4910-8dc3-e2559ff3c817>
   PrefabRemaps:
     []
@@ -142,21 +126,7 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 6dea2454-0775-4b3d-a76d-dc5de65e0158
-    - !<own> 75e31938-d9df-459d-8f19-3fc67554c5e0
   Components:
     - !<own> ce14ee42-5248-4c83-be7e-2819d0a8aa2f
     - !<own> c0710684-088e-4cc6-b684-6d7531de75d2
     - !<own> 33466c32-8093-44c7-9263-3567e0d4e719
-- !<VFXComponent/f5fd18ff-1268-47fa-9fa7-2082d9f3d105>
-  PrefabRemaps:
-    []
-  Name: Trail VFX Component
-  Enabled: false
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  VFXAsset: !<reference> 33932599-ac0a-41ce-a7d1-c2be1c4bac79

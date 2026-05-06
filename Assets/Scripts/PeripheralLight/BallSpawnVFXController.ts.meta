@@ -26,14 +26,13 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    colorFadeDuration: false
+    colorFillDuration: false
     coreAlpha: false
-    emissionBoost: false
     finalEmission: false
     fresnelPower: false
     materializeDuration: false
+    particleEmissionBoost: false
     peakEmissionIntensity: false
-    residualEmission: false
     vfxComponent: false
   ScriptTypesHidden:
     {}
@@ -45,24 +44,22 @@
     []
   DefaultScriptInputs:
     - vfxComponent: !<reference.VFXComponent> 00000000-0000-0000-0000-000000000000
+      particleEmissionBoost: !<float> 2.000000
       materializeDuration: 0.800000
       fresnelPower: !<float> 3.000000
       peakEmissionIntensity: 2.500000
-      emissionBoost: 1.500000
-      residualEmission: 0.300000
-      colorFadeDuration: 0.350000
       coreAlpha: 0.600000
       finalEmission: 0.400000
+      colorFillDuration: 0.500000
   ScriptTypes:
     -
       {}
   InputLines:
     - '// @input Component.VFXComponent vfxComponent {"hint":"VFXComponent on child SceneObject for surrounding particle burst"}'
+    - '// @input float particleEmissionBoost = 2 {"hint":"Emission multiplier for spawn particles only"}'
     - '// @input float materializeDuration = 0.8 {"hint":"Seconds for the full dissolve reveal (0 = instant)"}'
     - '// @input float fresnelPower = 3 {"hint":"Fresnel edge falloff exponent (higher = thinner rim)"}'
     - '// @input float peakEmissionIntensity = 2.5 {"hint":"Peak HDR emission glow during reveal"}'
-    - '// @input float emissionBoost = 1.5 {"hint":"Multiplier to brighten baseColor into emissionColor"}'
-    - '// @input float residualEmission = 0.3 {"hint":"Fraction of peak emission kept while awaiting color (0-1)"}'
-    - '// @input float colorFadeDuration = 0.35 {"hint":"Seconds for Fresnel glow to fade after color arrives"}'
-    - '// @input float coreAlpha = 0.6 {"hint":"Base alpha for the ball core (lower = more see-through center)"}'
+    - '// @input float coreAlpha = 1 {"hint":"Final alpha for the ball core after materialization"}'
     - '// @input float finalEmission = 0.4 {"hint":"Emission kept on the final colored ball (0 = no rim, 0.5 = subtle glow)"}'
+    - '// @input float colorFillDuration = 0.5 {"hint":"Seconds for extracted color to blend from placeholder to final color"}'

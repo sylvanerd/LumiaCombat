@@ -3,7 +3,6 @@ import {GeminiTypes} from "RemoteServiceGateway.lspkg/HostedExternal/GeminiTypes
 import TrackedHand from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/TrackedHand"
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {BallSpawnVFXController} from "./BallSpawnVFXController"
-import {BallTrailVFXController} from "./BallTrailVFXController"
 import {ColorPickPinchDetector} from "./ColorPickPinchDetector"
 import {HandLatticeVFXController} from "./HandLatticeVFXController"
 import {HueEventEmitter} from "./HueEventEmitter"
@@ -29,10 +28,6 @@ export class ColorPickController extends BaseScriptComponent {
 
   @input
   mainCam: SceneObject
-
-  @input
-  @hint("Optional text component for status messages")
-  statusText: Text
 
   @input
   @hint("Sphere prefab with Unlit alpha-blend material")
@@ -102,7 +97,6 @@ export class ColorPickController extends BaseScriptComponent {
   private activeBall: SceneObject = null
   private activeBallMat: Material = null
   private activeBallVFX: BallSpawnVFXController = null
-  private activeBallTrailVFX: BallTrailVFXController = null
   private activeHand: TrackedHand = null
   private currentBallScale: number = 0
 
@@ -131,7 +125,6 @@ export class ColorPickController extends BaseScriptComponent {
 
     this.createEvent("UpdateEvent").bind(() => this.onUpdate())
 
-    this.setStatus("Color Pick ready. Pinch and hold to sample.")
     print(`${LOG_TAG} Controller initialized. Model: ${this.geminiModel}`)
   }
 
@@ -213,13 +206,11 @@ export class ColorPickController extends BaseScriptComponent {
   private onPinchHeld(hand: TrackedHand) {
     if (this.isRequestRunning || this.ballActive) {
       print(`${LOG_TAG} Request already in progress or ball active, ignoring pinch`)
-      this.setStatus("Already analyzing... please wait")
       return
     }
 
     this.pipelineStartTime = getTime()
     print(`${LOG_TAG} Pinch hold triggered! Using latest buffered frame...`)
-    this.setStatus("Capturing...")
     this.isRequestRunning = true
 
     if (this.latticeVFX) this.latticeVFX.startExtraction()
@@ -228,7 +219,6 @@ export class ColorPickController extends BaseScriptComponent {
 
     if (!this.latestFrame) {
       print(`${LOG_TAG} ERROR: No camera frame buffered yet, camera may still be starting`)
-      this.setStatus("Camera not ready yet, try again")
       this.isRequestRunning = false
       return
     }
@@ -239,7 +229,6 @@ export class ColorPickController extends BaseScriptComponent {
     print(`${LOG_TAG} Camera frame ready: ${width}x${height}`)
 
     print(`${LOG_TAG} Encoding image to Base64...`)
-    this.setStatus("Encoding image...")
 
     const encodeStart = getTime()
     Base64.encodeTextureAsync(
@@ -251,7 +240,6 @@ export class ColorPickController extends BaseScriptComponent {
       },
       () => {
         print(`${LOG_TAG} ERROR: Image encoding failed!`)
-        this.setStatus("ERROR: Image encoding failed")
         this.isRequestRunning = false
       },
       CompressionQuality.LowQuality,
@@ -277,7 +265,6 @@ export class ColorPickController extends BaseScriptComponent {
     this.previousHandPos = null
     this.handVelocity = vec3.zero()
     this.activeBallVFX = null
-    this.activeBallTrailVFX = null
 
     if (!this.ballPrefab) {
       print(`${LOG_TAG} WARNING: ballPrefab not assigned, skipping ball spawn`)
@@ -307,8 +294,6 @@ export class ColorPickController extends BaseScriptComponent {
       this.activeBallVFX.startMaterialize(this.activeBallMat, placeholderColor)
       print(`${LOG_TAG} Materialize VFX started`)
     }
-
-    this.activeBallTrailVFX = this.findTrailController(this.activeBall)
   }
 
   public spawnPresetBall(hand: TrackedHand, color: vec4, presetScale: number) {
@@ -338,7 +323,6 @@ export class ColorPickController extends BaseScriptComponent {
       Math.round(color.g * 255).toString(16).padStart(2, "0") +
       Math.round(color.b * 255).toString(16).padStart(2, "0")
 
-    this.setStatus(`Color: ${hex} (preset)`)
     print(`${LOG_TAG} Preset ball spawned with color ${hex}, scale=${presetScale}`)
   }
 
@@ -346,7 +330,6 @@ export class ColorPickController extends BaseScriptComponent {
 
   private sendGeminiColorRequest(imageBase64: string) {
     print(`${LOG_TAG} Sending Gemini request with model: ${this.geminiModel}...`)
-    this.setStatus("Analyzing color with AI...")
     this.geminiStartTime = getTime()
 
     const respSchema: GeminiTypes.Common.Schema = {
@@ -355,10 +338,9 @@ export class ColorPickController extends BaseScriptComponent {
         hex: {type: "string"},
         r: {type: "number"},
         g: {type: "number"},
-        b: {type: "number"},
-        colorName: {type: "string"}
+        b: {type: "number"}
       },
-      required: ["hex", "r", "g", "b", "colorName"]
+      required: ["hex", "r", "g", "b"]
     }
 
     const reqObj: GeminiTypes.Models.GenerateContentRequest = {
@@ -408,7 +390,6 @@ export class ColorPickController extends BaseScriptComponent {
         try {
           if (!response || !response.candidates || response.candidates.length === 0) {
             print(`${LOG_TAG} ERROR: No candidates in Gemini response`)
-            this.setStatus("ERROR: Empty Gemini response")
             this.isRequestRunning = false
             return
           }
@@ -416,7 +397,6 @@ export class ColorPickController extends BaseScriptComponent {
           const candidate = response.candidates[0]
           if (!candidate.content || !candidate.content.parts || candidate.content.parts.length === 0) {
             print(`${LOG_TAG} ERROR: No content parts in Gemini response. finishReason: ${candidate.finishReason}`)
-            this.setStatus("ERROR: No content in response")
             this.isRequestRunning = false
             return
           }
@@ -426,14 +406,12 @@ export class ColorPickController extends BaseScriptComponent {
           this.parseColorResponse(rawText)
         } catch (error) {
           print(`${LOG_TAG} ERROR: Failed to extract Gemini response: ${error}`)
-          this.setStatus("ERROR: Bad response structure")
           this.isRequestRunning = false
         }
       })
       .catch((error) => {
         const geminiMs = ((getTime() - this.geminiStartTime) * 1000).toFixed(0)
         print(`${LOG_TAG} ERROR: Gemini request failed after ${geminiMs}ms: ${error}`)
-        this.setStatus("ERROR: Gemini failed - " + error)
         this.isRequestRunning = false
       })
   }
@@ -448,9 +426,8 @@ export class ColorPickController extends BaseScriptComponent {
       const r: number = parsed.r !== undefined ? parsed.r : 0
       const g: number = parsed.g !== undefined ? parsed.g : 0
       const b: number = parsed.b !== undefined ? parsed.b : 0
-      const colorName: string = parsed.colorName || "unknown"
 
-      print(`${LOG_TAG} Parsed color: hex=${hex}, rgb=(${r},${g},${b}), name=${colorName}`)
+      print(`${LOG_TAG} Parsed color: hex=${hex}, rgb=(${r},${g},${b})`)
 
       const colorVec = new vec4(
         Math.max(0, Math.min(1, r / 255)),
@@ -461,27 +438,24 @@ export class ColorPickController extends BaseScriptComponent {
 
       print(`${LOG_TAG} Color vec4: (${colorVec.r.toFixed(3)}, ${colorVec.g.toFixed(3)}, ${colorVec.b.toFixed(3)}, ${colorVec.a.toFixed(3)})`)
 
-      this.applyColor(colorVec, hex, colorName)
+      this.applyColor(colorVec, hex)
     } catch (error) {
       print(`${LOG_TAG} ERROR: Failed to parse color response: ${error}`)
       print(`${LOG_TAG} Raw text was: ${rawText}`)
-      this.setStatus("ERROR: Parse failed")
       this.isRequestRunning = false
     }
   }
 
-  private applyColor(color: vec4, hex: string, colorName: string) {
+  private applyColor(color: vec4, hex: string) {
     this.lastDetectedColor = color
 
     if (this.activeBallVFX) {
       this.activeBallVFX.updateColor(color)
-      print(`${LOG_TAG} Ball color set to ${hex} (${colorName})`)
+      print(`${LOG_TAG} Ball color set to ${hex}`)
     } else if (this.activeBallMat) {
       this.activeBallMat.mainPass.baseColor = new vec4(color.r, color.g, color.b, 1.0)
-      print(`${LOG_TAG} Ball color set to ${hex} (${colorName}) (no VFX controller)`)
+      print(`${LOG_TAG} Ball color set to ${hex} (no VFX controller)`)
     }
-
-    this.setStatus(`Color: ${hex} (${colorName})`)
 
     this._onColorDetected.invoke(color)
     if (this.latticeVFX) this.latticeVFX.applyColor(color)
@@ -570,14 +544,6 @@ export class ColorPickController extends BaseScriptComponent {
     body.addForce(forceVector, Physics.ForceMode.Impulse)
     print(`${LOG_TAG} Ball THROWN — strength: ${throwStrength.toFixed(1)}, direction: (${throwDirection.x.toFixed(2)}, ${throwDirection.y.toFixed(2)}, ${throwDirection.z.toFixed(2)}), hand speed: ${this.handVelocity.length.toFixed(1)}`)
 
-    if (this.activeBallTrailVFX) {
-      const ballColor = this.activeBallMat
-        ? this.activeBallMat.mainPass.baseColor
-        : new vec4(1, 1, 1, 1)
-      this.activeBallTrailVFX.startTrail(ballColor)
-      print(`${LOG_TAG} Trail VFX activated on thrown ball`)
-    }
-
     this.cleanupAfterRelease()
   }
 
@@ -587,19 +553,7 @@ export class ColorPickController extends BaseScriptComponent {
     this.previousHandPos = null
     this.ballActive = false
     this.activeBallVFX = null
-    this.activeBallTrailVFX = null
     if (this.latticeVFX) this.latticeVFX.cancelExtraction()
-  }
-
-  private findTrailController(ball: SceneObject): BallTrailVFXController | null {
-    const scripts = ball.getComponents("Component.ScriptComponent")
-    for (let i = 0; i < scripts.length; i++) {
-      const s = scripts[i] as any
-      if (s && typeof s.startTrail === "function") {
-        return s as BallTrailVFXController
-      }
-    }
-    return null
   }
 
   private findHueEventEmitterInScene(): HueEventEmitter {
@@ -633,10 +587,4 @@ export class ColorPickController extends BaseScriptComponent {
     return null
   }
 
-  private setStatus(msg: string) {
-    print(`${LOG_TAG} Status: ${msg}`)
-    if (this.statusText) {
-      this.statusText.text = msg
-    }
-  }
 }

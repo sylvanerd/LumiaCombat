@@ -3,13 +3,20 @@ import {SIK} from "SpectaclesInteractionKit.lspkg/SIK"
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 
 const LOG_TAG = "[ColorPick]"
-const GRACE_PERIOD = 0.3
 
 @component
 export class ColorPickPinchDetector extends BaseScriptComponent {
   @input
   @hint("Minimum seconds to hold pinch before triggering")
   holdDuration: number = 2
+
+  @input
+  @hint("Enable a short forgiveness window for brief pinch-tracking loss")
+  useGracePeriod: boolean = true
+
+  @input
+  @hint("Seconds to forgive brief pinch-tracking loss before resetting the hold")
+  gracePeriod: number = 0.3
 
   get onPinchHeld() {
     return this._onPinchHeld.publicApi()
@@ -40,7 +47,7 @@ export class ColorPickPinchDetector extends BaseScriptComponent {
     this.rightHand = handInputData.getHand("right")
 
     this.createEvent("UpdateEvent").bind(() => this.onUpdate())
-    print(`${LOG_TAG} PinchDetector initialized. holdDuration=${this.holdDuration}s, gracePeriod=${GRACE_PERIOD}s`)
+    print(`${LOG_TAG} PinchDetector initialized. holdDuration=${this.holdDuration}s, useGracePeriod=${this.useGracePeriod}, gracePeriod=${this.gracePeriod}s`)
   }
 
   private onUpdate() {
@@ -78,6 +85,12 @@ export class ColorPickPinchDetector extends BaseScriptComponent {
     } else {
       if (this.getPinchStartTime(label) < 0) return
 
+      if (!this.useGracePeriod) {
+        this.logPinchLost(label)
+        this.resetHand(label)
+        return
+      }
+
       const lostTime = this.getPinchLostTime(label)
       if (lostTime < 0) {
         this.setPinchLostTime(label, getTime())
@@ -85,15 +98,19 @@ export class ColorPickPinchDetector extends BaseScriptComponent {
       }
 
       const lostDuration = getTime() - lostTime
-      if (lostDuration > GRACE_PERIOD) {
-        if (!this.getHasFired(label)) {
-          const elapsed = getTime() - this.getPinchStartTime(label)
-          if (elapsed > 0.1) {
-            print(`${LOG_TAG} Pinch lost on ${label} hand after ${elapsed.toFixed(2)}s (not long enough)`)
-          }
-        }
+      if (lostDuration > this.gracePeriod) {
+        this.logPinchLost(label)
         this.resetHand(label)
       }
+    }
+  }
+
+  private logPinchLost(label: string) {
+    if (this.getHasFired(label)) return
+
+    const elapsed = getTime() - this.getPinchStartTime(label)
+    if (elapsed > 0.1) {
+      print(`${LOG_TAG} Pinch lost on ${label} hand after ${elapsed.toFixed(2)}s (not long enough)`)
     }
   }
 

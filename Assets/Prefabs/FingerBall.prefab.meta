@@ -14,31 +14,6 @@
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
-- !<ScriptComponent/0d594e77-a645-49e7-a6d7-229405ca46d5>
-  PrefabRemaps:
-    []
-  Name: BallTrailVFXController
-  Enabled: true
-  ScriptAsset: !<reference> ac30e7a6-9a71-4653-8356-fd2f163a1af3
-  ScriptInputsDefault:
-    trailEmissionBoost: true
-    emissionIntensity: true
-    trailFadeDelay: true
-    trailFadeDuration: true
-    autoStopAfter: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      trailVfxComponent: !<reference.VFXComponent> f5fd18ff-1268-47fa-9fa7-2082d9f3d105
-      trailEmissionBoost: !<float> 2.000000
-      emissionIntensity: 2.500000
-      trailFadeDelay: !<float> 3.000000
-      trailFadeDuration: !<float> 1.000000
-      autoStopAfter: !<float> 5.000000
-  ScriptTypes:
-    "":
-      {}
 - !<ScriptComponent/33466c32-8093-44c7-9263-3567e0d4e719>
   PrefabRemaps:
     []
@@ -82,7 +57,7 @@
   PrefabRemaps:
     []
   Name: TrailVFX
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -172,7 +147,6 @@
     - !<own> ce14ee42-5248-4c83-be7e-2819d0a8aa2f
     - !<own> c0710684-088e-4cc6-b684-6d7531de75d2
     - !<own> 33466c32-8093-44c7-9263-3567e0d4e719
-    - !<own> 0d594e77-a645-49e7-a6d7-229405ca46d5
 - !<VFXComponent/f5fd18ff-1268-47fa-9fa7-2082d9f3d105>
   PrefabRemaps:
     []

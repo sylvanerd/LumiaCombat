@@ -26,7 +26,9 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    gracePeriod: false
     holdDuration: false
+    useGracePeriod: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -37,8 +39,12 @@
     []
   DefaultScriptInputs:
     - holdDuration: !<float> 2.000000
+      useGracePeriod: true
+      gracePeriod: 0.300000
   ScriptTypes:
     -
       {}
   InputLines:
     - '// @input float holdDuration = 2 {"hint":"Minimum seconds to hold pinch before triggering"}'
+    - '// @input bool useGracePeriod = true {"hint":"Enable a short forgiveness window for brief pinch-tracking loss"}'
+    - '// @input float gracePeriod = 0.3 {"hint":"Seconds to forgive brief pinch-tracking loss before resetting the hold"}'

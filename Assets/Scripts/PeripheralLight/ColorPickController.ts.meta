@@ -37,7 +37,6 @@
     mainCam: false
     minPinchStrength: false
     pinchDetector: false
-    statusText: false
     use25LiteModel: false
   ScriptTypesHidden:
     {}
@@ -51,7 +50,6 @@
     - pinchDetector: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       camModule: !<reference.CameraModule> 00000000-0000-0000-0000-000000000000
       mainCam: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      statusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       ballPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       growSpeed: !<float> 1.000000
       finalBallSize: !<float> 3.000000
@@ -68,7 +66,6 @@
     - // @input AssignableType pinchDetector
     - '// @input Asset.CameraModule camModule {"hint":"Camera Module asset from the scene (same one used by DepthCache)"}'
     - // @input SceneObject mainCam
-    - '// @input Component.Text statusText {"hint":"Optional text component for status messages"}'
     - '// @input Asset.ObjectPrefab ballPrefab {"hint":"Sphere prefab with Unlit alpha-blend material"}'
     - '// @input float growSpeed = 1 {"hint":"Scale units per second the ball grows"}'
     - '// @input float finalBallSize = 3 {"hint":"Target uniform scale of the fully grown ball"}'

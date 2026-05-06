@@ -70,7 +70,6 @@ export class ColorPickPinchDetector extends BaseScriptComponent {
       const startTime = this.getPinchStartTime(label)
       if (startTime < 0) {
         this.setPinchStartTime(label, getTime())
-        print(`${LOG_TAG} Pinch detected on ${label} hand`)
         return
       }
 
@@ -78,7 +77,6 @@ export class ColorPickPinchDetector extends BaseScriptComponent {
       const hasFired = this.getHasFired(label)
 
       if (!hasFired && elapsed >= this.holdDuration) {
-        print(`${LOG_TAG} Pinch hold complete on ${label} hand! (held ${elapsed.toFixed(2)}s)`)
         this.setHasFired(label, true)
         this._onPinchHeld.invoke(hand)
       }
@@ -86,7 +84,6 @@ export class ColorPickPinchDetector extends BaseScriptComponent {
       if (this.getPinchStartTime(label) < 0) return
 
       if (!this.useGracePeriod) {
-        this.logPinchLost(label)
         this.resetHand(label)
         return
       }
@@ -99,18 +96,8 @@ export class ColorPickPinchDetector extends BaseScriptComponent {
 
       const lostDuration = getTime() - lostTime
       if (lostDuration > this.gracePeriod) {
-        this.logPinchLost(label)
         this.resetHand(label)
       }
-    }
-  }
-
-  private logPinchLost(label: string) {
-    if (this.getHasFired(label)) return
-
-    const elapsed = getTime() - this.getPinchStartTime(label)
-    if (elapsed > 0.1) {
-      print(`${LOG_TAG} Pinch lost on ${label} hand after ${elapsed.toFixed(2)}s (not long enough)`)
     }
   }
 

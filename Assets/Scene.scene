@@ -7579,6 +7579,7 @@
   Enabled: true
   ScriptAsset: !<reference> 5f6cc5e8-b85b-4d49-9f92-bc4d2542f87c
   ScriptInputsDefault:
+    useCenterCrop: true
     minPinchStrength: true
   ScriptTypesDefault:
     {}
@@ -7586,6 +7587,9 @@
     "":
       pinchDetector: !<MappingBased.AssignableType> ebc93f35-0c87-4f5d-b849-80f8c2df8c9a
       camModule: !<reference.CameraModule> b5286bef-9ea5-4895-85b1-331e9f2b4abf
+      useCenterCrop: true
+      centerCropTexture: !<reference.Texture> 97934d4d-522e-4381-8187-3ebe9f3306b3
+      centerCropScale: 0.400000
       mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       ballPrefab: !<reference.ObjectPrefab> cb9a91d7-983d-46e5-9f22-5b73de1fe641
       growSpeed: !<float> 6.000000
@@ -7594,7 +7598,7 @@
       handVelocityMultiplier: 0.600000
       baseThrowForce: 0.500000
       minPinchStrength: 0.300000
-      use25LiteModel: true
+      useLiteModel: true
       latticeVFX: !<MappingBased.AssignableType_1> ef5cb7cd-04b5-41bf-bc68-7f961158f305
   ScriptTypes:
     "":

@@ -30,6 +30,8 @@
     ballPrefab: false
     baseThrowForce: false
     camModule: false
+    centerCropScale: false
+    centerCropTexture: false
     finalBallSize: false
     growSpeed: false
     handVelocityMultiplier: false
@@ -37,7 +39,8 @@
     mainCam: false
     minPinchStrength: false
     pinchDetector: false
-    use25LiteModel: false
+    useCenterCrop: false
+    useLiteModel: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -49,6 +52,9 @@
   DefaultScriptInputs:
     - pinchDetector: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       camModule: !<reference.CameraModule> 00000000-0000-0000-0000-000000000000
+      useCenterCrop: true
+      centerCropTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      centerCropScale: 0.300000
       mainCam: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       ballPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       growSpeed: !<float> 1.000000
@@ -57,7 +63,7 @@
       handVelocityMultiplier: 0.300000
       baseThrowForce: !<float> 150.000000
       minPinchStrength: 0.300000
-      use25LiteModel: false
+      useLiteModel: false
       latticeVFX: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
@@ -65,6 +71,13 @@
   InputLines:
     - // @input AssignableType pinchDetector
     - '// @input Asset.CameraModule camModule {"hint":"Camera Module asset from the scene (same one used by DepthCache)"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"Gemini Image Crop"}'
+    - '// @input bool useCenterCrop = true {"hint":"Send a centered cropped camera region to Gemini instead of the full frame"}'
+    - '// @input Asset.Texture centerCropTexture {"hint":"Screen Crop Texture asset used for centered Gemini crop"}'
+    - '// @input float centerCropScale = 0.3 {"hint":"Centered frame fraction to send to Gemini. 0.3 = middle 30% width and height"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"Ball & Gesture"}'
     - // @input SceneObject mainCam
     - '// @input Asset.ObjectPrefab ballPrefab {"hint":"Sphere prefab with Unlit alpha-blend material"}'
     - '// @input float growSpeed = 1 {"hint":"Scale units per second the ball grows"}'
@@ -73,5 +86,5 @@
     - '// @input float handVelocityMultiplier = 0.3 {"hint":"Multiplier for hand velocity (higher = more responsive to hand movement)"}'
     - '// @input float baseThrowForce = 800 {"hint":"Base forward force added to throws (guided by camera forward direction)"}'
     - '// @input float minPinchStrength = 0.3 {"hint":"Pinch strength below this triggers a freeze-release (0-1)"}'
-    - '// @input bool use25LiteModel {"hint":"Use gemini-2.5-flash-lite instead of gemini-2.0-flash"}'
+    - '// @input bool useLiteModel {"hint":"Use gemini-2.5-flash-lite (faster) instead of gemini-2.5-flash (more accurate)"}'
     - '// @input AssignableType_1 latticeVFX {"hint":"Hand lattice VFX controller for visual feedback on hand mesh"}'

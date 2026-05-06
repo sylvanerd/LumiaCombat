@@ -10,12 +10,13 @@ import {HueEventEmitter} from "./HueEventEmitter"
 let _colorPickInstance: ColorPickController = null
 
 const LOG_TAG = "[ColorPick]"
-const GEMINI_MODEL_DEFAULT = "gemini-2.0-flash"
+const GEMINI_MODEL_DEFAULT = "gemini-2.5-flash"
 const GEMINI_MODEL_LITE = "gemini-2.5-flash-lite"
 
 const SYSTEM_PROMPT =
   "Detect the dominant color of the object nearest the pinched index and thumb fingertips. " +
-  "Ignore hands/fingers. Return ONLY JSON."
+  "Ignore hands/fingers. Return exactly one JSON object with integer r, g, and b values from 0 to 255. " +
+  "Do not include markdown, code fences, explanation, or any text outside the JSON object."
 
 @component
 export class ColorPickController extends BaseScriptComponent {
@@ -25,6 +26,31 @@ export class ColorPickController extends BaseScriptComponent {
   @input
   @hint("Camera Module asset from the scene (same one used by DepthCache)")
   camModule: CameraModule
+
+  // ---------------------------------------------------------------------------
+  // Gemini Image Crop
+  // ---------------------------------------------------------------------------
+  @ui.separator
+  @ui.label("Gemini Image Crop")
+
+  @input
+  @hint("Send a centered cropped camera region to Gemini instead of the full frame")
+  useCenterCrop: boolean = true
+
+  @input
+  @hint("Screen Crop Texture asset used for centered Gemini crop")
+  @allowUndefined
+  centerCropTexture: Texture
+
+  @input
+  @hint("Centered frame fraction to send to Gemini. 0.3 = middle 30% width and height")
+  centerCropScale: number = 0.3
+
+  // ---------------------------------------------------------------------------
+  // Ball & Gesture Settings
+  // ---------------------------------------------------------------------------
+  @ui.separator
+  @ui.label("Ball & Gesture")
 
   @input
   mainCam: SceneObject
@@ -58,8 +84,8 @@ export class ColorPickController extends BaseScriptComponent {
   minPinchStrength: number = 0.3
 
   @input
-  @hint("Use gemini-2.5-flash-lite instead of gemini-2.0-flash")
-  use25LiteModel: boolean = false
+  @hint("Use gemini-2.5-flash-lite (faster) instead of gemini-2.5-flash (more accurate)")
+  useLiteModel: boolean = false
 
   @input
   @hint("Hand lattice VFX controller for visual feedback on hand mesh")
@@ -73,7 +99,7 @@ export class ColorPickController extends BaseScriptComponent {
   }
 
   private get geminiModel(): string {
-    return this.use25LiteModel ? GEMINI_MODEL_LITE : GEMINI_MODEL_DEFAULT
+    return this.useLiteModel ? GEMINI_MODEL_LITE : GEMINI_MODEL_DEFAULT
   }
 
   setHueEventEmitter(emitter: HueEventEmitter) {
@@ -93,6 +119,7 @@ export class ColorPickController extends BaseScriptComponent {
   private pipelineStartTime: number = 0
   private mainCamTrans: Transform
   private lastDetectedColor: vec4 = null
+  private hasWarnedMissingCropTexture: boolean = false
 
   private activeBall: SceneObject = null
   private activeBallMat: Material = null
@@ -228,11 +255,12 @@ export class ColorPickController extends BaseScriptComponent {
     const height = frozenFrame.getHeight()
     print(`${LOG_TAG} Camera frame ready: ${width}x${height}`)
 
+    const frameForGemini = this.getFrameForGemini(frozenFrame)
     print(`${LOG_TAG} Encoding image to Base64...`)
 
     const encodeStart = getTime()
     Base64.encodeTextureAsync(
-      frozenFrame,
+      frameForGemini,
       (base64String: string) => {
         const encodeMs = ((getTime() - encodeStart) * 1000).toFixed(0)
         print(`${LOG_TAG} Image encoded in ${encodeMs}ms, length: ${base64String.length} chars`)
@@ -245,6 +273,39 @@ export class ColorPickController extends BaseScriptComponent {
       CompressionQuality.LowQuality,
       EncodingType.Jpg
     )
+  }
+
+  // ---------------------------------------------------------------------------
+  // Gemini Image Crop
+  // ---------------------------------------------------------------------------
+  // Uses a Lens Studio Screen Crop Texture to crop the center of the camera frame
+  // before JPEG/Base64 encoding. Toggle useCenterCrop off to send the full frame.
+  private getFrameForGemini(sourceFrame: Texture): Texture {
+    if (!this.useCenterCrop) {
+      return sourceFrame
+    }
+
+    if (!this.centerCropTexture) {
+      if (!this.hasWarnedMissingCropTexture) {
+        print(`${LOG_TAG} WARNING: useCenterCrop is enabled but centerCropTexture is not assigned. Sending full frame.`)
+        this.hasWarnedMissingCropTexture = true
+      }
+      return sourceFrame
+    }
+
+    const cropProvider = this.centerCropTexture.control as RectCropTextureProvider
+    if (!cropProvider) {
+      print(`${LOG_TAG} WARNING: centerCropTexture has no RectCropTextureProvider. Sending full frame.`)
+      return sourceFrame
+    }
+
+    const cropScale = Math.max(0.05, Math.min(1.0, this.centerCropScale))
+    cropProvider.inputTexture = sourceFrame
+    cropProvider.cropRect = Rect.create(-cropScale, cropScale, -cropScale, cropScale)
+    cropProvider.rotation = 0
+
+    print(`${LOG_TAG} Center crop enabled: ${(cropScale * 100).toFixed(0)}% of frame, cropped size=${this.centerCropTexture.getWidth()}x${this.centerCropTexture.getHeight()}`)
+    return this.centerCropTexture
   }
 
   private getPinchMidpoint(hand: TrackedHand): vec3 {
@@ -335,12 +396,11 @@ export class ColorPickController extends BaseScriptComponent {
     const respSchema: GeminiTypes.Common.Schema = {
       type: "object",
       properties: {
-        hex: {type: "string"},
         r: {type: "number"},
         g: {type: "number"},
         b: {type: "number"}
       },
-      required: ["hex", "r", "g", "b"]
+      required: ["r", "g", "b"]
     }
 
     const reqObj: GeminiTypes.Models.GenerateContentRequest = {
@@ -371,7 +431,7 @@ export class ColorPickController extends BaseScriptComponent {
           ]
         },
         generationConfig: {
-          temperature: 0.1,
+          temperature: 0,
           responseMimeType: "application/json",
           response_schema: respSchema,
           maxOutputTokens: 150
@@ -422,10 +482,11 @@ export class ColorPickController extends BaseScriptComponent {
     try {
       const parsed = JSON.parse(rawText)
 
-      const hex: string = parsed.hex || "#000000"
       const r: number = parsed.r !== undefined ? parsed.r : 0
       const g: number = parsed.g !== undefined ? parsed.g : 0
       const b: number = parsed.b !== undefined ? parsed.b : 0
+
+      const hex = this.rgbToHex(r, g, b)
 
       print(`${LOG_TAG} Parsed color: hex=${hex}, rgb=(${r},${g},${b})`)
 
@@ -464,6 +525,14 @@ export class ColorPickController extends BaseScriptComponent {
     this.isRequestRunning = false
     const totalMs = ((getTime() - this.pipelineStartTime) * 1000).toFixed(0)
     print(`${LOG_TAG} --- Color pick cycle complete in ${totalMs}ms ---`)
+  }
+
+  private rgbToHex(r: number, g: number, b: number): string {
+    const clamp = (v: number) => Math.max(0, Math.min(255, Math.round(v)))
+    return "#" +
+      clamp(r).toString(16).padStart(2, "0") +
+      clamp(g).toString(16).padStart(2, "0") +
+      clamp(b).toString(16).padStart(2, "0")
   }
 
   private onUpdate() {

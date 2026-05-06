@@ -83,7 +83,7 @@
     "":
       vfxComponent: !<reference.VFXComponent> f3d7e2eb-41ae-4c43-9e44-e26330318b77
       particleEmissionBoost: !<float> 1.000000
-      materializeDuration: 2.500000
+      materializeDuration: !<float> 3.000000
       fresnelPower: 0.800000
       peakEmissionIntensity: !<float> 1.000000
       coreAlpha: !<float> 1.000000

@@ -28,8 +28,10 @@
   ScriptInputsHidden:
     autoStart: false
     bluetoothMenuRoot: false
+    connectButton: false
     introCard: false
     introVisuals: false
+    onboardingRoot: false
     tipDurationSeconds: false
     tipFadeDurationSeconds: false
     tipText: false
@@ -55,6 +57,8 @@
         []
       tipDurationSeconds: !<float> 10.000000
       tipFadeDurationSeconds: 0.400000
+      onboardingRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      connectButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -68,3 +72,5 @@
     - '// @input string[] tips {"hint":"Fun-fact lines cycled in order. Empty array disables the roller."}'
     - '// @input float tipDurationSeconds = 10 {"hint":"Seconds each tip stays fully visible before fading out"}'
     - '// @input float tipFadeDurationSeconds = 0.4 {"hint":"Seconds for one fade segment (fade-out OR fade-in)"}'
+    - '// @input SceneObject onboardingRoot {"hint":"Whole onboarding visual root to disable on first light connection (e.g. the GameOnboarding SceneObject)."}'
+    - '// @input SceneObject connectButton {"hint":"Bluetooth connect button SceneObject to disable on first light connection."}'

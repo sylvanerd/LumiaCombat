@@ -48,9 +48,31 @@ export class GameOnboardingManager extends BaseScriptComponent {
   @hint("Seconds for one fade segment (fade-out OR fade-in)")
   tipFadeDurationSeconds: number = 0.4
 
+  // Onboarding teardown: when a light connects, disable everything related to the
+  // onboarding UI so the player drops straight into gameplay. Both fields are
+  // optional -- leaving either undefined skips that part of the teardown.
+  @input
+  @allowUndefined
+  @hint("Whole onboarding visual root to disable on first light connection (e.g. the GameOnboarding SceneObject).")
+  onboardingRoot: SceneObject
+
+  @input
+  @allowUndefined
+  @hint("Bluetooth connect button SceneObject to disable on first light connection.")
+  connectButton: SceneObject
+
   public readonly onSequenceComplete: Event<void> = new Event<void>()
 
+  private static instance: GameOnboardingManager | null = null
+
+  // Returns the active manager or null if it has not awoken yet. Null-tolerant so
+  // call sites (e.g. ScanResultsManager) don't have to special-case startup order.
+  public static getInstance(): GameOnboardingManager | null {
+    return GameOnboardingManager.instance
+  }
+
   private isShowing: boolean = false
+  private hasHandledLightConnected: boolean = false
 
   // Tip roller state. tipBaseColor is captured lazily on first run so the artist
   // can author the tip color in the Inspector and we only modulate its alpha.
@@ -61,12 +83,35 @@ export class GameOnboardingManager extends BaseScriptComponent {
   private tipFadeInToken: CancelToken = null
 
   onAwake() {
+    GameOnboardingManager.instance = this
+
     this.setRootEnabled(this.introCard, false)
     this.setIntroVisualsEnabled(false)
     this.setRootEnabled(this.bluetoothMenuRoot, false)
     this.setRootEnabled(this.tipsRoot, false)
 
     this.createEvent("OnStartEvent").bind(() => this.onStart())
+  }
+
+  // Called once when the first light has paired. Tears down the onboarding UI and
+  // the connect button so the player isn't presented stale interactive UI.
+  // Idempotent -- subsequent light connections are no-ops.
+  public onLightConnected() {
+    if (this.hasHandledLightConnected) return
+    this.hasHandledLightConnected = true
+
+    this.stopTipsRoller()
+    this.setRootEnabled(this.connectButton, false)
+    this.setRootEnabled(this.onboardingRoot, false)
+    this.isShowing = false
+  }
+
+  // Called when the user presses the "Place Light" button on the light controller
+  // UI. Hides the Bluetooth scan results menu (which sits outside onboardingRoot
+  // and therefore survives onLightConnected()) so the placement flow has the
+  // screen to itself. Idempotent and safe to call repeatedly.
+  public onPlaceLightPressed() {
+    this.setRootEnabled(this.bluetoothMenuRoot, false)
   }
 
   private onStart() {

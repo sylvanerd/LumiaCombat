@@ -919,21 +919,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<SceneObject/11233d59-60a5-48fd-a6a3-5336bc4dd556>
-  PrefabRemaps:
-    []
-  Name: tipTitle
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.480632, z: -0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 0.450000, y: 0.450000, z: 0.450000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 6331688d-d30d-4e7b-a201-ee238bca932e
 - !<SceneObject/1146b313-0b0f-4b6c-b4d0-5b26a67bfcd4>
   PrefabRemaps:
     []
@@ -1837,7 +1822,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Position: {x: 0.000000, y: -3.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 0.450000, y: 0.450000, z: 0.450000}
     HasSegmentScaleCompensation: false
@@ -3527,7 +3512,6 @@
     Scale: {x: 0.060000, y: 0.060000, z: 0.060000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 11233d59-60a5-48fd-a6a3-5336bc4dd556
     - !<own> 26101310-7d15-4218-9c78-506ead79a203
   Components:
     - !<own> ed6b185a-fe93-44ed-bbd7-670f5162dfa6
@@ -4211,7 +4195,7 @@
   PrefabRemaps:
     []
   Name: ContainerFrame
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> 94ea82ba-1d42-4617-b71f-c92262f5960b
   ScriptInputsDefault:
     autoShowHide: true
@@ -4881,13 +4865,15 @@
       tipsRoot: !<reference.SceneObject> 40c18516-f5fe-4c99-a407-852c7da2a38d
       tipText: !<reference.Text> 5e69f3e5-b794-43aa-be66-8d097f73f443
       tips: !<string[]>
+        - Make sure your hue light is turned on!
+        - "Your occipital lobe processes color vision. Lumia's giving it a workout."
         - Play in a colorful room. More hues = more ammo.
         - Stock up on colors before combat starts.
-        - "Aim for big, solid color blocks."
         - Color wheel is your cheat code
-        - "Your occipital lobe processes color vision. Lumia's giving it a workout."
       tipDurationSeconds: !<float> 3.000000
       tipFadeDurationSeconds: 0.200000
+      onboardingRoot: !<reference.SceneObject> 7f556d43-b922-42aa-af86-59a5f4fb81c6
+      connectButton: !<reference.SceneObject> 65492144-593c-435b-8fdf-0272f8267348
   ScriptTypes:
     "":
       {}
@@ -5193,7 +5179,7 @@
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 50
+  FontSize: 55
   Font: !<reference> 711473f0-eaf8-4cdb-8d22-e1d2e07c6345
   LayoutRect:
     left: -7.500000
@@ -5634,87 +5620,6 @@
     bottom: -16.000000
     right: 0.000000
     top: 16.000000
-- !<Text/6331688d-d30d-4e7b-a201-ee238bca932e>
-  PrefabRemaps:
-    []
-  Name: Text
-  Enabled: true
-  RenderOrder: 8
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  Text: "Some tips: "
-  Editable: false
-  ShowEditingPreview: true
-  TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
-  SizeToFit: false
-  FontSize: 50
-  Font: !<reference> 711473f0-eaf8-4cdb-8d22-e1d2e07c6345
-  LayoutRect:
-    left: -7.500000
-    bottom: -2.250000
-    right: 7.500000
-    top: 2.250000
-  OverflowVertical: Overflow
-  OverflowHorizontal: Overflow
-  Fill: !<TextFill>
-    Mode: Solid
-    Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-    Texture: !<reference> 00000000-0000-0000-0000-000000000000
-    ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-    TileCount: 5.000000
-    TileZone: Rect
-    TextureStretch: FitWidth
-  BlendMode: PremultipliedAlpha
-  Outline: !<OutlineSettings>
-    Enabled: false
-    Fill: !<TextFill>
-      Mode: Solid
-      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
-      Texture: !<reference> 00000000-0000-0000-0000-000000000000
-      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-      TileCount: 5.000000
-      TileZone: Rect
-      TextureStretch: FitWidth
-    Size: 0.250000
-  Dropshadow: !<DropshadowSettings>
-    Enabled: false
-    Fill: !<TextFill>
-      Mode: Solid
-      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
-      Texture: !<reference> 00000000-0000-0000-0000-000000000000
-      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-      TileCount: 5.000000
-      TileZone: Rect
-      TextureStretch: FitWidth
-    OffsetX: 0.250000
-    OffsetY: 0.250000
-  Background: !<BackgroundSettings>
-    Enabled: false
-    Fill: !<TextFill>
-      Mode: Solid
-      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
-      Texture: !<reference> 00000000-0000-0000-0000-000000000000
-      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-      TileCount: 5.000000
-      TileZone: Rect
-      TextureStretch: FitWidth
-    Margins:
-      left: 0.000000
-      bottom: 0.000000
-      right: 0.000000
-      top: 0.000000
-    CornerRadius: 0.000000
-  AdvancedLayout: !<TextAdvancedLayout>
-    ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
-    LetterSpacing: 0.000000
-    LineSpacing: 1.000000
-    CapitalizationOverride: None
-  DepthTest: false
-  TwoSided: false
 - !<SceneObject/63d884db-7bc0-4d15-bf15-ce499b6b9372>
   PrefabRemaps:
     []
@@ -5737,7 +5642,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -10.000000, y: 0.000000, z: -0.000010}
+    Position: {x: 0.000000, y: 15.000000, z: -0.000010}
     Rotation: {x: 30.000008, y: -0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -7427,7 +7332,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: -6.000000, z: -48.000000}
+    Position: {x: 0.000000, y: -5.000000, z: -48.000000}
     Rotation: {x: 80.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 18.000000, y: 18.000000, z: 18.000000}
     HasSegmentScaleCompensation: false
@@ -9493,7 +9398,7 @@
   LocalTransform: !<TransformEntity>
     Position: {x: 2.878449, y: -5.800000, z: -16.000000}
     Rotation: {x: 90.000000, y: -0.000000, z: 0.000000}
-    Scale: {x: 0.360000, y: 0.360000, z: 0.360000}
+    Scale: {x: 0.400000, y: 0.400000, z: 0.400000}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 5bb212b2-c937-4aa2-8376-b94eb084bc14
@@ -12947,7 +12852,7 @@
   ScriptInputs:
     "":
       itemPrefab: !<reference.ObjectPrefab> 6d3ff4ec-5dcf-4301-af38-da5dcfc7dffd
-      itemsCount: !<float> 20.000000
+      itemsCount: !<float> 5.000000
   ScriptTypes:
     "":
       {}
@@ -13292,7 +13197,7 @@
   LocalTransform: !<TransformEntity>
     Position: {x: -3.125025, y: -5.800000, z: -16.000000}
     Rotation: {x: 90.000000, y: -0.000000, z: 0.000000}
-    Scale: {x: 0.360000, y: 0.360000, z: 0.360000}
+    Scale: {x: 0.400000, y: 0.400000, z: 0.400000}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> c6c4853c-f7c3-4bc8-9446-dfd75e47819a
@@ -14147,7 +14052,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -28.000000, y: 11.000000, z: 0.700001}
+    Position: {x: 0.000000, y: 6.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.200000, y: 1.200000, z: 1.200000}
     HasSegmentScaleCompensation: false
@@ -14914,7 +14819,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.500000}
+    Position: {x: 0.000000, y: -8.000000, z: 0.500000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 0.500000, y: 0.500000, z: 0.500000}
     HasSegmentScaleCompensation: false

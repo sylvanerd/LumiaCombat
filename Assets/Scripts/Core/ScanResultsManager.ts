@@ -9,6 +9,7 @@ import {HelperFuntions} from "../Helpers/HelperFunctions"
 import {Logger} from "../Helpers/Logger"
 import {BleServiceHandler} from "./BleServiceHandler"
 import {ControllerFactory} from "./ControllerFactory"
+import {GameOnboardingManager} from "./GameOnboardingManager"
 import {LensInitializer} from "./LensInitializer"
 import {HueLightData} from "./PeripheralTypeData"
 // import {HeartRateMonitorData, Thingy52Data} from "./PeripheralTypeData"
@@ -277,6 +278,9 @@ export class ScanResultsManager extends BaseScriptComponent {
 
     if (type === ScanResultType.Light) {
       this.lightScanResults.push(scanResult)
+      // First Hue light paired -- tear down the onboarding UI / connect button so
+      // the player drops directly into gameplay. onLightConnected() is idempotent.
+      GameOnboardingManager.getInstance()?.onLightConnected()
     // } else if (type === ScanResultType.Hrm) {
     //   this.hrmScanResults.push(scanResult)
     // } else if (type === ScanResultType.Climate) {

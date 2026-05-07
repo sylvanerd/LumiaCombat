@@ -29,6 +29,11 @@
     autoStart: false
     bluetoothMenuRoot: false
     introCard: false
+    tipDurationSeconds: false
+    tipFadeDurationSeconds: false
+    tipText: false
+    tips: false
+    tipsRoot: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -41,6 +46,12 @@
     - introCard: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       bluetoothMenuRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       autoStart: true
+      tipsRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      tipText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      tips: !<string[]>
+        []
+      tipDurationSeconds: !<float> 10.000000
+      tipFadeDurationSeconds: 0.400000
   ScriptTypes:
     -
       {}
@@ -48,3 +59,8 @@
     - '// @input SceneObject introCard {"hint":"The intro card or intro canvas root SceneObject in the scene"}'
     - '// @input SceneObject bluetoothMenuRoot {"hint":"Existing Bluetooth menu/canvas visual root to reveal after Go Physical"}'
     - '// @input bool autoStart = true {"hint":"Start the onboarding sequence automatically when the lens opens"}'
+    - '// @input SceneObject tipsRoot {"hint":"Tips canvas root revealed alongside the Bluetooth menu after Go Physical"}'
+    - '// @input Component.Text tipText {"hint":"Text component for the fading tip line. Authored color is preserved; only alpha is tweened."}'
+    - '// @input string[] tips {"hint":"Fun-fact lines cycled in order. Empty array disables the roller."}'
+    - '// @input float tipDurationSeconds = 10 {"hint":"Seconds each tip stays fully visible before fading out"}'
+    - '// @input float tipFadeDurationSeconds = 0.4 {"hint":"Seconds for one fade segment (fade-out OR fade-in)"}'

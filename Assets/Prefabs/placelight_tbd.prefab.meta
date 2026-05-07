@@ -1,14 +1,14 @@
-- !<AssetImportMetadata/5c31cf3c-9b7c-403e-bc54-1d855c2cdfd3>
+- !<AssetImportMetadata/47b70f02-441c-4f61-87a7-41d50476cf04>
   ImportedAssetIds:
-    ObjectPrefab: !<reference> 837d50c1-ad5c-44cc-a6a5-4e2c7d7b5cff
+    ObjectPrefab: !<reference> 8819a8df-ff12-4c3b-ab0a-d19128462a96
   ImporterName: ObjectPrefabImporter
-  PrimaryAsset: !<reference> 837d50c1-ad5c-44cc-a6a5-4e2c7d7b5cff
+  PrimaryAsset: !<reference> 8819a8df-ff12-4c3b-ab0a-d19128462a96
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:
     {}
   AssetDataMap:
-    ObjectPrefab: !<own> f2e284a7-aa74-4b9f-847c-d4cf4d3aaa16
+    ObjectPrefab: !<own> 400af591-77a8-4de4-8119-2f95dc92cae0
   DependentFiles:
     []
   ImporterSettings: !<AssetImporterSettings>
@@ -1097,6 +1097,11 @@
   ScriptTypes:
     "":
       {}
+- !<ObjectPrefabAssetData/400af591-77a8-4de4-8119-2f95dc92cae0>
+  Prototype: !<ObjectOwner/5b1364bc-1d07-44de-bed9-7d92bd1b7a80>
+    PackagePath: ""
+    objects:
+      - !<own> 6ebe27cb-c316-445b-ae35-5d1ba841f535
 - !<ScriptComponent/419c0d5d-e87f-44ee-ba6c-8c6a5ed0b177>
   PrefabRemaps:
     []
@@ -2444,11 +2449,6 @@
   RotationAngle: 0
   Pivot: {x: 0.000000, y: 0.000000}
   ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
-- !<ObjectPrefabAssetData/f2e284a7-aa74-4b9f-847c-d4cf4d3aaa16>
-  Prototype: !<ObjectOwner/2eb7ebdb-a742-4d58-ab4f-3ac51ba6ecf0>
-    PackagePath: ""
-    objects:
-      - !<own> 6ebe27cb-c316-445b-ae35-5d1ba841f535
 - !<ScriptComponent/fcfcb89e-cab1-402d-baef-69d382f374e1>
   PrefabRemaps:
     []

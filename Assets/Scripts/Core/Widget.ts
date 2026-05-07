@@ -41,6 +41,18 @@ export class Widget extends BaseScriptComponent {
   onStart() {
     this.onTranslationStartRemover = this.containerFrame.onTranslationStart.add(() => this.onTranslationStart())
     // this.onSnappingCompleteRemover = this.containerFrame.onSnappingComplete.add(() => this.onSnappingComplete());
+
+    // Hide the SIK frame visuals (dark backing + glass border) without breaking
+    // its interaction/translation behaviour. We deliberately zero only the
+    // visual alphas instead of calling hideVisual() or setting `opacity = 0`,
+    // because `opacity` also fades content/buttons which we still want visible.
+    this.makeFrameInvisible()
+  }
+
+  private makeFrameInvisible() {
+    if (!this.containerFrame) return
+    this.containerFrame.backingAlpha = 0
+    this.containerFrame.borderAlpha = 0
   }
 
   init(node: SceneObject, myType: ScanResultType) {

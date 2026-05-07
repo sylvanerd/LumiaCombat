@@ -52,15 +52,15 @@ export class OnboardingLightConnectionFlash {
       print(`${LOG_TAG} onboarding flash peak`)
       this.writeBrightness(brightnessCharacteristic, 1.0)
     })
-    flashUpEvent.reset(0.6)
+    flashUpEvent.reset(0.4)
 
     const settleEvent = host.createEvent("DelayedCallbackEvent")
     settleEvent.bind(() => {
       print(`${LOG_TAG} onboarding flash settle`)
       this.writeColor(colorCharacteristic, finalColor)
-      this.writeBrightness(brightnessCharacteristic, 0.45)
+      this.writeBrightness(brightnessCharacteristic, 0.7)
     })
-    settleEvent.reset(1.35)
+    settleEvent.reset(1)
   }
 
   private static writeBrightness(

@@ -5,8 +5,13 @@ import {LSTween} from "Spectacles 3D Hand Hints.lspkg/LSTween/LSTween"
 @component
 export class GameOnboardingManager extends BaseScriptComponent {
   @input
-  @hint("The intro card or intro canvas root SceneObject in the scene")
+  @hint("The intro card/canvas root to hide after Go Physical. Do not assign a parent that also contains tipsRoot.")
   introCard: SceneObject
+
+  @input
+  @allowUndefined
+  @hint("Extra intro-only visuals to hide with introCard, such as a shared parent backdrop RenderMeshVisual.")
+  introVisuals: RenderMeshVisual[]
 
   @input
   @allowUndefined
@@ -57,6 +62,7 @@ export class GameOnboardingManager extends BaseScriptComponent {
 
   onAwake() {
     this.setRootEnabled(this.introCard, false)
+    this.setIntroVisualsEnabled(false)
     this.setRootEnabled(this.bluetoothMenuRoot, false)
     this.setRootEnabled(this.tipsRoot, false)
 
@@ -78,6 +84,7 @@ export class GameOnboardingManager extends BaseScriptComponent {
 
     this.isShowing = true
     this.setRootEnabled(this.introCard, true)
+    this.setIntroVisualsEnabled(true)
     this.setRootEnabled(this.bluetoothMenuRoot, false)
     // Defensive: if the lens loops back to the intro, kill any in-flight tip timers.
     this.stopTipsRoller()
@@ -87,6 +94,7 @@ export class GameOnboardingManager extends BaseScriptComponent {
     if (!this.isShowing || !this.introCard) return
 
     this.setRootEnabled(this.introCard, false)
+    this.setIntroVisualsEnabled(false)
     this.stopTipsRoller()
     this.isShowing = false
     this.onSequenceComplete.invoke()
@@ -112,6 +120,7 @@ export class GameOnboardingManager extends BaseScriptComponent {
 
   onSkipPressed() {
     this.setRootEnabled(this.introCard, false)
+    this.setIntroVisualsEnabled(false)
     this.setRootEnabled(this.bluetoothMenuRoot, false)
     this.stopTipsRoller()
     this.isShowing = false
@@ -120,6 +129,7 @@ export class GameOnboardingManager extends BaseScriptComponent {
 
   private transitionFromIntro(onComplete: () => void) {
     this.setRootEnabled(this.introCard, false)
+    this.setIntroVisualsEnabled(false)
     this.isShowing = false
     onComplete()
   }
@@ -127,6 +137,15 @@ export class GameOnboardingManager extends BaseScriptComponent {
   private setRootEnabled(root: SceneObject, enabled: boolean) {
     if (root) {
       root.enabled = enabled
+    }
+  }
+
+  private setIntroVisualsEnabled(enabled: boolean) {
+    if (!this.introVisuals) return
+    for (let i = 0; i < this.introVisuals.length; i++) {
+      if (this.introVisuals[i]) {
+        this.introVisuals[i].enabled = enabled
+      }
     }
   }
 

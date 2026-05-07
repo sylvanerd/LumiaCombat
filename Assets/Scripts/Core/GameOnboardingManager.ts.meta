@@ -29,6 +29,7 @@
     autoStart: false
     bluetoothMenuRoot: false
     introCard: false
+    introVisuals: false
     tipDurationSeconds: false
     tipFadeDurationSeconds: false
     tipText: false
@@ -44,6 +45,8 @@
     []
   DefaultScriptInputs:
     - introCard: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      introVisuals: !<reference.RenderMeshVisual[]>
+        []
       bluetoothMenuRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       autoStart: true
       tipsRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
@@ -56,7 +59,8 @@
     -
       {}
   InputLines:
-    - '// @input SceneObject introCard {"hint":"The intro card or intro canvas root SceneObject in the scene"}'
+    - '// @input SceneObject introCard {"hint":"The intro card/canvas root to hide after Go Physical. Do not assign a parent that also contains tipsRoot."}'
+    - '// @input Component.RenderMeshVisual[] introVisuals {"hint":"Extra intro-only visuals to hide with introCard, such as a shared parent backdrop RenderMeshVisual."}'
     - '// @input SceneObject bluetoothMenuRoot {"hint":"Existing Bluetooth menu/canvas visual root to reveal after Go Physical"}'
     - '// @input bool autoStart = true {"hint":"Start the onboarding sequence automatically when the lens opens"}'
     - '// @input SceneObject tipsRoot {"hint":"Tips canvas root revealed alongside the Bluetooth menu after Go Physical"}'

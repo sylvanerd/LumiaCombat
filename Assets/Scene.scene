@@ -7567,7 +7567,7 @@
       mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       ballPrefab: !<reference.ObjectPrefab> cb9a91d7-983d-46e5-9f22-5b73de1fe641
       growSpeed: !<float> 6.000000
-      finalBallSize: 7.500000
+      finalBallSize: !<float> 7.000000
       ballFollowSpeed: !<float> 30.000000
       handVelocityMultiplier: 0.600000
       baseThrowForce: 0.500000

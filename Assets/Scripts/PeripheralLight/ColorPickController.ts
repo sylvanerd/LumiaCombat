@@ -369,26 +369,48 @@ export class ColorPickController extends BaseScriptComponent {
     }
   }
 
-  public spawnPresetBall(hand: TrackedHand, color: vec4, presetScale: number) {
+  public spawnPresetBall(hand: TrackedHand, color: vec4) {
     if (this.ballActive || this.isRequestRunning) return
+    if (!this.ballPrefab) {
+      print(`${LOG_TAG} WARNING: ballPrefab not assigned, skipping preset ball spawn`)
+      return
+    }
 
-    this.spawnBall(hand)
+    if (this.activeBall) {
+      this.activeBall.destroy()
+      print(`${LOG_TAG} Destroyed previous ball before preset spawn`)
+    }
 
-    if (!this.activeBall) return
+    this.activeHand = hand
+    this.currentBallScale = this.finalBallSize
+    this.ballActive = true
+    this.previousHandPos = null
+    this.handVelocity = vec3.zero()
+    this.activeBallVFX = null
 
-    this.currentBallScale = presetScale
-    this.activeBall.getTransform().setLocalScale(
-      vec3.one().uniformScale(presetScale)
-    )
+    const spawnPos = this.getPinchMidpoint(hand)
+    this.activeBall = this.ballPrefab.instantiate(null)
+    const tr = this.activeBall.getTransform()
+    tr.setWorldPosition(spawnPos)
+    tr.setLocalScale(vec3.one().uniformScale(this.finalBallSize))
 
-    this.lastDetectedColor = color
+    const rmv = this.activeBall.getComponent("RenderMeshVisual") as RenderMeshVisual
+    if (rmv) {
+      this.activeBallMat = rmv.mainMaterial.clone()
+      rmv.mainMaterial = this.activeBallMat
+    } else {
+      print(`${LOG_TAG} WARNING: No RenderMeshVisual on ball prefab`)
+      this.activeBallMat = null
+    }
 
-    if (this.activeBallVFX) {
-      this.activeBallVFX.updateColor(color)
+    this.activeBallVFX = this.activeBall.getComponent("ScriptComponent") as BallSpawnVFXController
+    if (this.activeBallVFX && this.activeBallMat) {
+      this.activeBallVFX.applyFinalState(this.activeBallMat, color)
     } else if (this.activeBallMat) {
       this.activeBallMat.mainPass.baseColor = new vec4(color.r, color.g, color.b, 1.0)
     }
 
+    this.lastDetectedColor = color
     if (this.latticeVFX) this.latticeVFX.applyColor(color)
 
     const hex = "#" +
@@ -396,7 +418,7 @@ export class ColorPickController extends BaseScriptComponent {
       Math.round(color.g * 255).toString(16).padStart(2, "0") +
       Math.round(color.b * 255).toString(16).padStart(2, "0")
 
-    print(`${LOG_TAG} Preset ball spawned with color ${hex}, scale=${presetScale}`)
+    print(`${LOG_TAG} Preset ball spawned instantly at finalBallSize=${this.finalBallSize}, color=${hex}`)
   }
 
   private geminiStartTime: number = 0

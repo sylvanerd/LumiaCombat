@@ -5,7 +5,7 @@ import {ColorPickPinchDetector} from "./ColorPickPinchDetector"
 import {HandVFXController} from "./HandVFXController"
 
 const LOG_TAG = "[ColorBar]"
-const SPHERE_COUNT = 5
+const SPHERE_COUNT = 6
 
 @component
 export class ColorHistoryBar extends BaseScriptComponent {
@@ -231,7 +231,7 @@ export class ColorHistoryBar extends BaseScriptComponent {
     if (!controller) return
 
     this.hasPinchSpawned = true
-    controller.spawnPresetBall(bestHand, this.colorSlots[bestSphere], this.sphereScale)
+    controller.spawnPresetBall(bestHand, this.colorSlots[bestSphere])
     print(`${LOG_TAG} Pinch on sphere ${bestSphere} — spawned preset ball`)
   }
 

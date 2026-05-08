@@ -131,6 +131,42 @@ export class BallSpawnVFXController extends BaseScriptComponent {
     this.killEmission()
   }
 
+  /**
+   * Snap the ball directly to the post-materialize, post-color-fill final state.
+   * Used by the history-bar preset spawn so a saved color appears instantly with
+   * no dissolve animation, no color blend, and particles already tinted.
+   */
+  applyFinalState(mat: Material, color: vec4) {
+    this.ballMat = mat
+    this.color = color
+    this.progress = 1
+    this.animating = false
+    this.awaitingColor = false
+    this.colorFilling = false
+    this.colorFillProgress = 0
+    this.colorFillStartColor = new vec4(color.r, color.g, color.b, this.coreAlpha)
+    this.colorFillTargetColor = new vec4(color.r, color.g, color.b, this.coreAlpha)
+
+    const pass = mat.mainPass
+    pass.materializeProgress = 1.0
+    pass.fresnelPower = this.fresnelPower * 0.4
+    pass.baseColor = new vec4(color.r, color.g, color.b, this.coreAlpha)
+    pass.emissionColor = this.buildEmission(color)
+    pass.emissionIntensity = this.peakEmissionIntensity * this.finalEmission
+
+    this.pushVfxColor(color)
+    if (this.vfxComponent) {
+      this.vfxComponent.enabled = true
+    }
+
+    if (!this.updateBound) {
+      this.createEvent("UpdateEvent").bind(() => this.tick())
+      this.updateBound = true
+    }
+
+    print(`${VFX_LOG} applyFinalState — instant final state, particles tinted`)
+  }
+
   get isMaterialized(): boolean {
     return !this.animating
   }

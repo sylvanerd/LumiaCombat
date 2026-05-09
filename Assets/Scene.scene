@@ -20,7 +20,6 @@
     - !<own> 52fd50fd-3025-4749-a0bb-587dafb28ea1
     - !<own> b0d1bd00-6edc-4481-b397-5d678f0124e6
     - !<own> ac3a992c-780f-4289-a289-1191af42cfa7
-    - !<own> bf91f6f2-1fbe-43d1-8e27-e751466a9a0d
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -4868,9 +4867,9 @@
         - Make sure your hue light is turned on!
         - "Your occipital lobe processes color vision. Lumia's giving it a workout."
         - Play in a colorful room. More hues = more ammo.
-        - Color wheel is your cheat code
+        - Color wheel is your cheat code.
         - Stock up on colors before combat starts.
-      tipDurationSeconds: 2.500000
+      tipDurationSeconds: 2.200000
       tipFadeDurationSeconds: 0.200000
       onboardingRoot: !<reference.SceneObject> 7f556d43-b922-42aa-af86-59a5f4fb81c6
       connectButton: !<reference.SceneObject> 65492144-593c-435b-8fdf-0272f8267348
@@ -6528,25 +6527,6 @@
   ScriptTypes:
     "":
       {}
-- !<Image/7087e579-4328-4715-ba3d-2e702b70fb8b>
-  PrefabRemaps:
-    []
-  Name: Image
-  Enabled: true
-  RenderOrder: 0
-  StretchMode: Fit
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  Materials:
-    - !<reference> 77732033-d418-4685-b508-6308314a2ddd
-  FlipX: false
-  FlipY: false
-  RotationAngle: 0
-  Pivot: {x: 0.000000, y: 0.000000}
-  ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/70955aa6-53ef-4e18-a86d-2d1df97bc8b6>
   PrefabRemaps:
     []
@@ -11375,21 +11355,6 @@
     CapitalizationOverride: None
   DepthTest: false
   TwoSided: false
-- !<SceneObject/bf91f6f2-1fbe-43d1-8e27-e751466a9a0d>
-  PrefabRemaps:
-    []
-  Name: LumiaRULES
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 7087e579-4328-4715-ba3d-2e702b70fb8b
 - !<ScriptComponent/bffe1706-e845-4e2c-8e7c-c1a78b46ad95>
   PrefabRemaps:
     []

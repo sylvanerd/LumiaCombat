@@ -247,23 +247,7 @@
   Components:
     - !<own> a671b4a8-e807-47c0-8e4d-514f40e68260
     - !<own> 595e7ab6-0080-40a2-8bad-198eb686be6b
-    - !<own> 818e44e6-1b58-4ca0-8e48-cc373f523260
-- !<ScriptComponent/818e44e6-1b58-4ca0-8e48-cc373f523260>
-  PrefabRemaps:
-    []
-  Name: DisableOnGameStart
-  Enabled: true
-  ScriptAsset: !<reference> f3392835-d16f-45da-9f1d-74c23fc713c8
-  ScriptInputsDefault:
-    {}
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      target: !<reference.SceneObject> 7901cf4a-5367-4e07-b5f6-aea5cb5abdbc
-  ScriptTypes:
-    "":
-      {}
+    - !<own> fb245de7-1840-4200-9158-a3d527cef1ff
 - !<SceneObject/833dca39-6e4a-4e11-baa0-28ad8fbddc5c>
   PrefabRemaps:
     []
@@ -439,3 +423,19 @@
   Components:
     - !<own> a5dc0426-22f1-4b5e-56d6-486c37c86ecb
     - !<own> 197678e9-51b5-4157-633e-3f7866f5ac5c
+- !<ScriptComponent/fb245de7-1840-4200-9158-a3d527cef1ff>
+  PrefabRemaps:
+    []
+  Name: DisableOnGameStart
+  Enabled: true
+  ScriptAsset: !<reference> f3392835-d16f-45da-9f1d-74c23fc713c8
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      target: !<reference.SceneObject> 7901cf4a-5367-4e07-b5f6-aea5cb5abdbc
+  ScriptTypes:
+    "":
+      {}

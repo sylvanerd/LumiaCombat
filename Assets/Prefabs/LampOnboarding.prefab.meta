@@ -47,7 +47,7 @@
   Enabled: true
   Shape: !<Sphere>
     FitVisual: false
-    Radius: 2.000000
+    Radius: 1.500000
   Matter: !<reference> adcfd91a-7aa4-4923-8eea-942e1313db75
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
@@ -173,16 +173,35 @@
   ForceCompound: false
   Intangible: false
   ShowCollider: false
+- !<ScriptComponent/595e7ab6-0080-40a2-8bad-198eb686be6b>
+  PrefabRemaps:
+    []
+  Name: FaceCameraOnY
+  Enabled: true
+  ScriptAsset: !<reference> bf4d7e3d-b962-40fb-8a19-93ee0ffcae97
+  ScriptInputsDefault:
+    yawOnly: true
+    smoothingSpeed: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      yawOnly: true
+      smoothingSpeed: !<float> 0.000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/6b4006fa-ded3-4d21-9a9d-b37e1695ba67>
   PrefabRemaps:
     []
-  Name: Pinch Button - Manual Placement
+  Name: StartGame
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 8.000000, z: 0.700001}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.200000, y: 1.200000, z: 1.200000}
+    Position: {x: -0.100000, y: 0.033333, z: 0.296560}
+    Rotation: {x: -90.000008, y: 0.000000, z: 0.000000}
+    Scale: {x: 0.041667, y: 0.041667, z: 0.041667}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 833dca39-6e4a-4e11-baa0-28ad8fbddc5c
@@ -209,6 +228,39 @@
       customFunctionForOnButtonPinched: !<reference.ScriptComponent> afc6a902-6a2e-43d1-99e9-e6bd227549e9
       onButtonPinchedFunctionNames: !<string[]>
         - startGame
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/7901cf4a-5367-4e07-b5f6-aea5cb5abdbc>
+  PrefabRemaps:
+    []
+  Name: RuleUI
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 4.583412, z: 0.000000}
+    Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 4.500000, y: 4.500000, z: 4.500000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 6b4006fa-ded3-4d21-9a9d-b37e1695ba67
+  Components:
+    - !<own> a671b4a8-e807-47c0-8e4d-514f40e68260
+    - !<own> 595e7ab6-0080-40a2-8bad-198eb686be6b
+    - !<own> 818e44e6-1b58-4ca0-8e48-cc373f523260
+- !<ScriptComponent/818e44e6-1b58-4ca0-8e48-cc373f523260>
+  PrefabRemaps:
+    []
+  Name: DisableOnGameStart
+  Enabled: true
+  ScriptAsset: !<reference> f3392835-d16f-45da-9f1d-74c23fc713c8
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      target: !<reference.SceneObject> 7901cf4a-5367-4e07-b5f6-aea5cb5abdbc
   ScriptTypes:
     "":
       {}
@@ -268,6 +320,26 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<RenderMeshVisual/a671b4a8-e807-47c0-8e4d-514f40e68260>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 7e4da214-d884-43dd-af7c-0a9ab735c77a
+  Mesh: !<reference> 134c2f3f-e37d-45ac-8462-dea7228853ef
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<Text/c3ce2044-dd81-445e-99e6-5b173057940d>
   PrefabRemaps:
     []
@@ -281,7 +353,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Text: |
-    Start Game
+    I'm Ready
 
   Editable: false
   ShowEditingPreview: true
@@ -363,7 +435,7 @@
     Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 6b4006fa-ded3-4d21-9a9d-b37e1695ba67
+    - !<own> 7901cf4a-5367-4e07-b5f6-aea5cb5abdbc
   Components:
     - !<own> a5dc0426-22f1-4b5e-56d6-486c37c86ecb
     - !<own> 197678e9-51b5-4157-633e-3f7866f5ac5c

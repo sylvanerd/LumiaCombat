@@ -76,19 +76,19 @@
   Enabled: true
   ScriptAsset: !<reference> c301c455-c3cd-431e-88d9-b66454ac8a32
   ScriptInputsDefault:
-    finalEmission: true
+    colorFillDuration: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       vfxComponent: !<reference.VFXComponent> f3d7e2eb-41ae-4c43-9e44-e26330318b77
       particleEmissionBoost: !<float> 1.000000
-      materializeDuration: !<float> 3.000000
+      materializeDuration: 2.500000
       fresnelPower: 0.800000
-      peakEmissionIntensity: !<float> 1.000000
+      peakEmissionIntensity: 0.300000
       coreAlpha: !<float> 1.000000
-      finalEmission: 0.400000
-      colorFillDuration: 0.300000
+      finalEmission: 0.300000
+      colorFillDuration: 0.500000
   ScriptTypes:
     "":
       {}

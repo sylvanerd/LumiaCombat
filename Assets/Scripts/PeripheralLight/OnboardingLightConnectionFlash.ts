@@ -58,7 +58,7 @@ export class OnboardingLightConnectionFlash {
     settleEvent.bind(() => {
       print(`${LOG_TAG} onboarding flash settle`)
       this.writeColor(colorCharacteristic, finalColor)
-      this.writeBrightness(brightnessCharacteristic, 0.7)
+      this.writeBrightness(brightnessCharacteristic, 1.0)
     })
     settleEvent.reset(1)
   }

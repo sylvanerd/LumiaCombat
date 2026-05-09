@@ -78,7 +78,7 @@ export class BallSpawnVFXController extends BaseScriptComponent {
 
     const pass = mat.mainPass
     pass.materializeProgress = 0
-    pass.baseColor = new vec4(initialColor.r, initialColor.g, initialColor.b, 0)
+    pass.baseColor = new vec4(initialColor.r, initialColor.g, initialColor.b, this.coreAlpha)
     pass.fresnelPower = this.fresnelPower
     pass.emissionColor = this.buildEmission(initialColor)
     pass.emissionIntensity = this.peakEmissionIntensity
@@ -190,7 +190,7 @@ export class BallSpawnVFXController extends BaseScriptComponent {
     const smooth = t * t * (3 - 2 * t)
 
     this.ballMat.mainPass.materializeProgress = smooth
-    this.ballMat.mainPass.baseColor = new vec4(this.color.r, this.color.g, this.color.b, smooth * this.coreAlpha)
+    this.ballMat.mainPass.baseColor = new vec4(this.color.r, this.color.g, this.color.b, this.coreAlpha)
     this.ballMat.mainPass.fresnelPower = this.fresnelPower * (1.0 - smooth * 0.6)
 
     const minEmission = this.peakEmissionIntensity * RESIDUAL_EMISSION

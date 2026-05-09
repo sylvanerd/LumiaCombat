@@ -1,0 +1,44 @@
+- !<AssetImportMetadata/60e1d3cd-e884-4287-9d40-0b7beda3ab7e>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> f3392835-d16f-45da-9f1d-74c23fc713c8
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> f3392835-d16f-45da-9f1d-74c23fc713c8
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 0bf9981c-8b99-4da9-93e3-ec29ef4c984d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/0bf9981c-8b99-4da9-93e3-ec29ef4c984d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 80a5bfdf-c567-416f-b55b-261b63f19691
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    target: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - target: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input SceneObject target {"hint":"SceneObject to disable when the player presses Start Game (GameLogicManager.startGame fires). Typically the rules / tutorial UI root."}'

@@ -1,3 +1,4 @@
+import {GameLogicManager} from "Scripts/GameLogicManager"
 import {LampHealthManager} from "./LampHealthManager"
 import {LightHandEventListener} from "./LightHandEventListener"
 
@@ -10,11 +11,11 @@ export class LampCircularHealthBar extends BaseScriptComponent {
   lampHealthManager: LampHealthManager
 
   @input
-  @hint("LightHandEventListener on the lamp prefab, used to detect when the light has been placed")
+  @hint("LightHandEventListener on the lamp prefab, used to read the placement position when the game starts")
   lightHandEventListener: LightHandEventListener
 
   @input
-  @hint("Prefab containing the health UI (colour wheel + damage overlay). Instantiated at anchor position after placement.")
+  @hint("Prefab containing the health UI (colour wheel + damage overlay). Instantiated at anchor position when the game starts.")
   healthUIPrefab: ObjectPrefab
 
   @input
@@ -34,15 +35,32 @@ export class LampCircularHealthBar extends BaseScriptComponent {
   private healthUIInstance: SceneObject
 
   onAwake() {
-    this.createEvent("UpdateEvent").bind(() => this.pollForPlacement())
+    // GameLogicManager.instance is set in its own onAwake; defer subscription to OnStartEvent
+    // so we don't rely on script ordering.
+    this.createEvent("OnStartEvent").bind(() => this.subscribeToGameStart())
   }
 
-  private pollForPlacement() {
+  private subscribeToGameStart() {
+    const manager = GameLogicManager.getInstance()
+    if (!manager) {
+      print(`${LOG_TAG} WARNING: GameLogicManager not found in scene; health UI will never spawn`)
+      return
+    }
+    manager.onGameStarted.add(() => this.onGameStarted())
+    print(`${LOG_TAG} Subscribed to GameLogicManager.onGameStarted`)
+  }
+
+  private onGameStarted() {
     if (this.placed) return
-    if (this.lightHandEventListener.surfaceDetectionPosition === undefined) return
+
+    const pos = this.lightHandEventListener.surfaceDetectionPosition
+    if (pos === undefined) {
+      print(`${LOG_TAG} WARNING: onGameStarted fired but surfaceDetectionPosition is undefined; skipping health UI spawn`)
+      return
+    }
 
     this.placed = true
-    this.spawnHealthUI(this.lightHandEventListener.surfaceDetectionPosition)
+    this.spawnHealthUI(pos)
   }
 
   private spawnHealthUI(pos: vec3) {

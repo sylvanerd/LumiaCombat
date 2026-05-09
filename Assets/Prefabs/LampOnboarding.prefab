@@ -30,7 +30,7 @@
   Enabled: true
   Shape: !<Sphere>
     FitVisual: false
-    Radius: 2.000000
+    Radius: 1.500000
   Matter: !<reference> adcfd91a-7aa4-4923-8eea-942e1313db75
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
@@ -64,6 +64,42 @@
   ForceCompound: false
   Intangible: false
   ShowCollider: false
+- !<RenderMeshVisual/2eec7adb-98f6-4dcd-bd5a-0e59fb3f25dd>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 7e4da214-d884-43dd-af7c-0a9ab735c77a
+  Mesh: !<reference> 134c2f3f-e37d-45ac-8462-dea7228853ef
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<SceneObject/69027e60-42ab-4342-b1b4-bd61439bf922>
+  PrefabRemaps:
+    []
+  Name: RuleUI
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 4.583412, z: 0.000000}
+    Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 4.500000, y: 4.500000, z: 4.500000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> b96d71c1-e6b4-4f2a-bb9c-1275457e9f38
+  Components:
+    - !<own> 2eec7adb-98f6-4dcd-bd5a-0e59fb3f25dd
+    - !<own> a869f1e7-0703-4f11-97e2-12662a358a7f
 - !<SceneObject/8ddc6acc-3c82-418f-823a-45df86d90090>
   PrefabRemaps:
     []
@@ -175,6 +211,25 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/a869f1e7-0703-4f11-97e2-12662a358a7f>
+  PrefabRemaps:
+    []
+  Name: FaceCameraOnY
+  Enabled: true
+  ScriptAsset: !<reference> bf4d7e3d-b962-40fb-8a19-93ee0ffcae97
+  ScriptInputsDefault:
+    yawOnly: true
+    smoothingSpeed: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      yawOnly: true
+      smoothingSpeed: !<float> 0.000000
+  ScriptTypes:
+    "":
+      {}
 - !<Text/a9845916-9554-4287-8a23-e56a3376af05>
   PrefabRemaps:
     []
@@ -188,7 +243,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Text: |
-    Start Game
+    I'm Ready
 
   Editable: false
   ShowEditingPreview: true
@@ -282,13 +337,13 @@
 - !<SceneObject/b96d71c1-e6b4-4f2a-bb9c-1275457e9f38>
   PrefabRemaps:
     []
-  Name: Pinch Button - Manual Placement
+  Name: StartGame
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 8.000000, z: 0.700001}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.200000, y: 1.200000, z: 1.200000}
+    Position: {x: -0.100000, y: 0.033333, z: 0.296560}
+    Rotation: {x: -90.000008, y: 0.000000, z: 0.000000}
+    Scale: {x: 0.041667, y: 0.041667, z: 0.041667}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 8ddc6acc-3c82-418f-823a-45df86d90090
@@ -304,16 +359,19 @@
     - 10313883-10de-4dd3-95c8-3eccc62152f4: 70255c44-6e5d-41d2-acab-2164be746926
     - 197678e9-51b5-4157-9cc1-c087990a53a3: 197678e9-51b5-4157-633e-3f7866f5ac5c
     - 2a51fb61-10e6-4799-9640-67f8752c1a4f: 5708a67a-f0d8-427e-ad8a-7450ea11820a
+    - 2eec7adb-98f6-4dcd-bd5a-0e59fb3f25dd: a671b4a8-e807-47c0-8e4d-514f40e68260
+    - 69027e60-42ab-4342-b1b4-bd61439bf922: 7901cf4a-5367-4e07-b5f6-aea5cb5abdbc
     - 8ddc6acc-3c82-418f-823a-45df86d90090: 833dca39-6e4a-4e11-baa0-28ad8fbddc5c
     - 9c021898-d3c2-4ae3-b224-ec0f1d837a11: 42bc5053-6334-4d45-8ebd-31ebaa040f01
     - a5dc0426-22f1-4b5e-a929-b793c8379134: a5dc0426-22f1-4b5e-56d6-486c37c86ecb
     - a6b3a764-dd02-46e3-9cb8-3a36356cad84: 0f79e3fa-4782-44c3-93f9-397a796c0ddc
+    - a869f1e7-0703-4f11-97e2-12662a358a7f: 595e7ab6-0080-40a2-8bad-198eb686be6b
     - a9845916-9554-4287-8a23-e56a3376af05: c3ce2044-dd81-445e-99e6-5b173057940d
     - abdaf940-2487-4501-ada2-82725722d172: 9c022f34-125b-43d3-86d5-372eea9342c5
     - b96d71c1-e6b4-4f2a-bb9c-1275457e9f38: 6b4006fa-ded3-4d21-9a9d-b37e1695ba67
     - f14135fc-934d-4ae0-bb63-836a53d9a1fc: f14135fc-934d-4ae0-449c-7c95ac265e03
     - f941326a-6bcd-4c2d-848a-8782c030ea09: 256bbdb3-7759-4ebd-9b50-d3d6620a2eb3
-  Name: LampTriggerCollider
+  Name: LampOnboarding
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -322,7 +380,7 @@
     Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> b96d71c1-e6b4-4f2a-bb9c-1275457e9f38
+    - !<own> 69027e60-42ab-4342-b1b4-bd61439bf922
   Components:
     - !<own> a5dc0426-22f1-4b5e-a929-b793c8379134
     - !<own> 197678e9-51b5-4157-9cc1-c087990a53a3

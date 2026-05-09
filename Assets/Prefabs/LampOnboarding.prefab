@@ -84,6 +84,22 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ScriptComponent/38f30c40-79ab-418f-b899-492b345aacef>
+  PrefabRemaps:
+    []
+  Name: DisableOnGameStart
+  Enabled: true
+  ScriptAsset: !<reference> f3392835-d16f-45da-9f1d-74c23fc713c8
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      target: !<reference.SceneObject> 69027e60-42ab-4342-b1b4-bd61439bf922
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/69027e60-42ab-4342-b1b4-bd61439bf922>
   PrefabRemaps:
     []
@@ -100,6 +116,7 @@
   Components:
     - !<own> 2eec7adb-98f6-4dcd-bd5a-0e59fb3f25dd
     - !<own> a869f1e7-0703-4f11-97e2-12662a358a7f
+    - !<own> 38f30c40-79ab-418f-b899-492b345aacef
 - !<SceneObject/8ddc6acc-3c82-418f-823a-45df86d90090>
   PrefabRemaps:
     []

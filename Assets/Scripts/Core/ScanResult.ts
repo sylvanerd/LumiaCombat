@@ -9,7 +9,6 @@ import {Colors} from "../Helpers/Colors"
 import {reportError} from "../Helpers/ErrorUtils"
 import {Logger} from "../Helpers/Logger"
 import {RotateScreenTransform} from "../Helpers/RotateScreenTransform"
-import {OnboardingLightConnectionFlash} from "../PeripheralLight/OnboardingLightConnectionFlash"
 import {BleServiceHandler} from "./BleServiceHandler"
 import {ControllerFactory} from "./ControllerFactory"
 import {LensInitializer} from "./LensInitializer"
@@ -236,16 +235,9 @@ export class ScanResult extends BaseScriptComponent {
           this.onConnectionStateChanged(arg)
         )
         this.onWidgetAssigned(this.controllerFactory.create(this.bluetoothGatt))
-        // ----------------------------------------------------------------------
-        // Onboarding connection feedback
-        // ----------------------------------------------------------------------
-        // Trigger the connection flash from the confirmed GATT connection instead
-        // of relying on the spawned light controller UI to initialize first.
-        OnboardingLightConnectionFlash.play(this, this.bluetoothGatt)
       } else {
         // We already have a widget from a prior connection attempt, so select us now
         this.scanResultsManager.selectMeAndDeselectOthers(this)
-        OnboardingLightConnectionFlash.play(this, this.bluetoothGatt)
       }
     }
   }

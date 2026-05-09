@@ -1668,7 +1668,7 @@
   PrefabRemaps:
     []
   Name: Render Mesh Visual
-  Enabled: true
+  Enabled: false
   RenderOrder: 2
   StretchMode: Stretch
   VerticalAlignment: Center
@@ -4099,7 +4099,7 @@
   PrefabRemaps:
     []
   Name: ASRQueryController (voice input)
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -5068,7 +5068,7 @@
   PrefabRemaps:
     []
   Name: StatusVisual
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -7.559993, y: 12.799999, z: 0.700001}

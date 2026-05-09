@@ -61,22 +61,52 @@ export class LightController extends BaseScriptComponent {
   }
 
   init(bluetoothGatt: any, widget: Widget) {
+    Logger.getInstance().log("[LightController] init START gatt=" + bluetoothGatt + " widget=" + widget)
     this.containerFrame = widget.containerFrame
 
     // Generate a neon unique color that stands out against current lamp colors
     const startColor = UniqueColorService.getInstance().getUniqueColor()
 
-    // Set our marker to this position
-    this.markerTr.setLocalPosition(this.getLocalPositionAtColor(startColor))
+    // Marker placement is best-effort -- failure here must not block BLE wiring below.
+    try {
+      this.markerTr.setLocalPosition(this.getLocalPositionAtColor(startColor))
+    } catch (e) {
+      Logger.getInstance().log("[LightController] markerTr.setLocalPosition failed: " + e)
+    }
 
-    // Init
-    this.roomLightsUI.init()
-    this.hueEventEmitter.init(bluetoothGatt, startColor)
+    // Wire BLE FIRST: a thrown exception in any subsequent UI script init must
+    // never prevent HueEventEmitter from binding the GATT characteristics, or
+    // the physical bulb will silently never receive color writes.
+    if (!this.hueEventEmitter) {
+      Logger.getInstance().log("[LightController] FATAL: hueEventEmitter @input is NOT WIRED on the prefab! Open pfbLight in Inspector and assign HueEventEmitter to LightController.hueEventEmitter.")
+    } else {
+      try {
+        Logger.getInstance().log("[LightController] calling hueEventEmitter.init")
+        this.hueEventEmitter.init(bluetoothGatt, startColor)
+        Logger.getInstance().log("[LightController] hueEventEmitter.init returned OK")
+      } catch (e) {
+        Logger.getInstance().log("[LightController] hueEventEmitter.init failed: " + e)
+      }
+    }
 
-    this.lightHandEventListener.init()
+    try {
+      this.roomLightsUI.init()
+    } catch (e) {
+      Logger.getInstance().log("[LightController] roomLightsUI.init failed (continuing): " + e)
+    }
 
-    this.containerFrame.onTranslationStart.add(() => this.hueEventEmitter.setFlash(true))
-    this.containerFrame.onTranslationEnd.add(() => this.hueEventEmitter.setFlash(false))
+    try {
+      this.lightHandEventListener.init()
+    } catch (e) {
+      Logger.getInstance().log("[LightController] lightHandEventListener.init failed (continuing): " + e)
+    }
+
+    try {
+      this.containerFrame.onTranslationStart.add(() => this.hueEventEmitter.setFlash(true))
+      this.containerFrame.onTranslationEnd.add(() => this.hueEventEmitter.setFlash(false))
+    } catch (e) {
+      Logger.getInstance().log("[LightController] containerFrame event wiring failed: " + e)
+    }
   }
 
   private generateColorWheel() {

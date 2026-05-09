@@ -97,16 +97,20 @@ export class HueEventEmitter extends BaseScriptComponent {
 
     this.bluetoothGatt = myBluetoothGatt as Bluetooth.BluetoothGatt
     if (this.bluetoothGatt) {
+      Logger.getInstance().log("HueLightController init received gatt OK")
       try {
         this.baseService = this.bluetoothGatt.getService(HueLightData._baseServiceUUID)
         if (this.baseService) {
-          // Logger.getInstance().log("HueLightController Found desired service: " + this.baseService.uuid);
+          Logger.getInstance().log("HueLightController found base service: " + this.baseService.uuid)
           try {
             this.powerCharacteristic = this.baseService.getCharacteristic(HueLightData._powerCharacteristicUUID)
             if (this.powerCharacteristic) {
-              // Logger.getInstance().log("HueLightController found char power " + this.powerCharacteristic);
+              Logger.getInstance().log("HueLightController found char POWER")
+            } else {
+              Logger.getInstance().log("HueLightController power characteristic NOT FOUND")
             }
           } catch (error) {
+            Logger.getInstance().log("HueLightController power getCharacteristic threw: " + error)
             reportError(error)
           }
 
@@ -115,23 +119,32 @@ export class HueEventEmitter extends BaseScriptComponent {
               HueLightData._brightnessCharacteristicUUID
             )
             if (this.brightnessCharacteristic) {
-              // Logger.getInstance().log("HueLightController found char brightness " + this.brightnessCharacteristic);
+              Logger.getInstance().log("HueLightController found char BRIGHTNESS")
+            } else {
+              Logger.getInstance().log("HueLightController brightness characteristic NOT FOUND")
             }
           } catch (error) {
+            Logger.getInstance().log("HueLightController brightness getCharacteristic threw: " + error)
             reportError(error)
           }
 
           try {
             this.colorCharacteristic = this.baseService.getCharacteristic(HueLightData._colorCharacteristicUUID)
             if (this.colorCharacteristic) {
+              Logger.getInstance().log("HueLightController found char COLOR -- writing startColor to bulb now")
               this.setColor(startColor)
-              // Logger.getInstance().log("HueLightController found char color " + this.colorCharacteristic);
+            } else {
+              Logger.getInstance().log("HueLightController color characteristic NOT FOUND -- bulb will not receive color writes!")
             }
           } catch (error) {
+            Logger.getInstance().log("HueLightController color getCharacteristic threw: " + error)
             reportError(error)
           }
+        } else {
+          Logger.getInstance().log("HueLightController base service NOT FOUND on gatt -- characteristics cannot bind!")
         }
       } catch (error) {
+        Logger.getInstance().log("HueLightController gatt.getService(base) threw: " + error)
         reportError(error)
       }
     } else {

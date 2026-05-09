@@ -27,12 +27,17 @@ export class UniqueColorService extends BaseScriptComponent {
   }
 
   registerLightVisualMat(mat: Material) {
+    // Defensive: never push undefined. A subsequent getUniqueColor() iterates these and
+    // dereferences mainPass.customColor; an undefined entry would crash future LightController
+    // inits and silently break BLE.
+    if (!mat) return
     this.lightMats.push(mat)
   }
 
   getUniqueColor() {
     const currentColors: Vec3Fast[] = []
     this.lightMats.forEach((mat) => {
+      if (!mat || !mat.mainPass || !mat.mainPass.customColor) return
       currentColors.push([mat.mainPass.customColor.x, mat.mainPass.customColor.y, mat.mainPass.customColor.z])
     })
 

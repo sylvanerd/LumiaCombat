@@ -98,32 +98,30 @@ export class ControllerFactory extends BaseScriptComponent {
     const so = this.instantiateControllerContentHelper(this.pfbLightController, widget.getSceneObject())
     so.getTransform().setLocalScale(vec3.one().uniformScale(this.localScaleMult))
 
-    // The pfbLight root has many ScriptComponents on it. so.getComponent("ScriptComponent")
-    // returns only the FIRST one, which is not guaranteed to be LightController -- the
-    // "as LightController" cast is a no-op at runtime, so calling .init() on the wrong
-    // script silently does nothing. Iterate all ScriptComponents and find the LightController
-    // by checking for the init signature explicitly.
-    const allScripts = so.getComponents("Component.ScriptComponent") as ScriptComponent[]
-    Logger.getInstance().log(
-      "HueControllerFactory onFoundLight prefab instantiated, scriptComponents on root: " + allScripts.length
-    )
+    // IMPORTANT: pfbLight has many ScriptComponents on its root and getComponent("ScriptComponent")
+    // is NOT guaranteed to return LightController -- it may return any of them, depending on
+    // serialization order. On gameAlpha there were fewer scripts so it happened to work. On main
+    // we must scan all script components and find the one whose interface matches LightController.
+    const allScripts = so.getComponents("ScriptComponent") as ScriptComponent[]
+    Logger.getInstance().log("Controllerfactory onFoundLight scanning " + allScripts.length + " script components on pfbLight root")
 
     let newLightController: LightController | undefined = undefined
     for (let i = 0; i < allScripts.length; i++) {
-      const s = allScripts[i] as any
-      // LightController owns the color-wheel query methods and the BLE/UI init path.
-      if (s && typeof s.init === "function" && typeof s.getWorldColorAtScreenPos === "function") {
-        newLightController = s as LightController
-        Logger.getInstance().log("HueControllerFactory onFoundLight matched LightController at index " + i)
+      const candidate = allScripts[i] as any
+      // selectColorWheelWorldPos is unique to LightController; this is more reliable than instanceof
+      // (instanceof fails across script-component class registrations in Lens Studio).
+      if (candidate && typeof candidate.selectColorWheelWorldPos === "function" && typeof candidate.init === "function") {
+        newLightController = candidate as LightController
+        Logger.getInstance().log("Controllerfactory onFoundLight matched LightController at script index " + i)
         break
       }
     }
 
     if (newLightController) {
-      Logger.getInstance().log("HueControllerFactory onFoundLight calling LightController.init")
+      Logger.getInstance().log("Controllerfactory onFoundLight calling LightController.init with gatt=" + bluetoothGatt)
       newLightController.init(bluetoothGatt, widget)
     } else {
-      Logger.getInstance().log("HueControllerFactory onFoundLight ERROR: no LightController found on instantiated pfbLight")
+      Logger.getInstance().log("Controllerfactory onFoundLight ERROR: LightController NOT found among " + allScripts.length + " scripts on pfbLight root -- BLE wiring will not happen!")
     }
     return widget
   }

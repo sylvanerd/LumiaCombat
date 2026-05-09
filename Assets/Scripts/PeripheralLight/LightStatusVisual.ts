@@ -17,14 +17,33 @@ export class LightStatusVisual extends BaseScriptComponent {
   private sphereMat: Material
 
   onAwake() {
-    this.sliderMat = this.sliderRmv.mainMaterial.clone()
-    this.sliderRmv.mainMaterial = this.sliderMat
-
-    this.sphereMat = this.sphereRmv.mainMaterial.clone()
-    this.sphereRmv.mainMaterial = this.sphereMat
-
     this.brightness = 1
     this.color = Colors.black()
+    this.ensureMaterials()
+  }
+
+  // Lazily clone+install materials. Safe to call multiple times. This must NOT throw,
+  // because HueEventEmitter.init() drives setColor(...) which depends on materials being
+  // present -- and if this throws, the BLE characteristics never bind and the bulb is dead.
+  // This is also resilient to the parent SceneObject being disabled at construction time
+  // (in which case onAwake never runs) -- the next setColor call will lazily init.
+  private ensureMaterials() {
+    try {
+      if (!this.sphereMat && this.sphereRmv && this.sphereRmv.mainMaterial) {
+        this.sphereMat = this.sphereRmv.mainMaterial.clone()
+        this.sphereRmv.mainMaterial = this.sphereMat
+      }
+    } catch (e) {
+      Logger.getInstance().log("[LightStatusVisual] ensureMaterials sphere failed: " + e)
+    }
+    try {
+      if (!this.sliderMat && this.sliderRmv && this.sliderRmv.mainMaterial) {
+        this.sliderMat = this.sliderRmv.mainMaterial.clone()
+        this.sliderRmv.mainMaterial = this.sliderMat
+      }
+    } catch (e) {
+      Logger.getInstance().log("[LightStatusVisual] ensureMaterials slider failed: " + e)
+    }
   }
 
   turnOn(on: boolean) {
@@ -63,10 +82,19 @@ export class LightStatusVisual extends BaseScriptComponent {
 
     // Mix our color and black to mimic brightness
     const mergedColor = color.uniformScale(localBrightness).add(blackColor.uniformScale(1 - localBrightness))
-    this.sphereMat.mainPass.customColor = mergedColor
-    this.sphereMat.mainPass.customColor = mergedColor
 
-    this.sliderRmv.mainMaterial.mainPass.Tweak_N3 = color
+    // Defensive: if onAwake didn't run (e.g., the SceneObject is disabled in the prefab) we
+    // would have undefined materials. Lazy-init here so a missing visual never aborts the
+    // caller (HueEventEmitter.init -> setColor) and breaks the BLE chain.
+    this.ensureMaterials()
+
+    if (this.sphereMat && this.sphereMat.mainPass) {
+      this.sphereMat.mainPass.customColor = mergedColor
+    }
+
+    if (this.sliderRmv && this.sliderRmv.mainMaterial && this.sliderRmv.mainMaterial.mainPass) {
+      this.sliderRmv.mainMaterial.mainPass.Tweak_N3 = color
+    }
   }
 
   getColor() {

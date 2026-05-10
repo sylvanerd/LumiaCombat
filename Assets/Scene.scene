@@ -4867,11 +4867,11 @@
       tipText: !<reference.Text> 5e69f3e5-b794-43aa-be66-8d097f73f443
       tips: !<string[]>
         - Make sure your hue light is turned on!
-        - "Your occipital lobe processes color vision. Lumia's giving it a workout."
+        - "Do you know? Your occipital lobe processes color vision."
         - Play in a colorful room. More hues = more ammo.
         - Color wheel is your cheat code.
         - Stock up on colors before combat starts.
-      tipDurationSeconds: 2.200000
+      tipDurationSeconds: !<float> 2.000000
       tipFadeDurationSeconds: 0.200000
       onboardingRoot: !<reference.SceneObject> 7f556d43-b922-42aa-af86-59a5f4fb81c6
       connectButton: !<reference.SceneObject> 65492144-593c-435b-8fdf-0272f8267348

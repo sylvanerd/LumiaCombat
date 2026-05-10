@@ -940,7 +940,7 @@
   PrefabRemaps:
     []
   Name: Render Mesh Visual
-  Enabled: true
+  Enabled: false
   RenderOrder: 4
   StretchMode: Stretch
   VerticalAlignment: Center
@@ -1565,9 +1565,9 @@
   ScriptAsset: !<reference> 8090f35b-c8bf-4f07-855a-123a551268b3
   ScriptInputsDefault:
     trackedHand: true
+    lampOnboardingObjectName: true
     wristOffsetDistance: true
     positionLerpSpeed: true
-    rotationLerpSpeed: true
     backEnterThreshold: true
     frontEnterThreshold: true
     lowAngleIsFront: true
@@ -1579,16 +1579,18 @@
   ScriptInputs:
     "":
       trackedHand: left
-      prefabFront: !<reference.ObjectPrefab> 97f8401a-3ec3-4321-833e-dbb6070d47ba
+      prefabFront: !<reference.ObjectPrefab> 7aa3e4cf-1c49-467b-913d-b6d317565a00
       prefabBack: !<reference.ObjectPrefab> edcebd70-3205-4179-8325-1d82de4cb7ef
       prefabFront2: !<reference.ObjectPrefab> 6ffb1271-3270-4b6f-938b-562f70223b8c
       cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      lightHandEventListener: !<MappingBased.AssignableType> 80d36c97-d6a9-4802-86cf-b2b6690c86fc
+      lampOnboardingObjectName: LampOnboarding
       wristOffsetDistance: !<float> 2.000000
       wristOffsetForward: 5.500000
       wristOffsetRight: !<float> 1.000000
       positionLerpSpeed: !<float> 16.000000
-      rotationLerpSpeed: !<float> 14.000000
-      blendSmoothingSpeed: !<float> 15.000000
+      rotationLerpSpeed: !<float> 18.000000
+      blendSmoothingSpeed: !<float> 18.000000
       backEnterThreshold: 0.200000
       frontEnterThreshold: -0.200000
       lowAngleIsFront: true
@@ -2544,7 +2546,7 @@
   PrefabRemaps:
     []
   Name: Text
-  Enabled: true
+  Enabled: false
   RenderOrder: 3
   StretchMode: Stretch
   VerticalAlignment: Center
@@ -3507,7 +3509,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Position: {x: 0.000000, y: -0.000000, z: 0.100000}
     Rotation: {x: -90.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 0.060000, y: 0.060000, z: 0.060000}
     HasSegmentScaleCompensation: false
@@ -7868,7 +7870,7 @@
   PrefabRemaps:
     []
   Name: Text
-  Enabled: true
+  Enabled: false
   RenderOrder: 3
   StretchMode: Stretch
   VerticalAlignment: Center
@@ -10448,7 +10450,7 @@
 - !<SceneObject/b0d1bd00-6edc-4481-b397-5d678f0124e6>
   PrefabRemaps:
     []
-  Name: GameUIVisualManager
+  Name: PlayerUIVisualManager
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -11816,7 +11818,7 @@
   PrefabRemaps:
     []
   Name: Render Mesh Visual
-  Enabled: true
+  Enabled: false
   RenderOrder: 3
   StretchMode: Stretch
   VerticalAlignment: Center

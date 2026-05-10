@@ -25,6 +25,7 @@ export class GameLogicManager extends BaseScriptComponent {
 
   private debugMeshes: RenderMeshVisual[] = []
   private debugMats: Material[] = []
+  private debugVfxComponents: VFXComponent[] = []
   private currentLampColor: vec4 = new vec4(1, 1, 1, 1)
   private lastContrastingColor: vec4 = new vec4(1, 1, 1, 1)
   private cyclers: AutoColorCycler[] = []
@@ -60,17 +61,54 @@ export class GameLogicManager extends BaseScriptComponent {
 
   registerDebugObject(obj: SceneObject) {
     if (!obj) return
-    const rmv = obj.getComponent("RenderMeshVisual") as RenderMeshVisual
-    if (!rmv) {
-      print(`${LOG_TAG} WARNING: No RenderMeshVisual on registered debug object "${obj.name}"`)
+
+    // RenderMeshVisual path: clone the material so per-instance baseColor edits
+    // don't bleed across other users of the same source material.
+    const rmv = obj.getComponent("Component.RenderMeshVisual") as RenderMeshVisual
+    if (rmv) {
+      const mat = rmv.mainMaterial.clone()
+      rmv.mainMaterial = mat
+      mat.mainPass.baseColor = this.lastContrastingColor
+      this.debugMeshes.push(rmv)
+      this.debugMats.push(mat)
+    }
+
+    // VFXComponent path: walk descendants because the VFXComponent is usually
+    // mounted on a child, not the prefab root. The graph must expose a vec4
+    // Simulate property named "particleColor" (see ColorHintVFX.vfxgraph).
+    const vfx = this.findVfxComponent(obj)
+    if (vfx) {
+      this.debugVfxComponents.push(vfx)
+      this.pushVfxColor(vfx, this.lastContrastingColor)
+    }
+
+    if (!rmv && !vfx) {
+      print(`${LOG_TAG} WARNING: No RenderMeshVisual or VFXComponent on registered debug object "${obj.name}"`)
       return
     }
-    const mat = rmv.mainMaterial.clone()
-    rmv.mainMaterial = mat
-    mat.mainPass.baseColor = this.lastContrastingColor
-    this.debugMeshes.push(rmv)
-    this.debugMats.push(mat)
-    print(`${LOG_TAG} Debug object registered: "${obj.name}" (total: ${this.debugMeshes.length})`)
+
+    print(`${LOG_TAG} Debug object registered: "${obj.name}" (meshes=${this.debugMeshes.length}, vfx=${this.debugVfxComponents.length})`)
+  }
+
+  private findVfxComponent(obj: SceneObject): VFXComponent | null {
+    const direct = obj.getComponent("Component.VFXComponent") as VFXComponent
+    if (direct) return direct
+    const childCount = obj.getChildrenCount()
+    for (let i = 0; i < childCount; i++) {
+      const found = this.findVfxComponent(obj.getChild(i))
+      if (found) return found
+    }
+    return null
+  }
+
+  private pushVfxColor(vfx: VFXComponent, color: vec4) {
+    if (!vfx || !vfx.asset) return
+    try {
+      const props = vfx.asset.properties as any
+      props["particleColor"] = color
+    } catch (_) {
+      // particleColor may not be exposed yet on this graph
+    }
   }
 
   registerCycler(cycler: AutoColorCycler) {
@@ -114,6 +152,10 @@ export class GameLogicManager extends BaseScriptComponent {
       if (this.debugMats[i]) {
         this.debugMats[i].mainPass.baseColor = contrasting
       }
+    }
+
+    for (let i = 0; i < this.debugVfxComponents.length; i++) {
+      this.pushVfxColor(this.debugVfxComponents[i], contrasting)
     }
   }
 

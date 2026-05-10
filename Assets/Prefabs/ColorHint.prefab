@@ -1,0 +1,35 @@
+- !<ObjectPrefab/7aa3e4cf-1c49-467b-913d-b6d317565a00>
+  PackagePath: ""
+  objects:
+    - !<own> b02a80fa-1cdf-4602-98de-4b6015848c05
+  LazyLoading: false
+  RetainAssets: true
+- !<VFXComponent/05bb8ebb-a775-4019-ab57-cbb353b35280>
+  PrefabRemaps:
+    []
+  Name: VFX Component
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  VFXAsset: !<reference> 4e97228f-c8a6-4412-b0d4-b672e5c92958
+- !<SceneObject/b02a80fa-1cdf-4602-98de-4b6015848c05>
+  PrefabRemaps:
+    - 05bb8ebb-a775-4019-ab57-cbb353b35280: 05bb8ebb-a775-4019-54a8-344cac4cad7f
+    - b02a80fa-1cdf-4602-98de-4b6015848c05: b02a80fa-1cdf-4602-6721-b49fea7b73fa
+  Name: ColorHint
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -0.000004}
+    Rotation: {x: 0.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 05bb8ebb-a775-4019-ab57-cbb353b35280

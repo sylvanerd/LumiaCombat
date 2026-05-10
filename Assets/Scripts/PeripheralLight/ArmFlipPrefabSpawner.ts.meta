@@ -31,6 +31,8 @@
     cameraObject: false
     disableTinyObjects: false
     frontEnterThreshold: false
+    lampOnboardingObjectName: false
+    lightHandEventListener: false
     lockToFlipAxis: false
     lowAngleIsFront: false
     minVisibleScale: false
@@ -60,6 +62,8 @@
       prefabBack: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       prefabFront2: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       cameraObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      lightHandEventListener: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      lampOnboardingObjectName: LampOnboarding
       wristOffsetDistance: !<float> 2.000000
       wristOffsetForward: !<float> 0.000000
       wristOffsetRight: !<float> 0.000000
@@ -84,6 +88,8 @@
     - '// @input Asset.ObjectPrefab prefabBack {"hint":"Prefab B: shown when back side faces user"}'
     - '// @input Asset.ObjectPrefab prefabFront2 {"hint":"Prefab A2: additional prefab shown when palm/front side faces user"}'
     - '// @input SceneObject cameraObject {"hint":"Optional camera object. If empty, uses world camera from scene"}'
+    - '// @input AssignableType lightHandEventListener {"hint":"Optional: a LightHandEventListener to poll. Leave empty to auto-detect the runtime pfbLight by walking the scene tree."}'
+    - '// @input string lampOnboardingObjectName = "LampOnboarding" {"hint":"Name of the SceneObject spawned by LampColliderSpawner when the light is placed. Wrist UI unlocks the moment a SceneObject with this name appears."}'
     - '// @input float wristOffsetDistance = 2 {"hint":"Distance from wrist along the user-facing normal (always toward the camera)"}'
     - '// @input float wristOffsetForward {"hint":"Extra offset along hand forward direction (wrist-to-fingers axis)"}'
     - '// @input float wristOffsetRight {"hint":"Extra offset along hand right direction (index-to-pinky axis)"}'

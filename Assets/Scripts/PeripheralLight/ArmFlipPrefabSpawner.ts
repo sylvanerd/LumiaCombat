@@ -1,6 +1,7 @@
 import TrackedHand from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/TrackedHand"
 import {SIK} from "SpectaclesInteractionKit.lspkg/SIK"
 import {GameLogicManager} from "Scripts/GameLogicManager"
+import {LightHandEventListener} from "./LightHandEventListener"
 
 const LOG_TAG = "[ArmFlipSpawner]"
 const EPS = 0.0001
@@ -28,6 +29,15 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
   @hint("Optional camera object. If empty, uses world camera from scene")
   @allowUndefined
   cameraObject: SceneObject
+
+  @input
+  @hint("Optional: a LightHandEventListener to poll. Leave empty to auto-detect the runtime pfbLight by walking the scene tree.")
+  @allowUndefined
+  lightHandEventListener: LightHandEventListener
+
+  @input
+  @hint("Name of the SceneObject spawned by LampColliderSpawner when the light is placed. Wrist UI unlocks the moment a SceneObject with this name appears.")
+  lampOnboardingObjectName: string = "LampOnboarding"
 
   @input
   @hint("Distance from wrist along the user-facing normal (always toward the camera)")
@@ -102,6 +112,7 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
   private smoothedScore: number = 0
   private smoothedBlend: number = 0
   private isBackState: boolean = false
+  private isUiUnlocked: boolean = false
 
   private worldCameraTransform: Transform | null = null
   private warnedMissingPrefab: boolean = false
@@ -218,7 +229,9 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
   }
 
   private onUpdate() {
-    if (!this.anchor || !this.hand || !this.hand.isTracked()) {
+    this.updateUiUnlocked()
+
+    if (!this.isUiUnlocked || !this.anchor || !this.hand || !this.hand.isTracked()) {
       this.setAnchorActive(false)
       return
     }
@@ -226,6 +239,86 @@ export class ArmFlipPrefabSpawner extends BaseScriptComponent {
     this.setAnchorActive(true)
     this.updateAnchorPose()
     this.updateFrontBackBlend()
+  }
+
+  private updateUiUnlocked() {
+    if (this.isUiUnlocked) return
+
+    // Path 1 (fastest): explicit @input wiring. If the user wires this to the
+    // active runtime LightHandEventListener, we unlock as soon as it sets
+    // surfaceDetectionPosition.
+    if (
+      this.lightHandEventListener &&
+      this.lightHandEventListener.surfaceDetectionPosition !== undefined
+    ) {
+      this.isUiUnlocked = true
+      print(`${LOG_TAG} Light placed (via wired listener); wrist UI unlocked`)
+      return
+    }
+
+    // Path 2 (no wiring required): pfbLight is instantiated dynamically by
+    // ControllerFactory at runtime, so the @input on this scene-level component
+    // can never reference the runtime pfbLight reliably. Detect the moment
+    // LampColliderSpawner spawns the LampOnboarding prefab anywhere in the scene.
+    if (this.findEnabledSceneObjectByName(this.lampOnboardingObjectName) !== null) {
+      this.isUiUnlocked = true
+      print(`${LOG_TAG} Light placed (via "${this.lampOnboardingObjectName}" spawn); wrist UI unlocked`)
+      return
+    }
+
+    // Path 3 (defensive): scan the scene for any LightHandEventListener-shaped
+    // ScriptComponent whose surfaceDetectionPosition is set. Catches setups
+    // where the LampOnboarding name has been customised but the placement
+    // signal still flows through the same listener API.
+    if (this.findAnyPlacedSurfaceListener()) {
+      this.isUiUnlocked = true
+      print(`${LOG_TAG} Light placed (via scene-walk listener); wrist UI unlocked`)
+    }
+  }
+
+  private findEnabledSceneObjectByName(name: string): SceneObject | null {
+    if (!name) return null
+    const roots = global.scene.getRootObjectsCount()
+    for (let i = 0; i < roots; i++) {
+      const found = this.searchByName(global.scene.getRootObject(i), name)
+      if (found) return found
+    }
+    return null
+  }
+
+  private searchByName(obj: SceneObject, name: string): SceneObject | null {
+    if (!obj || !obj.enabled) return null
+    if (obj.name === name) return obj
+    const count = obj.getChildrenCount()
+    for (let i = 0; i < count; i++) {
+      const found = this.searchByName(obj.getChild(i), name)
+      if (found) return found
+    }
+    return null
+  }
+
+  private findAnyPlacedSurfaceListener(): boolean {
+    const roots = global.scene.getRootObjectsCount()
+    for (let i = 0; i < roots; i++) {
+      if (this.scanForPlacedListener(global.scene.getRootObject(i))) return true
+    }
+    return false
+  }
+
+  private scanForPlacedListener(obj: SceneObject): boolean {
+    if (!obj || !obj.enabled) return false
+    const scripts = obj.getComponents("ScriptComponent") as ScriptComponent[]
+    for (let i = 0; i < scripts.length; i++) {
+      const candidate = scripts[i] as any
+      if (candidate && candidate.surfaceDetectionPosition !== undefined) {
+        return true
+      }
+    }
+    const count = obj.getChildrenCount()
+    for (let i = 0; i < count; i++) {
+      if (this.scanForPlacedListener(obj.getChild(i))) return true
+    }
+    return false
   }
 
   private setAnchorActive(active: boolean) {

@@ -5,7 +5,7 @@ import {ColorPickPinchDetector} from "./ColorPickPinchDetector"
 import {HandVFXController} from "./HandVFXController"
 
 const LOG_TAG = "[ColorBar]"
-const SPHERE_COUNT = 6
+const SPHERE_COUNT = 5
 
 @component
 export class ColorHistoryBar extends BaseScriptComponent {

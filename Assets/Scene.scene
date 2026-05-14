@@ -10401,7 +10401,7 @@
     {}
   ScriptInputs:
     "":
-      debugMeshPrefab: !<reference.ObjectPrefab> 97f8401a-3ec3-4321-833e-dbb6070d47ba
+      debugMeshPrefab: !<reference.ObjectPrefab> 7aa3e4cf-1c49-467b-913d-b6d317565a00
       contrastThreshold: 0.400000
       similarityThreshold: 0.100000
       quickTestMode: true

@@ -1,0 +1,96 @@
+- !<ObjectPrefab/f458a24c-f549-44bf-a7d3-cd64b454a342>
+  PackagePath: ""
+  objects:
+    - !<own> efaa2699-cb3c-44e6-8a03-8214aec0892b
+  LazyLoading: false
+  RetainAssets: true
+- !<SceneObject/38b49bfb-17e1-41bb-a417-1f3af612fca4>
+  PrefabRemaps:
+    []
+  Name: LargeCirclePlane
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -0.147059, y: 0.147244, z: 0.200000}
+    Rotation: {x: 90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 1.070076, y: 1.070076, z: 1.070076}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> aff2611e-cf31-403e-a470-0217ef749a81
+- !<RenderMeshVisual/aff2611e-cf31-403e-a470-0217ef749a81>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 2
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> ad27d81d-ff88-45e4-bd8f-63cf66ab5de1
+  Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<SceneObject/b3a037a0-5d3e-4ea1-a9dc-6c06e5bb7822>
+  PrefabRemaps:
+    []
+  Name: ecg
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 15.000000, y: 15.000000, z: 15.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 38b49bfb-17e1-41bb-a417-1f3af612fca4
+  Components:
+    - !<own> dc43d462-ed6e-4e9b-99f3-e22bcabc7948
+- !<AnimationPlayer/dc43d462-ed6e-4e9b-99f3-e22bcabc7948>
+  PrefabRemaps:
+    []
+  Name: component_1
+  Enabled: true
+  Autoplay: true
+  ClipRangeType: Frames
+  AnimationClips:
+    - !<AnimationClip>
+      AnimationAsset: !<reference> dd34814c-953d-4eeb-a62a-4e7dff686963
+      Name: BaseLayer
+      Weight: 1.000000
+      PlaybackSpeed: 1.000000
+      Begin: 0.000000
+      End: 0.000000
+      Offset: 0.000000
+      Reversed: false
+      Disabled: false
+      BlendMode: Default
+      ScaleMode: Multiply
+      PlaybackMode: Loop
+- !<SceneObject/efaa2699-cb3c-44e6-8a03-8214aec0892b>
+  PrefabRemaps:
+    - 38b49bfb-17e1-41bb-a417-1f3af612fca4: 8a98575b-705f-465d-bf58-5483e110dd99
+    - aff2611e-cf31-403e-a470-0217ef749a81: 5d7a2c1c-0998-4e51-9a93-a9622fcef177
+    - b3a037a0-5d3e-4ea1-a9dc-6c06e5bb7822: 2c280f11-d8c0-4e22-b049-2d6d29ac97ee
+    - dc43d462-ed6e-4e9b-99f3-e22bcabc7948: 61ca86db-9256-4b3e-bf9b-ae2599db9282
+    - efaa2699-cb3c-44e6-8a03-8214aec0892b: 596f0a2a-dba7-41de-8afe-724da519714f
+  Name: pfbHeartRate
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.500000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> b3a037a0-5d3e-4ea1-a9dc-6c06e5bb7822
+  Components:
+    []

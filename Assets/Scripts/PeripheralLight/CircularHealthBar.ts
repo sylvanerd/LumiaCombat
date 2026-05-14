@@ -69,7 +69,7 @@ export class CircularHealthBar extends BaseScriptComponent {
     }
 
     if (this.debugScoreText) {
-      this.debugScoreText.text = `HP: ${Math.round(healthPercent)}%`
+      this.debugScoreText.text = `Your Glow: ${Math.round(healthPercent)}%`
     }
   }
 }

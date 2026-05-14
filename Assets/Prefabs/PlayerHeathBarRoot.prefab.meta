@@ -14,6 +14,21 @@
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<SceneObject/042c21eb-1024-420e-b163-5ca35eb56fc7>
+  PrefabRemaps:
+    []
+  Name: LargeCirclePlane
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -0.147059, y: 0.147244, z: 0.200000}
+    Rotation: {x: 90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 2c781041-a991-4287-967d-57e78703d3f9
 - !<Text/22dfce6c-c8b9-44ad-5a52-3b2cfc8b0d2e>
   PrefabRemaps:
     []
@@ -31,7 +46,7 @@
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 5
+  FontSize: 4
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
     left: -7.500000
@@ -95,6 +110,62 @@
     CapitalizationOverride: None
   DepthTest: false
   TwoSided: false
+- !<AnimationPlayer/297da244-6662-4f75-bfc8-cbf55e4f7076>
+  PrefabRemaps:
+    []
+  Name: component_1
+  Enabled: true
+  Autoplay: true
+  ClipRangeType: Frames
+  AnimationClips:
+    - !<AnimationClip>
+      AnimationAsset: !<reference> dd34814c-953d-4eeb-a62a-4e7dff686963
+      Name: BaseLayer
+      Weight: 1.000000
+      PlaybackSpeed: 1.000000
+      Begin: 0.000000
+      End: 0.000000
+      Offset: 0.000000
+      Reversed: false
+      Disabled: false
+      BlendMode: Default
+      ScaleMode: Multiply
+      PlaybackMode: Loop
+- !<SceneObject/2b3dd856-43e2-4378-af38-dd2151420027>
+  PrefabRemaps:
+    []
+  Name: ecg
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -0.154033, y: -0.260000, z: -0.163703}
+    Rotation: {x: 90.000000, y: 0.000005, z: -180.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 042c21eb-1024-420e-b163-5ca35eb56fc7
+  Components:
+    - !<own> 297da244-6662-4f75-bfc8-cbf55e4f7076
+- !<RenderMeshVisual/2c781041-a991-4287-967d-57e78703d3f9>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> ad27d81d-ff88-45e4-bd8f-63cf66ab5de1
+  Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<SceneObject/4a097df6-bc0b-4f47-791d-b2e7152ebf26>
   PrefabRemaps:
     []
@@ -102,7 +173,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: -0.626229}
+    Position: {x: 0.000000, y: 0.000000, z: -0.601374}
     Rotation: {x: -90.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -124,7 +195,7 @@
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.070000, z: 0.800000}
     Rotation: {x: 0.000000, y: 180.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Scale: {x: 1.100000, y: 1.100000, z: 1.100000}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -134,7 +205,7 @@
   PrefabRemaps:
     []
   Name: Render Mesh Visual
-  Enabled: true
+  Enabled: false
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center
@@ -143,7 +214,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 18594472-0504-482f-a850-c0198ef27833
+    []
   Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -183,6 +254,7 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 4a097df6-bc0b-4f47-791d-b2e7152ebf26
+    - !<own> 2b3dd856-43e2-4378-af38-dd2151420027
   Components:
     - !<own> 78102288-e44b-4d0a-4d51-81bed165892a
 - !<SceneObject/b27e8484-9773-4617-7db7-9ea18a2122ea>

@@ -1,0 +1,107 @@
+- !<AssetImportMetadata/5aa2f0f7-847b-4543-b792-4ef1faf0b8e1>
+  ImportedAssetIds:
+    ObjectPrefab: !<reference> f458a24c-f549-44bf-a7d3-cd64b454a342
+  ImporterName: ObjectPrefabImporter
+  PrimaryAsset: !<reference> f458a24c-f549-44bf-a7d3-cd64b454a342
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    ObjectPrefab: !<own> fa486ec1-c285-4d88-ab2d-ebed46734884
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<SceneObject/2c280f11-d8c0-4e22-b049-2d6d29ac97ee>
+  PrefabRemaps:
+    []
+  Name: ecg
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 15.000000, y: 15.000000, z: 15.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 8a98575b-705f-465d-bf58-5483e110dd99
+  Components:
+    - !<own> 61ca86db-9256-4b3e-bf9b-ae2599db9282
+- !<SceneObject/596f0a2a-dba7-41de-8afe-724da519714f>
+  PrefabRemaps:
+    []
+  Name: pfbHeartRate
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.500000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 2c280f11-d8c0-4e22-b049-2d6d29ac97ee
+  Components:
+    []
+- !<RenderMeshVisual/5d7a2c1c-0998-4e51-9a93-a9622fcef177>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 2
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> ad27d81d-ff88-45e4-bd8f-63cf66ab5de1
+  Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<AnimationPlayer/61ca86db-9256-4b3e-bf9b-ae2599db9282>
+  PrefabRemaps:
+    []
+  Name: component_1
+  Enabled: true
+  Autoplay: true
+  ClipRangeType: Frames
+  AnimationClips:
+    - !<AnimationClip>
+      AnimationAsset: !<reference> dd34814c-953d-4eeb-a62a-4e7dff686963
+      Name: BaseLayer
+      Weight: 1.000000
+      PlaybackSpeed: 1.000000
+      Begin: 0.000000
+      End: 0.000000
+      Offset: 0.000000
+      Reversed: false
+      Disabled: false
+      BlendMode: Default
+      ScaleMode: Multiply
+      PlaybackMode: Loop
+- !<SceneObject/8a98575b-705f-465d-bf58-5483e110dd99>
+  PrefabRemaps:
+    []
+  Name: LargeCirclePlane
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -0.147059, y: 0.147244, z: 0.200000}
+    Rotation: {x: 90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 1.070076, y: 1.070076, z: 1.070076}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 5d7a2c1c-0998-4e51-9a93-a9622fcef177
+- !<ObjectPrefabAssetData/fa486ec1-c285-4d88-ab2d-ebed46734884>
+  Prototype: !<ObjectOwner/66d4bb8b-ce34-40dc-ad1f-8a5a89a104a6>
+    PackagePath: ""
+    objects:
+      - !<own> 596f0a2a-dba7-41de-8afe-724da519714f

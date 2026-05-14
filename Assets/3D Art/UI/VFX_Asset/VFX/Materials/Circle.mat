@@ -190,7 +190,7 @@
         typeIdx: 1
         value: 1.000000
   DepthWrite: true
-  DepthTest: true
+  DepthTest: false
   DepthFunction: LessEqual
   TwoSided: false
   ColorMask: {x: true, y: true, z: true, w: true}

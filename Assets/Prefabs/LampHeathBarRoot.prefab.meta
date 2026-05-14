@@ -41,7 +41,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: "HP: 100%"
+  Text: "Lumia's Glow: 100%"
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -110,6 +110,36 @@
     CapitalizationOverride: None
   DepthTest: false
   TwoSided: false
+- !<SceneObject/2be8902e-9ca3-4af8-936e-2a73e1461f83>
+  PrefabRemaps:
+    []
+  Name: LampHalo
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.070000, z: 0.800000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 0.300000, y: 0.300000, z: 0.300000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 313f5bbb-5e95-40e6-b6ad-3134fa76e166
+    - !<own> 607ba4f6-0ecc-4e3b-8a40-aa144a43add0
+    - !<own> b9c3a764-0c66-4de9-938b-5bd40546aca7
+- !<VFXComponent/313f5bbb-5e95-40e6-b6ad-3134fa76e166>
+  PrefabRemaps:
+    []
+  Name: VFX Component
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  VFXAsset: !<reference> 300c47aa-ad21-49b7-96d4-6dea590a1253
 - !<RenderMeshVisual/39d9a1fa-8e68-4213-859f-38fcbc5cfc7c>
   PrefabRemaps:
     []
@@ -130,6 +160,60 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<RenderMeshVisual/49c1d5b6-33a7-42a5-a17f-0dffdca5d05f>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 2
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 56ec67b4-8004-41a2-bfd1-7784190194ce
+  Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<ScriptComponent/607ba4f6-0ecc-4e3b-8a40-aa144a43add0>
+  PrefabRemaps:
+    []
+  Name: LampHaloVFXController
+  Enabled: true
+  ScriptAsset: !<reference> 7f576632-5c45-4491-88b4-c55aa299073e
+  ScriptInputsDefault:
+    emissionBoost: true
+    restartCooldownSeconds: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      vfxComponent: !<reference.VFXComponent> 313f5bbb-5e95-40e6-b6ad-3134fa76e166
+      emissionBoost: 1.500000
+      restartCooldownSeconds: 0.100000
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/70f13f1c-1c81-4a6f-9a24-7ec99b8b7e0e>
+  PrefabRemaps:
+    []
+  Name: Object 0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -0.426129, y: 0.000000, z: 0.101687}
+    Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 0.250000, y: 1.000000, z: 1.250000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 49c1d5b6-33a7-42a5-a17f-0dffdca5d05f
 - !<ObjectPrefabAssetData/7d55693a-ca65-4ea8-8d28-3e230154b344>
   Prototype: !<ObjectOwner/866b2816-5fe8-4fe9-89ae-d52ff522330f>
     PackagePath: ""
@@ -147,10 +231,29 @@
     Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
     HasSegmentScaleCompensation: false
   Children:
+    - !<own> d462e175-d1c5-458a-8acb-6e38023617c2
     - !<own> c1bef1e5-dc07-489e-a587-632690db4cc9
     - !<own> 1c8c90ba-c09d-4db9-a40e-a17aeb96e20f
+    - !<own> 2be8902e-9ca3-4af8-936e-2a73e1461f83
   Components:
     []
+- !<ScriptComponent/b9c3a764-0c66-4de9-938b-5bd40546aca7>
+  PrefabRemaps:
+    []
+  Name: HaloRotator
+  Enabled: true
+  ScriptAsset: !<reference> 82f7e175-dc4e-4910-bcd2-a345d85e2cbc
+  ScriptInputsDefault:
+    debugLog: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      rotationSpeed: !<float> 40.000000
+      debugLog: false
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/c1bef1e5-dc07-489e-a587-632690db4cc9>
   PrefabRemaps:
     []
@@ -166,6 +269,42 @@
     - !<own> dd594daf-b928-4fcc-8f02-438476c25ec2
   Components:
     - !<own> f347f09e-53da-48d0-a7d3-1fe6e91ea44e
+- !<RenderMeshVisual/d0363e37-82aa-43b7-8c55-432b83b9ad69>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 1
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 70f05732-72cd-4fa7-85c1-432155ca5ace
+  Mesh: !<reference> 75999566-a8fe-4f69-bd57-e7e7a4e519b3
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    pCube2: 0.550000
+    pCube3: 0.100000
+- !<SceneObject/d462e175-d1c5-458a-8acb-6e38023617c2>
+  PrefabRemaps:
+    []
+  Name: pCube1
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.023415, y: 3.062858, z: 1.200000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 4.000000, y: 0.800000, z: 1.500000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 70f13f1c-1c81-4a6f-9a24-7ec99b8b7e0e
+  Components:
+    - !<own> d0363e37-82aa-43b7-8c55-432b83b9ad69
 - !<SceneObject/dd594daf-b928-4fcc-8f02-438476c25ec2>
   PrefabRemaps:
     []
@@ -185,7 +324,7 @@
   PrefabRemaps:
     []
   Name: Render Mesh Visual
-  Enabled: true
+  Enabled: false
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center

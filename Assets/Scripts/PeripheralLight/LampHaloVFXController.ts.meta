@@ -1,0 +1,50 @@
+- !<AssetImportMetadata/242c6688-0757-409d-9352-cbd9dfff6584>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 7f576632-5c45-4491-88b4-c55aa299073e
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 7f576632-5c45-4491-88b4-c55aa299073e
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 558f9a36-ba18-4b74-b917-58b9675aa176
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/558f9a36-ba18-4b74-b917-58b9675aa176>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 5f716496-b457-4051-8b1e-a5ed740b4748
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    emissionBoost: false
+    restartCooldownSeconds: false
+    vfxComponent: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - vfxComponent: !<reference.VFXComponent> 00000000-0000-0000-0000-000000000000
+      emissionBoost: 1.500000
+      restartCooldownSeconds: 0.100000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Component.VFXComponent vfxComponent {"hint":"VFXComponent on the sibling Halo SceneObject (LampHaloVFX.vfxgraph)"}'
+    - "// @input float emissionBoost = 1.5 {\"hint\":\"Multiplier pushed to the graph's particleEmissionBoost property\"}"
+    - '// @input float restartCooldownSeconds = 0.1 {"hint":"Minimum seconds between consecutive restart kicks (debounces stacked hits)"}'

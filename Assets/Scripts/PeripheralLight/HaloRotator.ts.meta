@@ -1,0 +1,47 @@
+- !<AssetImportMetadata/bc824230-d90c-4c83-b96c-fe0bcd35ca8e>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 82f7e175-dc4e-4910-bcd2-a345d85e2cbc
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 82f7e175-dc4e-4910-bcd2-a345d85e2cbc
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> a19185ad-fa1c-4dd0-89d4-147f5cea6d54
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/a19185ad-fa1c-4dd0-89d4-147f5cea6d54>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 6b405cd9-217b-4884-a44a-650f985b97bf
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    debugLog: false
+    rotationSpeed: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - rotationSpeed: !<float> 30.000000
+      debugLog: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input float rotationSpeed = 30 {"hint":"Rotation speed in degrees per second. Positive = clockwise viewed from above (+Y looking down). Negative = counter-clockwise. Set to 0 to freeze."}'
+    - '// @input bool debugLog {"hint":"If true, the script will print one debug line per second showing the current angle (useful for confirming the script is wired and running)."}'

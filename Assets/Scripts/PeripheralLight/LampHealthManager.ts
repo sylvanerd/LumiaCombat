@@ -46,6 +46,8 @@ export class LampHealthManager extends BaseScriptComponent {
   @hint("Text component for 'You Win' message (initially disabled)")
   winText: Text
 
+  private static instance: LampHealthManager
+
   private currentHealth: number = 100
   private alive: boolean = true
   private lastHitTime: number = -999
@@ -56,7 +58,16 @@ export class LampHealthManager extends BaseScriptComponent {
   private _onLampDied: Event<void> = new Event<void>()
   get onLampDied() { return this._onLampDied.publicApi() }
 
+  static getInstance(): LampHealthManager | undefined {
+    return LampHealthManager.instance
+  }
+
   onAwake() {
+    if (LampHealthManager.instance) {
+      print(`${LOG_TAG} WARNING: Multiple instances detected`)
+    }
+    LampHealthManager.instance = this
+
     this.currentHealth = this.maxHealth
 
     if (this.winText) {
@@ -67,7 +78,7 @@ export class LampHealthManager extends BaseScriptComponent {
       this.handleHit(collider)
     })
 
-    print(`${LOG_TAG} Initialized, maxHealth=${this.maxHealth}, damagePerHit=${this.damagePerHit}%`)
+    print(`${LOG_TAG} Singleton initialized, maxHealth=${this.maxHealth}, damagePerHit=${this.damagePerHit}%`)
   }
 
   getHealthPercent(): number {

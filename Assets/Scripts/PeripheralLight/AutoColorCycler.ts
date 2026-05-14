@@ -20,6 +20,8 @@ export class AutoColorCycler extends BaseScriptComponent {
   @input
   autoChangeEnabled: boolean = false
 
+  private static instance: AutoColorCycler
+
   private _onColorCycled: Event<vec4> = new Event<vec4>()
   get onColorCycled() { return this._onColorCycled.publicApi() }
 
@@ -27,7 +29,16 @@ export class AutoColorCycler extends BaseScriptComponent {
   private currentInterval: number = 0
   private initialized: boolean = false
 
+  static getInstance(): AutoColorCycler | undefined {
+    return AutoColorCycler.instance
+  }
+
   onAwake() {
+    if (AutoColorCycler.instance) {
+      print(`${LOG_TAG} WARNING: Multiple instances detected`)
+    }
+    AutoColorCycler.instance = this
+
     print(`${LOG_TAG} onAwake called`)
     print(`${LOG_TAG} hueEventEmitter wired: ${this.hueEventEmitter != null}`)
     print(`${LOG_TAG} intervalSeconds: [${this.intervalSecondsMin}-${this.intervalSecondsMax}]`)

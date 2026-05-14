@@ -4,11 +4,64 @@
     - !<own> 612af2e8-168d-4b0b-a862-83efec7e0f29
   LazyLoading: false
   RetainAssets: true
+- !<RenderMeshVisual/0e637f48-454d-4ab2-a1f6-dc24009dc891>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 1
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 70f05732-72cd-4fa7-85c1-432155ca5ace
+  Mesh: !<reference> 75999566-a8fe-4f69-bd57-e7e7a4e519b3
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    pCube2: 0.550000
+    pCube3: 0.100000
+- !<SceneObject/0ea567ce-03ea-45b9-91ac-f71c3a50f4f9>
+  PrefabRemaps:
+    []
+  Name: pCube1
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.023415, y: 3.062858, z: 1.200000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 4.000000, y: 0.800000, z: 1.500000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 2a7c7ab8-3edf-473d-9199-c07ff2ab06df
+  Components:
+    - !<own> 0e637f48-454d-4ab2-a1f6-dc24009dc891
+- !<ScriptComponent/14e79bf0-7d3c-4967-b456-53e5369e45b4>
+  PrefabRemaps:
+    []
+  Name: HaloRotator
+  Enabled: true
+  ScriptAsset: !<reference> 82f7e175-dc4e-4910-bcd2-a345d85e2cbc
+  ScriptInputsDefault:
+    debugLog: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      rotationSpeed: !<float> 40.000000
+      debugLog: false
+  ScriptTypes:
+    "":
+      {}
 - !<RenderMeshVisual/293d6146-8261-4018-878d-a8afc6b0f3e8>
   PrefabRemaps:
     []
   Name: Render Mesh Visual
-  Enabled: true
+  Enabled: false
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center
@@ -24,6 +77,21 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/2a7c7ab8-3edf-473d-9199-c07ff2ab06df>
+  PrefabRemaps:
+    []
+  Name: Object 0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -0.426129, y: 0.000000, z: 0.101687}
+    Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 0.250000, y: 1.000000, z: 1.250000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 760c2d87-5ca9-4e85-8cdd-2555fc9d8534
 - !<SceneObject/2ce6d5af-58fd-4cfd-8450-33da6f87c1b4>
   PrefabRemaps:
     []
@@ -39,11 +107,68 @@
     []
   Components:
     - !<own> 79b1ce3d-5b55-4a86-81ec-aa2fe2b2fefa
+- !<VFXComponent/37337cbf-3b4f-4a30-8976-936ad780d954>
+  PrefabRemaps:
+    []
+  Name: VFX Component
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  VFXAsset: !<reference> 300c47aa-ad21-49b7-96d4-6dea590a1253
+- !<SceneObject/4d6c8436-6e2a-43a1-989d-09d11f49cccb>
+  PrefabRemaps:
+    []
+  Name: LampHalo
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.070000, z: 0.800000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 0.300000, y: 0.300000, z: 0.300000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 37337cbf-3b4f-4a30-8976-936ad780d954
+    - !<own> 5e2fe31c-efaa-4a3c-92d7-8958eea18b0a
+    - !<own> 14e79bf0-7d3c-4967-b456-53e5369e45b4
+- !<ScriptComponent/5e2fe31c-efaa-4a3c-92d7-8958eea18b0a>
+  PrefabRemaps:
+    []
+  Name: LampHaloVFXController
+  Enabled: true
+  ScriptAsset: !<reference> 7f576632-5c45-4491-88b4-c55aa299073e
+  ScriptInputsDefault:
+    emissionBoost: true
+    restartCooldownSeconds: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      vfxComponent: !<reference.VFXComponent> 37337cbf-3b4f-4a30-8976-936ad780d954
+      emissionBoost: 1.500000
+      restartCooldownSeconds: 0.100000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/612af2e8-168d-4b0b-a862-83efec7e0f29>
   PrefabRemaps:
+    - 0e637f48-454d-4ab2-a1f6-dc24009dc891: d0363e37-82aa-43b7-8c55-432b83b9ad69
+    - 0ea567ce-03ea-45b9-91ac-f71c3a50f4f9: d462e175-d1c5-458a-8acb-6e38023617c2
+    - 14e79bf0-7d3c-4967-b456-53e5369e45b4: b9c3a764-0c66-4de9-938b-5bd40546aca7
     - 293d6146-8261-4018-878d-a8afc6b0f3e8: f347f09e-53da-48d0-a7d3-1fe6e91ea44e
+    - 2a7c7ab8-3edf-473d-9199-c07ff2ab06df: 70f13f1c-1c81-4a6f-9a24-7ec99b8b7e0e
     - 2ce6d5af-58fd-4cfd-8450-33da6f87c1b4: dd594daf-b928-4fcc-8f02-438476c25ec2
+    - 37337cbf-3b4f-4a30-8976-936ad780d954: 313f5bbb-5e95-40e6-b6ad-3134fa76e166
+    - 4d6c8436-6e2a-43a1-989d-09d11f49cccb: 2be8902e-9ca3-4af8-936e-2a73e1461f83
+    - 5e2fe31c-efaa-4a3c-92d7-8958eea18b0a: 607ba4f6-0ecc-4e3b-8a40-aa144a43add0
     - 612af2e8-168d-4b0b-a862-83efec7e0f29: 8c5f5d26-505c-44e9-877f-7e2b094957e7
+    - 760c2d87-5ca9-4e85-8cdd-2555fc9d8534: 49c1d5b6-33a7-42a5-a17f-0dffdca5d05f
     - 79b1ce3d-5b55-4a86-81ec-aa2fe2b2fefa: 2a83f1bd-2d96-4373-8ed2-90f971b68d35
     - 7b9a09bd-07ae-4dda-a60e-dbc71c11fe4d: 39d9a1fa-8e68-4213-859f-38fcbc5cfc7c
     - dacf51fc-8381-4e05-8434-274cdbec2f67: 1c8c90ba-c09d-4db9-a40e-a17aeb96e20f
@@ -57,10 +182,32 @@
     Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
     HasSegmentScaleCompensation: false
   Children:
+    - !<own> 0ea567ce-03ea-45b9-91ac-f71c3a50f4f9
     - !<own> e1563e67-477a-4da2-a99b-90cad540eedb
     - !<own> dacf51fc-8381-4e05-8434-274cdbec2f67
+    - !<own> 4d6c8436-6e2a-43a1-989d-09d11f49cccb
   Components:
     []
+- !<RenderMeshVisual/760c2d87-5ca9-4e85-8cdd-2555fc9d8534>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 2
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 56ec67b4-8004-41a2-bfd1-7784190194ce
+  Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<Text/79b1ce3d-5b55-4a86-81ec-aa2fe2b2fefa>
   PrefabRemaps:
     []
@@ -73,7 +220,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: "HP: 100%"
+  Text: "Lumia's Glow: 100%"
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000

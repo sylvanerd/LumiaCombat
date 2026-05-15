@@ -2,7 +2,7 @@ import {GameLogicManager} from "Scripts/GameLogicManager"
 import {LampHealthManager} from "./LampHealthManager"
 import {LightHandEventListener} from "./LightHandEventListener"
 
-const LOG_TAG = "[LampCircularHealthBar]"
+const LOG_TAG = "[LampBatteryHealthBar]"
 
 @component
 export class LampCircularHealthBar extends BaseScriptComponent {
@@ -15,7 +15,7 @@ export class LampCircularHealthBar extends BaseScriptComponent {
   lightHandEventListener: LightHandEventListener
 
   @input
-  @hint("Prefab containing the health UI (colour wheel + damage overlay). Instantiated at anchor position when the game starts.")
+  @hint("Prefab containing the battery-bar health UI. Instantiated at the anchor position when the game starts.")
   healthUIPrefab: ObjectPrefab
 
   @input
@@ -23,20 +23,50 @@ export class LampCircularHealthBar extends BaseScriptComponent {
   yOffset: number = 30
 
   @input
-  @hint("Name of the RenderMeshVisual child inside the prefab used as damage overlay")
-  overlayChildName: string = "DamageOverlay"
+  @hint("Name of the RenderMeshVisual child inside the prefab that carries the battery bar mesh and material")
+  batteryBarChildName: string = "BatteryBar"
 
   @input
-  @hint("Name of the float parameter on the Graph Material that controls radial fill (0=no damage, 1=full black)")
-  fillPropertyName: string = "fillAmount"
+  @hint("Blend shape name on the battery-bar mesh that controls the fill level (0=empty, 1=full)")
+  fillBlendShapeName: string = "pCube2"
 
-  private overlayMat: Material
+  @input
+  @hint("Optional secondary blend shape on the battery-bar mesh, held at a constant accent value")
+  accentBlendShapeName: string = "pCube3"
+
+  @input
+  @hint("Constant weight to write into the accent blend shape (leave at 0 to disable)")
+  accentValue: number = 0.1
+
+  @input
+  @hint("Name of the color (vec4) property on the battery-bar material to tint based on health")
+  colorPropertyName: string = "baseColor"
+
+  @input("vec4")
+  @widget(new ColorWidget())
+  @hint("Color at 100% health")
+  healthyColor: vec4 = new vec4(0.2, 1.0, 0.4, 1.0)
+
+  @input("vec4")
+  @widget(new ColorWidget())
+  @hint("Color at the warning threshold")
+  warningColor: vec4 = new vec4(1.0, 0.85, 0.2, 1.0)
+
+  @input("vec4")
+  @widget(new ColorWidget())
+  @hint("Color at 0% health")
+  dangerColor: vec4 = new vec4(1.0, 0.25, 0.25, 1.0)
+
+  @input
+  @hint("Health % at which the bar reaches warningColor; below this it lerps toward dangerColor")
+  warningThresholdPct: number = 50
+
+  private batteryBarMesh: RenderMeshVisual | null = null
+  private batteryBarMat: Material | null = null
   private placed: boolean = false
   private healthUIInstance: SceneObject
 
   onAwake() {
-    // GameLogicManager.instance is set in its own onAwake; defer subscription to OnStartEvent
-    // so we don't rely on script ordering.
     this.createEvent("OnStartEvent").bind(() => this.subscribeToGameStart())
   }
 
@@ -70,14 +100,18 @@ export class LampCircularHealthBar extends BaseScriptComponent {
     this.healthUIInstance = this.healthUIPrefab.instantiate(null)
     this.healthUIInstance.getTransform().setWorldPosition(spawnPos)
 
-    const overlay = this.findRenderMeshByName(this.healthUIInstance, this.overlayChildName)
-    if (overlay) {
-      this.overlayMat = overlay.mainMaterial.clone()
-      overlay.mainMaterial = this.overlayMat
-      this.overlayMat.mainPass[this.fillPropertyName] = 0.0
-      print(`${LOG_TAG} Overlay material cloned, fillPropertyName="${this.fillPropertyName}"`)
+    this.batteryBarMesh = this.findRenderMeshByName(this.healthUIInstance, this.batteryBarChildName)
+    if (this.batteryBarMesh) {
+      this.batteryBarMat = this.batteryBarMesh.mainMaterial.clone()
+      this.batteryBarMesh.mainMaterial = this.batteryBarMat
+
+      if (this.accentBlendShapeName && this.batteryBarMesh.hasBlendShapeWeight(this.accentBlendShapeName)) {
+        this.batteryBarMesh.setBlendShapeWeight(this.accentBlendShapeName, this.accentValue)
+      }
+
+      print(`${LOG_TAG} Battery bar found, material cloned, fill blend shape="${this.fillBlendShapeName}", color prop="${this.colorPropertyName}"`)
     } else {
-      print(`${LOG_TAG} WARNING: Could not find RenderMeshVisual named "${this.overlayChildName}" in health UI prefab`)
+      print(`${LOG_TAG} WARNING: Could not find RenderMeshVisual named "${this.batteryBarChildName}" in health UI prefab`)
     }
 
     this.subscribeToHealth()
@@ -109,10 +143,37 @@ export class LampCircularHealthBar extends BaseScriptComponent {
   }
 
   private updateVisuals(healthPercent: number) {
-    const fillAmount = 1.0 - (healthPercent / 100)
+    const fillAmount = Math.max(0, Math.min(1, healthPercent / 100))
 
-    if (this.overlayMat) {
-      this.overlayMat.mainPass[this.fillPropertyName] = fillAmount
+    if (this.batteryBarMesh && this.batteryBarMesh.hasBlendShapeWeight(this.fillBlendShapeName)) {
+      this.batteryBarMesh.setBlendShapeWeight(this.fillBlendShapeName, fillAmount)
     }
+
+    if (this.batteryBarMat) {
+      const color = this.healthToColor(healthPercent)
+      this.batteryBarMat.mainPass[this.colorPropertyName] = color
+    }
+  }
+
+  private healthToColor(healthPercent: number): vec4 {
+    const threshold = Math.max(1, Math.min(99, this.warningThresholdPct))
+
+    if (healthPercent >= threshold) {
+      const t = (healthPercent - threshold) / (100 - threshold)
+      return this.lerpColor(this.warningColor, this.healthyColor, t)
+    } else {
+      const t = healthPercent / threshold
+      return this.lerpColor(this.dangerColor, this.warningColor, t)
+    }
+  }
+
+  private lerpColor(a: vec4, b: vec4, t: number): vec4 {
+    const clampedT = Math.max(0, Math.min(1, t))
+    return new vec4(
+      a.x + (b.x - a.x) * clampedT,
+      a.y + (b.y - a.y) * clampedT,
+      a.z + (b.z - a.z) * clampedT,
+      a.w + (b.w - a.w) * clampedT
+    )
   }
 }

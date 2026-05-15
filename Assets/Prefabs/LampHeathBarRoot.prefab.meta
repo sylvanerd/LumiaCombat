@@ -18,7 +18,7 @@
   PrefabRemaps:
     []
   Name: DamageOverlay
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.070000, z: 0.800000}
@@ -117,9 +117,9 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.070000, z: 0.800000}
+    Position: {x: 0.000000, y: 0.080000, z: 0.800000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 0.300000, y: 0.300000, z: 0.300000}
+    Scale: {x: 0.280000, y: 0.280000, z: 0.280000}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -202,7 +202,7 @@
 - !<SceneObject/70f13f1c-1c81-4a6f-9a24-7ec99b8b7e0e>
   PrefabRemaps:
     []
-  Name: Object 0
+  Name: lampIcon
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -219,6 +219,26 @@
     PackagePath: ""
     objects:
       - !<own> 8c5f5d26-505c-44e9-877f-7e2b094957e7
+- !<ScriptComponent/880dd83f-075d-45cd-84b2-9a1f4f52f4be>
+  PrefabRemaps:
+    []
+  Name: FaceCameraOnAxis
+  Enabled: true
+  ScriptAsset: !<reference> 2ca585ae-2190-42b2-bafe-ee246290c96a
+  ScriptInputsDefault:
+    yawOnly: true
+    smoothingSpeed: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      faceAxis: +Z
+      yawOnly: true
+      smoothingSpeed: !<float> 0.000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/8c5f5d26-505c-44e9-877f-7e2b094957e7>
   PrefabRemaps:
     []
@@ -258,7 +278,7 @@
   PrefabRemaps:
     []
   Name: ColorWheel
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.050000, z: 0.800000}
@@ -282,7 +302,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 70f05732-72cd-4fa7-85c1-432155ca5ace
+    - !<reference> 4217d911-e349-4cfe-b59e-c6ac4c27ba6d
   Mesh: !<reference> 75999566-a8fe-4f69-bd57-e7e7a4e519b3
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -293,7 +313,7 @@
 - !<SceneObject/d462e175-d1c5-458a-8acb-6e38023617c2>
   PrefabRemaps:
     []
-  Name: pCube1
+  Name: BatteryBar
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -305,6 +325,7 @@
     - !<own> 70f13f1c-1c81-4a6f-9a24-7ec99b8b7e0e
   Components:
     - !<own> d0363e37-82aa-43b7-8c55-432b83b9ad69
+    - !<own> 880dd83f-075d-45cd-84b2-9a1f4f52f4be
 - !<SceneObject/dd594daf-b928-4fcc-8f02-438476c25ec2>
   PrefabRemaps:
     []

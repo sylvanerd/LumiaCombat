@@ -503,7 +503,7 @@
       lightHandEventListener: !<MappingBased.AssignableType_1> 8e9638f6-967e-40a1-712e-b606b74b63f1
       mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       ballPrefab: !<reference.ObjectPrefab> 9a570ba6-c4cc-4de6-8097-6334d54685b9
-      delayThrowTime: 0.200000
+      delayThrowTime: 0.800000
       arcHeightMin: !<float> 10.000000
       arcHeightMax: !<float> 45.000000
       flightTimeMin: 0.500000
@@ -856,8 +856,15 @@
   Enabled: true
   ScriptAsset: !<reference> acaca947-ab43-4117-86ff-7a7f69b2da07
   ScriptInputsDefault:
-    overlayChildName: true
-    fillPropertyName: true
+    batteryBarChildName: true
+    fillBlendShapeName: true
+    accentBlendShapeName: true
+    accentValue: true
+    colorPropertyName: true
+    healthyColor: true
+    warningColor: true
+    dangerColor: true
+    warningThresholdPct: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -866,8 +873,15 @@
       lightHandEventListener: !<MappingBased.AssignableType_1> 8e9638f6-967e-40a1-712e-b606b74b63f1
       healthUIPrefab: !<reference.ObjectPrefab> 561175f4-6f44-4651-ae87-1fef6597d0d9
       yOffset: !<float> 20.000000
-      overlayChildName: DamageOverlay
-      fillPropertyName: fillAmount
+      batteryBarChildName: BatteryBar
+      fillBlendShapeName: pCube2
+      accentBlendShapeName: pCube3
+      accentValue: 0.100000
+      colorPropertyName: baseColor
+      healthyColor: !<Vec4> {x: 0.200000, y: 1.000000, z: 0.400000, w: 1.000000}
+      warningColor: !<Vec4> {x: 1.000000, y: 0.850000, z: 0.200000, w: 1.000000}
+      dangerColor: !<Vec4> {x: 1.000000, y: 0.250000, z: 0.250000, w: 1.000000}
+      warningThresholdPct: !<float> 50.000000
   ScriptTypes:
     "":
       {}

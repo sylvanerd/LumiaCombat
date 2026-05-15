@@ -17,7 +17,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 70f05732-72cd-4fa7-85c1-432155ca5ace
+    - !<reference> 4217d911-e349-4cfe-b59e-c6ac4c27ba6d
   Mesh: !<reference> 75999566-a8fe-4f69-bd57-e7e7a4e519b3
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -28,7 +28,7 @@
 - !<SceneObject/0ea567ce-03ea-45b9-91ac-f71c3a50f4f9>
   PrefabRemaps:
     []
-  Name: pCube1
+  Name: BatteryBar
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -40,6 +40,7 @@
     - !<own> 2a7c7ab8-3edf-473d-9199-c07ff2ab06df
   Components:
     - !<own> 0e637f48-454d-4ab2-a1f6-dc24009dc891
+    - !<own> 831b6641-809a-4dc3-8df3-92676d6a66a5
 - !<ScriptComponent/14e79bf0-7d3c-4967-b456-53e5369e45b4>
   PrefabRemaps:
     []
@@ -80,7 +81,7 @@
 - !<SceneObject/2a7c7ab8-3edf-473d-9199-c07ff2ab06df>
   PrefabRemaps:
     []
-  Name: Object 0
+  Name: lampIcon
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -127,9 +128,9 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.070000, z: 0.800000}
+    Position: {x: 0.000000, y: 0.080000, z: 0.800000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 0.300000, y: 0.300000, z: 0.300000}
+    Scale: {x: 0.280000, y: 0.280000, z: 0.280000}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -171,6 +172,7 @@
     - 760c2d87-5ca9-4e85-8cdd-2555fc9d8534: 49c1d5b6-33a7-42a5-a17f-0dffdca5d05f
     - 79b1ce3d-5b55-4a86-81ec-aa2fe2b2fefa: 2a83f1bd-2d96-4373-8ed2-90f971b68d35
     - 7b9a09bd-07ae-4dda-a60e-dbc71c11fe4d: 39d9a1fa-8e68-4213-859f-38fcbc5cfc7c
+    - 831b6641-809a-4dc3-8df3-92676d6a66a5: 880dd83f-075d-45cd-84b2-9a1f4f52f4be
     - dacf51fc-8381-4e05-8434-274cdbec2f67: 1c8c90ba-c09d-4db9-a40e-a17aeb96e20f
     - e1563e67-477a-4da2-a99b-90cad540eedb: c1bef1e5-dc07-489e-a587-632690db4cc9
   Name: HeathBarRoot
@@ -309,11 +311,31 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ScriptComponent/831b6641-809a-4dc3-8df3-92676d6a66a5>
+  PrefabRemaps:
+    []
+  Name: FaceCameraOnAxis
+  Enabled: true
+  ScriptAsset: !<reference> 2ca585ae-2190-42b2-bafe-ee246290c96a
+  ScriptInputsDefault:
+    yawOnly: true
+    smoothingSpeed: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      faceAxis: +Z
+      yawOnly: true
+      smoothingSpeed: !<float> 0.000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/dacf51fc-8381-4e05-8434-274cdbec2f67>
   PrefabRemaps:
     []
   Name: DamageOverlay
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.070000, z: 0.800000}
@@ -328,7 +350,7 @@
   PrefabRemaps:
     []
   Name: ColorWheel
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.050000, z: 0.800000}

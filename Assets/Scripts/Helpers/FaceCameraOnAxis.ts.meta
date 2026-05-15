@@ -1,20 +1,20 @@
-- !<AssetImportMetadata/5f7d1f39-d5e0-421f-a4b3-b32961024886>
+- !<AssetImportMetadata/8dcdda31-7dd7-4e29-ba8c-c55c49aa3153>
   ImportedAssetIds:
-    TypeScriptAsset: !<reference> bf4d7e3d-b962-40fb-8a19-93ee0ffcae97
+    TypeScriptAsset: !<reference> 2ca585ae-2190-42b2-bafe-ee246290c96a
   ImporterName: TypeScriptAssetImporter
-  PrimaryAsset: !<reference> bf4d7e3d-b962-40fb-8a19-93ee0ffcae97
+  PrimaryAsset: !<reference> 2ca585ae-2190-42b2-bafe-ee246290c96a
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:
     {}
   AssetDataMap:
-    TypeScriptAsset: !<own> d5d90723-26f5-4bb0-95d2-2c7a978967b1
+    TypeScriptAsset: !<own> 6ff72b0c-1e86-4f49-90a3-4b7d15516935
   DependentFiles:
     []
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
-- !<TypeScriptAssetData/d5d90723-26f5-4bb0-95d2-2c7a978967b1>
+- !<TypeScriptAssetData/6ff72b0c-1e86-4f49-90a3-4b7d15516935>
   SvgIcon: ""
   SetupScript:
     code: ""
@@ -22,11 +22,12 @@
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: 7842eac4-e85f-454d-85c8-d0e305a8fb73
+  ComponentUid: 09fa9778-78a1-443c-9906-c5c30c6c67b8
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     cameraObject: false
+    faceAxis: false
     smoothingSpeed: false
     yawOnly: false
   ScriptTypesHidden:
@@ -39,12 +40,14 @@
     []
   DefaultScriptInputs:
     - cameraObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      faceAxis: +Y
       yawOnly: true
       smoothingSpeed: !<float> 0.000000
   ScriptTypes:
     -
       {}
   InputLines:
-    - '// @input SceneObject cameraObject {"hint":"Camera SceneObject to face. The local +Y axis of this object will rotate to point toward this camera each frame."}'
+    - '// @input SceneObject cameraObject {"hint":"Camera SceneObject to face. The chosen local axis of this object will rotate to point toward this camera each frame."}'
+    - "// @input string faceAxis = \"+Y\" {\"hint\":\"Which LOCAL axis of this object should point at the camera. Valid values: +X, -X, +Y, -Y, +Z, -Z. Cycle through these while previewing to find the axis that matches your prefab's 'front' side.\"}"
     - '// @input bool yawOnly = true {"hint":"Yaw only: rotate only around world Y so the object stays upright (typical UI card billboard, prevents the card lying flat when the camera is above the object). Disable for a full free billboard that also tilts."}'
     - '// @input float smoothingSpeed {"hint":"Smoothing speed (higher = snappier catch-up). Set to 0 for an instant snap each frame."}'

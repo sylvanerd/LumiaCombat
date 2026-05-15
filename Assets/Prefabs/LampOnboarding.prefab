@@ -231,10 +231,11 @@
 - !<ScriptComponent/a869f1e7-0703-4f11-97e2-12662a358a7f>
   PrefabRemaps:
     []
-  Name: FaceCameraOnY
+  Name: FaceCameraOnAxis
   Enabled: true
-  ScriptAsset: !<reference> bf4d7e3d-b962-40fb-8a19-93ee0ffcae97
+  ScriptAsset: !<reference> 2ca585ae-2190-42b2-bafe-ee246290c96a
   ScriptInputsDefault:
+    faceAxis: true
     yawOnly: true
     smoothingSpeed: true
   ScriptTypesDefault:
@@ -242,6 +243,7 @@
   ScriptInputs:
     "":
       cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      faceAxis: +Y
       yawOnly: true
       smoothingSpeed: !<float> 0.000000
   ScriptTypes:

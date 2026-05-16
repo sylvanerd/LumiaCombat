@@ -34,13 +34,19 @@
     delayThrowTime: false
     flightTimeMax: false
     flightTimeMin: false
+    handVFXController: false
+    healPercentOnShatter: false
     hitSound: false
     lightHandEventListener: false
     mainCam: false
     maxActiveBalls: false
     overshootMultiplier: false
     playerCollider: false
+    shatterEmissionBoost: false
+    shatterLifetimeSeconds: false
+    shatterPrefab: false
     shootingEnabled: false
+    touchRadius: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -65,6 +71,12 @@
       hitSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
       playerCollider: !<reference.ColliderComponent> 00000000-0000-0000-0000-000000000000
       overshootMultiplier: 1.500000
+      handVFXController: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      shatterPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      touchRadius: !<float> 6.000000
+      shatterLifetimeSeconds: !<float> 2.000000
+      healPercentOnShatter: !<float> 5.000000
+      shatterEmissionBoost: 1.500000
   ScriptTypes:
     -
       {}
@@ -84,3 +96,11 @@
     - '// @input Component.AudioComponent hitSound {"hint":"Sound played when a ball hits the player. Wire an AudioComponent with your desired clip."}'
     - '// @input Component.ColliderComponent playerCollider {"hint":"ColliderComponent on the player (camera child). Ball must overlap this to count as a hit. If not wired, every ball is a guaranteed hit."}'
     - '// @input float overshootMultiplier = 1.5 {"hint":"How far past the player (as a multiplier of flightTime) the ball continues before being destroyed. E.g. 1.5 = ball flies 50% beyond the target."}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"Hand Defence"}'
+    - '// @input AssignableType_2 handVFXController {"hint":"HandVFXController on this prefab, used to read the current hand contour color for the color-match defence gate"}'
+    - "// @input Asset.ObjectPrefab shatterPrefab {\"hint\":\"Prefab spawned at the ball's position when a same-tone hand shatters it. Must contain a VFXComponent at the root (or first child) exposing particleColor and particleEmissionBoost properties.\"}"
+    - "// @input float touchRadius = 6 {\"hint\":\"Distance (cm) from a hand's index tip to the ball center that counts as a touch\"}"
+    - '// @input float shatterLifetimeSeconds = 2 {"hint":"Seconds the spawned shatter FX SceneObject lives before being destroyed"}'
+    - "// @input float healPercentOnShatter = 5 {\"hint\":\"Health % restored when the player's hand successfully shatters a same-tone lamp ball. Set to 0 to disable healing.\"}"
+    - "// @input float shatterEmissionBoost = 2 {\"hint\":\"Emission multiplier pushed to the shatter VFX graph's particleEmissionBoost property\"}"

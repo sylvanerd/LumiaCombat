@@ -1,0 +1,35 @@
+- !<ObjectPrefab/12728728-4dd2-44c8-9fb9-0abc38aa0949>
+  PackagePath: ""
+  objects:
+    - !<own> 4fc795b5-d8f0-4fad-bac2-3b11f0479293
+  LazyLoading: false
+  RetainAssets: true
+- !<SceneObject/4fc795b5-d8f0-4fad-bac2-3b11f0479293>
+  PrefabRemaps:
+    - 4fc795b5-d8f0-4fad-bac2-3b11f0479293: 4fc795b5-d8f0-4fad-453d-c4ee0fb86d6c
+    - e541abf9-1806-4499-a4a2-70a62fcdcf2d: e541abf9-1806-4499-5b5d-8f59d03230d2
+  Name: LampBallShatterFX
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> e541abf9-1806-4499-a4a2-70a62fcdcf2d
+- !<VFXComponent/e541abf9-1806-4499-a4a2-70a62fcdcf2d>
+  PrefabRemaps:
+    []
+  Name: VFX Component
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  VFXAsset: !<reference> 5c7ea5be-32f6-415e-9723-47c28ddc3429

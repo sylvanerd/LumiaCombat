@@ -99,6 +99,15 @@ export class HandVFXController extends BaseScriptComponent {
     pass.pulseStrength = 0
   }
 
+  /**
+   * Returns the current contour color tracked by this controller. Used by
+   * AutoBallShooter's hand-defence gate to compare against a LampBall's color.
+   * Both hands currently share one contour color, so this is a single accessor.
+   */
+  getCurrentContourColor(): vec4 {
+    return this.currentContourColor
+  }
+
   /** Called by ColorPickController when pinch-hold triggers color extraction. */
   startExtraction() {
     this.state = ContourState.Extracting

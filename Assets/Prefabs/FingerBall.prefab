@@ -10,6 +10,7 @@
     - 28d03338-ccc1-4e85-902d-ea60b73df3b8: ce14ee42-5248-4c83-be7e-2819d0a8aa2f
     - 3e66f9c1-2c41-4af0-8b01-7544cc9f8a45: c0710684-088e-4cc6-b684-6d7531de75d2
     - 7988fdf6-fc20-4de4-ac16-8bfe2f54a985: 33466c32-8093-44c7-9263-3567e0d4e719
+    - c7043f04-1651-4225-bfa3-e0dfe010d56d: fcae6428-78b8-4493-8994-1792c54e23f4
     - cf89afe5-4ab3-4f90-8e0b-6df5b50e092f: 6dea2454-0775-4b3d-a76d-dc5de65e0158
     - f3d7e2eb-41ae-4c43-9e44-e26330318b77: 8016cd5c-5e7d-4910-8dc3-e2559ff3c817
   Name: Sphere
@@ -26,6 +27,7 @@
     - !<own> 28d03338-ccc1-4e85-902d-ea60b73df3b8
     - !<own> 3e66f9c1-2c41-4af0-8b01-7544cc9f8a45
     - !<own> 7988fdf6-fc20-4de4-ac16-8bfe2f54a985
+    - !<own> c7043f04-1651-4225-bfa3-e0dfe010d56d
 - !<RenderMeshVisual/28d03338-ccc1-4e85-902d-ea60b73df3b8>
   PrefabRemaps:
     []
@@ -89,6 +91,31 @@
       coreAlpha: !<float> 1.000000
       finalEmission: 0.300000
       colorFillDuration: 0.500000
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/c7043f04-1651-4225-bfa3-e0dfe010d56d>
+  PrefabRemaps:
+    []
+  Name: BallCometTrailController
+  Enabled: true
+  ScriptAsset: !<reference> 8fd1c272-09df-4874-a3c3-422c1b953820
+  ScriptInputsDefault:
+    endWidth: true
+    autoStopAfter: true
+    trailParent: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      lineMaterial: !<reference.Material> 44f80935-7be1-4e73-96fc-d17c068249a1
+      tailPointCount: !<float> 35.000000
+      startWidth: !<float> 1.000000
+      endWidth: !<float> 0.000000
+      minSampleDistance: !<float> 2.000000
+      emissionBoost: 1.500000
+      autoStopAfter: !<float> 5.000000
+      trailParent: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     "":
       {}

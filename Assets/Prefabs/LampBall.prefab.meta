@@ -34,6 +34,30 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ScriptComponent/32c00cf6-4244-4faf-8fda-44f157dbb803>
+  PrefabRemaps:
+    []
+  Name: BallCometTrailController
+  Enabled: true
+  ScriptAsset: !<reference> 8fd1c272-09df-4874-a3c3-422c1b953820
+  ScriptInputsDefault:
+    endWidth: true
+    trailParent: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      lineMaterial: !<reference.Material> 44f80935-7be1-4e73-96fc-d17c068249a1
+      tailPointCount: !<float> 25.000000
+      startWidth: 1.500000
+      endWidth: !<float> 0.000000
+      minSampleDistance: !<float> 2.000000
+      emissionBoost: !<float> 1.000000
+      autoStopAfter: !<float> 3.000000
+      trailParent: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    "":
+      {}
 - !<BodyComponent/8bf79e64-3faa-4044-ac4f-b56e9e38c708>
   PrefabRemaps:
     []
@@ -78,3 +102,4 @@
   Components:
     - !<own> 0760e032-be47-4236-632e-6cae555b2dd6
     - !<own> 8bf79e64-3faa-4044-ac4f-b56e9e38c708
+    - !<own> 32c00cf6-4244-4faf-8fda-44f157dbb803

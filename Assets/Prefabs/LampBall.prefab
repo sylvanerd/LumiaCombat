@@ -47,10 +47,35 @@
   BodySettingValue: 1.000000
   Damping: 0.000000
   AngularDamping: 0.000000
+- !<ScriptComponent/6200f65d-5b0f-45d5-aca3-c09c3ee716bf>
+  PrefabRemaps:
+    []
+  Name: BallCometTrailController
+  Enabled: true
+  ScriptAsset: !<reference> 8fd1c272-09df-4874-a3c3-422c1b953820
+  ScriptInputsDefault:
+    endWidth: true
+    trailParent: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      lineMaterial: !<reference.Material> 44f80935-7be1-4e73-96fc-d17c068249a1
+      tailPointCount: !<float> 25.000000
+      startWidth: 1.500000
+      endWidth: !<float> 0.000000
+      minSampleDistance: !<float> 2.000000
+      emissionBoost: !<float> 1.000000
+      autoStopAfter: !<float> 3.000000
+      trailParent: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/d010b405-e43c-4f82-8d8e-fd1306803480>
   PrefabRemaps:
     - 0760e032-be47-4236-9cd1-9351aaa4d229: 0760e032-be47-4236-632e-6cae555b2dd6
     - 425b49f0-8910-416a-9629-1018a0a3f244: 8bf79e64-3faa-4044-ac4f-b56e9e38c708
+    - 6200f65d-5b0f-45d5-aca3-c09c3ee716bf: 32c00cf6-4244-4faf-8fda-44f157dbb803
     - d010b405-e43c-4f82-8d8e-fd1306803480: d010b405-e43c-4f82-7271-02ecf97fcb7f
   Name: Sphere
   Enabled: true
@@ -65,3 +90,4 @@
   Components:
     - !<own> 0760e032-be47-4236-9cd1-9351aaa4d229
     - !<own> 425b49f0-8910-416a-9629-1018a0a3f244
+    - !<own> 6200f65d-5b0f-45d5-aca3-c09c3ee716bf

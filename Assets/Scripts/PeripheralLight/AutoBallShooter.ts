@@ -3,6 +3,7 @@ import {SIK} from "SpectaclesInteractionKit.lspkg/SIK"
 import {CancelToken, clearTimeout, setTimeout} from "SpectaclesInteractionKit.lspkg/Utils/FunctionTimingUtils"
 import {GameLogicManager} from "Scripts/GameLogicManager"
 import {AutoColorCycler} from "./AutoColorCycler"
+import {BallCometTrailController} from "./BallCometTrailController"
 import {HandVFXController} from "./HandVFXController"
 import {LightHandEventListener} from "./LightHandEventListener"
 import {PlayerHealthManager} from "./PlayerHealthManager"
@@ -196,6 +197,11 @@ export class AutoBallShooter extends BaseScriptComponent {
       mat.mainPass.baseColor = new vec4(color.r, color.g, color.b, 1.0)
     }
 
+    const trailCtrl = this.findTrailController(ball)
+    if (trailCtrl) {
+      trailCtrl.startTrail(new vec4(color.r, color.g, color.b, 1.0))
+    }
+
     const endPos = this.mainCamTrans.getWorldPosition()
     const duration = Math.max(0.1, this.randomRange(this.flightTimeMin, this.flightTimeMax))
     const arcHeight = this.randomRange(this.arcHeightMin, this.arcHeightMax)
@@ -334,6 +340,22 @@ export class AutoBallShooter extends BaseScriptComponent {
     for (let i = 0; i < count; i++) {
       const found = this.findVfxComponent(obj.getChild(i))
       if (found) return found
+    }
+    return null
+  }
+
+  /**
+   * Locate the BallCometTrailController on the lamp ball by duck-typing
+   * on its `startTrail` method, so we don't depend on script ordering when
+   * the prefab grows additional ScriptComponents.
+   */
+  private findTrailController(obj: SceneObject): BallCometTrailController | null {
+    const scripts = obj.getComponents("Component.ScriptComponent")
+    for (let i = 0; i < scripts.length; i++) {
+      const s = scripts[i] as any
+      if (s && typeof s.startTrail === "function") {
+        return s as BallCometTrailController
+      }
     }
     return null
   }

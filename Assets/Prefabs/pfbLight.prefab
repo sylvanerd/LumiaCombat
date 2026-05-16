@@ -1451,7 +1451,6 @@
     maxActiveBalls: true
     shootingEnabled: true
     overshootMultiplier: true
-    touchRadius: true
     shatterLifetimeSeconds: true
     healPercentOnShatter: true
     shatterEmissionBoost: true
@@ -1476,7 +1475,7 @@
       overshootMultiplier: 1.500000
       handVFXController: !<MappingBased.AssignableType_2> ef5cb7cd-04b5-41bf-bc68-7f961158f305
       shatterPrefab: !<reference.ObjectPrefab> 12728728-4dd2-44c8-9fb9-0abc38aa0949
-      touchRadius: !<float> 6.000000
+      touchRadius: !<float> 15.000000
       shatterLifetimeSeconds: !<float> 2.000000
       healPercentOnShatter: !<float> 5.000000
       shatterEmissionBoost: 1.500000

@@ -130,3 +130,29 @@
     - !<own> ce14ee42-5248-4c83-be7e-2819d0a8aa2f
     - !<own> c0710684-088e-4cc6-b684-6d7531de75d2
     - !<own> 33466c32-8093-44c7-9263-3567e0d4e719
+    - !<own> fcae6428-78b8-4493-8994-1792c54e23f4
+- !<ScriptComponent/fcae6428-78b8-4493-8994-1792c54e23f4>
+  PrefabRemaps:
+    []
+  Name: BallCometTrailController
+  Enabled: true
+  ScriptAsset: !<reference> 8fd1c272-09df-4874-a3c3-422c1b953820
+  ScriptInputsDefault:
+    endWidth: true
+    autoStopAfter: true
+    trailParent: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      lineMaterial: !<reference.Material> 44f80935-7be1-4e73-96fc-d17c068249a1
+      tailPointCount: !<float> 35.000000
+      startWidth: !<float> 1.000000
+      endWidth: !<float> 0.000000
+      minSampleDistance: !<float> 2.000000
+      emissionBoost: 1.500000
+      autoStopAfter: !<float> 5.000000
+      trailParent: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    "":
+      {}

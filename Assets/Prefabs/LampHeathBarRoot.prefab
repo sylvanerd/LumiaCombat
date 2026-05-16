@@ -37,7 +37,7 @@
     Scale: {x: 1.600000, y: 0.800000, z: 1.500000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 2a7c7ab8-3edf-473d-9199-c07ff2ab06df
+    []
   Components:
     - !<own> 0e637f48-454d-4ab2-a1f6-dc24009dc891
     - !<own> 831b6641-809a-4dc3-8df3-92676d6a66a5
@@ -85,9 +85,9 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -0.700000, y: 0.000000, z: 0.108710}
+    Position: {x: -2.596974, y: 3.100000, z: 1.363065}
     Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 0.625000, y: 1.000001, z: 1.250001}
+    Scale: {x: 1.000000, y: 1.500001, z: 1.000001}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -184,6 +184,7 @@
     Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
     HasSegmentScaleCompensation: false
   Children:
+    - !<own> 2a7c7ab8-3edf-473d-9199-c07ff2ab06df
     - !<own> 0ea567ce-03ea-45b9-91ac-f71c3a50f4f9
     - !<own> e1563e67-477a-4da2-a99b-90cad540eedb
     - !<own> dacf51fc-8381-4e05-8434-274cdbec2f67

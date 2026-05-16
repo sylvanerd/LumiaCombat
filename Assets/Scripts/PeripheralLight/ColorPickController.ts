@@ -2,6 +2,7 @@ import {Gemini} from "RemoteServiceGateway.lspkg/HostedExternal/Gemini"
 import {GeminiTypes} from "RemoteServiceGateway.lspkg/HostedExternal/GeminiTypes"
 import TrackedHand from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/TrackedHand"
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
+import {BallCometTrailController} from "./BallCometTrailController"
 import {BallSpawnVFXController} from "./BallSpawnVFXController"
 import {ColorPickPinchDetector} from "./ColorPickPinchDetector"
 import {HandVFXController} from "./HandVFXController"
@@ -124,6 +125,7 @@ export class ColorPickController extends BaseScriptComponent {
   private activeBall: SceneObject = null
   private activeBallMat: Material = null
   private activeBallVFX: BallSpawnVFXController = null
+  private activeBallTrail: BallCometTrailController = null
   private activeHand: TrackedHand = null
   private currentBallScale: number = 0
 
@@ -338,6 +340,7 @@ export class ColorPickController extends BaseScriptComponent {
     this.previousHandPos = null
     this.handVelocity = vec3.zero()
     this.activeBallVFX = null
+    this.activeBallTrail = null
 
     if (!this.ballPrefab) {
       print(`${LOG_TAG} WARNING: ballPrefab not assigned, skipping ball spawn`)
@@ -362,10 +365,31 @@ export class ColorPickController extends BaseScriptComponent {
       print(`${LOG_TAG} WARNING: No RenderMeshVisual on ball prefab`)
     }
 
-    this.activeBallVFX = this.activeBall.getComponent("ScriptComponent") as BallSpawnVFXController
+    this.resolveBallScripts(this.activeBall)
     if (this.activeBallVFX && this.activeBallMat) {
       this.activeBallVFX.startMaterialize(this.activeBallMat, placeholderColor)
       print(`${LOG_TAG} Materialize VFX started`)
+    }
+  }
+
+  /**
+   * The ball prefab now carries multiple ScriptComponents (BallSpawnVFXController
+   * for the dissolve/burst, BallCometTrailController for the comet trail).
+   * Look them up by duck-typing on their public methods rather than relying on
+   * getComponent returning the first script.
+   */
+  private resolveBallScripts(ball: SceneObject) {
+    this.activeBallVFX = null
+    this.activeBallTrail = null
+    const scripts = ball.getComponents("Component.ScriptComponent")
+    for (let i = 0; i < scripts.length; i++) {
+      const s = scripts[i] as any
+      if (s && typeof s.startMaterialize === "function") {
+        this.activeBallVFX = s as BallSpawnVFXController
+      }
+      if (s && typeof s.startTrail === "function") {
+        this.activeBallTrail = s as BallCometTrailController
+      }
     }
   }
 
@@ -387,6 +411,7 @@ export class ColorPickController extends BaseScriptComponent {
     this.previousHandPos = null
     this.handVelocity = vec3.zero()
     this.activeBallVFX = null
+    this.activeBallTrail = null
 
     const spawnPos = this.getPinchMidpoint(hand)
     this.activeBall = this.ballPrefab.instantiate(null)
@@ -403,7 +428,7 @@ export class ColorPickController extends BaseScriptComponent {
       this.activeBallMat = null
     }
 
-    this.activeBallVFX = this.activeBall.getComponent("ScriptComponent") as BallSpawnVFXController
+    this.resolveBallScripts(this.activeBall)
     if (this.activeBallVFX && this.activeBallMat) {
       this.activeBallVFX.applyFinalState(this.activeBallMat, color)
     } else if (this.activeBallMat) {
@@ -646,6 +671,14 @@ export class ColorPickController extends BaseScriptComponent {
     body.addForce(forceVector, Physics.ForceMode.Impulse)
     print(`${LOG_TAG} Ball THROWN — strength: ${throwStrength.toFixed(1)}, direction: (${throwDirection.x.toFixed(2)}, ${throwDirection.y.toFixed(2)}, ${throwDirection.z.toFixed(2)}), hand speed: ${this.handVelocity.length.toFixed(1)}`)
 
+    if (this.activeBallTrail) {
+      const trailColor = this.activeBallMat
+        ? this.activeBallMat.mainPass.baseColor
+        : (this.lastDetectedColor ? this.lastDetectedColor : new vec4(1, 1, 1, 1))
+      const opaqueTrailColor = new vec4(trailColor.r, trailColor.g, trailColor.b, 1.0)
+      this.activeBallTrail.startTrail(opaqueTrailColor)
+    }
+
     this.cleanupAfterRelease()
   }
 
@@ -655,6 +688,7 @@ export class ColorPickController extends BaseScriptComponent {
     this.previousHandPos = null
     this.ballActive = false
     this.activeBallVFX = null
+    this.activeBallTrail = null
     if (this.latticeVFX) this.latticeVFX.cancelExtraction()
   }
 

@@ -1,0 +1,65 @@
+- !<AssetImportMetadata/e252f25b-95f0-418f-acf3-90da5aa3b8fb>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 8fd1c272-09df-4874-a3c3-422c1b953820
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 8fd1c272-09df-4874-a3c3-422c1b953820
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 378c6e36-9847-4df8-a262-49c5ee594c45
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/378c6e36-9847-4df8-a262-49c5ee594c45>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: b658c7c2-49a8-43bd-a81b-bad7e66826d1
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoStopAfter: false
+    emissionBoost: false
+    endWidth: false
+    lineMaterial: false
+    minSampleDistance: false
+    startWidth: false
+    tailPointCount: false
+    trailParent: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - lineMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      tailPointCount: !<float> 20.000000
+      startWidth: !<float> 4.000000
+      endWidth: !<float> 0.000000
+      minSampleDistance: !<float> 1.000000
+      emissionBoost: !<float> 2.000000
+      autoStopAfter: !<float> 5.000000
+      trailParent: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - "// @input Asset.Material lineMaterial {\"hint\":\"MUST be a LineRenderer-compatible material — i.e. one whose shader exposes startColor / endColor / startWidth / endWidth / billboarding uniforms. The simplest path is to duplicate Packages/SpectaclesInteractionKit.lspkg/Components/Interaction/InteractorCursor/ManipulateLineMaterial.mat (or InteractorLineMaterial.mat) into your Assets and assign that. A generic 'unlit' material WILL render zero-width and look invisible.\"}"
+    - '// @input float tailPointCount = 20 {"hint":"Ring buffer size — number of recent positions kept in the trail. Higher = longer visible tail. FingerBall ~30, LampBall ~8."}'
+    - "// @input float startWidth = 4 {\"hint\":\"Trail width (cm) at the head, near the ball. Set close to the ball's diameter for the chunky comet look.\"}"
+    - '// @input float endWidth {"hint":"Trail width (cm) at the tail tip. 0 for a sharp taper, startWidth*0.3 for a stubbier feel."}'
+    - '// @input float minSampleDistance = 1 {"hint":"Only push a new point when the ball has moved at least this many cm since the last sample. Prevents zero-length segments when the ball is stationary."}'
+    - "// @input float emissionBoost = 2 {\"hint\":\"HDR multiplier applied to the ball's base color so the trail reads bright/emissive.\"}"
+    - '// @input float autoStopAfter = 5 {"hint":"Hard timeout (s) after which the trail self-destructs even if stopTrail() is never called."}'
+    - "// @input SceneObject trailParent {\"hint\":\"Optional stable parent SceneObject the trail's LineRenderer attaches to. If unset, a fresh empty SceneObject is created at scene root (recommended). NEVER set this to the moving ball or to the Camera Object.\"}"

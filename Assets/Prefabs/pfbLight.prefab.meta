@@ -857,14 +857,14 @@
   ScriptAsset: !<reference> acaca947-ab43-4117-86ff-7a7f69b2da07
   ScriptInputsDefault:
     batteryBarChildName: true
-    fillBlendShapeName: true
-    accentBlendShapeName: true
     accentValue: true
     colorPropertyName: true
     healthyColor: true
     warningColor: true
     dangerColor: true
     warningThresholdPct: true
+    anchorEdge: true
+    emptyShiftOffset: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -874,14 +874,16 @@
       healthUIPrefab: !<reference.ObjectPrefab> 561175f4-6f44-4651-ae87-1fef6597d0d9
       yOffset: !<float> 20.000000
       batteryBarChildName: BatteryBar
-      fillBlendShapeName: pCube2
-      accentBlendShapeName: pCube3
+      fillBlendShapeName: pCube3
+      accentBlendShapeName: pCube2
       accentValue: 0.100000
       colorPropertyName: baseColor
       healthyColor: !<Vec4> {x: 0.200000, y: 1.000000, z: 0.400000, w: 1.000000}
       warningColor: !<Vec4> {x: 1.000000, y: 0.850000, z: 0.200000, w: 1.000000}
       dangerColor: !<Vec4> {x: 1.000000, y: 0.250000, z: 0.250000, w: 1.000000}
       warningThresholdPct: !<float> 50.000000
+      anchorEdge: true
+      emptyShiftOffset: !<Vec3> {x: -2.000000, y: 0.000000, z: 0.000000}
   ScriptTypes:
     "":
       {}

@@ -61,8 +61,19 @@ export class LampCircularHealthBar extends BaseScriptComponent {
   @hint("Health % at which the bar reaches warningColor; below this it lerps toward dangerColor")
   warningThresholdPct: number = 50
 
+  @input
+  @hint("If true, slide the battery bar's local position as it shrinks so the chosen edge stays anchored. Disable for a symmetric shrink around the center.")
+  anchorEdge: boolean = true
+
+  @input("vec3")
+  @showIf("anchorEdge", true)
+  @hint("Local-space offset applied to the battery bar when it is fully empty (health=0). Linearly interpolated based on health: empty offset blends to zero at full health. For a horizontal bar of local width 4 anchored to its left edge, use (-2, 0, 0).")
+  emptyShiftOffset: vec3 = new vec3(-2.0, 0.0, 0.0)
+
   private batteryBarMesh: RenderMeshVisual | null = null
   private batteryBarMat: Material | null = null
+  private batteryBarTransform: Transform | null = null
+  private batteryBarOriginalPos: vec3 | null = null
   private placed: boolean = false
   private healthUIInstance: SceneObject
 
@@ -104,6 +115,9 @@ export class LampCircularHealthBar extends BaseScriptComponent {
     if (this.batteryBarMesh) {
       this.batteryBarMat = this.batteryBarMesh.mainMaterial.clone()
       this.batteryBarMesh.mainMaterial = this.batteryBarMat
+
+      this.batteryBarTransform = this.batteryBarMesh.getSceneObject().getTransform()
+      this.batteryBarOriginalPos = this.batteryBarTransform.getLocalPosition()
 
       if (this.accentBlendShapeName && this.batteryBarMesh.hasBlendShapeWeight(this.accentBlendShapeName)) {
         this.batteryBarMesh.setBlendShapeWeight(this.accentBlendShapeName, this.accentValue)
@@ -152,6 +166,16 @@ export class LampCircularHealthBar extends BaseScriptComponent {
     if (this.batteryBarMat) {
       const color = this.healthToColor(healthPercent)
       this.batteryBarMat.mainPass[this.colorPropertyName] = color
+    }
+
+    if (this.anchorEdge && this.batteryBarTransform && this.batteryBarOriginalPos) {
+      const t = 1 - fillAmount
+      const newPos = new vec3(
+        this.batteryBarOriginalPos.x + this.emptyShiftOffset.x * t,
+        this.batteryBarOriginalPos.y + this.emptyShiftOffset.y * t,
+        this.batteryBarOriginalPos.z + this.emptyShiftOffset.z * t
+      )
+      this.batteryBarTransform.setLocalPosition(newPos)
     }
   }
 

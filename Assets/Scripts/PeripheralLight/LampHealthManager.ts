@@ -41,11 +41,6 @@ export class LampHealthManager extends BaseScriptComponent {
   @hint("Sound effect played when the finger ball hits the lamp")
   hitSound: AudioComponent
 
-  @input
-  @allowUndefined
-  @hint("Text component for 'You Win' message (initially disabled)")
-  winText: Text
-
   private static instance: LampHealthManager
 
   private currentHealth: number = 100
@@ -69,10 +64,6 @@ export class LampHealthManager extends BaseScriptComponent {
     LampHealthManager.instance = this
 
     this.currentHealth = this.maxHealth
-
-    if (this.winText) {
-      this.winText.getSceneObject().enabled = false
-    }
 
     this.colliderSpawner.onBallCollision.add((collider: ColliderComponent) => {
       this.handleHit(collider)
@@ -144,11 +135,6 @@ export class LampHealthManager extends BaseScriptComponent {
     this.hueEventEmitter.togglePower(false)
     this.autoColorCycler.stopCycling()
 
-    if (this.winText) {
-      this.winText.getSceneObject().enabled = true
-      this.winText.text = "You Win"
-    }
-
     this._onLampDied.invoke()
   }
 
@@ -157,9 +143,11 @@ export class LampHealthManager extends BaseScriptComponent {
     this.alive = true
     this.lastHitTime = -999
 
-    if (this.winText) {
-      this.winText.getSceneObject().enabled = false
-    }
+    // Symmetric inverse of die(): bring the bulb back online and resume cycling so
+    // GameLogicManager.restartGame() can rely on a single reset() call to put the
+    // lamp back into a playable state.
+    this.hueEventEmitter.togglePower(true)
+    this.autoColorCycler.startCycling()
 
     print(`${LOG_TAG} Health reset to ${this.maxHealth}`)
     this._onHealthChanged.invoke(100)

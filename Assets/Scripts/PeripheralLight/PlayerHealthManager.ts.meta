@@ -27,7 +27,6 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     damagePerHit: false
-    failText: false
     healPerNeutralize: false
     invincibilityDuration: false
     lowHealthThreshold: false
@@ -46,7 +45,6 @@
       invincibilityDuration: 0.500000
       healPerNeutralize: !<float> 5.000000
       lowHealthThreshold: !<float> 25.000000
-      failText: !<reference.Text> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -56,4 +54,3 @@
     - '// @input float invincibilityDuration = 0.5 {"hint":"Seconds of invincibility after taking a hit (prevents rapid multi-hits)"}'
     - '// @input float healPerNeutralize = 5 {"hint":"Health % restored when a lamp ball is neutralized by colour-matching"}'
     - '// @input float lowHealthThreshold = 25 {"hint":"Health % threshold for low-health state (exposed for future warning hooks)"}'
-    - "// @input Component.Text failText {\"hint\":\"Text component for 'You Failed' message (attached to camera, initially disabled)\"}"

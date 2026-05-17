@@ -24,11 +24,6 @@ export class PlayerHealthManager extends BaseScriptComponent {
   @hint("Health % threshold for low-health state (exposed for future warning hooks)")
   lowHealthThreshold: number = 25
 
-  @input
-  @allowUndefined
-  @hint("Text component for 'You Failed' message (attached to camera, initially disabled)")
-  failText: Text
-
   private static instance: PlayerHealthManager
 
   private currentHealth: number = 100
@@ -51,10 +46,6 @@ export class PlayerHealthManager extends BaseScriptComponent {
     }
     PlayerHealthManager.instance = this
     this.currentHealth = this.maxHealth
-
-    if (this.failText) {
-      this.failText.getSceneObject().enabled = false
-    }
 
     print(`${LOG_TAG} Singleton initialized, maxHealth=${this.maxHealth}, damagePerHit=${this.damagePerHit}%, healPerNeutralize=${this.healPerNeutralize}%`)
   }
@@ -88,10 +79,6 @@ export class PlayerHealthManager extends BaseScriptComponent {
     if (this.currentHealth <= 0) {
       this.alive = false
       print(`${LOG_TAG} Player died!`)
-      if (this.failText) {
-        this.failText.getSceneObject().enabled = true
-        this.failText.text = "You Failed"
-      }
       this._onPlayerDied.invoke()
     }
   }
@@ -114,9 +101,6 @@ export class PlayerHealthManager extends BaseScriptComponent {
     this.currentHealth = this.maxHealth
     this.alive = true
     this.lastHitTime = -999
-    if (this.failText) {
-      this.failText.getSceneObject().enabled = false
-    }
     print(`${LOG_TAG} Health reset to ${this.maxHealth}`)
     this._onHealthChanged.invoke(100)
   }

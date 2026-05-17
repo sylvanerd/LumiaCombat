@@ -1402,8 +1402,8 @@
   ScriptInputs:
     "":
       hueEventEmitter: !<MappingBased.AssignableType> 910f2104-ab73-469f-98c8-c524ffffe4c8
-      intervalSecondsMin: !<float> 4.000000
-      intervalSecondsMax: !<float> 6.000000
+      intervalSecondsMin: !<float> 3.000000
+      intervalSecondsMax: !<float> 4.000000
       autoChangeEnabled: false
   ScriptTypes:
     "":
@@ -1447,7 +1447,6 @@
   Enabled: true
   ScriptAsset: !<reference> 12e2ba06-cf34-4fba-8277-d12e3e7c3633
   ScriptInputsDefault:
-    arcHeightMax: true
     maxActiveBalls: true
     shootingEnabled: true
     overshootMultiplier: true
@@ -1464,7 +1463,7 @@
       ballPrefab: !<reference.ObjectPrefab> 9a570ba6-c4cc-4de6-8097-6334d54685b9
       delayThrowTime: 0.800000
       arcHeightMin: !<float> 10.000000
-      arcHeightMax: !<float> 45.000000
+      arcHeightMax: !<float> 40.000000
       flightTimeMin: 0.500000
       flightTimeMax: !<float> 3.000000
       ballScale: !<float> 7.000000
@@ -2446,7 +2445,6 @@
       invincibilityDuration: 0.500000
       lowHealthThreshold: !<float> 25.000000
       hitSound: !<reference.AudioComponent> eff66de5-b9d6-4c98-bda7-0c86f4dabedc
-      winText: !<reference.Text> 7e46947a-4dad-4cb3-8874-c995411f1b9c
   ScriptTypes:
     "":
       {}

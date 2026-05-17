@@ -26,10 +26,17 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    confettiPrefab: false
     contrastThreshold: false
     debugMeshPrefab: false
+    handVFXController: false
+    loseHandFadeSeconds: false
+    mainCam: false
+    pinchDetector: false
     quickTestMode: false
     similarityThreshold: false
+    winConfettiDistance: false
+    winPauseSeconds: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -43,6 +50,13 @@
       contrastThreshold: 0.300000
       similarityThreshold: 0.150000
       quickTestMode: false
+      mainCam: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      confettiPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      winConfettiDistance: !<float> 80.000000
+      winPauseSeconds: !<float> 1.000000
+      handVFXController: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      pinchDetector: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      loseHandFadeSeconds: !<float> 1.000000
   ScriptTypes:
     -
       {}
@@ -51,3 +65,12 @@
     - '// @input float contrastThreshold = 0.3 {"hint":"Hue distance (0-0.5) the finger ball must exceed vs lamp color to count as contrasting"}'
     - '// @input float similarityThreshold = 0.15 {"hint":"Hue distance (0-0.5) below which finger ball and lamp ball colors count as similar"}'
     - '// @input bool quickTestMode {"hint":"Bypass color filters -- all collisions play sound regardless of color"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"End-state orchestration"}'
+    - '// @input SceneObject mainCam {"hint":"Main camera SceneObject. Used to spawn the win confetti in front of the player."}'
+    - '// @input Asset.ObjectPrefab confettiPrefab {"hint":"Multi-color confetti VFX prefab spawned in front of the player on win"}'
+    - '// @input float winConfettiDistance = 80 {"hint":"Distance (cm) in front of the camera to spawn the confetti VFX"}'
+    - '// @input float winPauseSeconds = 1 {"hint":"Brief pause in seconds between lamp death and the confetti burst"}'
+    - "// @input AssignableType handVFXController {\"hint\":\"HandVFXController for the player's hand mesh. Faded to transparent on lose, restored on restart.\"}"
+    - '// @input SceneObject pinchDetector {"hint":"ColorPickPinchDetector SceneObject -- disabled on lose so fresh extraction also stops, re-enabled on restart"}'
+    - '// @input float loseHandFadeSeconds = 1 {"hint":"Seconds to fade the hand mesh to transparent on player defeat"}'

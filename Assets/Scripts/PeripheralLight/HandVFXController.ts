@@ -4,7 +4,9 @@ const TWO_PI = 2 * Math.PI
 enum ContourState {
   Idle,
   Extracting,
-  ColorTransitioning
+  ColorTransitioning,
+  FadingOut,
+  Disabled
 }
 
 @component
@@ -56,6 +58,10 @@ export class HandVFXController extends BaseScriptComponent {
   private startBaseColor: vec4 = null
   private startContourColor: vec4 = null
   private transitionProgress: number = 0
+
+  // Per-call duration override used by disableAndFade so the fade-out can have a
+  // different timing than the normal color-extraction transition.
+  private activeTransitionDuration: number = 0.5
 
   private readonly INITIAL_BASE_COLOR = new vec4(0.25, 0.25, 0.25, 0.5)
   private readonly INITIAL_CONTOUR_COLOR = new vec4(0.7, 0.7, 0.7, 1.0)
@@ -110,12 +116,16 @@ export class HandVFXController extends BaseScriptComponent {
 
   /** Called by ColorPickController when pinch-hold triggers color extraction. */
   startExtraction() {
+    if (this.state === ContourState.Disabled || this.state === ContourState.FadingOut) return
     this.state = ContourState.Extracting
     print(`${LOG_TAG} State -> Extracting (pulse started)`)
   }
 
   /** Called by ColorPickController when Gemini returns a detected color. */
   applyColor(color: vec4) {
+    if (this.state === ContourState.Disabled || this.state === ContourState.FadingOut) return
+
+    this.activeTransitionDuration = this.transitionDuration
     this.targetBaseColor = new vec4(
       color.r * this.BASE_DIM_FACTOR,
       color.g * this.BASE_DIM_FACTOR,
@@ -148,13 +158,70 @@ export class HandVFXController extends BaseScriptComponent {
     print(`${LOG_TAG} State -> Idle (extraction cancelled)`)
   }
 
+  /**
+   * Fade both hand materials to fully transparent over `duration` seconds and
+   * lock the controller into Disabled. Used by GameLogicManager when the player
+   * loses so the hand mesh visually vanishes and subsequent color extraction or
+   * saved-color taps cannot re-light it. Idempotent if already disabled.
+   */
+  disableAndFade(duration: number) {
+    if (this.state === ContourState.Disabled || this.state === ContourState.FadingOut) return
+
+    this.activeTransitionDuration = Math.max(0.01, duration)
+
+    this.startBaseColor = new vec4(
+      this.currentBaseColor.r, this.currentBaseColor.g,
+      this.currentBaseColor.b, this.currentBaseColor.a
+    )
+    this.startContourColor = new vec4(
+      this.currentContourColor.r, this.currentContourColor.g,
+      this.currentContourColor.b, this.currentContourColor.a
+    )
+
+    // Same RGB, alpha 0 -- fade-to-transparent only.
+    this.targetBaseColor = new vec4(
+      this.currentBaseColor.r, this.currentBaseColor.g,
+      this.currentBaseColor.b, 0
+    )
+    this.targetContourColor = new vec4(
+      this.currentContourColor.r, this.currentContourColor.g,
+      this.currentContourColor.b, 0
+    )
+
+    this.transitionProgress = 0
+    this.state = ContourState.FadingOut
+    print(`${LOG_TAG} State -> FadingOut (duration ${this.activeTransitionDuration.toFixed(2)}s)`)
+  }
+
+  /**
+   * Restore the hand visuals to the initial grey idle look. Used by
+   * GameLogicManager.restartGame() to undo disableAndFade. Safe to call when
+   * not previously disabled -- the hand just snaps back to its initial grey.
+   */
+  reEnable() {
+    this.state = ContourState.Idle
+    this.currentBaseColor = new vec4(
+      this.INITIAL_BASE_COLOR.r, this.INITIAL_BASE_COLOR.g,
+      this.INITIAL_BASE_COLOR.b, this.INITIAL_BASE_COLOR.a
+    )
+    this.currentContourColor = new vec4(
+      this.INITIAL_CONTOUR_COLOR.r, this.INITIAL_CONTOUR_COLOR.g,
+      this.INITIAL_CONTOUR_COLOR.b, this.INITIAL_CONTOUR_COLOR.a
+    )
+    if (this.leftMat) this.settleToIdle(this.leftMat)
+    if (this.rightMat) this.settleToIdle(this.rightMat)
+    print(`${LOG_TAG} State -> Idle (reEnable)`)
+  }
+
   private onUpdate() {
-    if (this.state === ContourState.Idle) return
+    if (this.state === ContourState.Idle || this.state === ContourState.Disabled) return
 
     if (this.state === ContourState.Extracting) {
       this.tickExtracting()
     } else if (this.state === ContourState.ColorTransitioning) {
       this.tickColorTransitioning()
+    } else if (this.state === ContourState.FadingOut) {
+      this.tickFadingOut()
     }
   }
 
@@ -165,7 +232,7 @@ export class HandVFXController extends BaseScriptComponent {
   }
 
   private tickColorTransitioning() {
-    this.transitionProgress += getDeltaTime() / this.transitionDuration
+    this.transitionProgress += getDeltaTime() / this.activeTransitionDuration
     const t = Math.min(this.transitionProgress, 1.0)
     const smooth = t * t * (3 - 2 * t)
 
@@ -188,6 +255,34 @@ export class HandVFXController extends BaseScriptComponent {
       this.settleToIdle(this.leftMat)
       this.settleToIdle(this.rightMat)
       print(`${LOG_TAG} State -> Idle (color transition complete)`)
+    }
+  }
+
+  // Fade-only variant of tickColorTransitioning: same smoothstep alpha lerp from
+  // the captured start colors to the alpha-0 targets, but does NOT call settleToIdle
+  // at the end (which would push idleEmission back onto the materials). Instead it
+  // locks into Disabled and zeros pulse + emission so the hand stays fully invisible.
+  private tickFadingOut() {
+    this.transitionProgress += getDeltaTime() / this.activeTransitionDuration
+    const t = Math.min(this.transitionProgress, 1.0)
+    const smooth = t * t * (3 - 2 * t)
+
+    this.currentBaseColor = this.lerpColor(this.startBaseColor, this.targetBaseColor, smooth)
+    this.currentContourColor = this.lerpColor(this.startContourColor, this.targetContourColor, smooth)
+
+    this.setOnBoth("baseColor", this.currentBaseColor)
+    this.setOnBoth("contourColor", this.currentContourColor)
+
+    const blendedEmission = this.idleEmission * (1.0 - smooth)
+    this.setOnBoth("emissionIntensity", blendedEmission)
+    this.setOnBoth("pulseStrength", 0)
+
+    if (t >= 1.0) {
+      this.state = ContourState.Disabled
+      this.setOnBoth("pulsePhase", 0)
+      this.setOnBoth("pulseStrength", 0)
+      this.setOnBoth("emissionIntensity", 0)
+      print(`${LOG_TAG} State -> Disabled (fade out complete)`)
     }
   }
 

@@ -49,7 +49,23 @@ export class ColorHistoryRing extends BaseScriptComponent {
   private isSuppressing: boolean = false
   private activeSphereIndex: number = -1
 
+  // The ring is the root SceneObject of ColorHistoryBar.prefab, which is
+  // instantiated dynamically by ArmFlipPrefabSpawner -- so there is no scene-
+  // level reference for GameLogicManager to wire via @input. We self-register
+  // as a singleton on onAwake so the end-state flow can toggle this SceneObject
+  // (which also disables the ColorHistoryBar child) on lose / restart.
+  private static instance: ColorHistoryRing
+
+  static getInstance(): ColorHistoryRing | undefined {
+    return ColorHistoryRing.instance
+  }
+
   onAwake() {
+    if (ColorHistoryRing.instance) {
+      print(`${LOG_TAG} WARNING: Multiple instances detected`)
+    }
+    ColorHistoryRing.instance = this
+
     this.createEvent("OnStartEvent").bind(() => this.onStart())
     this.createEvent("UpdateEvent").bind(() => this.onUpdate())
   }

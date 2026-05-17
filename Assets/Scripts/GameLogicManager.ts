@@ -1,5 +1,9 @@
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {AutoColorCycler} from "Scripts/PeripheralLight/AutoColorCycler"
+import {ColorHistoryRing} from "Scripts/PeripheralLight/ColorHistoryRing"
+import {HandVFXController} from "Scripts/PeripheralLight/HandVFXController"
+import {LampHealthManager} from "Scripts/PeripheralLight/LampHealthManager"
+import {PlayerHealthManager} from "Scripts/PeripheralLight/PlayerHealthManager"
 
 const LOG_TAG = "[GameLogicManager]"
 
@@ -21,6 +25,49 @@ export class GameLogicManager extends BaseScriptComponent {
   @hint("Bypass color filters -- all collisions play sound regardless of color")
   quickTestMode: boolean = false
 
+  // ---------------------------------------------------------------------------
+  // End-state orchestration
+  // ---------------------------------------------------------------------------
+  @ui.separator
+  @ui.label("End-state orchestration")
+
+  @input
+  @allowUndefined
+  @hint("Main camera SceneObject. Used to spawn the win confetti in front of the player.")
+  mainCam: SceneObject
+
+  @input
+  @allowUndefined
+  @hint("Multi-color confetti VFX prefab spawned in front of the player on win")
+  confettiPrefab: ObjectPrefab
+
+  @input
+  @hint("Distance (cm) in front of the camera to spawn the confetti VFX")
+  winConfettiDistance: number = 80
+
+  @input
+  @hint("Brief pause in seconds between lamp death and the confetti burst")
+  winPauseSeconds: number = 1.0
+
+  @input
+  @allowUndefined
+  @hint("HandVFXController for the player's hand mesh. Faded to transparent on lose, restored on restart.")
+  handVFXController: HandVFXController
+
+  // ColorHistoryRing (the root of ColorHistoryBar.prefab) is instantiated at
+  // runtime by ArmFlipPrefabSpawner, so it can't be wired via @input. We
+  // resolve it through ColorHistoryRing.getInstance() instead. Disabling the
+  // ring's SceneObject also disables the ColorHistoryBar child.
+
+  @input
+  @allowUndefined
+  @hint("ColorPickPinchDetector SceneObject -- disabled on lose so fresh extraction also stops, re-enabled on restart")
+  pinchDetector: SceneObject
+
+  @input
+  @hint("Seconds to fade the hand mesh to transparent on player defeat")
+  loseHandFadeSeconds: number = 1.0
+
   private static instance: GameLogicManager
 
   private debugMeshes: RenderMeshVisual[] = []
@@ -30,6 +77,7 @@ export class GameLogicManager extends BaseScriptComponent {
   private lastContrastingColor: vec4 = new vec4(1, 1, 1, 1)
   private cyclers: AutoColorCycler[] = []
   private gameStarted: boolean = false
+  private isGameOver: boolean = false
 
   private _onGameStarted: Event<void> = new Event<void>()
 
@@ -57,6 +105,23 @@ export class GameLogicManager extends BaseScriptComponent {
 
   private onStart() {
     print(`${LOG_TAG} Ready — call registerDebugObject() to wire color display meshes`)
+
+    // Subscribe to end-state events from the two health managers. Both are scene
+    // singletons that registered themselves in their onAwake, which runs before
+    // any OnStartEvent, so getInstance() is reliably non-null here.
+    const lamp = LampHealthManager.getInstance()
+    if (lamp) {
+      lamp.onLampDied.add(() => this.handleWin())
+    } else {
+      print(`${LOG_TAG} WARNING: LampHealthManager singleton not found -- win flow disabled`)
+    }
+
+    const player = PlayerHealthManager.getInstance()
+    if (player) {
+      player.onPlayerDied.add(() => this.handleLose())
+    } else {
+      print(`${LOG_TAG} WARNING: PlayerHealthManager singleton not found -- lose flow disabled`)
+    }
   }
 
   registerDebugObject(obj: SceneObject) {
@@ -213,6 +278,89 @@ export class GameLogicManager extends BaseScriptComponent {
       return rmv.mainMaterial.mainPass.baseColor
     }
     return null
+  }
+
+  // ---------------------------------------------------------------------------
+  // End-state orchestration
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Lamp defeated. The cycler + bulb are already stopped by LampHealthManager.die(),
+   * and AutoBallShooter starves once the cycler stops, so nothing else needs to be
+   * disabled. We just pause briefly for a moment of silence, then spawn the confetti
+   * in front of the player. Free play continues.
+   */
+  private handleWin() {
+    if (this.isGameOver) return
+    this.isGameOver = true
+    print(`${LOG_TAG} Win -- scheduling confetti in ${this.winPauseSeconds.toFixed(2)}s`)
+
+    const delay = this.createEvent("DelayedCallbackEvent")
+    delay.bind(() => this.spawnWinConfetti())
+    delay.reset(this.winPauseSeconds)
+  }
+
+  /**
+   * Player died. Stop the lamp's cycler ourselves (LampHealthManager.die does NOT
+   * run on player death), which also starves AutoBallShooter of onColorCycled
+   * events. Fade the hand mesh transparent and shut down both fresh extraction
+   * and saved-color throws.
+   */
+  private handleLose() {
+    if (this.isGameOver) return
+    this.isGameOver = true
+    print(`${LOG_TAG} Lose -- stopping cyclers, fading hand, disabling color inputs`)
+
+    for (let i = 0; i < this.cyclers.length; i++) {
+      this.cyclers[i].stopCycling()
+    }
+
+    if (this.handVFXController) {
+      this.handVFXController.disableAndFade(this.loseHandFadeSeconds)
+    }
+
+    this.setColorHistoryRingEnabled(false)
+    this.setSceneObjectEnabled(this.pinchDetector, false)
+  }
+
+  private spawnWinConfetti() {
+    if (!this.confettiPrefab) {
+      print(`${LOG_TAG} WARNING: confettiPrefab not wired -- skipping win VFX`)
+      return
+    }
+    if (!this.mainCam) {
+      print(`${LOG_TAG} WARNING: mainCam not wired -- skipping win VFX`)
+      return
+    }
+
+    // ColorPickController treats the camera's negated forward as "into the scene"
+    // (see onPinchRelease). Mirror that convention so the confetti appears in
+    // front of the player rather than behind them.
+    const camTrans = this.mainCam.getTransform()
+    const camPos = camTrans.getWorldPosition()
+    const camForward = camTrans.forward.uniformScale(-1)
+    const spawnPos = camPos.add(camForward.uniformScale(this.winConfettiDistance))
+
+    const fx = this.confettiPrefab.instantiate(null)
+    fx.getTransform().setWorldPosition(spawnPos)
+    print(`${LOG_TAG} Confetti spawned at (${spawnPos.x.toFixed(1)}, ${spawnPos.y.toFixed(1)}, ${spawnPos.z.toFixed(1)})`)
+  }
+
+  private setSceneObjectEnabled(obj: SceneObject, enabled: boolean) {
+    if (obj) obj.enabled = enabled
+  }
+
+  // ColorHistoryRing self-registers as a singleton because its prefab is
+  // instantiated at runtime by ArmFlipPrefabSpawner. Disabling the ring's root
+  // SceneObject also disables the ColorHistoryBar child, killing both the
+  // color-hint touch path and the saved-color throw path with one toggle.
+  private setColorHistoryRingEnabled(enabled: boolean) {
+    const ring = ColorHistoryRing.getInstance()
+    if (ring) {
+      ring.getSceneObject().enabled = enabled
+    } else {
+      print(`${LOG_TAG} WARNING: ColorHistoryRing singleton not found -- skipping enabled=${enabled}`)
+    }
   }
 
   private hsvToRgb(h: number, s: number, v: number): {r: number; g: number; b: number} {

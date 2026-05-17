@@ -34,7 +34,6 @@
     invincibilityDuration: false
     lowHealthThreshold: false
     maxHealth: false
-    winText: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -52,7 +51,6 @@
       invincibilityDuration: 0.500000
       lowHealthThreshold: !<float> 25.000000
       hitSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
-      winText: !<reference.Text> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -65,4 +63,3 @@
     - '// @input float invincibilityDuration = 0.5 {"hint":"Seconds of invincibility after taking a hit (prevents rapid multi-hits)"}'
     - '// @input float lowHealthThreshold = 25 {"hint":"Health % threshold for low-health state (exposed for future warning hooks)"}'
     - '// @input Component.AudioComponent hitSound {"hint":"Sound effect played when the finger ball hits the lamp"}'
-    - "// @input Component.Text winText {\"hint\":\"Text component for 'You Win' message (initially disabled)\"}"

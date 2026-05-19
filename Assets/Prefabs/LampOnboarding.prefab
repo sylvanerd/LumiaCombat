@@ -23,6 +23,23 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/16e4818f-0fc9-43fc-a3db-440f4085badc>
+  PrefabRemaps:
+    []
+  Name: face
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.900000, z: 0.900000}
+    Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 4.000000, y: 4.000000, z: 4.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 426fc069-d0b0-48b4-aced-c83ff64e4af0
+    - !<own> 6222347a-e527-422c-8fb5-b6d6c63c6d50
+    - !<own> dd16f7fe-05ef-4b0f-89ac-c916177f7598
 - !<BodyComponent/197678e9-51b5-4157-9cc1-c087990a53a3>
   PrefabRemaps:
     []
@@ -97,6 +114,62 @@
   ScriptInputs:
     "":
       target: !<reference.SceneObject> 69027e60-42ab-4342-b1b4-bd61439bf922
+  ScriptTypes:
+    "":
+      {}
+- !<RenderMeshVisual/426fc069-d0b0-48b4-aced-c83ff64e4af0>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> ee0226b2-b275-413c-992c-c8fef8b6f083
+  Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<ScriptComponent/6222347a-e527-422c-8fb5-b6d6c63c6d50>
+  PrefabRemaps:
+    []
+  Name: LampFaceAnimator
+  Enabled: true
+  ScriptAsset: !<reference> 52d408da-71fb-4a92-89f0-68107e30c023
+  ScriptInputsDefault:
+    blinkClosedDuration: true
+    attackHoldDuration: true
+    damageHoldDuration: true
+    warningThresholdPct: true
+    criticalThresholdPct: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      faceMeshVisual: !<reference.RenderMeshVisual> 426fc069-d0b0-48b4-aced-c83ff64e4af0
+      blinkClosedFrame: !<reference.Texture> 20b2697b-77de-4afa-ac4e-17dce129bba8
+      tutorialOpenFrame: !<reference.Texture> af97f50c-b994-4b44-8e16-7c1395aec1c3
+      normalOpenFrame: !<reference.Texture> 411293ea-ee02-41e3-bcff-e456133adb39
+      attackFrame: !<reference.Texture> 1bd844d8-8e60-4023-84a7-da5fef41fe26
+      damageFrame: !<reference.Texture> ea3c04e9-f8a8-43e8-871a-b7f0b1341ec5
+      warningOpenFrame: !<reference.Texture> 6243729e-162f-4893-8695-68209a0f54df
+      criticalOpenFrame: !<reference.Texture> 5dce61e9-0e1c-48bb-8ac7-b2b3bdbc1b00
+      deadFrame: !<reference.Texture> ba6a5428-8ea6-40a8-a10d-8e96648e5788
+      victoriousFrame: !<reference.Texture> af97f50c-b994-4b44-8e16-7c1395aec1c3
+      blinkOpenDuration: 1.500000
+      blinkClosedDuration: 0.150000
+      attackHoldDuration: !<float> 1.000000
+      damageHoldDuration: !<float> 1.000000
+      warningThresholdPct: !<float> 50.000000
+      criticalThresholdPct: !<float> 25.000000
+      autoBallShooter: !<MappingBased.AssignableType> 7bde9410-aaa2-4087-9adf-5ed1294c9a8b
   ScriptTypes:
     "":
       {}
@@ -186,7 +259,7 @@
   PrefabRemaps:
     []
   Name: Render Mesh Visual
-  Enabled: true
+  Enabled: false
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center
@@ -373,13 +446,37 @@
     - !<own> 2a51fb61-10e6-4799-9640-67f8752c1a4f
     - !<own> a6b3a764-dd02-46e3-9cb8-3a36356cad84
     - !<own> 9c021898-d3c2-4ae3-b224-ec0f1d837a11
+- !<ScriptComponent/dd16f7fe-05ef-4b0f-89ac-c916177f7598>
+  PrefabRemaps:
+    []
+  Name: FaceCameraOnAxis
+  Enabled: true
+  ScriptAsset: !<reference> 2ca585ae-2190-42b2-bafe-ee246290c96a
+  ScriptInputsDefault:
+    faceAxis: true
+    yawOnly: true
+    smoothingSpeed: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      faceAxis: +Y
+      yawOnly: true
+      smoothingSpeed: !<float> 0.000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/f14135fc-934d-4ae0-bb63-836a53d9a1fc>
   PrefabRemaps:
     - 10313883-10de-4dd3-95c8-3eccc62152f4: 70255c44-6e5d-41d2-acab-2164be746926
+    - 16e4818f-0fc9-43fc-a3db-440f4085badc: eab855e5-e4bf-4fae-8047-bf8c570b5808
     - 197678e9-51b5-4157-9cc1-c087990a53a3: 197678e9-51b5-4157-633e-3f7866f5ac5c
     - 2a51fb61-10e6-4799-9640-67f8752c1a4f: 5708a67a-f0d8-427e-ad8a-7450ea11820a
     - 2eec7adb-98f6-4dcd-bd5a-0e59fb3f25dd: a671b4a8-e807-47c0-8e4d-514f40e68260
     - 38f30c40-79ab-418f-b899-492b345aacef: fb245de7-1840-4200-9158-a3d527cef1ff
+    - 426fc069-d0b0-48b4-aced-c83ff64e4af0: f7a26445-0c15-4d52-b0c4-28a9d01d42d1
+    - 6222347a-e527-422c-8fb5-b6d6c63c6d50: 327428ea-42d2-4e68-8e4f-c1fa0965aa6d
     - 69027e60-42ab-4342-b1b4-bd61439bf922: 7901cf4a-5367-4e07-b5f6-aea5cb5abdbc
     - 8ddc6acc-3c82-418f-823a-45df86d90090: 833dca39-6e4a-4e11-baa0-28ad8fbddc5c
     - 9c021898-d3c2-4ae3-b224-ec0f1d837a11: 42bc5053-6334-4d45-8ebd-31ebaa040f01
@@ -389,6 +486,7 @@
     - a9845916-9554-4287-8a23-e56a3376af05: c3ce2044-dd81-445e-99e6-5b173057940d
     - abdaf940-2487-4501-ada2-82725722d172: 9c022f34-125b-43d3-86d5-372eea9342c5
     - b96d71c1-e6b4-4f2a-bb9c-1275457e9f38: 6b4006fa-ded3-4d21-9a9d-b37e1695ba67
+    - dd16f7fe-05ef-4b0f-89ac-c916177f7598: 23addd59-0635-4110-9a89-79f4f6fd3411
     - f14135fc-934d-4ae0-bb63-836a53d9a1fc: f14135fc-934d-4ae0-449c-7c95ac265e03
     - f941326a-6bcd-4c2d-848a-8782c030ea09: 256bbdb3-7759-4ebd-9b50-d3d6620a2eb3
   Name: LampOnboarding
@@ -401,6 +499,7 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 69027e60-42ab-4342-b1b4-bd61439bf922
+    - !<own> 16e4818f-0fc9-43fc-a3db-440f4085badc
   Components:
     - !<own> a5dc0426-22f1-4b5e-a929-b793c8379134
     - !<own> 197678e9-51b5-4157-9cc1-c087990a53a3

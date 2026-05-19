@@ -1,5 +1,6 @@
 import TrackedHand from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/TrackedHand"
 import {SIK} from "SpectaclesInteractionKit.lspkg/SIK"
+import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {CancelToken, clearTimeout, setTimeout} from "SpectaclesInteractionKit.lspkg/Utils/FunctionTimingUtils"
 import {GameLogicManager} from "Scripts/GameLogicManager"
 import {AutoColorCycler} from "./AutoColorCycler"
@@ -108,6 +109,14 @@ export class AutoBallShooter extends BaseScriptComponent {
   @input
   @hint("Emission multiplier pushed to the shatter VFX graph's particleEmissionBoost property")
   shatterEmissionBoost: number = 2
+
+  // Fires the instant a lamp ball is actually launched (after delayThrowTime,
+  // not when the cycler ticks). LampFaceAnimator hooks this to flash its attack
+  // expression at the moment the ball leaves the lamp rather than during the
+  // pre-attack charging window. Payload is the ball color (vec4) for parity with
+  // onColorCycled in case future listeners want to color-match.
+  private _onBallSpawned: Event<vec4> = new Event<vec4>()
+  get onBallSpawned() { return this._onBallSpawned.publicApi() }
 
   private flyingBalls: FlyingBall[] = []
   private pendingThrowToken: CancelToken = null
@@ -224,6 +233,8 @@ export class AutoBallShooter extends BaseScriptComponent {
         oldest.obj.destroy()
       }
     }
+
+    this._onBallSpawned.invoke(color)
   }
 
   private onUpdate() {

@@ -63,6 +63,27 @@
   BodySettingValue: 1.000000
   Damping: 0.000000
   AngularDamping: 0.000000
+- !<ScriptComponent/23addd59-0635-4110-9a89-79f4f6fd3411>
+  PrefabRemaps:
+    []
+  Name: FaceCameraOnAxis
+  Enabled: true
+  ScriptAsset: !<reference> 2ca585ae-2190-42b2-bafe-ee246290c96a
+  ScriptInputsDefault:
+    faceAxis: true
+    yawOnly: true
+    smoothingSpeed: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      faceAxis: +Y
+      yawOnly: true
+      smoothingSpeed: !<float> 0.000000
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/256bbdb3-7759-4ebd-9b50-d3d6620a2eb3>
   PrefabRemaps:
     []
@@ -97,6 +118,42 @@
       acceptableYDirections: !<float> 0.000000
       acceptableZDirections: !<float> 1.000000
       useFilteredPinch: false
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/327428ea-42d2-4e68-8e4f-c1fa0965aa6d>
+  PrefabRemaps:
+    []
+  Name: LampFaceAnimator
+  Enabled: true
+  ScriptAsset: !<reference> 52d408da-71fb-4a92-89f0-68107e30c023
+  ScriptInputsDefault:
+    blinkClosedDuration: true
+    attackHoldDuration: true
+    damageHoldDuration: true
+    warningThresholdPct: true
+    criticalThresholdPct: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      faceMeshVisual: !<reference.RenderMeshVisual> f7a26445-0c15-4d52-b0c4-28a9d01d42d1
+      blinkClosedFrame: !<reference.Texture> 20b2697b-77de-4afa-ac4e-17dce129bba8
+      tutorialOpenFrame: !<reference.Texture> af97f50c-b994-4b44-8e16-7c1395aec1c3
+      normalOpenFrame: !<reference.Texture> 411293ea-ee02-41e3-bcff-e456133adb39
+      attackFrame: !<reference.Texture> 1bd844d8-8e60-4023-84a7-da5fef41fe26
+      damageFrame: !<reference.Texture> ea3c04e9-f8a8-43e8-871a-b7f0b1341ec5
+      warningOpenFrame: !<reference.Texture> 6243729e-162f-4893-8695-68209a0f54df
+      criticalOpenFrame: !<reference.Texture> 5dce61e9-0e1c-48bb-8ac7-b2b3bdbc1b00
+      deadFrame: !<reference.Texture> ba6a5428-8ea6-40a8-a10d-8e96648e5788
+      victoriousFrame: !<reference.Texture> af97f50c-b994-4b44-8e16-7c1395aec1c3
+      blinkOpenDuration: 1.500000
+      blinkClosedDuration: 0.150000
+      attackHoldDuration: !<float> 1.000000
+      damageHoldDuration: !<float> 1.000000
+      warningThresholdPct: !<float> 50.000000
+      criticalThresholdPct: !<float> 25.000000
+      autoBallShooter: !<MappingBased.AssignableType> 7bde9410-aaa2-4087-9adf-5ed1294c9a8b
   ScriptTypes:
     "":
       {}
@@ -290,7 +347,7 @@
   PrefabRemaps:
     []
   Name: Render Mesh Visual
-  Enabled: true
+  Enabled: false
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center
@@ -409,6 +466,23 @@
     CapitalizationOverride: None
   DepthTest: false
   TwoSided: false
+- !<SceneObject/eab855e5-e4bf-4fae-8047-bf8c570b5808>
+  PrefabRemaps:
+    []
+  Name: face
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.900000, z: 0.900000}
+    Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 4.000000, y: 4.000000, z: 4.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> f7a26445-0c15-4d52-b0c4-28a9d01d42d1
+    - !<own> 327428ea-42d2-4e68-8e4f-c1fa0965aa6d
+    - !<own> 23addd59-0635-4110-9a89-79f4f6fd3411
 - !<SceneObject/f14135fc-934d-4ae0-449c-7c95ac265e03>
   PrefabRemaps:
     []
@@ -422,9 +496,30 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 7901cf4a-5367-4e07-b5f6-aea5cb5abdbc
+    - !<own> eab855e5-e4bf-4fae-8047-bf8c570b5808
   Components:
     - !<own> a5dc0426-22f1-4b5e-56d6-486c37c86ecb
     - !<own> 197678e9-51b5-4157-633e-3f7866f5ac5c
+- !<RenderMeshVisual/f7a26445-0c15-4d52-b0c4-28a9d01d42d1>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> ee0226b2-b275-413c-992c-c8fef8b6f083
+  Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<ScriptComponent/fb245de7-1840-4200-9158-a3d527cef1ff>
   PrefabRemaps:
     []

@@ -1,0 +1,102 @@
+- !<AssetImportMetadata/fe8300ce-7990-468a-a948-fda07eae2462>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 52d408da-71fb-4a92-89f0-68107e30c023
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 52d408da-71fb-4a92-89f0-68107e30c023
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 97d2ca83-5114-44c5-bdcb-bc5fc9bd527b
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/97d2ca83-5114-44c5-bdcb-bc5fc9bd527b>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 3afd7183-058e-4456-b5a1-9e44aec3adca
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    attackFrame: false
+    attackHoldDuration: false
+    autoBallShooter: false
+    blinkClosedDuration: false
+    blinkClosedFrame: false
+    blinkOpenDuration: false
+    criticalOpenFrame: false
+    criticalThresholdPct: false
+    damageFrame: false
+    damageHoldDuration: false
+    deadFrame: false
+    faceMeshVisual: false
+    normalOpenFrame: false
+    tutorialOpenFrame: false
+    victoriousFrame: false
+    warningOpenFrame: false
+    warningThresholdPct: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - faceMeshVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      blinkClosedFrame: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      tutorialOpenFrame: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      normalOpenFrame: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      attackFrame: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      damageFrame: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      warningOpenFrame: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      criticalOpenFrame: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      deadFrame: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      victoriousFrame: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      blinkOpenDuration: 2.500000
+      blinkClosedDuration: 0.150000
+      attackHoldDuration: !<float> 1.000000
+      damageHoldDuration: !<float> 1.000000
+      warningThresholdPct: !<float> 50.000000
+      criticalThresholdPct: !<float> 25.000000
+      autoBallShooter: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"Render target"}'
+    - '// @input Component.RenderMeshVisual faceMeshVisual {"hint":"RenderMeshVisual on the face quad. Material is cloned on Awake and baseTex is swapped per frame change."}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"Frame textures"}'
+    - '// @input Asset.Texture blinkClosedFrame {"hint":"Shared closed-eyes blink frame used by every blinking state (Tutorial / Normal / Warning / Critical)"}'
+    - '// @input Asset.Texture tutorialOpenFrame {"hint":"Tutorial open frame (eyes fully open, looking up). If unset, falls back to normalOpenFrame."}'
+    - '// @input Asset.Texture normalOpenFrame {"hint":"Normal open frame -- the default mid-game blink while HP is above the warning threshold"}'
+    - '// @input Asset.Texture attackFrame {"hint":"Attack frame (one eye squinted, mouth open). Held for attackHoldDuration when a ball spawns."}'
+    - '// @input Asset.Texture damageFrame {"hint":"Damage frame (eyes wide, mouth O). Held for damageHoldDuration when the lamp takes a hit."}'
+    - '// @input Asset.Texture warningOpenFrame {"hint":"Warning open frame (droopy eyes, frown). Shown while HP is between the critical and warning thresholds."}'
+    - '// @input Asset.Texture criticalOpenFrame {"hint":"Critical open frame (more droopy, mouth open). Shown while HP is below the critical threshold."}'
+    - '// @input Asset.Texture deadFrame {"hint":"Dead frame (X eyes, flat mouth). Held indefinitely when the lamp dies (player wins)."}'
+    - '// @input Asset.Texture victoriousFrame {"hint":"Victorious frame (smug squint, full smile). Held indefinitely when the player dies (lamp wins)."}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"Timing (seconds)"}'
+    - '// @input float blinkOpenDuration = 2.5 {"hint":"How long the open-eye frame holds before each blink"}'
+    - '// @input float blinkClosedDuration = 0.15 {"hint":"How long the closed-eye frame holds during each blink"}'
+    - '// @input float attackHoldDuration = 1 {"hint":"How long the attack frame holds before returning to the blink loop"}'
+    - '// @input float damageHoldDuration = 1 {"hint":"How long the damage frame holds before returning to the blink loop"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"HP thresholds (% of max)"}'
+    - '// @input float warningThresholdPct = 50 {"hint":"Below this HP the face switches to the Warning expression (default mirrors LampCircularHealthBar.warningThresholdPct)"}'
+    - '// @input float criticalThresholdPct = 25 {"hint":"Below this HP the face switches to the Critical expression (default mirrors LampHealthManager.lowHealthThreshold)"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"External references"}'
+    - '// @input AssignableType autoBallShooter {"hint":"AutoBallShooter ScriptComponent on the lamp scene root. Drives the Attack expression via its onBallSpawned event."}'

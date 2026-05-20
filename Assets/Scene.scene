@@ -1822,7 +1822,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: -3.000000, z: 0.000000}
+    Position: {x: 0.000000, y: -3.500000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 0.450000, y: 0.450000, z: 0.450000}
     HasSegmentScaleCompensation: false

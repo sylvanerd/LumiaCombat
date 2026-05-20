@@ -30,7 +30,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -0.350507, y: 0.900000, z: 1.200000}
+    Position: {x: -0.798287, y: 0.900000, z: 1.200000}
     Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 3.800000, y: 3.800000, z: 3.800000}
     HasSegmentScaleCompensation: false
@@ -145,7 +145,6 @@
   ScriptAsset: !<reference> 52d408da-71fb-4a92-89f0-68107e30c023
   ScriptInputsDefault:
     blinkClosedDuration: true
-    attackHoldDuration: true
     damageHoldDuration: true
     warningThresholdPct: true
     criticalThresholdPct: true
@@ -165,7 +164,7 @@
       victoriousFrame: !<reference.Texture> c4a19d88-5e0b-466a-8e45-df345c2575b7
       blinkOpenDuration: !<float> 2.000000
       blinkClosedDuration: 0.150000
-      attackHoldDuration: !<float> 1.000000
+      attackHoldDuration: 0.600000
       damageHoldDuration: !<float> 1.000000
       warningThresholdPct: !<float> 50.000000
       criticalThresholdPct: !<float> 25.000000

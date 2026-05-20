@@ -1,7 +1,6 @@
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {AutoColorCycler} from "Scripts/PeripheralLight/AutoColorCycler"
 import {ColorHistoryRing} from "Scripts/PeripheralLight/ColorHistoryRing"
-import {HandVFXController} from "Scripts/PeripheralLight/HandVFXController"
 import {LampHealthManager} from "Scripts/PeripheralLight/LampHealthManager"
 import {PlayerHealthManager} from "Scripts/PeripheralLight/PlayerHealthManager"
 
@@ -49,11 +48,6 @@ export class GameLogicManager extends BaseScriptComponent {
   @hint("Brief pause in seconds between lamp death and the confetti burst")
   winPauseSeconds: number = 1.0
 
-  @input
-  @allowUndefined
-  @hint("HandVFXController for the player's hand mesh. Faded to transparent on lose, restored on restart.")
-  handVFXController: HandVFXController
-
   // ColorHistoryRing (the root of ColorHistoryBar.prefab) is instantiated at
   // runtime by ArmFlipPrefabSpawner, so it can't be wired via @input. We
   // resolve it through ColorHistoryRing.getInstance() instead. Disabling the
@@ -61,12 +55,8 @@ export class GameLogicManager extends BaseScriptComponent {
 
   @input
   @allowUndefined
-  @hint("ColorPickPinchDetector SceneObject -- disabled on lose so fresh extraction also stops, re-enabled on restart")
+  @hint("ColorPickPinchDetector SceneObject -- disabled on lose so fresh extraction also stops")
   pinchDetector: SceneObject
-
-  @input
-  @hint("Seconds to fade the hand mesh to transparent on player defeat")
-  loseHandFadeSeconds: number = 1.0
 
   private static instance: GameLogicManager
 
@@ -303,20 +293,17 @@ export class GameLogicManager extends BaseScriptComponent {
   /**
    * Player died. Stop the lamp's cycler ourselves (LampHealthManager.die does NOT
    * run on player death), which also starves AutoBallShooter of onColorCycled
-   * events. Fade the hand mesh transparent and shut down both fresh extraction
-   * and saved-color throws.
+   * events. Then shut down both fresh extraction and saved-color throws by
+   * disabling the pinch detector and the ColorHistoryRing SceneObject (which
+   * also disables its ColorHistoryBar child).
    */
   private handleLose() {
     if (this.isGameOver) return
     this.isGameOver = true
-    print(`${LOG_TAG} Lose -- stopping cyclers, fading hand, disabling color inputs`)
+    print(`${LOG_TAG} Lose -- stopping cyclers, disabling color inputs`)
 
     for (let i = 0; i < this.cyclers.length; i++) {
       this.cyclers[i].stopCycling()
-    }
-
-    if (this.handVFXController) {
-      this.handVFXController.disableAndFade(this.loseHandFadeSeconds)
     }
 
     this.setColorHistoryRingEnabled(false)

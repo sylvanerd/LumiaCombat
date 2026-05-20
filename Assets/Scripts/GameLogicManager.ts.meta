@@ -29,8 +29,6 @@
     confettiPrefab: false
     contrastThreshold: false
     debugMeshPrefab: false
-    handVFXController: false
-    loseHandFadeSeconds: false
     mainCam: false
     pinchDetector: false
     quickTestMode: false
@@ -54,9 +52,7 @@
       confettiPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       winConfettiDistance: !<float> 80.000000
       winPauseSeconds: !<float> 1.000000
-      handVFXController: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       pinchDetector: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      loseHandFadeSeconds: !<float> 1.000000
   ScriptTypes:
     -
       {}
@@ -71,6 +67,4 @@
     - '// @input Asset.ObjectPrefab confettiPrefab {"hint":"Multi-color confetti VFX prefab spawned in front of the player on win"}'
     - '// @input float winConfettiDistance = 80 {"hint":"Distance (cm) in front of the camera to spawn the confetti VFX"}'
     - '// @input float winPauseSeconds = 1 {"hint":"Brief pause in seconds between lamp death and the confetti burst"}'
-    - "// @input AssignableType handVFXController {\"hint\":\"HandVFXController for the player's hand mesh. Faded to transparent on lose, restored on restart.\"}"
-    - '// @input SceneObject pinchDetector {"hint":"ColorPickPinchDetector SceneObject -- disabled on lose so fresh extraction also stops, re-enabled on restart"}'
-    - '// @input float loseHandFadeSeconds = 1 {"hint":"Seconds to fade the hand mesh to transparent on player defeat"}'
+    - '// @input SceneObject pinchDetector {"hint":"ColorPickPinchDetector SceneObject -- disabled on lose so fresh extraction also stops"}'

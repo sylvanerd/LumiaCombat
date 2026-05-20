@@ -11,7 +11,6 @@
     - !<own> 6f7e5c48-1d18-4dfd-9bdd-22ca7fae10ca
     - !<own> 308da6fe-c2c3-4fb7-a2d5-070041ddcc3f
     - !<own> 6d90bc7c-95d3-46e4-bf93-49ab9a0b3526
-    - !<own> 41191a57-a7e8-4cde-b4e1-066ae57c8f7b
     - !<own> 0e1cab31-205e-4036-9020-508d0afa08c5
     - !<own> d63420e7-a9a5-4824-ac9e-1ab121de3bb0
     - !<own> 78a32601-3fcd-4b55-8a52-d1f113cb30d0
@@ -3499,21 +3498,6 @@
     - !<own> 26101310-7d15-4218-9c78-506ead79a203
   Components:
     - !<own> ed6b185a-fe93-44ed-bbd7-670f5162dfa6
-- !<SceneObject/41191a57-a7e8-4cde-b4e1-066ae57c8f7b>
-  PrefabRemaps:
-    []
-  Name: "------------BLE_Settings------------"
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: -4.535576, y: 5.728333, z: -67.544495}
-    Rotation: {x: -20.000011, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    []
 - !<SceneObject/416a42a7-c680-48af-bd48-6f4579d340a6>
   PrefabRemaps:
     []
@@ -10219,7 +10203,6 @@
   ScriptAsset: !<reference> f44d9200-ee1a-4ed8-a784-88487a217e4f
   ScriptInputsDefault:
     winPauseSeconds: true
-    loseHandFadeSeconds: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -10229,12 +10212,10 @@
       similarityThreshold: 0.100000
       quickTestMode: true
       mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
-      confettiPrefab: !<reference.ObjectPrefab> 12728728-4dd2-44c8-9fb9-0abc38aa0949
-      winConfettiDistance: !<float> 15.000000
+      confettiPrefab: !<reference.ObjectPrefab> 6af5c089-1f16-4e40-887f-bfe6d4c4bcec
+      winConfettiDistance: !<float> 10.000000
       winPauseSeconds: !<float> 1.000000
-      handVFXController: !<MappingBased.AssignableType> ef5cb7cd-04b5-41bf-bc68-7f961158f305
       pinchDetector: !<reference.SceneObject> 09a22389-4981-4452-9b3b-17473341edad
-      loseHandFadeSeconds: !<float> 1.000000
   ScriptTypes:
     "":
       {}

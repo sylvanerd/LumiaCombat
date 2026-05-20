@@ -118,6 +118,20 @@ export class AutoBallShooter extends BaseScriptComponent {
   private _onBallSpawned: Event<vec4> = new Event<vec4>()
   get onBallSpawned() { return this._onBallSpawned.publicApi() }
 
+  // Singleton registration so listeners inside runtime-instantiated prefabs
+  // (e.g. LampFaceAnimator in LampOnboarding.prefab) can resolve us via
+  // getInstance() instead of an @input. Cross-prefab @input ScriptComponent
+  // references in Lens Studio sometimes resolve to a remapped view that doesn't
+  // share the same in-memory Event subscriber list, so handlers added through
+  // an @input never fire when invoke() runs on the real instance. Going
+  // through the singleton avoids that pitfall and matches the pattern already
+  // used by LampHealthManager / PlayerHealthManager / AutoColorCycler.
+  private static instance: AutoBallShooter
+
+  static getInstance(): AutoBallShooter | undefined {
+    return AutoBallShooter.instance
+  }
+
   private flyingBalls: FlyingBall[] = []
   private pendingThrowToken: CancelToken = null
   private mainCamTrans: Transform
@@ -125,6 +139,11 @@ export class AutoBallShooter extends BaseScriptComponent {
   private rightHand: TrackedHand = null
 
   onAwake() {
+    if (AutoBallShooter.instance) {
+      print(`${LOG_TAG} WARNING: Multiple instances detected, only one AutoBallShooter should exist in the scene`)
+    }
+    AutoBallShooter.instance = this
+
     this.createEvent("OnStartEvent").bind(() => this.onStart())
   }
 

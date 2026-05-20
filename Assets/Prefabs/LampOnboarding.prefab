@@ -30,9 +30,9 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.900000, z: 0.900000}
+    Position: {x: -0.350507, y: 0.900000, z: 1.200000}
     Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 4.000000, y: 4.000000, z: 4.000000}
+    Scale: {x: 3.800000, y: 3.800000, z: 3.800000}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -154,22 +154,21 @@
   ScriptInputs:
     "":
       faceMeshVisual: !<reference.RenderMeshVisual> 426fc069-d0b0-48b4-aced-c83ff64e4af0
-      blinkClosedFrame: !<reference.Texture> 20b2697b-77de-4afa-ac4e-17dce129bba8
-      tutorialOpenFrame: !<reference.Texture> af97f50c-b994-4b44-8e16-7c1395aec1c3
-      normalOpenFrame: !<reference.Texture> 411293ea-ee02-41e3-bcff-e456133adb39
-      attackFrame: !<reference.Texture> 1bd844d8-8e60-4023-84a7-da5fef41fe26
-      damageFrame: !<reference.Texture> ea3c04e9-f8a8-43e8-871a-b7f0b1341ec5
-      warningOpenFrame: !<reference.Texture> 6243729e-162f-4893-8695-68209a0f54df
-      criticalOpenFrame: !<reference.Texture> 5dce61e9-0e1c-48bb-8ac7-b2b3bdbc1b00
-      deadFrame: !<reference.Texture> ba6a5428-8ea6-40a8-a10d-8e96648e5788
-      victoriousFrame: !<reference.Texture> af97f50c-b994-4b44-8e16-7c1395aec1c3
-      blinkOpenDuration: 1.500000
+      blinkClosedFrame: !<reference.Texture> 84e311b2-51be-43d8-96a4-6357e72cab82
+      tutorialOpenFrame: !<reference.Texture> a82a90ff-9e76-4d98-9add-1ab34ff4f78b
+      normalOpenFrame: !<reference.Texture> 57eb6137-94de-433d-8012-5871cc897c1d
+      attackFrame: !<reference.Texture> 9df3ca5b-c514-42d3-87bd-f6345981413d
+      damageFrame: !<reference.Texture> fbfac964-a8b0-464a-b68e-ebf9aabea5f2
+      warningOpenFrame: !<reference.Texture> 1706400c-c8af-4e66-a392-f879001a3095
+      criticalOpenFrame: !<reference.Texture> af22d373-8a25-4185-8b6a-aee1b4a228ee
+      deadFrame: !<reference.Texture> 6bfa0279-cbf3-4826-996c-74c401e38326
+      victoriousFrame: !<reference.Texture> c4a19d88-5e0b-466a-8e45-df345c2575b7
+      blinkOpenDuration: !<float> 2.000000
       blinkClosedDuration: 0.150000
       attackHoldDuration: !<float> 1.000000
       damageHoldDuration: !<float> 1.000000
       warningThresholdPct: !<float> 50.000000
       criticalThresholdPct: !<float> 25.000000
-      autoBallShooter: !<MappingBased.AssignableType> 7bde9410-aaa2-4087-9adf-5ed1294c9a8b
   ScriptTypes:
     "":
       {}

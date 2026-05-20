@@ -114,19 +114,19 @@ export class LampFaceAnimator extends BaseScriptComponent {
   @hint("Below this HP the face switches to the Critical expression (default mirrors LampHealthManager.lowHealthThreshold)")
   criticalThresholdPct: number = 25
 
-  @ui.separator
-  @ui.label("External references")
-
-  @input
-  @hint("AutoBallShooter ScriptComponent on the lamp scene root. Drives the Attack expression via its onBallSpawned event.")
-  autoBallShooter: AutoBallShooter
-
   private faceMat: Material = null
   private currentTex: Texture = null
 
   private lampHealth: LampHealthManager = null
   private playerHealth: PlayerHealthManager = null
   private gameLogic: GameLogicManager = null
+  // Resolved via AutoBallShooter.getInstance() in tryBind() rather than an
+  // @input. Cross-prefab @input references to scene ScriptComponents can
+  // resolve to a remapped view whose Event subscriber list is not the one
+  // invoke() targets -- handlers register without error but never fire. Going
+  // through the singleton avoids that and matches the pattern used for the
+  // other managers above.
+  private ballShooter: AutoBallShooter = null
   private subscribed: boolean = false
 
   private gameStarted: boolean = false
@@ -163,13 +163,14 @@ export class LampFaceAnimator extends BaseScriptComponent {
     this.lampHealth = LampHealthManager.getInstance() as LampHealthManager
     this.playerHealth = PlayerHealthManager.getInstance() as PlayerHealthManager
     this.gameLogic = GameLogicManager.getInstance() as GameLogicManager
+    this.ballShooter = AutoBallShooter.getInstance() as AutoBallShooter
 
-    if (this.lampHealth && this.playerHealth && this.gameLogic) {
+    if (this.lampHealth && this.playerHealth && this.gameLogic && this.ballShooter) {
       this.subscribe()
       return
     }
 
-    print(`${LOG_TAG} Singletons not ready (lamp=${!!this.lampHealth}, player=${!!this.playerHealth}, logic=${!!this.gameLogic}); polling in update`)
+    print(`${LOG_TAG} Singletons not ready (lamp=${!!this.lampHealth}, player=${!!this.playerHealth}, logic=${!!this.gameLogic}, shooter=${!!this.ballShooter}); polling in update`)
   }
 
   private subscribe() {
@@ -180,12 +181,7 @@ export class LampFaceAnimator extends BaseScriptComponent {
     this.lampHealth.onHealthChanged.add((p: number) => this.onHealthChanged(p))
     this.lampHealth.onLampDied.add(() => this.enterTerminal("dead"))
     this.playerHealth.onPlayerDied.add(() => this.enterTerminal("victorious"))
-
-    if (this.autoBallShooter) {
-      this.autoBallShooter.onBallSpawned.add(() => this.enterOverlay("attack"))
-    } else {
-      print(`${LOG_TAG} WARNING: autoBallShooter not wired in Inspector; attack expression disabled`)
-    }
+    this.ballShooter.onBallSpawned.add(() => this.enterOverlay("attack"))
 
     // Seed lastHealthPct from the live manager so the first onHealthChanged
     // compares against the actual current health rather than the 100 default.
@@ -219,8 +215,14 @@ export class LampFaceAnimator extends BaseScriptComponent {
     print(`${LOG_TAG} Base state -> ${next}`)
 
     // Reflect the new base expression immediately if no overlay/terminal is
-    // masking it. The blink phase is preserved so the loop doesn't stutter.
+    // masking it. For non-blinking states (warning/critical) we also force
+    // blinkOpen back to true so the open frame is shown right away even if we
+    // crossed the threshold mid-blink-closed.
     if (!this.terminal && !this.overlay) {
+      if (!this.shouldBlink()) {
+        this.blinkOpen = true
+        this.blinkPhaseStart = getTime()
+      }
       this.applyBaseFrame()
     }
   }
@@ -239,6 +241,10 @@ export class LampFaceAnimator extends BaseScriptComponent {
     this.overlayStart = getTime()
     const tex = kind === "attack" ? this.attackFrame : this.damageFrame
     this.setFrame(tex)
+    // Diagnostic: confirms the handler is wired up and the texture pointer is live.
+    // If you don't see this line in the Logger after a ball spawns, the
+    // AutoBallShooter.onBallSpawned event isn't reaching us.
+    print(`${LOG_TAG} Overlay -> ${kind} (frame=${tex ? "set" : "MISSING TEXTURE"})`)
   }
 
   private enterTerminal(kind: TerminalKind) {
@@ -273,12 +279,30 @@ export class LampFaceAnimator extends BaseScriptComponent {
       return
     }
 
+    // Warning and Critical hold steady on their open frame -- no blink. If we
+    // entered these states mid-blink (blinkOpen=false), force back to the open
+    // frame so the closed-eye frame doesn't get stuck on screen.
+    if (!this.shouldBlink()) {
+      if (!this.blinkOpen) {
+        this.blinkOpen = true
+        this.blinkPhaseStart = now
+        this.applyBaseFrame()
+      }
+      return
+    }
+
     const phaseDur = this.blinkOpen ? this.blinkOpenDuration : this.blinkClosedDuration
     if (now - this.blinkPhaseStart >= phaseDur) {
       this.blinkOpen = !this.blinkOpen
       this.blinkPhaseStart = now
       this.applyBaseFrame()
     }
+  }
+
+  private shouldBlink(): boolean {
+    // Only Tutorial and Normal blink. Warning/Critical hold their open frame
+    // to read as a sustained "uh oh" expression rather than a busy animation.
+    return this.baseState === "tutorial" || this.baseState === "normal"
   }
 
   private applyBaseFrame() {

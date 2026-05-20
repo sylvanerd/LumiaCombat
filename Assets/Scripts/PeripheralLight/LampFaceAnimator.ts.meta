@@ -28,7 +28,6 @@
   ScriptInputsHidden:
     attackFrame: false
     attackHoldDuration: false
-    autoBallShooter: false
     blinkClosedDuration: false
     blinkClosedFrame: false
     blinkOpenDuration: false
@@ -68,7 +67,6 @@
       damageHoldDuration: !<float> 1.000000
       warningThresholdPct: !<float> 50.000000
       criticalThresholdPct: !<float> 25.000000
-      autoBallShooter: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -97,6 +95,3 @@
     - '// @ui {"widget":"label", "label":"HP thresholds (% of max)"}'
     - '// @input float warningThresholdPct = 50 {"hint":"Below this HP the face switches to the Warning expression (default mirrors LampCircularHealthBar.warningThresholdPct)"}'
     - '// @input float criticalThresholdPct = 25 {"hint":"Below this HP the face switches to the Critical expression (default mirrors LampHealthManager.lowHealthThreshold)"}'
-    - '// @ui {"widget":"separator"}'
-    - '// @ui {"widget":"label", "label":"External references"}'
-    - '// @input AssignableType autoBallShooter {"hint":"AutoBallShooter ScriptComponent on the lamp scene root. Drives the Attack expression via its onBallSpawned event."}'

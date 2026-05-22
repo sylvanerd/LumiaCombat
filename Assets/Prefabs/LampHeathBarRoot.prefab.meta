@@ -17,7 +17,7 @@
 - !<SceneObject/1c8c90ba-c09d-4db9-a40e-a17aeb96e20f>
   PrefabRemaps:
     []
-  Name: DamageOverlay
+  Name: DamageOverlay_Old
   Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -203,7 +203,7 @@
   PrefabRemaps:
     []
   Name: lampIcon
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -0.700000, y: -0.000000, z: 0.108710}
@@ -277,7 +277,7 @@
 - !<SceneObject/c1bef1e5-dc07-489e-a587-632690db4cc9>
   PrefabRemaps:
     []
-  Name: ColorWheel
+  Name: ColorWheel_Old
   Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -317,7 +317,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -1.476974, y: 3.100000, z: 1.200000}
+    Position: {x: -1.500000, y: 3.100000, z: 1.200000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.600000, y: 0.800000, z: 1.500000}
     HasSegmentScaleCompensation: false

@@ -36,6 +36,13 @@ export class PlayerHealthManager extends BaseScriptComponent {
   private _onPlayerDied: Event<void> = new Event<void>()
   get onPlayerDied() { return this._onPlayerDied.publicApi() }
 
+  // Fires only when a damage hit actually lands (i.e. NOT blocked by invincibility),
+  // so visual feedback (DamageFlashOverlay) stays in sync with the health drop.
+  // Payload is the color of the source (e.g. the lamp ball's baseColor) so listeners
+  // can tint themselves to match what hit the player.
+  private _onDamageFlash: Event<vec4> = new Event<vec4>()
+  get onDamageFlash() { return this._onDamageFlash.publicApi() }
+
   static getInstance(): PlayerHealthManager | undefined {
     return PlayerHealthManager.instance
   }
@@ -58,7 +65,7 @@ export class PlayerHealthManager extends BaseScriptComponent {
     return this.alive
   }
 
-  takeDamage(percent?: number) {
+  takeDamage(percent?: number, color?: vec4) {
     if (!this.alive) return
 
     const now = getTime()
@@ -75,6 +82,10 @@ export class PlayerHealthManager extends BaseScriptComponent {
     const healthPct = this.getHealthPercent()
     print(`${LOG_TAG} Took ${dmgPercent}% damage, health=${healthPct.toFixed(1)}%`)
     this._onHealthChanged.invoke(healthPct)
+
+    if (color) {
+      this._onDamageFlash.invoke(color)
+    }
 
     if (this.currentHealth <= 0) {
       this.alive = false

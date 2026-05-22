@@ -268,7 +268,7 @@ export class AutoBallShooter extends BaseScriptComponent {
 
       if (s >= maxS) {
         if (!this.playerCollider && !fb.hit) {
-          this.onBallHitPlayer()
+          this.onBallHitPlayer(fb.obj)
         }
         fb.obj.destroy()
         this.flyingBalls.splice(i, 1)
@@ -398,7 +398,7 @@ export class AutoBallShooter extends BaseScriptComponent {
     for (let i = 0; i < this.flyingBalls.length; i++) {
       if (this.flyingBalls[i].obj === ballObj && !this.flyingBalls[i].hit) {
         this.flyingBalls[i].hit = true
-        this.onBallHitPlayer()
+        this.onBallHitPlayer(ballObj)
         ballObj.destroy()
         this.flyingBalls.splice(i, 1)
         print(`${LOG_TAG} Player HIT by lamp ball!`)
@@ -407,14 +407,15 @@ export class AutoBallShooter extends BaseScriptComponent {
     }
   }
 
-  private onBallHitPlayer() {
+  private onBallHitPlayer(ballObj?: SceneObject) {
     if (this.hitSound) {
       this.hitSound.play(1)
     }
     const health = PlayerHealthManager.getInstance()
-    if (health) {
-      health.takeDamage()
-    }
+    if (!health) return
+
+    const color = ballObj ? GameLogicManager.getObjectColor(ballObj) : null
+    health.takeDamage(undefined, color || undefined)
   }
 
   private randomRange(min: number, max: number): number {

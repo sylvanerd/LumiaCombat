@@ -58,6 +58,7 @@
     - !<own> 45f2f9d5-5110-4e60-a232-d7069ff46d1c
     - !<own> 23a799f2-5d09-4314-9943-6f51bb468f37
     - !<own> 2d6eceaa-4586-4baf-8e32-77eb28a1b4d9
+    - !<own> 98fa28f8-2409-4e88-b3a4-93ac59362f63
   Components:
     - !<own> 00000000-0000-0065-0000-000000000065
     - !<own> 9228bd9b-5113-4e9a-a7c5-bb6945cb0bc4
@@ -2035,6 +2036,26 @@
   ScriptTypes:
     "":
       {}
+- !<RenderMeshVisual/2a710ba7-b8a1-4bb6-a601-7da523d0c289>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 7cfbf95d-6d0f-489a-afcd-d0da0c908a46
+  Mesh: !<reference> 8df90b87-c459-46d1-bff1-5bd166a61c7e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<ScriptComponent/2a7deba4-403e-4e3f-8449-3947a78edc88>
   PrefabRemaps:
     []
@@ -4156,6 +4177,24 @@
   ScriptInputs:
     "":
       lightStatusVisual: !<MappingBased.AssignableType> 0f0e3d48-d53c-4322-a15d-25622e9d5985
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/4e710206-babf-4dee-bd9a-80884b83873f>
+  PrefabRemaps:
+    []
+  Name: DamageFlashOverlay
+  Enabled: true
+  ScriptAsset: !<reference> bcd3071d-690d-4878-879e-546b53da7e25
+  ScriptInputsDefault:
+    flashDuration: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      targetVisual: !<reference.RenderMeshVisual> 2a710ba7-b8a1-4bb6-a601-7da523d0c289
+      flashDuration: 0.500000
+      peakAlpha: !<float> 1.000000
   ScriptTypes:
     "":
       {}
@@ -8688,6 +8727,22 @@
     []
   Components:
     []
+- !<SceneObject/98fa28f8-2409-4e88-b3a4-93ac59362f63>
+  PrefabRemaps:
+    []
+  Name: DamageFlash
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -50.000000}
+    Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 18.000000, y: 18.000000, z: 18.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 2a710ba7-b8a1-4bb6-a601-7da523d0c289
+    - !<own> 4e710206-babf-4dee-bd9a-80884b83873f
 - !<ColliderComponent/9a3f57d9-c0e7-4a89-876f-44976bd1ab8a>
   PrefabRemaps:
     []

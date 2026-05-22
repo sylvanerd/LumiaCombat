@@ -1,0 +1,50 @@
+- !<AssetImportMetadata/4d4f8331-3825-4083-b39c-25bf10f2861b>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> bcd3071d-690d-4878-879e-546b53da7e25
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> bcd3071d-690d-4878-879e-546b53da7e25
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 476023b3-6640-45ec-ae81-e2fcdfdde79b
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/476023b3-6640-45ec-ae81-e2fcdfdde79b>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 596a5a1d-c1bd-46fc-9d75-eaa808d9d8ed
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    flashDuration: false
+    peakAlpha: false
+    targetVisual: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - targetVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      flashDuration: 0.500000
+      peakAlpha: 0.500000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - "// @input Component.RenderMeshVisual targetVisual {\"hint\":\"RenderMeshVisual on the camera-anchored plane. Its mainMaterial will be cloned at runtime so per-instance edits don't leak to other meshes sharing the source material.\"}"
+    - '// @input float flashDuration = 0.5 {"hint":"Seconds for the flash to decay from peakAlpha back to 0"}'
+    - '// @input float peakAlpha = 0.5 {"hint":"Peak alpha applied at the instant of the hit (0..1). Lower = subtler flash."}'

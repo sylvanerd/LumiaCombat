@@ -123,6 +123,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/113671ff-3dc4-47d1-b19b-e08e4a87ab47>
+  PrefabRemaps:
+    []
+  Name: shatter
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 74195828-0743-4cee-9420-4ac3f1d8cb6c
 - !<SceneObject/11534fc2-e68d-4d60-b956-7a9f71b005fa>
   PrefabRemaps:
     []
@@ -160,6 +175,23 @@
   ForceCompound: false
   Intangible: false
   ShowCollider: false
+- !<AudioComponent/1354b8e0-9acb-4f5d-825e-efe678a65073>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> e2ea316e-2a58-4149-a090-2f8101dacea5
+  EnableAutoplayLoop: false
+  Volume: 0.700000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<SceneObject/140bc578-2b68-422f-87cc-28c1b77b81a1>
   PrefabRemaps:
     []
@@ -390,6 +422,21 @@
   BlendShapes:
     pCube2: 0.310000
     pCube3: 0.030000
+- !<SceneObject/2f0ae9fd-6ca4-4a7c-85e2-2d291a486c61>
+  PrefabRemaps:
+    []
+  Name: ballLaunch
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 1354b8e0-9acb-4f5d-825e-efe678a65073
 - !<ScriptComponent/3a2007ce-668f-44fa-ba3c-6007635507e9>
   PrefabRemaps:
     []
@@ -788,6 +835,23 @@
   ScriptTypes:
     "":
       {}
+- !<AudioComponent/74195828-0743-4cee-9420-4ac3f1d8cb6c>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> 2bb2046c-d851-46ea-97c2-77338233e6cc
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<Canvas/755e52e3-b8f9-400b-869f-ff1fe2855b97>
   PrefabRemaps:
     []
@@ -822,7 +886,7 @@
 - !<SceneObject/75b8fa8b-6d36-40f1-9895-508eb83561fa>
   PrefabRemaps:
     []
-  Name: CameraClick
+  Name: lightHit
   Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -970,7 +1034,7 @@
     []
   Name: Audio
   Enabled: true
-  AudioTrack: !<reference> 5c2e936c-018d-436a-9403-1a1c670f87e5
+  AudioTrack: !<reference> af55e8a5-30ef-40b4-a365-5e37a62b1494
   EnableAutoplayLoop: false
   Volume: 1.000000
   EnableMixToSnap: false
@@ -1099,7 +1163,7 @@
     []
   Name: Audio
   Enabled: true
-  AudioTrack: !<reference> a8a9219d-1d36-44b1-9893-a29d8002e614
+  AudioTrack: !<reference> e3bb3ca0-7354-4e72-b31e-4301b6590330
   EnableAutoplayLoop: false
   Volume: 1.000000
   EnableMixToSnap: false
@@ -1249,7 +1313,7 @@
 - !<SceneObject/949f2fa5-f967-4df4-accb-ebdf56527e19>
   PrefabRemaps:
     []
-  Name: beinghittemp
+  Name: playerHit
   Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -1469,6 +1533,7 @@
       maxActiveBalls: !<float> 5.000000
       shootingEnabled: true
       hitSound: !<reference.AudioComponent> 8882d3d6-423f-42c1-adac-d557a22fc619
+      launchSound: !<reference.AudioComponent> 1354b8e0-9acb-4f5d-825e-efe678a65073
       playerCollider: !<reference.ColliderComponent> 6ac2351a-1ea6-4a43-8201-2688abf16ffe
       overshootMultiplier: 1.500000
       handVFXController: !<MappingBased.AssignableType_2> ef5cb7cd-04b5-41bf-bc68-7f961158f305
@@ -1477,6 +1542,7 @@
       shatterLifetimeSeconds: !<float> 2.000000
       healPercentOnShatter: !<float> 5.000000
       shatterEmissionBoost: 1.500000
+      shatterSound: !<reference.AudioComponent> 74195828-0743-4cee-9420-4ac3f1d8cb6c
   ScriptTypes:
     "":
       {}
@@ -2212,6 +2278,8 @@
     - !<own> 3d90115c-c3fe-4b58-a2f0-7851a5bf7c87
     - !<own> 949f2fa5-f967-4df4-accb-ebdf56527e19
     - !<own> 75b8fa8b-6d36-40f1-9895-508eb83561fa
+    - !<own> 2f0ae9fd-6ca4-4a7c-85e2-2d291a486c61
+    - !<own> 113671ff-3dc4-47d1-b19b-e08e4a87ab47
   Components:
     []
 - !<Image/eadbb083-91b9-4881-8ba0-c56cae9d7321>
@@ -2452,8 +2520,10 @@
     - 036a81a2-c790-43ff-8de8-24c87dd5d13c: 036a81a2-c790-43ff-7217-db37822a2ec3
     - 0e835237-ca20-4361-9a18-b3108d0f122c: 0e835237-ca20-4361-65e7-4cef72f0edd3
     - 100aef53-8e66-4705-b4ea-be118228aeb6: 157859c3-4cf5-4a3d-bda4-3bfba6e90247
+    - 113671ff-3dc4-47d1-b19b-e08e4a87ab47: 2145a9f8-b80b-4f22-ba78-de8a9f97fe82
     - 11534fc2-e68d-4d60-b956-7a9f71b005fa: 11534fc2-e68d-4d60-46a9-85608e4ffa05
     - 118620d0-d230-4b1c-8f54-f13e0b33a5ea: 118620d0-d230-4b1c-70ab-0ec1f4cc5a15
+    - 1354b8e0-9acb-4f5d-825e-efe678a65073: 1d8176f0-204b-4ef4-b426-719d1e618d85
     - 140bc578-2b68-422f-87cc-28c1b77b81a1: 140bc578-2b68-422f-7833-d73e48847e5e
     - 173a3a22-5fa1-4d28-b73f-6375ca4b6eb3: 173a3a22-5fa1-4d28-48c0-9c8a35b4914c
     - 1dfca59b-1728-48e3-b573-93f6e86b0bfd: 1dfca59b-1728-48e3-4a8c-6c091794f402
@@ -2462,6 +2532,7 @@
     - 27a317d5-597b-49c1-ab5f-71deae543a90: 27a317d5-597b-49c1-54a0-8e2151abc56f
     - 28434c08-3e90-4090-88d6-a7a37d91a63f: 28434c08-3e90-4090-7729-585c826e59c0
     - 2b7ff7af-79fc-49ce-aa8f-f50ce77acf56: 2b7ff7af-79fc-49ce-5570-0af3188530a9
+    - 2f0ae9fd-6ca4-4a7c-85e2-2d291a486c61: 8661ee7d-6f76-4ccf-b7a1-6af134383b11
     - 3a2007ce-668f-44fa-ba3c-6007635507e9: 3a2007ce-668f-44fa-45c3-9ff89caaf816
     - 3acb3a50-6cb9-4339-893f-396f63d92a34: 3acb3a50-6cb9-4339-76c0-c6909c26d5cb
     - 3d90115c-c3fe-4b58-a2f0-7851a5bf7c87: 3d90115c-c3fe-4b58-5d0f-87ae5a408378
@@ -2475,6 +2546,7 @@
     - 6966878a-372c-42f2-8832-7d899fbaf54d: 6966878a-372c-42f2-77cd-827660450ab2
     - 6dc5139c-a398-42c8-b68f-596bd300649f: 6dc5139c-a398-42c8-4970-a6942cff9b60
     - 736c4210-66f0-4ab4-8ef0-87ec7dd254b2: 736c4210-66f0-4ab4-710f-7813822dab4d
+    - 74195828-0743-4cee-9420-4ac3f1d8cb6c: 97562d34-dc1c-4057-879e-5944b8b37d04
     - 755e52e3-b8f9-400b-869f-ff1fe2855b97: 755e52e3-b8f9-400b-7960-00e01d7aa468
     - 75a67dff-56a5-4bbd-aa28-2871264dbaab: 75a67dff-56a5-4bbd-55d7-d78ed9b24554
     - 75b8fa8b-6d36-40f1-9895-508eb83561fa: ea6ba4dd-3a9c-4c5e-880b-fa4b0007f853

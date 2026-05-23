@@ -38,6 +38,8 @@
     - !<own> 3d90115c-c3fe-4b58-5d0f-87ae5a408378
     - !<own> fbec1766-c91a-49ed-b369-9b9ca870405a
     - !<own> ea6ba4dd-3a9c-4c5e-880b-fa4b0007f853
+    - !<own> 8661ee7d-6f76-4ccf-b7a1-6af134383b11
+    - !<own> 2145a9f8-b80b-4f22-ba78-de8a9f97fe82
   Components:
     []
 - !<ScriptComponent/028377a9-b6ce-443b-80e3-b22e598565ce>
@@ -260,6 +262,23 @@
   BodySettingValue: 1.000000
   Damping: 0.000000
   AngularDamping: 0.000000
+- !<AudioComponent/1d8176f0-204b-4ef4-b426-719d1e618d85>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> e2ea316e-2a58-4149-a090-2f8101dacea5
+  EnableAutoplayLoop: false
+  Volume: 0.700000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<ScreenTransform/1dfca59b-1728-48e3-4a8c-6c091794f402>
   PrefabRemaps:
     []
@@ -293,6 +312,21 @@
     bottom: 0.000000
     right: 0.000000
     top: 0.000000
+- !<SceneObject/2145a9f8-b80b-4f22-ba78-de8a9f97fe82>
+  PrefabRemaps:
+    []
+  Name: shatter
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 97562d34-dc1c-4057-879e-5944b8b37d04
 - !<Text/22c0962a-cc50-4e9b-5fbd-dc45548466e0>
   PrefabRemaps:
     []
@@ -513,6 +547,7 @@
       maxActiveBalls: !<float> 5.000000
       shootingEnabled: true
       hitSound: !<reference.AudioComponent> 4761041c-e30e-481a-9b7e-4bf00c6579a2
+      launchSound: !<reference.AudioComponent> 1d8176f0-204b-4ef4-b426-719d1e618d85
       playerCollider: !<reference.ColliderComponent> 6ac2351a-1ea6-4a43-8201-2688abf16ffe
       overshootMultiplier: 1.500000
       handVFXController: !<MappingBased.AssignableType_2> ef5cb7cd-04b5-41bf-bc68-7f961158f305
@@ -521,6 +556,7 @@
       shatterLifetimeSeconds: !<float> 2.000000
       healPercentOnShatter: !<float> 5.000000
       shatterEmissionBoost: 1.500000
+      shatterSound: !<reference.AudioComponent> 97562d34-dc1c-4057-879e-5944b8b37d04
   ScriptTypes:
     "":
       {}
@@ -610,7 +646,7 @@
     []
   Name: Audio
   Enabled: true
-  AudioTrack: !<reference> a8a9219d-1d36-44b1-9893-a29d8002e614
+  AudioTrack: !<reference> e3bb3ca0-7354-4e72-b31e-4301b6590330
   EnableAutoplayLoop: false
   Volume: 1.000000
   EnableMixToSnap: false
@@ -923,7 +959,7 @@
     []
   Name: Audio
   Enabled: true
-  AudioTrack: !<reference> 5c2e936c-018d-436a-9403-1a1c670f87e5
+  AudioTrack: !<reference> af55e8a5-30ef-40b4-a365-5e37a62b1494
   EnableAutoplayLoop: false
   Volume: 1.000000
   EnableMixToSnap: false
@@ -1205,6 +1241,21 @@
   Components:
     - !<own> bb31124f-970c-4fdb-6efb-18a06b8ee243
     - !<own> dd2393a3-a3b0-47ba-7d86-d45b7733ec4e
+- !<SceneObject/8661ee7d-6f76-4ccf-b7a1-6af134383b11>
+  PrefabRemaps:
+    []
+  Name: ballLaunch
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 1d8176f0-204b-4ef4-b426-719d1e618d85
 - !<RenderMeshVisual/869601b0-4752-4b90-4f59-8b54f7e4b6e1>
   PrefabRemaps:
     []
@@ -1435,6 +1486,23 @@
     - !<own> 6dc5139c-a398-42c8-4970-a6942cff9b60
     - !<own> 7d997d9e-3377-4a3d-499a-be1a994f1f5e
     - !<own> 92381b14-ed4a-425d-5b0e-73c64c136bab
+- !<AudioComponent/97562d34-dc1c-4057-879e-5944b8b37d04>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> 2bb2046c-d851-46ea-97c2-77338233e6cc
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<SceneObject/97960dc4-b7d3-42c6-6d73-f521793752e3>
   PrefabRemaps:
     []
@@ -2247,7 +2315,7 @@
 - !<SceneObject/ea6ba4dd-3a9c-4c5e-880b-fa4b0007f853>
   PrefabRemaps:
     []
-  Name: CameraClick
+  Name: lightHit
   Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -2474,7 +2542,7 @@
 - !<SceneObject/fbec1766-c91a-49ed-b369-9b9ca870405a>
   PrefabRemaps:
     []
-  Name: beinghittemp
+  Name: playerHit
   Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>

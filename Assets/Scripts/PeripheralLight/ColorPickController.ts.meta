@@ -32,6 +32,7 @@
     camModule: false
     centerCropScale: false
     centerCropTexture: false
+    extractionStartSound: false
     finalBallSize: false
     growSpeed: false
     handVelocityMultiplier: false
@@ -65,6 +66,7 @@
       minPinchStrength: 0.300000
       useLiteModel: false
       latticeVFX: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      extractionStartSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -88,3 +90,6 @@
     - '// @input float minPinchStrength = 0.3 {"hint":"Pinch strength below this triggers a freeze-release (0-1)"}'
     - '// @input bool useLiteModel {"hint":"Use gemini-2.5-flash-lite (faster) instead of gemini-2.5-flash (more accurate)"}'
     - '// @input AssignableType_1 latticeVFX {"hint":"Hand lattice VFX controller for visual feedback on hand mesh"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"Sound"}'
+    - '// @input Component.AudioComponent extractionStartSound {"hint":"One-shot played the moment a pinch-hold succeeds and color extraction starts"}'

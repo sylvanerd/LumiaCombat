@@ -29,10 +29,12 @@
     confettiPrefab: false
     contrastThreshold: false
     debugMeshPrefab: false
+    defeatSound: false
     mainCam: false
     pinchDetector: false
     quickTestMode: false
     similarityThreshold: false
+    victorySound: false
     winConfettiDistance: false
     winPauseSeconds: false
   ScriptTypesHidden:
@@ -53,6 +55,8 @@
       winConfettiDistance: !<float> 80.000000
       winPauseSeconds: !<float> 1.000000
       pinchDetector: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      victorySound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
+      defeatSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -68,3 +72,5 @@
     - '// @input float winConfettiDistance = 80 {"hint":"Distance (cm) in front of the camera to spawn the confetti VFX"}'
     - '// @input float winPauseSeconds = 1 {"hint":"Brief pause in seconds between lamp death and the confetti burst"}'
     - '// @input SceneObject pinchDetector {"hint":"ColorPickPinchDetector SceneObject -- disabled on lose so fresh extraction also stops"}'
+    - '// @input Component.AudioComponent victorySound {"hint":"Victory sting played when the lamp is defeated"}'
+    - '// @input Component.AudioComponent defeatSound {"hint":"Defeat sting played when the player is defeated"}'

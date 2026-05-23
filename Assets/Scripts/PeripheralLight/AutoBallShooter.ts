@@ -74,6 +74,11 @@ export class AutoBallShooter extends BaseScriptComponent {
 
   @input
   @allowUndefined
+  @hint("One-shot played the instant Lumia launches a lamp ball toward the player")
+  launchSound: AudioComponent
+
+  @input
+  @allowUndefined
   @hint("ColliderComponent on the player (camera child). Ball must overlap this to count as a hit. If not wired, every ball is a guaranteed hit.")
   playerCollider: ColliderComponent
 
@@ -109,6 +114,11 @@ export class AutoBallShooter extends BaseScriptComponent {
   @input
   @hint("Emission multiplier pushed to the shatter VFX graph's particleEmissionBoost property")
   shatterEmissionBoost: number = 2
+
+  @input
+  @allowUndefined
+  @hint("One-shot played when a same-tone hand shatters a lamp ball")
+  shatterSound: AudioComponent
 
   // Fires the instant a lamp ball is actually launched (after delayThrowTime,
   // not when the cycler ticks). LampFaceAnimator hooks this to flash its attack
@@ -253,6 +263,8 @@ export class AutoBallShooter extends BaseScriptComponent {
       }
     }
 
+    if (this.launchSound) this.launchSound.play(1)
+
     this._onBallSpawned.invoke(color)
   }
 
@@ -335,6 +347,8 @@ export class AutoBallShooter extends BaseScriptComponent {
 
   private fireShatter(pos: vec3, color: vec4) {
     if (!this.shatterPrefab) return
+
+    if (this.shatterSound) this.shatterSound.play(1)
 
     const fx = this.shatterPrefab.instantiate(null)
     fx.getTransform().setWorldPosition(pos)

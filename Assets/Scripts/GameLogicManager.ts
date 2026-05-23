@@ -58,6 +58,16 @@ export class GameLogicManager extends BaseScriptComponent {
   @hint("ColorPickPinchDetector SceneObject -- disabled on lose so fresh extraction also stops")
   pinchDetector: SceneObject
 
+  @input
+  @allowUndefined
+  @hint("Victory sting played when the lamp is defeated")
+  victorySound: AudioComponent
+
+  @input
+  @allowUndefined
+  @hint("Defeat sting played when the player is defeated")
+  defeatSound: AudioComponent
+
   private static instance: GameLogicManager
 
   private debugMeshes: RenderMeshVisual[] = []
@@ -285,6 +295,8 @@ export class GameLogicManager extends BaseScriptComponent {
     this.isGameOver = true
     print(`${LOG_TAG} Win -- scheduling confetti in ${this.winPauseSeconds.toFixed(2)}s`)
 
+    if (this.victorySound) this.victorySound.play(1)
+
     const delay = this.createEvent("DelayedCallbackEvent")
     delay.bind(() => this.spawnWinConfetti())
     delay.reset(this.winPauseSeconds)
@@ -301,6 +313,8 @@ export class GameLogicManager extends BaseScriptComponent {
     if (this.isGameOver) return
     this.isGameOver = true
     print(`${LOG_TAG} Lose -- stopping cyclers, disabling color inputs`)
+
+    if (this.defeatSound) this.defeatSound.play(1)
 
     for (let i = 0; i < this.cyclers.length; i++) {
       this.cyclers[i].stopCycling()

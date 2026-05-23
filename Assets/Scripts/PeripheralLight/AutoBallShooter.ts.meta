@@ -37,6 +37,7 @@
     handVFXController: false
     healPercentOnShatter: false
     hitSound: false
+    launchSound: false
     lightHandEventListener: false
     mainCam: false
     maxActiveBalls: false
@@ -45,6 +46,7 @@
     shatterEmissionBoost: false
     shatterLifetimeSeconds: false
     shatterPrefab: false
+    shatterSound: false
     shootingEnabled: false
     touchRadius: false
   ScriptTypesHidden:
@@ -69,6 +71,7 @@
       maxActiveBalls: !<float> 5.000000
       shootingEnabled: true
       hitSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
+      launchSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
       playerCollider: !<reference.ColliderComponent> 00000000-0000-0000-0000-000000000000
       overshootMultiplier: 1.500000
       handVFXController: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
@@ -77,6 +80,7 @@
       shatterLifetimeSeconds: !<float> 2.000000
       healPercentOnShatter: !<float> 5.000000
       shatterEmissionBoost: 1.500000
+      shatterSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -94,6 +98,7 @@
     - '// @input float maxActiveBalls = 5 {"hint":"Oldest ball is destroyed when this cap is exceeded"}'
     - '// @input bool shootingEnabled = true {"hint":"Master on/off toggle for ball shooting"}'
     - '// @input Component.AudioComponent hitSound {"hint":"Sound played when a ball hits the player. Wire an AudioComponent with your desired clip."}'
+    - '// @input Component.AudioComponent launchSound {"hint":"One-shot played the instant Lumia launches a lamp ball toward the player"}'
     - '// @input Component.ColliderComponent playerCollider {"hint":"ColliderComponent on the player (camera child). Ball must overlap this to count as a hit. If not wired, every ball is a guaranteed hit."}'
     - '// @input float overshootMultiplier = 1.5 {"hint":"How far past the player (as a multiplier of flightTime) the ball continues before being destroyed. E.g. 1.5 = ball flies 50% beyond the target."}'
     - '// @ui {"widget":"separator"}'
@@ -104,3 +109,4 @@
     - '// @input float shatterLifetimeSeconds = 2 {"hint":"Seconds the spawned shatter FX SceneObject lives before being destroyed"}'
     - "// @input float healPercentOnShatter = 5 {\"hint\":\"Health % restored when the player's hand successfully shatters a same-tone lamp ball. Set to 0 to disable healing.\"}"
     - "// @input float shatterEmissionBoost = 2 {\"hint\":\"Emission multiplier pushed to the shatter VFX graph's particleEmissionBoost property\"}"
+    - '// @input Component.AudioComponent shatterSound {"hint":"One-shot played when a same-tone hand shatters a lamp ball"}'

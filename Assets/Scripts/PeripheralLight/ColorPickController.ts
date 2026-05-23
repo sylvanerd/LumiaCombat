@@ -92,6 +92,14 @@ export class ColorPickController extends BaseScriptComponent {
   @allowUndefined
   latticeVFX: HandVFXController
 
+  @ui.separator
+  @ui.label("Sound")
+
+  @input
+  @allowUndefined
+  @hint("One-shot played the moment a pinch-hold succeeds and color extraction starts")
+  extractionStartSound: AudioComponent
+
   private hueEventEmitter: HueEventEmitter = null
 
   static getInstance(): ColorPickController {
@@ -244,6 +252,8 @@ export class ColorPickController extends BaseScriptComponent {
     this.pipelineStartTime = getTime()
     print(`${LOG_TAG} Pinch hold triggered! Using latest buffered frame...`)
     this.isRequestRunning = true
+
+    if (this.extractionStartSound) this.extractionStartSound.play(1)
 
     if (this.latticeVFX) this.latticeVFX.startExtraction()
 

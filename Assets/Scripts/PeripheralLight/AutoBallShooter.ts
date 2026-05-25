@@ -142,6 +142,24 @@ export class AutoBallShooter extends BaseScriptComponent {
     return AutoBallShooter.instance
   }
 
+  /**
+   * Cancel any pending throw timer and destroy every in-flight LampBall. Used by
+   * GameLogicManager.restartGame() so freshly-revived players aren't immediately
+   * hit by balls that were already in the air at the moment of game-over.
+   */
+  public cancelAllBalls() {
+    if (this.pendingThrowToken) {
+      clearTimeout(this.pendingThrowToken)
+      this.pendingThrowToken = null
+    }
+    for (let i = 0; i < this.flyingBalls.length; i++) {
+      const fb = this.flyingBalls[i]
+      if (fb && fb.obj) fb.obj.destroy()
+    }
+    this.flyingBalls = []
+    print(`${LOG_TAG} All in-flight balls cancelled`)
+  }
+
   private flyingBalls: FlyingBall[] = []
   private pendingThrowToken: CancelToken = null
   private mainCamTrans: Transform

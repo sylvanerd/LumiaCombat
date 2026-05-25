@@ -1,9 +1,12 @@
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
+import {AutoBallShooter} from "Scripts/PeripheralLight/AutoBallShooter"
 import {AutoColorCycler} from "Scripts/PeripheralLight/AutoColorCycler"
 import {ColorHistoryBar} from "Scripts/PeripheralLight/ColorHistoryBar"
+import {LampFaceAnimator} from "Scripts/PeripheralLight/LampFaceAnimator"
 import {LampHealthManager} from "Scripts/PeripheralLight/LampHealthManager"
 import {LightHandInputManager} from "Scripts/PeripheralLight/LightHandInputManager"
 import {PlayerHealthManager} from "Scripts/PeripheralLight/PlayerHealthManager"
+import {RestartButtonController} from "Scripts/PeripheralLight/RestartButtonController"
 
 const LOG_TAG = "[GameLogicManager]"
 
@@ -346,6 +349,9 @@ export class GameLogicManager extends BaseScriptComponent {
 
     if (this.victorySound) this.victorySound.play(1)
 
+    const restartBtn = RestartButtonController.getInstance()
+    if (restartBtn) restartBtn.setVisible(true)
+
     // Confetti spawn temporarily disabled. Re-enable by uncommenting this block
     // and the spawnWinConfetti() method below.
     // const delay = this.createEvent("DelayedCallbackEvent")
@@ -372,15 +378,19 @@ export class GameLogicManager extends BaseScriptComponent {
     }
 
     this.setExtractionEnabled(false)
+
+    const restartBtn = RestartButtonController.getInstance()
+    if (restartBtn) restartBtn.setVisible(true)
   }
 
   /**
-   * Entry point for a future "Restart" UI button. Symmetric inverse of
-   * handleLose: clears the game-over latch, resumes cyclers, and re-opens the
-   * color-extraction gate -- but only if the light has actually been placed.
-   * Health-manager resets (LampHealthManager.reset / PlayerHealthManager.reset)
-   * and any hand-VFX restore should be invoked here too as the rest of the
-   * restart flow gets wired up.
+   * Entry point for the "Restart" UI button (PinchButton inside LampOnboarding.prefab).
+   * Symmetric inverse of handleLose / handleWin: clears the game-over latch, resets
+   * both health managers, cancels any in-flight lamp balls, re-opens the color-
+   * extraction gate (if the light was placed), and hides the restart button.
+   *
+   * Note: LampHealthManager.reset() restarts the cycler itself, so we do NOT loop
+   * over this.cyclers here -- doing so would just be a redundant idempotent call.
    */
   public restartGame() {
     if (!this.isGameOver) {
@@ -388,15 +398,27 @@ export class GameLogicManager extends BaseScriptComponent {
       return
     }
     this.isGameOver = false
-    print(`${LOG_TAG} Restart -- resuming cyclers, re-enabling color inputs (isLightPlaced=${this.isLightPlaced})`)
+    print(`${LOG_TAG} Restart -- resetting health, clearing balls, re-enabling color inputs (isLightPlaced=${this.isLightPlaced})`)
 
-    for (let i = 0; i < this.cyclers.length; i++) {
-      this.cyclers[i].startCycling()
-    }
+    const lamp = LampHealthManager.getInstance()
+    if (lamp) lamp.reset()
+    const player = PlayerHealthManager.getInstance()
+    if (player) player.reset()
+
+    // Must run AFTER lamp.reset() so the face animator reads the refreshed HP
+    // (100%) when recomputing its base blink state.
+    const face = LampFaceAnimator.getInstance()
+    if (face) face.reset()
+
+    const shooter = AutoBallShooter.getInstance()
+    if (shooter) shooter.cancelAllBalls()
 
     if (this.isLightPlaced) {
       this.setExtractionEnabled(true)
     }
+
+    const restartBtn = RestartButtonController.getInstance()
+    if (restartBtn) restartBtn.setVisible(false)
   }
 
   // Single toggle for every "color extraction" path: fresh Gemini extraction

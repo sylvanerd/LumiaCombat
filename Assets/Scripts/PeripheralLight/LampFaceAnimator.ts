@@ -114,6 +114,12 @@ export class LampFaceAnimator extends BaseScriptComponent {
   @hint("Below this HP the face switches to the Critical expression (default mirrors LampHealthManager.lowHealthThreshold)")
   criticalThresholdPct: number = 25
 
+  private static instance: LampFaceAnimator
+
+  static getInstance(): LampFaceAnimator | undefined {
+    return LampFaceAnimator.instance
+  }
+
   private faceMat: Material = null
   private currentTex: Texture = null
 
@@ -140,6 +146,11 @@ export class LampFaceAnimator extends BaseScriptComponent {
   private lastHealthPct: number = 100
 
   onAwake() {
+    if (LampFaceAnimator.instance) {
+      print(`${LOG_TAG} WARNING: Multiple instances detected`)
+    }
+    LampFaceAnimator.instance = this
+
     if (!this.faceMeshVisual) {
       print(`${LOG_TAG} ERROR: faceMeshVisual not wired in Inspector; script disabled`)
       return
@@ -253,6 +264,23 @@ export class LampFaceAnimator extends BaseScriptComponent {
     const tex = kind === "dead" ? this.deadFrame : this.victoriousFrame
     this.setFrame(tex)
     print(`${LOG_TAG} Terminal state -> ${kind}`)
+  }
+
+  /**
+   * Clears the terminal/overlay latches and snaps the face back to the correct
+   * blink loop for the post-restart HP. Called by GameLogicManager.restartGame()
+   * AFTER LampHealthManager.reset(), so getHealthPercent() returns the refreshed
+   * value rather than the dead 0%.
+   */
+  public reset() {
+    this.terminal = null
+    this.overlay = null
+    this.blinkOpen = true
+    this.blinkPhaseStart = getTime()
+    this.lastHealthPct = this.lampHealth ? this.lampHealth.getHealthPercent() : 100
+    this.baseState = this.computeBaseState()
+    this.applyBaseFrame()
+    print(`${LOG_TAG} Reset -- terminal cleared, base=${this.baseState}, hp=${this.lastHealthPct.toFixed(1)}%`)
   }
 
   private onUpdate() {

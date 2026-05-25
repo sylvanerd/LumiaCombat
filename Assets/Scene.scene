@@ -3363,7 +3363,7 @@
   PrefabRemaps:
     []
   Name: Text
-  Enabled: true
+  Enabled: false
   RenderOrder: 3
   StretchMode: Stretch
   VerticalAlignment: Center

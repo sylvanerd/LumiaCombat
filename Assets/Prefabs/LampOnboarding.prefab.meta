@@ -249,6 +249,26 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/623a4387-61cb-4256-af8a-69389e8d367f>
+  PrefabRemaps:
+    []
+  Name: FaceCameraOnAxis
+  Enabled: true
+  ScriptAsset: !<reference> 2ca585ae-2190-42b2-bafe-ee246290c96a
+  ScriptInputsDefault:
+    yawOnly: true
+    smoothingSpeed: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      faceAxis: +Z
+      yawOnly: true
+      smoothingSpeed: !<float> 0.000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/6b4006fa-ded3-4d21-9a9d-b37e1695ba67>
   PrefabRemaps:
     []
@@ -471,7 +491,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -0.500000, y: 0.900000, z: 1.000000}
+    Position: {x: 0.000000, y: 0.900000, z: 0.600000}
     Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 3.800000, y: 3.800000, z: 3.800000}
     HasSegmentScaleCompensation: false
@@ -498,6 +518,7 @@
   Components:
     - !<own> a5dc0426-22f1-4b5e-56d6-486c37c86ecb
     - !<own> 197678e9-51b5-4157-633e-3f7866f5ac5c
+    - !<own> 623a4387-61cb-4256-af8a-69389e8d367f
 - !<RenderMeshVisual/f7a26445-0c15-4d52-b0c4-28a9d01d42d1>
   PrefabRemaps:
     []

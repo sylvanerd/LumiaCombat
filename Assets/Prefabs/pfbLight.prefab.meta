@@ -538,9 +538,9 @@
       lightHandEventListener: !<MappingBased.AssignableType_1> 8e9638f6-967e-40a1-712e-b606b74b63f1
       mainCam: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       ballPrefab: !<reference.ObjectPrefab> 9a570ba6-c4cc-4de6-8097-6334d54685b9
-      delayThrowTime: 0.800000
+      delayThrowTime: !<float> 1.000000
       arcHeightMin: !<float> 10.000000
-      arcHeightMax: !<float> 40.000000
+      arcHeightMax: !<float> 50.000000
       flightTimeMin: 0.500000
       flightTimeMax: !<float> 3.000000
       ballScale: !<float> 7.000000

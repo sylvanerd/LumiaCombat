@@ -30,7 +30,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -0.500000, y: 0.900000, z: 1.000000}
+    Position: {x: 0.000000, y: 0.900000, z: 0.600000}
     Rotation: {x: 90.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 3.800000, y: 3.800000, z: 3.800000}
     HasSegmentScaleCompensation: false
@@ -444,6 +444,26 @@
     - !<own> 2a51fb61-10e6-4799-9640-67f8752c1a4f
     - !<own> a6b3a764-dd02-46e3-9cb8-3a36356cad84
     - !<own> 9c021898-d3c2-4ae3-b224-ec0f1d837a11
+- !<ScriptComponent/d9bb98cd-3bb6-42b8-b120-acb694e006bb>
+  PrefabRemaps:
+    []
+  Name: FaceCameraOnAxis
+  Enabled: true
+  ScriptAsset: !<reference> 2ca585ae-2190-42b2-bafe-ee246290c96a
+  ScriptInputsDefault:
+    yawOnly: true
+    smoothingSpeed: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      faceAxis: +Z
+      yawOnly: true
+      smoothingSpeed: !<float> 0.000000
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/dd16f7fe-05ef-4b0f-89ac-c916177f7598>
   PrefabRemaps:
     []
@@ -484,6 +504,7 @@
     - a9845916-9554-4287-8a23-e56a3376af05: c3ce2044-dd81-445e-99e6-5b173057940d
     - abdaf940-2487-4501-ada2-82725722d172: 9c022f34-125b-43d3-86d5-372eea9342c5
     - b96d71c1-e6b4-4f2a-bb9c-1275457e9f38: 6b4006fa-ded3-4d21-9a9d-b37e1695ba67
+    - d9bb98cd-3bb6-42b8-b120-acb694e006bb: 623a4387-61cb-4256-af8a-69389e8d367f
     - dd16f7fe-05ef-4b0f-89ac-c916177f7598: 23addd59-0635-4110-9a89-79f4f6fd3411
     - f14135fc-934d-4ae0-bb63-836a53d9a1fc: f14135fc-934d-4ae0-449c-7c95ac265e03
     - f941326a-6bcd-4c2d-848a-8782c030ea09: 256bbdb3-7759-4ebd-9b50-d3d6620a2eb3
@@ -501,6 +522,7 @@
   Components:
     - !<own> a5dc0426-22f1-4b5e-a929-b793c8379134
     - !<own> 197678e9-51b5-4157-9cc1-c087990a53a3
+    - !<own> d9bb98cd-3bb6-42b8-b120-acb694e006bb
 - !<ScriptComponent/f941326a-6bcd-4c2d-848a-8782c030ea09>
   PrefabRemaps:
     []

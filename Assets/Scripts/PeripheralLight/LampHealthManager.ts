@@ -43,6 +43,13 @@ export class LampHealthManager extends BaseScriptComponent {
 
   private static instance: LampHealthManager
 
+  // Fires when a LampHealthManager finishes onAwake and assigns itself as the
+  // singleton. Lets late subscribers (e.g. GameLogicManager.onStart, which runs
+  // before ControllerFactory instantiates pfbLight at BLE discovery time) wire
+  // up onLampDied without polling.
+  private static _onRegistered: Event<LampHealthManager> = new Event<LampHealthManager>()
+  static get onRegistered() { return LampHealthManager._onRegistered.publicApi() }
+
   private currentHealth: number = 100
   private alive: boolean = true
   private lastHitTime: number = -999
@@ -68,6 +75,8 @@ export class LampHealthManager extends BaseScriptComponent {
     this.colliderSpawner.onBallCollision.add((collider: ColliderComponent) => {
       this.handleHit(collider)
     })
+
+    LampHealthManager._onRegistered.invoke(this)
 
     print(`${LOG_TAG} Singleton initialized, maxHealth=${this.maxHealth}, damagePerHit=${this.damagePerHit}%`)
   }

@@ -131,7 +131,7 @@
   PrefabRemaps:
     []
   Name: VFX Component
-  Enabled: true
+  Enabled: false
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center
@@ -261,7 +261,7 @@
   PrefabRemaps:
     []
   Name: HaloRotator
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> 82f7e175-dc4e-4910-bcd2-a345d85e2cbc
   ScriptInputsDefault:
     debugLog: true
@@ -293,7 +293,7 @@
   PrefabRemaps:
     []
   Name: component_0
-  Enabled: true
+  Enabled: false
   RenderOrder: 1
   StretchMode: Stretch
   VerticalAlignment: Center
@@ -314,7 +314,7 @@
   PrefabRemaps:
     []
   Name: BatteryBar
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -1.500000, y: 3.100000, z: 1.200000}

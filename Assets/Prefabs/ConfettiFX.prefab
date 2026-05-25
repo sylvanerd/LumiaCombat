@@ -9,7 +9,7 @@
     - 80385591-840e-4743-a068-f1ffa7dfab6a: f2904213-b94f-4d08-a0fc-a19c05325a02
     - fee469e6-c789-4a9c-b5e7-4f848d450952: d50825ac-8499-4959-86c3-05a1b9325c41
   Name: LampBallShatterFX
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}

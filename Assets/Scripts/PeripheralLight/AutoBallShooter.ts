@@ -205,10 +205,13 @@ export class AutoBallShooter extends BaseScriptComponent {
       clearTimeout(this.pendingThrowToken)
     }
 
+    // SIK's setTimeout takes milliseconds (it divides by 1000 internally
+     // before handing off to createDelayedEvent, which is seconds-based).
+     // delayThrowTime is authored in seconds in the inspector, so convert.
     this.pendingThrowToken = setTimeout(() => {
       this.pendingThrowToken = null
       this.spawnBall(color, spawnPos)
-    }, this.delayThrowTime)
+    }, this.delayThrowTime * 1000)
   }
 
   private spawnBall(color: vec4, startPos: vec3) {

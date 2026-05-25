@@ -57,7 +57,22 @@ export class ColorHistoryBar extends BaseScriptComponent {
   private activeSphereIndex: number = -1
   private hasPinchSpawned: boolean = false
 
+  // ColorHistoryBar.prefab is instantiated at runtime by ArmFlipPrefabSpawner
+  // (prefabFront2), so it can't be wired into GameLogicManager via @input. We
+  // self-register as a singleton here so the end-state flow can disable this
+  // SceneObject on lose, which kills both the touch and pinch-spawn paths.
+  private static instance: ColorHistoryBar
+
+  static getInstance(): ColorHistoryBar | undefined {
+    return ColorHistoryBar.instance
+  }
+
   onAwake() {
+    if (ColorHistoryBar.instance) {
+      print(`${LOG_TAG} WARNING: Multiple instances detected`)
+    }
+    ColorHistoryBar.instance = this
+
     this.createEvent("OnStartEvent").bind(() => this.onStart())
     this.createEvent("UpdateEvent").bind(() => this.onUpdate())
   }

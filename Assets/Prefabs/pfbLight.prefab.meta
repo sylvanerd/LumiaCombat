@@ -896,7 +896,7 @@
   PrefabRemaps:
     []
   Name: LampCircularHealthBar
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> acaca947-ab43-4117-86ff-7a7f69b2da07
   ScriptInputsDefault:
     batteryBarChildName: true

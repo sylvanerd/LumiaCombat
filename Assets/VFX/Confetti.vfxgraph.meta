@@ -23,12 +23,7 @@
       SimulateProperties:
         {}
       RenderProperties:
-        particleEmissionBoost:
-          typeIdx: 1
-          value: 1.000000
-        particleColor:
-          typeIdx: 5
-          value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+        {}
       FeedbackDefines:
         []
       SimulateDefines:

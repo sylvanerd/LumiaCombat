@@ -1,6 +1,6 @@
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {AutoColorCycler} from "Scripts/PeripheralLight/AutoColorCycler"
-import {ColorHistoryRing} from "Scripts/PeripheralLight/ColorHistoryRing"
+import {ColorHistoryBar} from "Scripts/PeripheralLight/ColorHistoryBar"
 import {LampHealthManager} from "Scripts/PeripheralLight/LampHealthManager"
 import {LightHandInputManager} from "Scripts/PeripheralLight/LightHandInputManager"
 import {PlayerHealthManager} from "Scripts/PeripheralLight/PlayerHealthManager"
@@ -49,10 +49,10 @@ export class GameLogicManager extends BaseScriptComponent {
   @hint("Brief pause in seconds between lamp death and the confetti burst")
   winPauseSeconds: number = 1.0
 
-  // ColorHistoryRing (the root of ColorHistoryBar.prefab) is instantiated at
-  // runtime by ArmFlipPrefabSpawner, so it can't be wired via @input. We
-  // resolve it through ColorHistoryRing.getInstance() instead. Disabling the
-  // ring's SceneObject also disables the ColorHistoryBar child.
+  // ColorHistoryBar.prefab is instantiated at runtime by ArmFlipPrefabSpawner
+  // (prefabFront2), so it can't be wired via @input. We resolve it through
+  // ColorHistoryBar.getInstance() instead and disable its SceneObject on lose,
+  // which kills both the saved-color touch path and the pinch-spawn path.
 
   @input
   @allowUndefined
@@ -130,14 +130,27 @@ export class GameLogicManager extends BaseScriptComponent {
       print(`${LOG_TAG} WARNING: lightHandInputManager not wired -- color extraction will remain disabled. Wire it in the Inspector to unlock extraction on placement.`)
     }
 
-    // Subscribe to end-state events from the two health managers. Both are scene
-    // singletons that registered themselves in their onAwake, which runs before
-    // any OnStartEvent, so getInstance() is reliably non-null here.
+    // Subscribe to end-state events from the two health managers.
+    //
+    // PlayerHealthManager lives on a scene-root SceneObject and registers in
+    // its onAwake, which always runs before OnStartEvent, so getInstance() is
+    // reliably non-null below.
+    //
+    // LampHealthManager is hosted by pfbLight, which ControllerFactory
+    // instantiates at runtime after BLE service discovery, so its singleton
+    // typically isn't ready yet here. Fast path: if it's already up (restart,
+    // no-BLE-debug), subscribe immediately. Slow path: wait for
+    // LampHealthManager.onRegistered and chain onLampDied -> handleWin when
+    // the live instance shows up.
     const lamp = LampHealthManager.getInstance()
     if (lamp) {
       lamp.onLampDied.add(() => this.handleWin())
     } else {
-      print(`${LOG_TAG} WARNING: LampHealthManager singleton not found -- win flow disabled`)
+      print(`${LOG_TAG} LampHealthManager not yet registered -- deferring win-flow subscription`)
+      LampHealthManager.onRegistered.add((instance: LampHealthManager) => {
+        instance.onLampDied.add(() => this.handleWin())
+        print(`${LOG_TAG} LampHealthManager registered -- win flow now armed`)
+      })
     }
 
     const player = PlayerHealthManager.getInstance()
@@ -329,13 +342,15 @@ export class GameLogicManager extends BaseScriptComponent {
   private handleWin() {
     if (this.isGameOver) return
     this.isGameOver = true
-    print(`${LOG_TAG} Win -- scheduling confetti in ${this.winPauseSeconds.toFixed(2)}s`)
+    print(`${LOG_TAG} Win -- victory sound only (confetti spawn temporarily disabled)`)
 
     if (this.victorySound) this.victorySound.play(1)
 
-    const delay = this.createEvent("DelayedCallbackEvent")
-    delay.bind(() => this.spawnWinConfetti())
-    delay.reset(this.winPauseSeconds)
+    // Confetti spawn temporarily disabled. Re-enable by uncommenting this block
+    // and the spawnWinConfetti() method below.
+    // const delay = this.createEvent("DelayedCallbackEvent")
+    // delay.bind(() => this.spawnWinConfetti())
+    // delay.reset(this.winPauseSeconds)
   }
 
   /**
@@ -393,43 +408,45 @@ export class GameLogicManager extends BaseScriptComponent {
     this.setColorHistoryRingEnabled(enabled)
   }
 
-  private spawnWinConfetti() {
-    if (!this.confettiPrefab) {
-      print(`${LOG_TAG} WARNING: confettiPrefab not wired -- skipping win VFX`)
-      return
-    }
-    if (!this.mainCam) {
-      print(`${LOG_TAG} WARNING: mainCam not wired -- skipping win VFX`)
-      return
-    }
-
-    // ColorPickController treats the camera's negated forward as "into the scene"
-    // (see onPinchRelease). Mirror that convention so the confetti appears in
-    // front of the player rather than behind them.
-    const camTrans = this.mainCam.getTransform()
-    const camPos = camTrans.getWorldPosition()
-    const camForward = camTrans.forward.uniformScale(-1)
-    const spawnPos = camPos.add(camForward.uniformScale(this.winConfettiDistance))
-
-    const fx = this.confettiPrefab.instantiate(null)
-    fx.getTransform().setWorldPosition(spawnPos)
-    print(`${LOG_TAG} Confetti spawned at (${spawnPos.x.toFixed(1)}, ${spawnPos.y.toFixed(1)}, ${spawnPos.z.toFixed(1)})`)
-  }
+  // Confetti spawn temporarily disabled. Re-enable by uncommenting this method
+  // and the DelayedCallbackEvent block in handleWin() above.
+  // private spawnWinConfetti() {
+  //   if (!this.confettiPrefab) {
+  //     print(`${LOG_TAG} WARNING: confettiPrefab not wired -- skipping win VFX`)
+  //     return
+  //   }
+  //   if (!this.mainCam) {
+  //     print(`${LOG_TAG} WARNING: mainCam not wired -- skipping win VFX`)
+  //     return
+  //   }
+  //
+  //   // ColorPickController treats the camera's negated forward as "into the scene"
+  //   // (see onPinchRelease). Mirror that convention so the confetti appears in
+  //   // front of the player rather than behind them.
+  //   const camTrans = this.mainCam.getTransform()
+  //   const camPos = camTrans.getWorldPosition()
+  //   const camForward = camTrans.forward.uniformScale(-1)
+  //   const spawnPos = camPos.add(camForward.uniformScale(this.winConfettiDistance))
+  //
+  //   const fx = this.confettiPrefab.instantiate(null)
+  //   fx.getTransform().setWorldPosition(spawnPos)
+  //   print(`${LOG_TAG} Confetti spawned at (${spawnPos.x.toFixed(1)}, ${spawnPos.y.toFixed(1)}, ${spawnPos.z.toFixed(1)})`)
+  // }
 
   private setSceneObjectEnabled(obj: SceneObject, enabled: boolean) {
     if (obj) obj.enabled = enabled
   }
 
-  // ColorHistoryRing self-registers as a singleton because its prefab is
-  // instantiated at runtime by ArmFlipPrefabSpawner. Disabling the ring's root
-  // SceneObject also disables the ColorHistoryBar child, killing both the
-  // color-hint touch path and the saved-color throw path with one toggle.
+  // ColorHistoryBar self-registers as a singleton because its prefab is
+  // instantiated at runtime by ArmFlipPrefabSpawner (prefabFront2). Disabling
+  // its SceneObject stops the script's UpdateEvent, killing both the saved-
+  // color touch path and the pinch-spawn path in one toggle.
   private setColorHistoryRingEnabled(enabled: boolean) {
-    const ring = ColorHistoryRing.getInstance()
-    if (ring) {
-      ring.getSceneObject().enabled = enabled
+    const bar = ColorHistoryBar.getInstance()
+    if (bar) {
+      bar.getSceneObject().enabled = enabled
     } else {
-      print(`${LOG_TAG} WARNING: ColorHistoryRing singleton not found -- skipping enabled=${enabled}`)
+      print(`${LOG_TAG} WARNING: ColorHistoryBar singleton not found -- skipping enabled=${enabled}`)
     }
   }
 

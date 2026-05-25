@@ -10392,6 +10392,7 @@
       winConfettiDistance: !<float> 10.000000
       winPauseSeconds: !<float> 1.000000
       pinchDetector: !<reference.SceneObject> 09a22389-4981-4452-9b3b-17473341edad
+      lightHandInputManager: !<MappingBased.AssignableType> b3af6bf2-2ecc-45d3-b98a-2d21e087bfb2
       victorySound: !<reference.AudioComponent> 7c10e99e-7ea2-4419-926f-649e85abd3ef
       defeatSound: !<reference.AudioComponent> b895ecb5-a414-4b95-ad5c-8e9983efc6c0
   ScriptTypes:

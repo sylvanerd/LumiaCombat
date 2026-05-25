@@ -30,6 +30,7 @@
     contrastThreshold: false
     debugMeshPrefab: false
     defeatSound: false
+    lightHandInputManager: false
     mainCam: false
     pinchDetector: false
     quickTestMode: false
@@ -55,6 +56,7 @@
       winConfettiDistance: !<float> 80.000000
       winPauseSeconds: !<float> 1.000000
       pinchDetector: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      lightHandInputManager: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       victorySound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
       defeatSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
@@ -71,6 +73,7 @@
     - '// @input Asset.ObjectPrefab confettiPrefab {"hint":"Multi-color confetti VFX prefab spawned in front of the player on win"}'
     - '// @input float winConfettiDistance = 80 {"hint":"Distance (cm) in front of the camera to spawn the confetti VFX"}'
     - '// @input float winPauseSeconds = 1 {"hint":"Brief pause in seconds between lamp death and the confetti burst"}'
-    - '// @input SceneObject pinchDetector {"hint":"ColorPickPinchDetector SceneObject -- disabled on lose so fresh extraction also stops"}'
+    - '// @input SceneObject pinchDetector {"hint":"ColorPickPinchDetector SceneObject -- disabled before the light is placed and re-disabled on lose so fresh extraction stays off"}'
+    - '// @input AssignableType lightHandInputManager {"hint":"LightHandInputManager -- source of the onLightPlaced event that unlocks color extraction"}'
     - '// @input Component.AudioComponent victorySound {"hint":"Victory sting played when the lamp is defeated"}'
     - '// @input Component.AudioComponent defeatSound {"hint":"Defeat sting played when the player is defeated"}'

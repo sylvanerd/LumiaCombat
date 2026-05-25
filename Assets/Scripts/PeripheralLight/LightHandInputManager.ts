@@ -10,6 +10,7 @@ import {ToggleButton} from "SpectaclesInteractionKit.lspkg/Components/UI/ToggleB
 import {AllHandTypes} from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/HandType"
 import TrackedHand from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/TrackedHand"
 import {SIK} from "SpectaclesInteractionKit.lspkg/SIK"
+import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {CancelToken, clearTimeout, setTimeout} from "SpectaclesInteractionKit.lspkg/Utils/FunctionTimingUtils"
 import {HandHintSequence} from "../Core/HandHintSequence"
 import {CameraQueryController} from "./CameraQueryController"
@@ -49,6 +50,22 @@ export class LightHandInputManager extends BaseScriptComponent {
   private lightPlacedWithGeminiUnsubscribe: any
   private hintPlayed: boolean
 
+  // Unified light-placed signal. Both placement paths (surface detection and
+  // Gemini depth) funnel through this so downstream gates (e.g. the color
+  // extraction pinch detector in GameLogicManager) have a single source of
+  // truth. Fires at most once per session; subsequent placements are no-ops
+  // because there is no concept of "un-placing" a light in this codebase.
+  private _onLightPlaced: Event<vec3> = new Event<vec3>()
+  private _isLightPlaced: boolean = false
+
+  get onLightPlaced() {
+    return this._onLightPlaced.publicApi()
+  }
+
+  get isLightPlaced(): boolean {
+    return this._isLightPlaced
+  }
+
   onAwake() {
     this.hintPlayed = false
     this.lightHandEventListeners = []
@@ -75,11 +92,27 @@ export class LightHandInputManager extends BaseScriptComponent {
 
     // Make a label for lights placed with surface detection as well
     this.geminiDepthLightEstimator.responseUI.loadWorldLabel("Light", pos, true)
+
+    this.firePlacedOnce(pos)
   }
 
   onLightPlacedWithGemini() {
     this.playHint()
     this.geminiDepthLightEstimator.lightPlaced.remove(this.lightPlacedWithGeminiUnsubscribe)
+
+    // Gemini path fires its event without a position payload, so pull the most
+    // recent estimate from lightPositions. Falls back to vec3.zero() in the
+    // unlikely case the array is empty -- downstream gates only care that
+    // placement happened, not where.
+    const positions = this.geminiDepthLightEstimator.lightPositions
+    const pos = positions && positions.length > 0 ? positions[positions.length - 1] : vec3.zero()
+    this.firePlacedOnce(pos)
+  }
+
+  private firePlacedOnce(pos: vec3) {
+    if (this._isLightPlaced) return
+    this._isLightPlaced = true
+    this._onLightPlaced.invoke(pos)
   }
 
   private playHint() {

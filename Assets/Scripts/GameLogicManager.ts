@@ -2,6 +2,7 @@ import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {AutoColorCycler} from "Scripts/PeripheralLight/AutoColorCycler"
 import {ColorHistoryRing} from "Scripts/PeripheralLight/ColorHistoryRing"
 import {LampHealthManager} from "Scripts/PeripheralLight/LampHealthManager"
+import {LightHandInputManager} from "Scripts/PeripheralLight/LightHandInputManager"
 import {PlayerHealthManager} from "Scripts/PeripheralLight/PlayerHealthManager"
 
 const LOG_TAG = "[GameLogicManager]"
@@ -55,8 +56,13 @@ export class GameLogicManager extends BaseScriptComponent {
 
   @input
   @allowUndefined
-  @hint("ColorPickPinchDetector SceneObject -- disabled on lose so fresh extraction also stops")
+  @hint("ColorPickPinchDetector SceneObject -- disabled before the light is placed and re-disabled on lose so fresh extraction stays off")
   pinchDetector: SceneObject
+
+  @input
+  @allowUndefined
+  @hint("LightHandInputManager -- source of the onLightPlaced event that unlocks color extraction")
+  lightHandInputManager: LightHandInputManager
 
   @input
   @allowUndefined
@@ -78,6 +84,10 @@ export class GameLogicManager extends BaseScriptComponent {
   private cyclers: AutoColorCycler[] = []
   private gameStarted: boolean = false
   private isGameOver: boolean = false
+  // Tracks whether LightHandInputManager has emitted onLightPlaced at least
+  // once. Used by restartGame() to decide whether to re-enable extraction:
+  // restart with no placement yet shouldn't open the gate.
+  private isLightPlaced: boolean = false
 
   private _onGameStarted: Event<void> = new Event<void>()
 
@@ -106,6 +116,20 @@ export class GameLogicManager extends BaseScriptComponent {
   private onStart() {
     print(`${LOG_TAG} Ready — call registerDebugObject() to wire color display meshes`)
 
+    // Color extraction stays off until the light is placed. We disable only the
+    // pinch detector here, not the full extraction set: ColorHistoryRing isn't
+    // spawned until placement (ArmFlipPrefabSpawner gates it on
+    // surfaceDetectionPosition), so toggling it now would just log a missing-
+    // singleton warning. handleLose / restartGame use setExtractionEnabled for
+    // the full symmetric toggle once the ring exists.
+    this.setSceneObjectEnabled(this.pinchDetector, false)
+
+    if (this.lightHandInputManager) {
+      this.lightHandInputManager.onLightPlaced.add(() => this.onLightPlaced())
+    } else {
+      print(`${LOG_TAG} WARNING: lightHandInputManager not wired -- color extraction will remain disabled. Wire it in the Inspector to unlock extraction on placement.`)
+    }
+
     // Subscribe to end-state events from the two health managers. Both are scene
     // singletons that registered themselves in their onAwake, which runs before
     // any OnStartEvent, so getInstance() is reliably non-null here.
@@ -121,6 +145,18 @@ export class GameLogicManager extends BaseScriptComponent {
       player.onPlayerDied.add(() => this.handleLose())
     } else {
       print(`${LOG_TAG} WARNING: PlayerHealthManager singleton not found -- lose flow disabled`)
+    }
+  }
+
+  private onLightPlaced() {
+    if (this.isLightPlaced) return
+    this.isLightPlaced = true
+    print(`${LOG_TAG} Light placed -- enabling color extraction`)
+    // Only open the gate if the game isn't already in a terminal lose state.
+    // (Unreachable today since lose can only happen post-placement, but the
+    // guard keeps restart/lose ordering safe for future flows.)
+    if (!this.isGameOver) {
+      this.setExtractionEnabled(true)
     }
   }
 
@@ -320,8 +356,41 @@ export class GameLogicManager extends BaseScriptComponent {
       this.cyclers[i].stopCycling()
     }
 
-    this.setColorHistoryRingEnabled(false)
-    this.setSceneObjectEnabled(this.pinchDetector, false)
+    this.setExtractionEnabled(false)
+  }
+
+  /**
+   * Entry point for a future "Restart" UI button. Symmetric inverse of
+   * handleLose: clears the game-over latch, resumes cyclers, and re-opens the
+   * color-extraction gate -- but only if the light has actually been placed.
+   * Health-manager resets (LampHealthManager.reset / PlayerHealthManager.reset)
+   * and any hand-VFX restore should be invoked here too as the rest of the
+   * restart flow gets wired up.
+   */
+  public restartGame() {
+    if (!this.isGameOver) {
+      print(`${LOG_TAG} restartGame ignored; not in a game-over state`)
+      return
+    }
+    this.isGameOver = false
+    print(`${LOG_TAG} Restart -- resuming cyclers, re-enabling color inputs (isLightPlaced=${this.isLightPlaced})`)
+
+    for (let i = 0; i < this.cyclers.length; i++) {
+      this.cyclers[i].startCycling()
+    }
+
+    if (this.isLightPlaced) {
+      this.setExtractionEnabled(true)
+    }
+  }
+
+  // Single toggle for every "color extraction" path: fresh Gemini extraction
+  // (pinchDetector SceneObject) and saved-color throws (ColorHistoryRing
+  // SceneObject, which also gates its ColorHistoryBar child). All three states
+  // -- pre-placement, lose, and the post-lose restart -- run through here.
+  private setExtractionEnabled(enabled: boolean) {
+    this.setSceneObjectEnabled(this.pinchDetector, enabled)
+    this.setColorHistoryRingEnabled(enabled)
   }
 
   private spawnWinConfetti() {

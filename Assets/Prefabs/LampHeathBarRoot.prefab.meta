@@ -184,7 +184,7 @@
   PrefabRemaps:
     []
   Name: LampHaloVFXController
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> 7f576632-5c45-4491-88b4-c55aa299073e
   ScriptInputsDefault:
     emissionBoost: true

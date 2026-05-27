@@ -1,365 +1,304 @@
-# BLE Playground
+# Lumia Combat
 
 [![SIK](https://img.shields.io/badge/SIK-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/spectacles-frameworks/spectacles-interaction-kit/features/overview?) [![Experimental API](https://img.shields.io/badge/Experimental%20API-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/about-spectacles-features/apis/experimental-apis?) [![BLE](https://img.shields.io/badge/BLE-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/about-spectacles-features/compatibility-list) [![Remote Service Gateway](https://img.shields.io/badge/Remote%20Service%20Gateway-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/about-spectacles-features/overview)
 
-<img src="./README-ref/sample-list-ble-playground-rounded-edges.gif" alt="Device Scanning" width="500" />
+<!-- TODO: add hero gif/screenshot of Lumia Combat gameplay -->
+<img src="" alt="Lumia Combat hero" width="600" />
 
 ## Overview
-This project provides a Bluetooth Low Energy (BLE) implementation template for Snapchat Spectacles. It enables the creation of Lenses that can communicate with BLE peripheral devices, specifically implementing support for Hue smart lights and heart rate monitors. The template demonstrates how to scan for devices, connect to them, and interact with their services and characteristics.
 
-## Initial Project Setup
+Lumia Combat is a hand-tracked, color-matching AR duel for Snap Spectacles where you pinch real-world colors with Gemini, throw them as energy balls at a physical (BLE-connected Philips Hue) lamp, and dodge or hand-shatter the lamp's same-color retaliation.
 
-In order to use this project and call Remote Service Gateway APIs, you need to:
-
-1. Install the Remote Service Gateway Token Generator plug-in from the Asset Browser
-2. Go to Window -> Remote Service Gateway Token
-3. Click "Generate Token"
-4. Copy paste the token into the "RemoteServiceGatewayCredentials" object in the Inspector
-
-<img src="./README-ref/RSGCredentialsObject.png" alt="Remote Service Gateway Credentials object" width="500" />
-
-## Architecture
-
-```
-+----------------------------+                            +-------------------------+
-|     Ble Service Handler    |                            |    Controller Factory   |
-|----------------------------|                            |-------------------------|
-| - Scan Button input        |                            | - If type is found,     |
-| - Start scan               |                            |   create widget &       |
-| - Stop scan => send to     |                            |   controller by type    |
-|   Scan Results Handler     |                            | - Return widget or null |
-+-------------+--------------+                            +------------+------------+
-              |                                                          |
-              v                                                          v
-+-----------------------------+                              +--------------------+
-|     Scan Results Handler    |                              |     Pfb Widget     |
-|-----------------------------|                              |--------------------|
-| - Subscribe to BLE events   |                              | - Container        |
-| - Instantiate scan results  |                              | - Controls snapping|
-| - Filter + select results   |                              |   to hub           |
-| - Manage autoconnections    |                              +--------+-----------+
-+-------------+---------------+                                       |
-              |                                                       |
-              v                                                       |
-+-------------------------------+                                     |
-|        Pfb Scan Result        |                                     |
-|-------------------------------|                                     |
-| - Displays scan status        |                                     |
-| - Controls connection/widget  |                                     |
-| - Calls ControllerFactory     |                                     |
-| - Registers type              |                                     |
-+-------------------------------+                                     |
-                                                                      |
-                                                                      |
-                                                                      v
-           +----------------------------------------------------------+---------------------+
-           |                                                                                 |
-           v                                                                                 v
-+-----------------------------+              +----------------------------+    +------------------------------+
-|     Pfb Light Controller    |              |     Pfb HR Controller      |    |   Pfb Climate Controller      |
-|-----------------------------|              |----------------------------|    |-------------------------------|
-| - LightController           |              | - Show BPM                 |    | - Show temperature            |
-|   - Sends to HueEmitter     |              | - Show EKG effects         |    | - Show humidity, air quality  |
-|                             |              +----------------------------+    +-------------------------------+
-| - LightColorWheelInputMgr   |
-|   - Color wheel input       |
-|                             |
-| - LightHandEventListener    |
-|   - Listens to HandInputMgr |
-|                             |
-| - LightAiEventListener      |
-|   - Listens to AiInputMgr   |
-|                             |
-| - HueEventEmitter           |
-|   - Sets power, brightness  |
-|     and color               |
-+-----------------------------+
-```
-
-The architecture diagram illustrates the interaction between key components:
-
-1. **BLE Service Handler**: Core component for BLE scanning operations.
-
-2. **Scan Results Manager**: Instantiates scan results, filters by device type. Manages auto connection and  selection.
-
-3. **Pfb Scan Result**: UI component displaying device information and providing connection controls.
-
-4. **Controller Factory**: Creates appropriate controllers based on peripheral type.
-
-5. **Pfb Widget**: Parent container for peripheral controllers that provides positioning in the hub.
-
-6. **Peripheral Controllers**:
-   - **Pfb Light Controller**: Controls light parameters including power, brightness, and color
-   - **Pfb HR Controller**: Manages heart rate monitor data
-   - **Pfb Climate Controller**: Handles climate-related data like temperature and humidity
-
-> **NOTE:**
-> This project will only work for the Spectacles platform.
-> The BLE APIs are experimental and may change in future updates.
-
-## Design Guidelines
-
-Designing BLE-enabled Lenses for Spectacles offers exciting possibilities to interact with the physical world through connected devices.
-Get started using our [Design Guidelines](https://developers.snap.com/spectacles/best-practices/design-for-spectacles/introduction-to-spatial-design)
-
-## Prerequisites
-
-- **Lens Studio**: v5.15.0+
-- **Spectacles OS Version**: v5.64+
-- **Spectacles App iOS**: v0.64+
-- **Spectacles App Android**: v0.64+
-
-To update your Spectacles device and mobile app, please refer to this [guide](https://support.spectacles.com/hc/en-us/articles/30214953982740-Updating).
-
-You can download the latest version of Lens Studio from [here](https://ar.snap.com/download?lang=en-US).
-
-The Bluetooth feature requires you to use Experimental APIs. Please see Experimental APIs for more details [here](https://developers.snap.com/spectacles/about-spectacles-features/apis/experimental-apis).
-
-Extended Permissions mode on device must be enabled for enabling Bluetooth APIs. Please see Extended Permissions for more details [here](https://developers.snap.com/spectacles/permission-privacy/extended-permissions).
-
-## Getting Started
-
-To obtain the project folder, clone the repository.
-
-> **IMPORTANT:**
-> This project uses Git Large Files Support (LFS). Downloading a zip file using the green button on GitHub **will not work**. You must clone the project with a version of git that has LFS.
-> You can download Git LFS [here](https://git-lfs.github.com/).
-
-## Initial Project Setup
-
-The project should be pre-configured to get you started without any additional steps. However, ensure you:
-
-1. Open the project in Lens Studio
-2. Configure your compatible BLE devices (such as Hue lights or heart rate monitors)
-3. Adjust device names and UUIDs in `PeripheralTypeData.ts` if needed
-4. Configure scanning settings in `BleServiceHandler.ts` based on your requirements
+<!-- TODO: gameplay gif (player throwing color ball at lamp) -->
+<img src="" alt="Lumia Combat gameplay" width="600" />
 
 ## Key Features
 
-<img src="./README-ref/ble-playground-sample-ui.gif" alt="ble-template" width="500" />
+- **Hue-based color combat.** Damage to the lamp only lands when the thrown ball's hue contrasts with the lamp's current color. The contrast/similarity rules live in [`GameLogicManager`](Assets/Scripts/GameLogicManager.ts) and are applied in [`LampHealthManager`](Assets/Scripts/PeripheralLight/LampHealthManager.ts).
+- **Real-world color extraction.** Pinch-and-hold lets the player point at any object in the environment; the camera frame is cropped and sent to Gemini (via Remote Service Gateway) to extract its dominant color. See [`ColorPickController`](Assets/Scripts/PeripheralLight/ColorPickController.ts).
+- **Physical Philips Hue smart bulb as the enemy.** The same bulb that lights up the player's room is the in-game opponent. Color writes go over BLE through [`HueEventEmitter`](Assets/Scripts/PeripheralLight/HueEventEmitter.ts); the lamp randomizes its own color via [`AutoColorCycler`](Assets/Scripts/PeripheralLight/AutoColorCycler.ts).
+- **Wrist-mounted color history.** Saved colors live on a wrist UI (a hex ring or bar) and can be re-thrown by touch — see [`ColorHistoryBar`](Assets/Scripts/PeripheralLight/ColorHistoryBar.ts), [`ColorHistoryRing`](Assets/Scripts/PeripheralLight/ColorHistoryRing.ts), and [`ArmFlipPrefabSpawner`](Assets/Scripts/PeripheralLight/ArmFlipPrefabSpawner.ts).
+- **Player damage feedback.** Screen vignette flash tinted to the incoming ball ([`DamageFlashOverlay`](Assets/Scripts/PeripheralLight/DamageFlashOverlay.ts)) plus comet-trail balls ([`BallCometTrailController`](Assets/Scripts/PeripheralLight/BallCometTrailController.ts)).
+- **Editor / no-hardware debug mode.** Run the full UI flow without a real bulb via `LensInitializer.isNoBleDebug` and bypass all color-match checks via `GameLogicManager.quickTestMode`.
 
-### Device Discovery
+## Key Mechanics
 
-The application uses BLE scanning to find compatible devices within range. This feature is powered by the `BleServiceHandler.ts` script and allows filtering by device name or service UUID.
+<!-- TODO: pinch-and-throw clip -->
+<img src="" alt="Pinch-and-throw mechanic" width="600" />
 
-```typescript
-// Example: Start scanning for devices
-bleServiceHandler.onStartScan();
-```
+- **Attack.** Pinch and hold for ~2 seconds ([`ColorPickPinchDetector.holdDuration`](Assets/Scripts/PeripheralLight/ColorPickPinchDetector.ts)) on a real-world color. Gemini returns the color; a ball grows in your hand, then your hand motion throws it. On lamp impact, [`ColorBallCollisionGate`](Assets/Scripts/PeripheralLight/ColorBallCollisionGate.ts) writes the new color to the bulb and damage is applied only if the hue contrast exceeds `GameLogicManager.contrastThreshold`.
+- **Retaliate.** The lamp picks a random color every `intervalSecondsMin..Max` ([`AutoColorCycler`](Assets/Scripts/PeripheralLight/AutoColorCycler.ts)) and shortly after fires a parabolic ball at the camera ([`AutoBallShooter`](Assets/Scripts/PeripheralLight/AutoBallShooter.ts)).
+- **Defend.** When the lamp ball's color is similar enough to a color the player is "holding" (`similarityThreshold`), bringing a hand within `touchRadius` of the ball shatters it and heals the player by `healPercentOnShatter`.
+- **Win / Lose / Restart.** Lamp HP reaches 0 → [`LampHealthManager.onLampDied`](Assets/Scripts/PeripheralLight/LampHealthManager.ts) fires; player HP reaches 0 → [`PlayerHealthManager.onPlayerDied`](Assets/Scripts/PeripheralLight/PlayerHealthManager.ts) fires. Either outcome surfaces the restart button ([`RestartButtonController`](Assets/Scripts/PeripheralLight/RestartButtonController.ts)) which calls back into `GameLogicManager.restartGame()`.
 
-### Smart Light Control
+## Setup
 
-Control Hue smart lights including power, brightness, and color settings. This feature is handled by the `HueLightController.ts` script.
+> **You must generate your own Remote Service Gateway token before this project will run.**
+> The repo does **not** ship a token — the `RemoteServiceGatewayCredentials` SceneObject is intentionally left blank. Without a valid token, Gemini-based color extraction, depth-based lamp detection, and any AI prompt flow will silently fail and [`APIKeyHint`](Assets/Scripts/Helpers/APIKeyHint.ts) will warn at startup. See step 4 below.
 
-```typescript
-// Example: Toggle light power
-hueLightController.togglePower(true);
+> **New to BLE on Spectacles?**
+> Lumia Combat's BLE scan/connect/widget layer is built on top of Snap's open-source **BLE Playground** sample. For a deeper walkthrough of the BLE architecture, Hue pairing/reset procedure, and a GATT primer, see [BLE Playground](https://github.com/specs-devs/samples/tree/main/BLE%20Playground).
 
-// Example: Set light color
-hueLightController.setColor(new vec4(1, 0, 0, 1)); // Red
-```
+### Prerequisites
 
-<img src="./README-ref/ble-playground-sample-heartrate.gif" alt="heart-rate" width="500" />
+- **Lens Studio** v5.15.0+
+- **Spectacles OS** v5.64+
+- **Spectacles App** iOS v0.64+ / Android v0.64+
+- **Git LFS** (zip download will not work — large assets under `Assets/3D Art`, `Assets/Sound`, and `Assets/VFX` are LFS-tracked)
+- A **Philips Hue color bulb** named `Hue color lamp` (the default) — or run in `isNoBleDebug` mode for editor-only iteration
 
-### Heart Rate Monitoring
+Update guides: [Spectacles & app updates](https://support.spectacles.com/hc/en-us/articles/30214953982740-Updating) · [Download Lens Studio](https://ar.snap.com/download?lang=en-US)
 
-Connect to and read data from heart rate monitor devices like Polar H10. This feature is handled by the `HeartRateController.ts` script.
+### Steps
 
-```typescript
-// Heart rate data will be processed automatically via notifications
-// and displayed in the connected text component
-```
+1. **Clone with Git LFS.**
 
-### Debug Mode
+   ```bash
+   git clone <this-repo-url>
+   git lfs pull
+   ```
 
-Test BLE functionality in the editor without actual hardware. This is particularly useful during development and is configured through the `LensInitializer.ts` script.
+2. **Open the project.** Open `LumiaCombat.esproj` in Lens Studio and let the import finish.
+
+3. **Enable Experimental APIs + Extended Permissions on the headset.** Required for BLE, Gemini, camera frame access, and surface detection. See [Experimental APIs](https://developers.snap.com/spectacles/about-spectacles-features/apis/experimental-apis) and [Extended Permissions](https://developers.snap.com/spectacles/permission-privacy/extended-permissions).
+
+4. **Generate and paste your RSG token.** *This is the step the repo cannot do for you — every contributor must do this once on a fresh clone.*
+
+   1. In Lens Studio's Asset Browser, install the **Remote Service Gateway Token Generator** plug-in.
+   2. Open `Window → Remote Service Gateway Token` and click **Generate Token**.
+   3. Enable at least the **Gemini / Google** scope (required for [`ColorPickController`](Assets/Scripts/PeripheralLight/ColorPickController.ts) and the depth-based lamp finder in [`GeminiDepthLightEstimator`](Assets/Scripts/PeripheralLight/GeminiDepthLightEstimator.ts)). Enable **OpenAI** if you want the optional voice-prompt flow in [`LightAiInputManager`](Assets/Scripts/PeripheralLight/LightAiInputManager.ts).
+   4. In the scene, select the `RemoteServiceGatewayCredentials` SceneObject in the Inspector and paste the token into its API Token field.
+
+      <img src="./README-ref/RSGCredentialsObject.png" alt="Remote Service Gateway Credentials object" width="500" />
+
+   5. **Do not commit your token.** It's a personal credential — keep `RemoteServiceGatewayCredentials` blank in any commits you push.
+
+5. **(Optional) Editor / no-bulb mode.** On the `LensInitializer` SceneObject, set `isNoBleDebug = true` to fake BLE in the editor or on-device (you'll see ~30 synthetic scan results). On `GameLogicManager`, set `quickTestMode = true` to bypass color-match checks while iterating UI.
+
+6. **Bulb prep (physical play only).** Keep the bulb on its default name `Hue color lamp` — the `"hue"` substring auto-connect filter in [`ScanResultsManager`](Assets/Scripts/Core/ScanResultsManager.ts) depends on it. If the bulb is already paired to a phone (e.g. the Hue app or nRF Connect), factory-reset it via the standard Hue power-cycle procedure documented in the [BLE Playground](https://github.com/specs-devs/samples/tree/main/BLE%20Playground) sample.
+
+7. **Run it.**
+   - **Editor:** press Preview. With `isNoBleDebug = true` you'll see a synthetic scan result list and the full UI flow without a real bulb.
+   - **Device:** build/deploy to Spectacles, walk through onboarding → tap **Go Physical** → connect bulb → place lamp on a surface → press **Start Game**.
+
+## Where to Set the Game Rules
+
+**Every tunable game rule is exposed as an `@input` field on a component in `Assets/Scene.scene`.** Open the scene in Lens Studio and edit the Inspector — no code changes needed for balance.
+
+| Category | Script | `@input` field(s) | Default |
+|---|---|---|---|
+| Color matching | [`GameLogicManager`](Assets/Scripts/GameLogicManager.ts) | `contrastThreshold` (hue distance required to damage the lamp) | `0.3` |
+| Color matching | [`GameLogicManager`](Assets/Scripts/GameLogicManager.ts) | `similarityThreshold` (hue distance allowed for hand shatter) | `0.15` |
+| Debug | [`GameLogicManager`](Assets/Scripts/GameLogicManager.ts) | `quickTestMode` (bypass all color filters) | `false` |
+| Debug | [`LensInitializer`](Assets/Scripts/Core/LensInitializer.ts) | `isNoBleDebug` (fake BLE scan/connect) | `false` |
+| Lamp HP | [`LampHealthManager`](Assets/Scripts/PeripheralLight/LampHealthManager.ts) | `maxHealth`, `damagePerHit` (%), `invincibilityDuration` (s), `lowHealthThreshold` (%) | `100`, `10`, `0.5`, `25` |
+| Player HP | [`PlayerHealthManager`](Assets/Scripts/PeripheralLight/PlayerHealthManager.ts) | `maxHealth`, `damagePerHit` (%), `invincibilityDuration` (s), `healPerNeutralize` (%), `lowHealthThreshold` (%) | `100`, `10`, `0.5`, `5`, `25` |
+| Lamp color cadence | [`AutoColorCycler`](Assets/Scripts/PeripheralLight/AutoColorCycler.ts) | `intervalSecondsMin`, `intervalSecondsMax`, `autoChangeEnabled` | `2`, `5`, `false` |
+| Lamp ball physics | [`AutoBallShooter`](Assets/Scripts/PeripheralLight/AutoBallShooter.ts) | `delayThrowTime`, `arcHeightMin/Max`, `flightTimeMin/Max`, `ballScale`, `maxActiveBalls`, `shootingEnabled`, `overshootMultiplier` | `0.3`, `15`/`45`, `1.0`/`2.5`, `5`, `5`, `true`, `1.5` |
+| Hand defence | [`AutoBallShooter`](Assets/Scripts/PeripheralLight/AutoBallShooter.ts) | `touchRadius` (cm), `healPercentOnShatter`, `shatterLifetimeSeconds`, `shatterEmissionBoost` | `6`, `5`, `2`, `2` |
+| Player ball extraction | [`ColorPickController`](Assets/Scripts/PeripheralLight/ColorPickController.ts) | `growSpeed`, `finalBallSize`, `handVelocityMultiplier`, `baseThrowForce`, `centerCropScale`, `useLiteModel` | (see Inspector) |
+| Pinch trigger | [`ColorPickPinchDetector`](Assets/Scripts/PeripheralLight/ColorPickPinchDetector.ts) | `holdDuration` (s), `useGracePeriod`, `gracePeriod` (s) | `2`, `true`, `0.3` |
+| Damage feedback | [`DamageFlashOverlay`](Assets/Scripts/PeripheralLight/DamageFlashOverlay.ts) | `flashDuration` (s), `peakAlpha` | `0.5`, `0.5` |
+| Onboarding tips | [`GameOnboardingManager`](Assets/Scripts/Core/GameOnboardingManager.ts) | `tipDurationSeconds`, `tipFadeDurationSeconds`, `autoStart`, `tips[]` | `10`, `0.4`, `true`, *(authored list)* |
+
+### Constants that are *not* Inspector-tunable
+
+Some values are intentionally hardcoded — change them in source if needed.
+
+- The `0.7` "looking at light" dot-product threshold in [`LightHandInputManager`](Assets/Scripts/PeripheralLight/LightHandInputManager.ts).
+- The `"hue"` auto-connect substring filter in [`ScanResultsManager`](Assets/Scripts/Core/ScanResultsManager.ts).
+- The 5-slot color history count in [`ColorHistoryBar`](Assets/Scripts/PeripheralLight/ColorHistoryBar.ts) and [`ColorHistoryRing`](Assets/Scripts/PeripheralLight/ColorHistoryRing.ts).
+- The `"Sphere"` SceneObject name expected by [`LampColliderSpawner`](Assets/Scripts/PeripheralLight/LampColliderSpawner.ts) (rename a finger ball and it stops registering hits).
+
+## Key Scripts
+
+The shortest path through the codebase, in the order a new contributor should read:
+
+1. **[`GameLogicManager.ts`](Assets/Scripts/GameLogicManager.ts)** — combat rules (hue contrast/similarity), game start, win/lose/restart orchestration. Singleton; emits `onGameStarted`.
+2. **BLE bootstrap** — [`LensInitializer`](Assets/Scripts/Core/LensInitializer.ts) → [`BleServiceHandler`](Assets/Scripts/Core/BleServiceHandler.ts) → [`ScanResultsManager`](Assets/Scripts/Core/ScanResultsManager.ts) → [`ControllerFactory`](Assets/Scripts/Core/ControllerFactory.ts). Discovers the bulb, instantiates `pfbLight` after GATT connect.
+3. **Bulb control** — [`LightController`](Assets/Scripts/PeripheralLight/LightController.ts) (widget UI) + [`HueEventEmitter`](Assets/Scripts/PeripheralLight/HueEventEmitter.ts) (BLE writes: power, brightness, color).
+4. **Player attack** — [`ColorPickPinchDetector`](Assets/Scripts/PeripheralLight/ColorPickPinchDetector.ts) → [`ColorPickController`](Assets/Scripts/PeripheralLight/ColorPickController.ts) (Gemini extract → grow → throw) → [`ColorBallCollisionGate`](Assets/Scripts/PeripheralLight/ColorBallCollisionGate.ts) (impact gate).
+5. **Lamp attack** — [`AutoColorCycler`](Assets/Scripts/PeripheralLight/AutoColorCycler.ts) → [`AutoBallShooter`](Assets/Scripts/PeripheralLight/AutoBallShooter.ts) (parabolic ball + hand-defence + heal).
+6. **Health + death** — [`LampHealthManager`](Assets/Scripts/PeripheralLight/LampHealthManager.ts) and [`PlayerHealthManager`](Assets/Scripts/PeripheralLight/PlayerHealthManager.ts). Both singletons; expose `onHealthChanged`, `onLampDied`/`onPlayerDied`.
+7. **Placement + onboarding** — [`LightHandInputManager`](Assets/Scripts/PeripheralLight/LightHandInputManager.ts) (fires `onLightPlaced` once per session) and [`GameOnboardingManager`](Assets/Scripts/Core/GameOnboardingManager.ts) (intro → BLE menu → tips roller).
 
 ## Project Structure
 
 ```
-Assets/Scripts/
-├── Core/                   # Core framework components
-│   ├── BleServiceHandler.ts        # BLE service management
-│   ├── ControllerFactory.ts        # Creates controllers for peripherals
-│   ├── HandHintSequence.ts         # Calls hand hint animations
-│   ├── LensInitializer.ts          # Lens initialization
-│   ├── PeripheralTypeData.ts       # Peripheral UUID definitions
-│   ├── ScanResult.ts               # Displays/controls scan result status, connection state, and widget state
-│   ├── ScanResultsManager.ts       # Spawns, filters, and auto connects scan results
-│   └── Widget.ts                   # Handles the generic container for all peripheral controllers
-├── Helpers/                # Utility functions
-│   ├── Colors.ts                   # Common colors
-│   ├── CursorVisualHelper.ts       # Makes cursor shown/hidden
-│   ├── ErrorUtils.ts               # Logs error object data (if available)
-│   ├── HelperFunctions.ts          # Common utility functions
-│   ├── Logger.ts                   # Logging utility
-│   ├── RotateScreenTransform.ts    # Used for try connecting arrow texture rotation
-│   └── UniqueColorService.ts       # Provides a unique color that stands out from color array param
-├── PeripheralHeartRate/    # Heart rate monitor implementation
-│   └── HeartRateController.ts      # Heart rate device controller
-└── PeripheralLight/        # Hue light implementation
-│   ├── GeminiDepthLightEstimator.ts            # In Scene: Estimates light positions via Gemini + Depth cache api 
-│   ├── GeminiDepthLightEstimatorListener.ts    # On Pfb: Listens for its position
-│   ├── HueEventEmitter.ts                      # On Pfb: Writes to the Hue light bulb
-│   ├── LightAiEventListener.ts                 # On Pfb: Listens for Ai input events, sends to Light Controller
-│   ├── LightAiInputManager.ts                  # In Scene: Processes user prompt into Ai json for light scheme 
-│   ├── LightAiJsonEventEmitter.ts              # In Scene: Processes Json into light events for Light Controller
-│   ├── LightColorWheelInputManager.ts          # On Pfb: Manages color wheel ui and drag input for Light Controller
-│   ├── LightController.ts                      # On Pfb: Processes all light inputs for HueEventEmitter
-│   ├── LightHandEventListener.ts               # On Pfb: Listens for Hand input events for Light Controller
-│   ├── LightHandInputManager.ts                # In Scene: Manages Hand input events 
-│   └── LightStatusVisual.ts                    # On Pfb: Mirrors Hue status across UL sphere and brightness slider 
+LumiaCombat/
+├── LumiaCombat.esproj          # Lens Studio project file
+├── Assets/
+│   ├── Scene.scene             # The single scene -- all @input wiring lives here
+│   ├── 3D Art/                 # Lamp + ball models, materials
+│   ├── AiPlayground/           # OpenAI-driven voice flow assets (optional)
+│   ├── DepthCacheGemini/       # Gemini + depth cache for lamp position estimation
+│   ├── Materials/              # Shared materials
+│   ├── Modules/                # Lens modules (camera, internet, etc.)
+│   ├── Physics/                # Physics assets/colliders
+│   ├── Prefabs/                # Runtime-spawned prefabs (pfbLight, LampOnboarding, ColorHistoryBar, ...)
+│   ├── Render/                 # Render targets / cameras
+│   ├── Scripts/                # See below
+│   ├── Sound/                  # SFX / music
+│   ├── Surface Detection [Modified]/  # Surface detection for lamp placement
+│   └── VFX/                    # Particle graphs, comet trail, shatter, etc.
+├── Packages/                   # SpectaclesInteractionKit, RemoteServiceGateway, ...
+└── README-ref/                 # README image assets
 ```
 
-## Key Scripts
+### `Assets/Scripts/`
 
-### BleServiceHandler.ts
+```
+Scripts/
+├── GameLogicManager.ts                       # Combat rules + game lifecycle (singleton)
+├── Core/
+│   ├── BleServiceHandler.ts                  # BLE scan start/stop, dedup, fake scan in editor
+│   ├── ControllerFactory.ts                  # Spawns pfbWidget + pfbLightController on GATT connect
+│   ├── GameOnboardingManager.ts              # Intro card -> BLE menu -> tips roller
+│   ├── HandHintSequence.ts                   # Hand hint animations
+│   ├── LensInitializer.ts                    # Singleton bootstrap; isNoBleDebug flag
+│   ├── PeripheralTypeData.ts                 # Hue UUIDs and name filters
+│   ├── ScanResult.ts                         # One BLE row in the scan UI
+│   ├── ScanResultsManager.ts                 # Spawns scan rows; auto-connects "hue" devices
+│   └── Widget.ts                             # SIK ContainerFrame shell for a connected peripheral
+├── Helpers/
+│   ├── APIKeyHint.ts                         # Warns at startup if RSG token is blank/placeholder
+│   ├── ButtonFeedback_ForceVisualState.ts
+│   ├── Colors.ts
+│   ├── CursorVisualHelper.ts
+│   ├── DisableOnGameStart.ts                 # Hides rules UI on GameLogicManager.onGameStarted
+│   ├── ErrorUtils.ts
+│   ├── FaceCameraOnAxis.ts
+│   ├── FollowCamUi.ts
+│   ├── GeminiDirectClient.ts                 # Direct Gemini client (alternative to RSG, optional)
+│   ├── HelperFunctions.ts
+│   ├── Logger.ts
+│   ├── RotateScreenTransform.ts
+│   ├── SmoothFollowCamera.ts
+│   └── UniqueColorService.ts
+└── PeripheralLight/
+    ├── ArmFlipPrefabSpawner.ts               # Spawns wrist UI on hand flip
+    ├── AutoBallShooter.ts                    # Lamp -> player parabolic balls + hand shatter
+    ├── AutoColorCycler.ts                    # Random lamp color on intervalSecondsMin/Max
+    ├── BallCometTrailController.ts           # SIK LineRenderer comet tail on balls
+    ├── BallSpawnVFXController.ts
+    ├── CameraQueryController.ts
+    ├── CircularHealthBar.ts
+    ├── ColorBallCollisionGate.ts             # Buffers picked color until ball touches lamp
+    ├── ColorHistoryBar.ts                    # Wrist FIFO bar of saved colors
+    ├── ColorHistoryRing.ts                   # Hex ring variant of the history bar
+    ├── ColorPickController.ts                # Pinch -> Gemini -> grow -> throw
+    ├── ColorPickPinchDetector.ts             # Pinch-hold detector (fires onPinchHeld)
+    ├── DamageFlashOverlay.ts                 # Tinted vignette flash on player hit
+    ├── GeminiDepthLightEstimator.ts          # Gemini + depth cache -> lamp positions
+    ├── HaloRotator.ts
+    ├── HandVFXController.ts                  # Hand contour color (defence gate)
+    ├── HueEventEmitter.ts                    # BLE write: power, brightness, color
+    ├── LampCircularHealthBar.ts
+    ├── LampColliderSpawner.ts                # Spawns lamp trigger; emits onBallCollision
+    ├── LampFaceAnimator.ts                   # Face texture swap by HP/attack/damage state
+    ├── LampHaloVFXController.ts
+    ├── LampHealthManager.ts                  # Lamp HP, damage, onLampDied (singleton)
+    ├── LightAiEventListener.ts               # Listens for AI input events (voice flow)
+    ├── LightAiInputManager.ts                # OpenAI voice prompt -> light scheme
+    ├── LightAiJsonEventEmitter.ts            # JSON -> light events
+    ├── LightColorWheelInputManager.ts        # Color wheel UI for the light widget
+    ├── LightController.ts                    # Hue widget controller (delegates BLE to HueEventEmitter)
+    ├── LightHandEventListener.ts             # Listens for hand input events for LightController
+    ├── LightHandInputManager.ts              # Global hand gestures; fires onLightPlaced
+    ├── LightStatusVisual.ts                  # Mirrors Hue status (sphere + slider)
+    ├── PlayerHealthManager.ts                # Player HP, damage, heal, onPlayerDied (singleton)
+    ├── RestartButtonController.ts            # Restart PinchButton singleton
+    └── RoomLightsUI.ts
+```
 
-This script handles:
+### User flow
 
-- Scanning for BLE devices
-- Managing device connections
-- Processing scan results
-- Dispatching events for discovered devices
+```mermaid
+flowchart TD
+  Intro["GameOnboardingManager: intro card"] --> Scan["BleServiceHandler: scan"]
+  Scan --> AutoConnect["ScanResultsManager: auto-connect 'hue'"]
+  AutoConnect --> Spawn["ControllerFactory: spawn pfbLight"]
+  Spawn --> Place["LightHandInputManager: place light on surface"]
+  Place --> Placed["onLightPlaced fires -> extraction unlocked"]
+  Placed --> Start["Start Game button -> GameLogicManager.startGame"]
+  Start --> Loop["Combat loop"]
+  Loop --> Win{"HP reaches 0?"}
+  Win -->|"Lamp dies"| HandleWin["GameLogicManager.handleWin + RestartButton"]
+  Win -->|"Player dies"| HandleLose["GameLogicManager.handleLose + RestartButton"]
+  HandleWin --> Restart["restartGame: reset HP, re-enable extraction"]
+  HandleLose --> Restart
+  Restart --> Loop
+```
 
-### HueLightController.ts
+### Data flow
 
-This script handles:
+```mermaid
+flowchart LR
+  subgraph PlayerAttack [Player attack]
+    Pinch["ColorPickPinchDetector"] --> Pick["ColorPickController + Gemini"]
+    Pick --> Ball["Ball spawn"]
+    Ball --> Gate["ColorBallCollisionGate"]
+    Gate --> Hue["HueEventEmitter (BLE write)"]
+    Gate --> LampHP["LampHealthManager (damage if contrasting)"]
+  end
+  subgraph LampAttack [Lamp attack]
+    Cycle["AutoColorCycler"] --> Shoot["AutoBallShooter"]
+    Shoot --> PlayerHP["PlayerHealthManager"]
+    PlayerHP --> Flash["DamageFlashOverlay"]
+  end
+  LampHP --> Win["GameLogicManager.handleWin"]
+  PlayerHP --> Lose["GameLogicManager.handleLose"]
+```
 
-- Connecting to Hue light devices
-- Controlling light power, brightness, and color
-- Managing GATT services and characteristics for lights
-- Processing notifications from the light device
+### Cross-cutting note: singletons
 
-### HeartRateController.ts
+Nearly every gameplay coordinator (`GameLogicManager`, `LampHealthManager`, `PlayerHealthManager`, `AutoBallShooter`, `AutoColorCycler`, `ColorHistoryBar`, `ColorHistoryRing`, `RestartButtonController`, `LampFaceAnimator`, `GameOnboardingManager`) is a **singleton** with a `getInstance()` accessor and, where startup order matters, an `onRegistered` event. This is because the prefabs that host them (`pfbLight`, `LampOnboarding`, the color-history UI) are instantiated at runtime by [`ControllerFactory`](Assets/Scripts/Core/ControllerFactory.ts) and [`ArmFlipPrefabSpawner`](Assets/Scripts/PeripheralLight/ArmFlipPrefabSpawner.ts), so they cannot be wired via `@input` from a scene-root component. **Use the singleton pattern, not cross-prefab `@input`, when coordinating between these components.**
 
-This script handles:
+## Caveats
 
-- Connecting to heart rate monitor devices
-- Reading heart rate data
-- Processing and displaying heart rate information
-- Managing notifications from the heart rate monitor
-
-## Developer Resources
-
-### GATT Specification
-
-The Bluetooth GATT (Generic Attribute Profile) specification defines how BLE devices exchange data using services, characteristics, and descriptors. For detailed information, refer to the official specification supplement:
-
-- [GATT Specification Supplement](https://btprodspecificationrefs.blob.core.windows.net/gatt-specification-supplement/GATT_Specification_Supplement.pdf) (Version Date: 2025-01-15)
-
-This document contains the definitions for all GATT characteristics and characteristic descriptors, which is essential for understanding and implementing BLE communication.
-
-### Gotchas
-
-When working with BLE in this template, keep these common issues in mind:
-
-- **Promise Handling**: Use try/catch, then() and finally() for proper error handling with promises
-- **Device Verification**: Check device name, UUIDs, and properties using tools like nRFConnect before implementation
-- **Scan Results**: `startScan()` will return a result object if successful, not just a boolean
-- **UUID Comparison**: When comparing UUIDs, remember that `UuidCompare` is checking for substring inclusion, not exact matching
-
-### Notes
-
-**Heart Rate Monitors:**
-- Use a dedicated app for initial setup of the heart rate monitor
-- Avoid connecting with a second app while using this template
-- The monitor will only pair with one device at a time
-
-### API Tips
-
-- You can use `await` or promise chaining (`.then()`) - both approaches work
-- For lengthy operations, consider using non-blocking calls
-- Register notification handlers before writing to characteristics when possible
+- **RSG token is mandatory.** Without it, color extraction, Gemini lamp detection, and any AI prompt flow silently fail. See Setup step 4.
+- **Hue BLE is unofficial.** Brightness/color writes are clamped to roughly half range due to a known serialization bug in [`HueEventEmitter`](Assets/Scripts/PeripheralLight/HueEventEmitter.ts), and any byte >127 will crash the BLE stack. The script header comments are authoritative for the workarounds.
+- **One app at a time.** The bulb must not be paired to another phone or app. If it is, factory-reset it via the standard Hue power-cycle procedure (the [BLE Playground](https://github.com/specs-devs/samples/tree/main/BLE%20Playground) sample documents this in full).
+- **Auto-connect is name-based.** [`ScanResultsManager`](Assets/Scripts/Core/ScanResultsManager.ts) only auto-connects to devices whose advertised name contains `"hue"`. Rename your bulb back to default if you've customized it.
+- **Color extraction is gated on placement.** Extraction stays off until `LightHandInputManager.onLightPlaced` fires the first time, so the `lightHandInputManager` field on [`GameLogicManager`](Assets/Scripts/GameLogicManager.ts) must be wired in the scene or the gate will never open.
+- **Runtime prefab references.** Cross-prefab `@input` references to `AutoBallShooter`, `ColorHistoryBar`, `LampHealthManager`, etc. are unreliable because those scripts live on prefabs instantiated at runtime. Always go through the singleton + `onRegistered` event pattern.
+- **Editor always fakes BLE.** Lens Studio's Preview panel fakes BLE regardless of `isNoBleDebug`. The real bulb-write code path is only exercised on-device.
+- **Finger ball naming.** Finger balls must keep the SceneObject name `"Sphere"` or [`LampColliderSpawner`](Assets/Scripts/PeripheralLight/LampColliderSpawner.ts) won't register hits.
+- **Singleton hygiene.** Multiple `GameLogicManager`, `LampHealthManager`, or `PlayerHealthManager` instances in the scene will print a warning and last-write-wins on the singleton — keep exactly one of each.
 
 ## Testing the Lens
 
-### In Lens Studio Editor
+<!-- TODO: short clip showing editor preview vs device preview -->
+<img src="" alt="Editor vs device" width="600" />
 
-1. Open the Preview panel in Lens Studio.
-2. Enable debug mode in `LensInitializer.ts` by setting `isNoBleDebug = true`.
-3. Test the UI and interaction flow without requiring actual BLE devices.
+### In Lens Studio editor
 
-### On Spectacles Device
+1. On the `LensInitializer` SceneObject, set `isNoBleDebug = true`. You'll get ~30 synthetic scan results so you can exercise the connect flow.
+2. (Optional) On `GameLogicManager`, set `quickTestMode = true` to skip color matching while iterating UI.
+3. Press Preview. UI, ball physics, and the win/lose/restart flow all work without a bulb.
 
-1. Build and deploy the project to your Spectacles device.
-2. Follow the [Spectacles guide](https://developers.snap.com/spectacles/get-started/start-building/preview-panel) for device testing.
-3. Ensure your BLE devices are powered on and within range.
-4. Use the interface to scan for and connect to your devices.
+### On Spectacles
 
-## Bluetooth API Disclaimer
+1. Build and deploy to your Spectacles device — see the [Spectacles preview-panel guide](https://developers.snap.com/spectacles/get-started/start-building/preview-panel).
+2. Power on your Hue bulb and make sure it's not paired to a phone (see Setup step 6 if it is).
+3. Walk through onboarding → tap **Go Physical** → connect bulb → place lamp on a surface → press **Start Game**.
 
-The Bluetooth APIs used in this project are experimental and subject to change. Ensure that you comply with Bluetooth LE standards and Spectacles' terms of service when deploying this project.
+## License
 
-## General Disclaimer
+Recommended: **MIT** — compatible with the public [BLE Playground](https://github.com/specs-devs/samples/tree/main/BLE%20Playground) sample this project is built on. Add a top-level `LICENSE` file with the MIT text and your copyright line.
 
-This repository includes references to third-party websites and products for educational and reference purposes only. These references are provided to enhance learning and understanding. We do not endorse or have any affiliation with the mentioned third-party resources.
-
-## OpenAI Disclaimer
-
-Ensure that you comply with [OpenAI's API usage policies](https://openai.com/policies/usage-policies/) and [Spectacles' terms of service](https://www.snap.com/terms/spectacles) when deploying this project.
-
-## Gemini Disclaimer
-
-Ensure that you comply with [Gemini's API usage policies](https://ai.google.dev/gemini-api/terms) and [Spectacles' terms of service](https://www.snap.com/terms/spectacles) when deploying this project.
-
-## Support
-
-If you have any questions or need assistance, please don't hesitate to reach out. Our community is here to help, and you can connect with us and ask for support [here](https://www.reddit.com/r/Spectacles/). We look forward to hearing from you and are excited to assist you on your journey!
+<!-- TODO: replace this paragraph with a one-liner once LICENSE is added, e.g. "Released under the MIT License — see [LICENSE](LICENSE)." -->
 
 ## Contributing
 
-Feel free to provide improvements or suggestions or directly contributing via merge request. By sharing insights, you help everyone else build better BLE-enabled Lenses.
+PRs and issues welcome. If you're working on the BLE foundation, please cross-reference the upstream [BLE Playground](https://github.com/specs-devs/samples/tree/main/BLE%20Playground) sample so improvements can flow both ways.
 
----
+## Support
 
-*Built with 👻 by the Spectacles team*  
+For Spectacles development questions, the [r/Spectacles](https://www.reddit.com/r/Spectacles/) community is the fastest place to get help.
 
----
+## Disclaimers
 
-## Supported Peripherals
-
-### Heart Rate Monitors
-- **Default Device**: Polar H10
-- **Services**: Heart Rate Service (0x180D)
-- **Characteristics**: Heart Rate Measurement (0x2A37)
-
-### Hue Smart Lights
-- **Default Device**: Hue color lamp
-- **Services**: Base Service (932C32BD-0000-47A2-835A-A8D455B859DD)
-- **Characteristics**:
-  - Power (932C32BD-0002-47A2-835A-A8D455B859DD)
-  - Brightness (932C32BD-0003-47A2-835A-A8D455B859DD)
-  - Color (932C32BD-0005-47A2-835A-A8D455B859DD)
-
-## Device Debugging Tips
-
-### Connect to Hue Light 
-Light must be on to connect. If you previously paired with your phone (eg, via nRF Connect or the Hue app), you must reset your bulb to connect to Spectacles. Ble will only auto connect to your bulb if it is named "Hue color lamp" (default name).  You can connect manually by tapping scan result. 
-
-### Reset Hue Light 
-If you are having trouble writing to hue bulb, you can try resetting bulb via Power Cycling:
-- Power off: Turn off the power to the bulb for 10 seconds (either at the wall switch or by unplugging the lamp).
-- Power on: Turn the power back on and leave it on for 3 seconds. 
-- Power off: Turn the power off again for 10 seconds. 
-- Repeat: Repeat the on and off cycle until the bulb flashes, with each on period lasting 3 seconds and each off period lasting 10 seconds. 
-- Confirm reset: The bulb should blink or cycle colors to indicate a successful reset. 
-
-### Connect to Polar Chest Band 
-- Download Polar Flow app
-- Connect battery to strap
-- Place strap around chest with skin contact.  Now your device is advertising -- but only to the mobile app
-- In mobile app:
-  - Select the “...” in the lower right corner
-  - Select Devices
-  - If your polar band is on and battery is full, it should appear
-  - Select Connect 
-  - In the next screen, make sure all four fields are selected, including “2 Bluetooth devices”.  This enables your band to be connected to your phone and spectacles at the same time. 
-If you're still having trouble connecting, you may need to [reset your device](https://www.youtube.com/watch?v=wFvB8MUy9Z4)
-
-
-
-
-
-
- 
+- **Experimental APIs.** The Bluetooth, Gemini, camera-frame, and depth-cache APIs used here are experimental and subject to change. See [Experimental APIs](https://developers.snap.com/spectacles/about-spectacles-features/apis/experimental-apis).
+- **Gemini usage.** Ensure compliance with [Google's Gemini API terms](https://ai.google.dev/gemini-api/terms) and [Spectacles' terms of service](https://www.snap.com/terms/spectacles).
+- **Third-party references.** Hue/Philips/Polar names are property of their respective owners and are referenced here for educational/integration purposes only.

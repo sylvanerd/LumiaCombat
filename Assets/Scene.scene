@@ -1714,9 +1714,9 @@
     {}
   ScriptInputs:
     "":
-      openAIToken: 841ef945-c882-4169-a4d6-2a60a8d72896
-      googleToken: 2115d958-3e47-4ac4-9a90-42d2a35caa1f
-      snapToken: 014fe9b7-aa01-49bc-8c76-47002b2589e8
+      openAIToken: ""
+      googleToken: ""
+      snapToken: ""
   ScriptTypes:
     "":
       {}

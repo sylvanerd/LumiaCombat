@@ -17,7 +17,6 @@
 - [Where to Set the Game Rules](#where-to-set-the-game-rules)
 - [Key Scripts](#key-scripts)
 - [Caveats](#caveats)
-- [Testing the Lens](#testing-the-lens)
 - [Next Steps](#next-steps)
 - [License](#license)
 - [Contributing](#contributing)
@@ -36,7 +35,6 @@ Lumia Combat is shared as a reference for the Snap Spectacles community — not 
 - **It's a study in mixed-reality interaction design.** Pinch-and-hold to harvest a real color, arm-flip to reveal a wrist UI, hand-to-shatter defence, and look-to-target gating — all built on hand tracking and SIK. These can serve as reusable interaction recipes for other project ideas.
 - **The physical world is the game.** The enemy is your actual Philips Hue bulb; hits recolor it and victory powers it off. It's a concrete blueprint for Lenses that reach out and change the room, not just the headset view.
 - **It shows how to wire AI into gameplay.** Real-world color extraction and lamp placement run through Gemini via the Remote Service Gateway — a practical example of camera-frame + depth + LLM working inside a real-time loop.
-- **It captures hard-won architecture lessons.** The singleton + `onRegistered` pattern for coordinating components that live on runtime-instantiated prefabs (via `ControllerFactory`) is a recurring Spectacles pain point this repo solves explicitly.
 - **It's MIT-licensed and built to remix.** Every game rule is an Inspector `@input`, so designers can re-balance or re-theme without touching code — and improvements can flow back to the BLE Playground sample it builds on.
 
 ## Key Features
@@ -44,7 +42,7 @@ Lumia Combat is shared as a reference for the Snap Spectacles community — not 
 - **Color is the weapon.** Damage only lands when the thrown ball's hue *contrasts* with the lamp's current color; a *similar* hue lets you shatter incoming balls. The contrast/similarity rules live in [`GameLogicManager`](Assets/Scripts/GameLogicManager.ts) and are applied in [`LampHealthManager`](Assets/Scripts/PeripheralLight/LampHealthManager.ts).
 - **Real-world color extraction.** Pinch-and-hold lets the player point at any object in the environment; the camera frame is cropped and sent to Gemini (via Remote Service Gateway) to extract the dominant color around the pinch. See [`ColorPickController`](Assets/Scripts/PeripheralLight/ColorPickController.ts).
 - **A physical Philips Hue bulb is the enemy.** The same bulb that lights up the player's room is the in-game opponent: color writes go over BLE through [`HueEventEmitter`](Assets/Scripts/PeripheralLight/HueEventEmitter.ts), it recolors itself via [`AutoColorCycler`](Assets/Scripts/PeripheralLight/AutoColorCycler.ts), and it launches color balls **out of the bulb that arc toward the player's camera** — [`AutoBallShooter`](Assets/Scripts/PeripheralLight/AutoBallShooter.ts).
-- **Left-wrist UI.** Flip your left hand to reveal a wrist panel with your **saved color history** (re-throwable by pinch), your **player health**, and a **complementary-color hint** — see [`ArmFlipPrefabSpawner`](Assets/Scripts/PeripheralLight/ArmFlipPrefabSpawner.ts), [`ColorHistoryBar`](Assets/Scripts/PeripheralLight/ColorHistoryBar.ts), and [`CircularHealthBar`](Assets/Scripts/PeripheralLight/CircularHealthBar.ts).
+- **Left-hand UI.** Flip your left hand to reveal a wrist panel with your **saved color history** (re-throwable by pinch), your **player health**, and a **complementary-color hint** — see [`ArmFlipPrefabSpawner`](Assets/Scripts/PeripheralLight/ArmFlipPrefabSpawner.ts), [`ColorHistoryBar`](Assets/Scripts/PeripheralLight/ColorHistoryBar.ts), and [`CircularHealthBar`](Assets/Scripts/PeripheralLight/CircularHealthBar.ts).
 - **Rich combat visual feedback.** Tinted screen vignette on a hit ([`DamageFlashOverlay`](Assets/Scripts/PeripheralLight/DamageFlashOverlay.ts)), hand-contour color when you hold a defence color ([`HandVFXController`](Assets/Scripts/PeripheralLight/HandVFXController.ts)), and comet-trail balls ([`BallCometTrailController`](Assets/Scripts/PeripheralLight/BallCometTrailController.ts)).
 - **Quick Test Mode.** Bypass all color-match checks via `GameLogicManager.quickTestMode` while iterating combat behavior.
 
@@ -74,11 +72,11 @@ The lamp picks a random color every `intervalSecondsMin..Max` ([`AutoColorCycler
 
 Either **dodge** the incoming ball physically, or **shatter** it: when the ball's color is similar enough to a color you're holding (`similarityThreshold`), bringing a hand within `touchRadius` shatters it and heals the player by `healPercentOnShatter`.
 
-### Check your wrist
+### Check your left hand
 
 <img src="./README-ref/arm-flip.gif" alt="Flipping the left hand to reveal the wrist UI" width="300" />
 
-Flip your left hand to reveal the wrist UI ([`ArmFlipPrefabSpawner`](Assets/Scripts/PeripheralLight/ArmFlipPrefabSpawner.ts)): your saved color history, your current health, and a **complementary-color hint** — a VFX swatch ([`ColorHint.prefab`](Assets/Prefabs/ColorHint.prefab)) showing the hue opposite the lamp's current color (the one that will damage it), computed by [`GameLogicManager.getContrastingColor`](Assets/Scripts/GameLogicManager.ts) and refreshed each time the lamp recolors.
+Flip your left hand to reveal the hand UI ([`ArmFlipPrefabSpawner`](Assets/Scripts/PeripheralLight/ArmFlipPrefabSpawner.ts)): your saved color history, your current health, and a **complementary-color hint** — a VFX swatch ([`ColorHint.prefab`](Assets/Prefabs/ColorHint.prefab)) showing the hue opposite the lamp's current color (the one that will damage it), computed by [`GameLogicManager.getContrastingColor`](Assets/Scripts/GameLogicManager.ts) and refreshed each time the lamp recolors.
 
 ### Win / Lose / Restart
 
@@ -102,7 +100,7 @@ Lamp HP reaches 0 → [`LampHealthManager.onLampDied`](Assets/Scripts/Peripheral
 - **Spectacles OS (Snap OS)** v5.64.396+
 - **Spectacles App** iOS v0.64+ / Android v0.64+
 - **Git LFS** (zip download will not work — large assets under `Assets/3D Art`, `Assets/Sound`, and `Assets/VFX` are LFS-tracked)
-- A **Philips Hue color bulb** named `Hue color lamp` (the default) — or run in `isNoBleDebug` mode for editor-only iteration
+- A **Philips Hue color bulb** named `Hue color lamp` (the default)
 
 Update guides: [Spectacles & app updates](https://support.spectacles.com/hc/en-us/articles/30214953982740-Updating) · [Download Lens Studio](https://ar.snap.com/download?lang=en-US)
 
@@ -121,11 +119,11 @@ Update guides: [Spectacles & app updates](https://support.spectacles.com/hc/en-u
 
 3. **Enable Experimental APIs + Extended Permissions on the headset.** Required for BLE, Gemini, camera frame access, and surface detection. See [Experimental APIs](https://developers.snap.com/spectacles/about-spectacles-features/apis/experimental-apis) and [Extended Permissions](https://developers.snap.com/spectacles/permission-privacy/extended-permissions).
 
-4. **Generate and paste your RSG token.** *This is the step the repo cannot do for you — every contributor must do this once on a fresh clone.*
+4. **Generate and paste your RSG token.** 
 
    1. In Lens Studio's Asset Browser, install the **Remote Service Gateway Token Generator** plug-in.
    2. Open `Window → Remote Service Gateway Token` and click **Generate Token**.
-   3. Enable at least the **Gemini / Google** scope (required for [`ColorPickController`](Assets/Scripts/PeripheralLight/ColorPickController.ts) and the depth-based lamp finder in [`GeminiDepthLightEstimator`](Assets/Scripts/PeripheralLight/GeminiDepthLightEstimator.ts)). Enable **OpenAI** if you want the optional voice-prompt flow in [`LightAiInputManager`](Assets/Scripts/PeripheralLight/LightAiInputManager.ts).
+   3. Enable at least the **Gemini / Google** scope (required for [`ColorPickController`](Assets/Scripts/PeripheralLight/ColorPickController.ts) and the depth-based lamp finder in [`GeminiDepthLightEstimator`](Assets/Scripts/PeripheralLight/GeminiDepthLightEstimator.ts)). 
    4. In the scene, select the `RemoteServiceGatewayCredentials` SceneObject in the Inspector and paste the token into its API Token field.
 
       <img src="./README-ref/RSGCredentialsObject.png" alt="Remote Service Gateway Credentials object" width="500" />
@@ -137,8 +135,8 @@ Update guides: [Spectacles & app updates](https://support.spectacles.com/hc/en-u
 6. **Bulb prep (physical play only).** Keep the bulb on its default name `Hue color lamp` — the `"hue"` substring auto-connect filter in [`ScanResultsManager`](Assets/Scripts/Core/ScanResultsManager.ts) depends on it. If the bulb is already paired to a phone (e.g. the Hue app or nRF Connect), factory-reset it via the standard Hue power-cycle procedure documented in the [BLE Playground](https://github.com/specs-devs/samples/tree/main/BLE%20Playground) sample.
 
 7. **Run it.**
-   - **Editor:** press Preview. With `isNoBleDebug = true` you'll see a synthetic scan result list and the full UI flow without a real bulb.
-   - **Device:** make sure the Hue bulb is powered on, then build/deploy to Spectacles, walk through onboarding → tap **Go Physical** → connect bulb → place lamp on a surface → press **Start Game**.
+   - **Editor:** press Preview. With `isNoBleDebug = true` you'll see a synthetic scan result list and the full UI flow without a real bulb [Not Recommended for gameplay].
+   - **Device:** make sure the Hue bulb is powered on, then build/deploy to Spectacles, tap **Go Physical** → connect bulb → place lamp on a surface → walk through onboarding → press **Start Game**.
 
 ## Where to Set the Game Rules
 
@@ -159,15 +157,6 @@ Update guides: [Spectacles & app updates](https://support.spectacles.com/hc/en-u
 | Damage feedback | [`DamageFlashOverlay`](Assets/Scripts/PeripheralLight/DamageFlashOverlay.ts) | `flashDuration` (s), `peakAlpha` | `0.5`, `0.5` |
 | Onboarding tips | [`GameOnboardingManager`](Assets/Scripts/Core/GameOnboardingManager.ts) | `tipDurationSeconds`, `tipFadeDurationSeconds`, `autoStart`, `tips[]` | `10`, `0.4`, `true`, *(authored list)* |
 
-### Constants that are *not* Inspector-tunable
-
-Some values are intentionally hardcoded — change them in source if needed.
-
-- The `0.7` "looking at light" dot-product threshold in [`LightHandInputManager`](Assets/Scripts/PeripheralLight/LightHandInputManager.ts).
-- The `"hue"` auto-connect substring filter — defined as `HueLightData._commonDeviceNameSubstring` in [`PeripheralTypeData`](Assets/Scripts/Core/PeripheralTypeData.ts) and applied by [`ScanResultsManager`](Assets/Scripts/Core/ScanResultsManager.ts).
-- The 5-slot color history count in [`ColorHistoryBar`](Assets/Scripts/PeripheralLight/ColorHistoryBar.ts) and [`ColorHistoryRing`](Assets/Scripts/PeripheralLight/ColorHistoryRing.ts).
-- The `"Sphere"` SceneObject name expected by [`LampColliderSpawner`](Assets/Scripts/PeripheralLight/LampColliderSpawner.ts) (rename a finger ball and it stops registering hits).
-
 ## Key Scripts
 
 The shortest path through the codebase, in the order a new contributor should read:
@@ -180,24 +169,6 @@ The shortest path through the codebase, in the order a new contributor should re
 6. **Health + death** — [`LampHealthManager`](Assets/Scripts/PeripheralLight/LampHealthManager.ts) and [`PlayerHealthManager`](Assets/Scripts/PeripheralLight/PlayerHealthManager.ts). Both singletons; expose `onHealthChanged`, `onLampDied`/`onPlayerDied`.
 7. **Placement + onboarding** — [`LightHandInputManager`](Assets/Scripts/PeripheralLight/LightHandInputManager.ts) (fires `onLightPlaced` once per session) and [`GameOnboardingManager`](Assets/Scripts/Core/GameOnboardingManager.ts) (intro → BLE menu → tips roller).
 
-### User flow
-
-```mermaid
-flowchart TD
-  Intro["GameOnboardingManager: intro card"] --> Scan["BleServiceHandler: scan"]
-  Scan --> AutoConnect["ScanResultsManager: auto-connect 'hue'"]
-  AutoConnect --> Spawn["ControllerFactory: spawn pfbLight"]
-  Spawn --> Place["LightHandInputManager: place light on surface"]
-  Place --> Placed["onLightPlaced fires -> extraction unlocked"]
-  Placed --> Start["Start Game button -> GameLogicManager.startGame"]
-  Start --> Loop["Combat loop"]
-  Loop --> Win{"HP reaches 0?"}
-  Win -->|"Lamp dies"| HandleWin["GameLogicManager.handleWin + RestartButton"]
-  Win -->|"Player dies"| HandleLose["GameLogicManager.handleLose + RestartButton"]
-  HandleWin --> Restart["restartGame: reset HP, re-enable extraction"]
-  HandleLose --> Restart
-  Restart --> Loop
-```
 
 ### Data flow
 
@@ -229,25 +200,9 @@ Nearly every gameplay coordinator (`GameLogicManager`, `LampHealthManager`, `Pla
 - **Hue BLE is unofficial.** Brightness/color writes are clamped to roughly half range due to a known serialization bug in [`HueEventEmitter`](Assets/Scripts/PeripheralLight/HueEventEmitter.ts), and any byte >127 will crash the BLE stack. The script header comments are authoritative for the workarounds.
 - **One app at a time.** The bulb must not be paired to another phone or app. If it is, factory-reset it via the standard Hue power-cycle procedure (the [BLE Playground](https://github.com/specs-devs/samples/tree/main/BLE%20Playground) sample documents this in full).
 - **Auto-connect is name-based.** [`ScanResultsManager`](Assets/Scripts/Core/ScanResultsManager.ts) only auto-connects to devices whose advertised name contains `"hue"`. Rename your bulb back to default if you've customized it.
-- **Color extraction is gated on placement.** Extraction stays off until `LightHandInputManager.onLightPlaced` fires the first time, so the `lightHandInputManager` field on [`GameLogicManager`](Assets/Scripts/GameLogicManager.ts) must be wired in the scene or the gate will never open.
+- **Color extraction is gated on placement (UX decision).** Extraction stays off until `LightHandInputManager.onLightPlaced` fires the first time, so the `lightHandInputManager` field on [`GameLogicManager`](Assets/Scripts/GameLogicManager.ts) must be wired in the scene or the gate will never open.
 - **Runtime prefab references.** Cross-prefab `@input` references to `AutoBallShooter`, `ColorHistoryBar`, `LampHealthManager`, etc. are unreliable because those scripts live on prefabs instantiated at runtime. Always go through the singleton + `onRegistered` event pattern.
 - **Editor always fakes BLE.** Lens Studio's Preview panel fakes BLE regardless of `isNoBleDebug`. The real bulb-write code path is only exercised on-device.
-- **Finger ball naming.** Finger balls must keep the SceneObject name `"Sphere"` or [`LampColliderSpawner`](Assets/Scripts/PeripheralLight/LampColliderSpawner.ts) won't register hits.
-- **Singleton hygiene.** Multiple `GameLogicManager`, `LampHealthManager`, or `PlayerHealthManager` instances in the scene will print a warning and last-write-wins on the singleton — keep exactly one of each.
-
-## Testing the Lens
-
-### In Lens Studio editor
-
-1. On the `LensInitializer` SceneObject, set `isNoBleDebug = true`. You'll get ~30 synthetic scan results so you can exercise the connect flow.
-2. (Optional) On `GameLogicManager`, set `quickTestMode = true` to skip color matching while iterating UI.
-3. Press Preview. UI, ball physics, and the win/lose/restart flow all work without a bulb.
-
-### On Spectacles
-
-1. Build and deploy to your Spectacles device — see the [Spectacles preview-panel guide](https://developers.snap.com/spectacles/get-started/start-building/preview-panel).
-2. Power on your Hue bulb and make sure it's not paired to a phone (see Setup step 6 if it is).
-3. Walk through onboarding → tap **Go Physical** → connect bulb → place lamp on a surface → press **Start Game**.
 
 ## Next Steps
 

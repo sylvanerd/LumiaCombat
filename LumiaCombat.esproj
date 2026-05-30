@@ -1,8 +1,8 @@
 studioVersion:
   major: 5
   minor: 15
-  patch: 3
-  build: 26011319
+  patch: 4
+  build: 26022322
   type: Public
 coreVersion: 330
 clientVersion: 13.60
@@ -24,7 +24,7 @@ metaInfo:
     - Web
     - Spectacles
   platformBundlesEnabled: false
-  iconHash: 3459f0f3fb58ff2415ef6a89c6280da1
+  iconHash: 6a43071f03bee8f8a73e8612e47e80a0
   videoPreviewHash: ""
   fromTemplateName: Default
   fromTemplateUrl: Lens Studio 5.8.0.25032603

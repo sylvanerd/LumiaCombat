@@ -5,7 +5,7 @@
 <!-- "Watch the demo" CTA links to the Lumia Combat promo video -->
 <a href="https://drive.google.com/file/d/1o-x5i7CQ4uhdYuKIQobWNYZWIxg0KVQF/view?usp=drive_link"><img src="https://img.shields.io/badge/%E2%96%B6%20Watch%20the%20demo-FFCC00?style=for-the-badge" alt="Watch the Lumia Combat demo video" /></a>
 
-<img src="./README-ref/lumia.png" alt="Lumia Combat hero" width="300" />
+<img src="./README-ref/Lumia.png" alt="Lumia Combat logo" width="300" />
 
 ## Contents
 
@@ -16,8 +16,9 @@
 - [Setup](#setup)
 - [Where to Set the Game Rules](#where-to-set-the-game-rules)
 - [Key Scripts](#key-scripts)
-- [Testing the Lens](#testing-the-lens)
 - [Caveats](#caveats)
+- [Testing the Lens](#testing-the-lens)
+- [Next Steps](#next-steps)
 - [License](#license)
 - [Contributing](#contributing)
 - [Support](#support)
@@ -247,6 +248,16 @@ Nearly every gameplay coordinator (`GameLogicManager`, `LampHealthManager`, `Pla
 1. Build and deploy to your Spectacles device — see the [Spectacles preview-panel guide](https://developers.snap.com/spectacles/get-started/start-building/preview-panel).
 2. Power on your Hue bulb and make sure it's not paired to a phone (see Setup step 6 if it is).
 3. Walk through onboarding → tap **Go Physical** → connect bulb → place lamp on a surface → press **Start Game**.
+
+## Next Steps
+
+- **Virtual / no-hardware mode.** Add an in-Lens virtual light so the full game runs without a physical Hue bulb — and can be published without depending on the Remote Service Gateway.
+- **Gameplay polish and depth.**
+  - Add dedicated player victory and defeat visuals.
+  - Enhance the core game loop.
+  - Polish the overall visuals.
+  - Add levels and difficulty tiers.
+  - Let players choose which hand is the primary combat hand and which hand drives the wrist UI.
 
 ## License
 

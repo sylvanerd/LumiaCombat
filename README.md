@@ -2,10 +2,10 @@
 
 [![SIK](https://img.shields.io/badge/SIK-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/spectacles-frameworks/spectacles-interaction-kit/features/overview?) [![Experimental API](https://img.shields.io/badge/Experimental%20API-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/about-spectacles-features/apis/experimental-apis?) [![BLE](https://img.shields.io/badge/BLE-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/about-spectacles-features/compatibility-list) [![Remote Service Gateway](https://img.shields.io/badge/Remote%20Service%20Gateway-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/about-spectacles-features/overview)
 
-<!-- "Watch the demo" CTA + hero image; both link to the Lumia Combat promo video -->
+<!-- "Watch the demo" CTA links to the Lumia Combat promo video -->
 <a href="https://drive.google.com/file/d/1o-x5i7CQ4uhdYuKIQobWNYZWIxg0KVQF/view?usp=drive_link"><img src="https://img.shields.io/badge/%E2%96%B6%20Watch%20the%20demo-FFCC00?style=for-the-badge" alt="Watch the Lumia Combat demo video" /></a>
 
-<a href="https://drive.google.com/file/d/1o-x5i7CQ4uhdYuKIQobWNYZWIxg0KVQF/view?usp=drive_link"><img src="./README-ref/lumia.png" alt="Lumia Combat hero — click to watch the promo video" width="300" /></a>
+<img src="./README-ref/lumia.png" alt="Lumia Combat hero" width="300" />
 
 ## Contents
 

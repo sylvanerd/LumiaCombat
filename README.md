@@ -31,11 +31,10 @@ Lumia Combat is a kinetic game of color and light built with Snap Spectacles, BL
 
 Lumia Combat is shared as a reference for the Snap Spectacles community — not just a finished Lens, but a worked example of patterns that are otherwise hard to find:
 
-- **It extends the BLE foundation into a real game.** Snap's [BLE Playground](https://github.com/specs-devs/samples/tree/main/BLE%20Playground) shows you how to scan, connect, and read a characteristic. Lumia Combat picks up where it leaves off — turning a peripheral into a *live game object* with health, a combat loop, and win/lose state, and documenting the unofficial Hue write quirks (half-range clamping, the byte > 127 crash) so others don't have to rediscover them.
-- **It's a study in mixed-reality interaction design.** Pinch-and-hold to harvest a real color, arm-flip to reveal a wrist UI, hand-to-shatter defence, and look-to-target gating — all built on hand tracking and SIK. These can serve as reusable interaction recipes for other project ideas.
-- **The physical world is the game.** The enemy is your actual Philips Hue bulb; hits recolor it and victory powers it off. It's a concrete blueprint for Lenses that reach out and change the room, not just the headset view.
-- **It shows how to wire AI into gameplay.** Real-world color extraction and lamp placement run through Gemini via the Remote Service Gateway — a practical example of camera-frame + depth + LLM working inside a real-time loop.
-- **It's MIT-licensed and built to remix.** Every game rule is an Inspector `@input`, so designers can re-balance or re-theme without touching code — and improvements can flow back to the BLE Playground sample it builds on.
+- **It extends the BLE foundation into a real game.** Snap's [BLE Playground](https://github.com/specs-devs/samples/tree/main/BLE%20Playground) shows you how to scan, connect, and read a characteristic. Lumia Combat takes it further: turning a peripheral into a *live game object* with health, a combat loop, and win/lose state, and documenting the unofficial Hue write quirks (half-range clamping, the byte > 127 crash) so others don't have to rediscover them.
+- **It's a study in mixed-reality interaction design.** Pinch-and-hold to harvest a real color, arm-flip to reveal a hand UI, hand-to-shatter defence, all built on hand tracking and SIK. These can serve as reusable interaction recipes for other project prototyping.
+- **It shows how to wire AI into gameplay.** Color extraction and lamp placement run through Gemini via the Remote Service Gateway. Each interaction pulls a camera frame, sends it through the model, and feeds the result back into gameplay. Spatial AI examples are open sourced for other creators to feedback on or remix. 
+- Remote Service Gateway + BLE is experimental. Having these two in the project currently blocks the Lens from publishing. 
 
 ## Key Features
 

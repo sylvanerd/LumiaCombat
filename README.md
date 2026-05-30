@@ -2,8 +2,30 @@
 
 [![SIK](https://img.shields.io/badge/SIK-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/spectacles-frameworks/spectacles-interaction-kit/features/overview?) [![Experimental API](https://img.shields.io/badge/Experimental%20API-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/about-spectacles-features/apis/experimental-apis?) [![BLE](https://img.shields.io/badge/BLE-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/about-spectacles-features/compatibility-list) [![Remote Service Gateway](https://img.shields.io/badge/Remote%20Service%20Gateway-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/about-spectacles-features/overview)
 
-<!-- Hero image links to the Lumia Combat promo video -->
-<a href="https://drive.google.com/file/d/1o-x5i7CQ4uhdYuKIQobWNYZWIxg0KVQF/view?usp=drive_link"><img src="./README-ref/Lumia.png" alt="Lumia Combat hero — click to watch the promo video" width="600" /></a>
+<!-- "Watch the demo" CTA + hero image; both link to the Lumia Combat promo video -->
+<p align="center">
+  <a href="https://drive.google.com/file/d/1o-x5i7CQ4uhdYuKIQobWNYZWIxg0KVQF/view?usp=drive_link">
+    <img src="https://img.shields.io/badge/%E2%96%B6%20Watch%20the%20demo-FFCC00?style=for-the-badge" alt="Watch the Lumia Combat demo video" />
+  </a>
+</p>
+
+<a href="https://drive.google.com/file/d/1o-x5i7CQ4uhdYuKIQobWNYZWIxg0KVQF/view?usp=drive_link"><img src="./README-ref/lumia.png" alt="Lumia Combat hero — click to watch the promo video" width="300" /></a>
+
+## Contents
+
+- [Overview](#overview)
+- [Why Open Source](#why-open-source)
+- [Key Features](#key-features)
+- [Key Mechanics / Player Actions](#key-mechanics--player-actions)
+- [Setup](#setup)
+- [Where to Set the Game Rules](#where-to-set-the-game-rules)
+- [Key Scripts](#key-scripts)
+- [Testing the Lens](#testing-the-lens)
+- [Caveats](#caveats)
+- [License](#license)
+- [Contributing](#contributing)
+- [Support](#support)
+- [Disclaimers](#disclaimers)
 
 ## Overview
 
@@ -14,7 +36,7 @@ Lumia Combat is a kinetic game of color and light built with Snap Spectacles, BL
 Lumia Combat is shared as a reference for the Snap Spectacles community — not just a finished Lens, but a worked example of patterns that are otherwise hard to find:
 
 - **It extends the BLE foundation into a real game.** Snap's [BLE Playground](https://github.com/specs-devs/samples/tree/main/BLE%20Playground) shows you how to scan, connect, and read a characteristic. Lumia Combat picks up where it leaves off — turning a peripheral into a *live game object* with health, a combat loop, and win/lose state, and documenting the unofficial Hue write quirks (half-range clamping, the byte > 127 crash) so others don't have to rediscover them.
-- **It's a study in mixed-reality interaction design.** Pinch-and-hold to harvest a real color, arm-flip to reveal a wrist UI, hand-to-shatter defence, and look-to-target gating — all built on hand tracking and SIK. These are reusable interaction recipes, not one-offs.
+- **It's a study in mixed-reality interaction design.** Pinch-and-hold to harvest a real color, arm-flip to reveal a wrist UI, hand-to-shatter defence, and look-to-target gating — all built on hand tracking and SIK. These can serve as reusable interaction recipes for other project ideas.
 - **The physical world is the game.** The enemy is your actual Philips Hue bulb; hits recolor it and victory powers it off. It's a concrete blueprint for Lenses that reach out and change the room, not just the headset view.
 - **It shows how to wire AI into gameplay.** Real-world color extraction and lamp placement run through Gemini via the Remote Service Gateway — a practical example of camera-frame + depth + LLM working inside a real-time loop.
 - **It captures hard-won architecture lessons.** The singleton + `onRegistered` pattern for coordinating components that live on runtime-instantiated prefabs (via `ControllerFactory`) is a recurring Spectacles pain point this repo solves explicitly.
@@ -39,19 +61,19 @@ Pinch and hold ~2 seconds ([`ColorPickPinchDetector.holdDuration`](Assets/Script
 
 ### Attack
 
-<img src="./README-ref/attack.gif" alt="Player attacks by throwing the ball (of complimentary color) at Lumia" width="300" />
+<img src="./README-ref/attack.GIF" alt="Player attacks by throwing the ball (of complimentary color) at Lumia" width="300" />
 
 A ball grows in your hand, then your hand motion throws it. On lamp impact, [`ColorBallCollisionGate`](Assets/Scripts/PeripheralLight/ColorBallCollisionGate.ts) writes the new color to the bulb and damage is applied only if the hue contrast exceeds `GameLogicManager.contrastThreshold`. You can also pinch a saved swatch on your wrist to re-throw it ([`ColorHistoryBar`](Assets/Scripts/PeripheralLight/ColorHistoryBar.ts)).
 
 ### Lamp Retaliate
 
-<img src="./README-ref/retaliate.gif" alt="Lamp retaliating with a color ball" width="300" />
+<img src="./README-ref/retaliate.GIF" alt="Lamp retaliating with a color ball" width="300" />
 
 The lamp picks a random color every `intervalSecondsMin..Max` ([`AutoColorCycler`](Assets/Scripts/PeripheralLight/AutoColorCycler.ts)) and shortly after lobs a ball in a high arc from the bulb toward the player's camera ([`AutoBallShooter`](Assets/Scripts/PeripheralLight/AutoBallShooter.ts)).
 
 ### Defend
 
-<img src="./README-ref/defend.gif" alt="Defending against a lamp ball" width="300" />
+<img src="./README-ref/defend.GIF" alt="Defending against a lamp ball" width="300" />
 
 Either **dodge** the incoming ball physically, or **shatter** it: when the ball's color is similar enough to a color you're holding (`similarityThreshold`), bringing a hand within `touchRadius` shatters it and heals the player by `healPercentOnShatter`.
 
@@ -63,9 +85,9 @@ Flip your left hand to reveal the wrist UI ([`ArmFlipPrefabSpawner`](Assets/Scri
 
 ### Win / Lose / Restart
 
-<img src="./README-ref/win.gif" alt="Win state" width="300" />
+<img src="./README-ref/win.GIF" alt="Win state" width="300" />
 
-<img src="./README-ref/lose.gif" alt="Lose state" width="300" />
+<img src="./README-ref/lose.GIF" alt="Lose state" width="300" />
 
 Lamp HP reaches 0 → [`LampHealthManager.onLampDied`](Assets/Scripts/PeripheralLight/LampHealthManager.ts) fires; player HP reaches 0 → [`PlayerHealthManager.onPlayerDied`](Assets/Scripts/PeripheralLight/PlayerHealthManager.ts) fires. Either outcome surfaces the restart button ([`RestartButtonController`](Assets/Scripts/PeripheralLight/RestartButtonController.ts)) which calls back into `GameLogicManager.restartGame()`.
 
@@ -216,6 +238,7 @@ Nearly every gameplay coordinator (`GameLogicManager`, `LampHealthManager`, `Pla
 - **Finger ball naming.** Finger balls must keep the SceneObject name `"Sphere"` or [`LampColliderSpawner`](Assets/Scripts/PeripheralLight/LampColliderSpawner.ts) won't register hits.
 - **Singleton hygiene.** Multiple `GameLogicManager`, `LampHealthManager`, or `PlayerHealthManager` instances in the scene will print a warning and last-write-wins on the singleton — keep exactly one of each.
 
+## Testing the Lens
 
 ### In Lens Studio editor
 

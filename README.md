@@ -2,13 +2,23 @@
 
 [![SIK](https://img.shields.io/badge/SIK-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/spectacles-frameworks/spectacles-interaction-kit/features/overview?) [![Experimental API](https://img.shields.io/badge/Experimental%20API-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/about-spectacles-features/apis/experimental-apis?) [![BLE](https://img.shields.io/badge/BLE-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/about-spectacles-features/compatibility-list) [![Remote Service Gateway](https://img.shields.io/badge/Remote%20Service%20Gateway-Light%20Gray?color=D3D3D3)](https://developers.snap.com/spectacles/about-spectacles-features/overview)
 
-<!-- TODO: add hero gif/screenshot of Lumia Combat gameplay -->
-<img src="./README-ref/Lumia.png" alt="Lumia Combat hero" width="600" />
+<!-- Hero image links to the Lumia Combat promo video -->
+<a href="https://drive.google.com/file/d/1o-x5i7CQ4uhdYuKIQobWNYZWIxg0KVQF/view?usp=drive_link"><img src="./README-ref/Lumia.png" alt="Lumia Combat hero — click to watch the promo video" width="600" /></a>
 
 ## Overview
 
 Lumia Combat is a kinetic game of color and light built with Snap Spectacles, BLE, and Philips Hue. Harvest colors from real objects in your room and put color theory to work: strike Lumia with the complementary color and defend by matching her hue. Every hit registers in the physical world, your actual bulb powers off the moment she's defeated.
 
+## Why Open Source
+
+Lumia Combat is shared as a reference for the Snap Spectacles community — not just a finished Lens, but a worked example of patterns that are otherwise hard to find:
+
+- **It extends the BLE foundation into a real game.** Snap's [BLE Playground](https://github.com/specs-devs/samples/tree/main/BLE%20Playground) shows you how to scan, connect, and read a characteristic. Lumia Combat picks up where it leaves off — turning a peripheral into a *live game object* with health, a combat loop, and win/lose state, and documenting the unofficial Hue write quirks (half-range clamping, the byte > 127 crash) so others don't have to rediscover them.
+- **It's a study in mixed-reality interaction design.** Pinch-and-hold to harvest a real color, arm-flip to reveal a wrist UI, hand-to-shatter defence, and look-to-target gating — all built on hand tracking and SIK. These are reusable interaction recipes, not one-offs.
+- **The physical world is the game.** The enemy is your actual Philips Hue bulb; hits recolor it and victory powers it off. It's a concrete blueprint for Lenses that reach out and change the room, not just the headset view.
+- **It shows how to wire AI into gameplay.** Real-world color extraction and lamp placement run through Gemini via the Remote Service Gateway — a practical example of camera-frame + depth + LLM working inside a real-time loop.
+- **It captures hard-won architecture lessons.** The singleton + `onRegistered` pattern for coordinating components that live on runtime-instantiated prefabs (via `ControllerFactory`) is a recurring Spectacles pain point this repo solves explicitly.
+- **It's MIT-licensed and built to remix.** Every game rule is an Inspector `@input`, so designers can re-balance or re-theme without touching code — and improvements can flow back to the BLE Playground sample it builds on.
 
 ## Key Features
 
@@ -23,42 +33,39 @@ Lumia Combat is a kinetic game of color and light built with Snap Spectacles, BL
 
 ### Extract a color
 
-<img src="./README-ref/extract-color.gif" alt="Extracting a real-world color" width="600" />
+<img src="./README-ref/extract-color.gif" alt="Extracting a real-world color" width="300" />
 
 Pinch and hold ~2 seconds ([`ColorPickPinchDetector.holdDuration`](Assets/Scripts/PeripheralLight/ColorPickPinchDetector.ts)) on a real-world color. The camera frame is cropped and sent to Gemini via Remote Service Gateway, which returns the dominant color around the pinch; it's saved to your wrist history ([`ColorPickController`](Assets/Scripts/PeripheralLight/ColorPickController.ts)).
 
 ### Attack
 
-<img src="./README-ref/attack.gif" alt="Player attacks by throwing the ball (of complimentary color) at Lumia" width="600" />
+<img src="./README-ref/attack.gif" alt="Player attacks by throwing the ball (of complimentary color) at Lumia" width="300" />
 
 A ball grows in your hand, then your hand motion throws it. On lamp impact, [`ColorBallCollisionGate`](Assets/Scripts/PeripheralLight/ColorBallCollisionGate.ts) writes the new color to the bulb and damage is applied only if the hue contrast exceeds `GameLogicManager.contrastThreshold`. You can also pinch a saved swatch on your wrist to re-throw it ([`ColorHistoryBar`](Assets/Scripts/PeripheralLight/ColorHistoryBar.ts)).
 
 ### Lamp Retaliate
 
-<img src="./README-ref/retaliate.gif" alt="Lamp retaliating with a color ball" width="600" />
+<img src="./README-ref/retaliate.gif" alt="Lamp retaliating with a color ball" width="300" />
 
 The lamp picks a random color every `intervalSecondsMin..Max` ([`AutoColorCycler`](Assets/Scripts/PeripheralLight/AutoColorCycler.ts)) and shortly after lobs a ball in a high arc from the bulb toward the player's camera ([`AutoBallShooter`](Assets/Scripts/PeripheralLight/AutoBallShooter.ts)).
 
 ### Defend
 
-<!-- TODO: add defend gif -->
-<img src="./README-ref/defend.gif" alt="Defending against a lamp ball" width="600" />
+<img src="./README-ref/defend.gif" alt="Defending against a lamp ball" width="300" />
 
 Either **dodge** the incoming ball physically, or **shatter** it: when the ball's color is similar enough to a color you're holding (`similarityThreshold`), bringing a hand within `touchRadius` shatters it and heals the player by `healPercentOnShatter`.
 
 ### Check your wrist
 
-<img src="./README-ref/arm-flip.gif" alt="Flipping the left hand to reveal the wrist UI" width="600" />
+<img src="./README-ref/arm-flip.gif" alt="Flipping the left hand to reveal the wrist UI" width="300" />
 
 Flip your left hand to reveal the wrist UI ([`ArmFlipPrefabSpawner`](Assets/Scripts/PeripheralLight/ArmFlipPrefabSpawner.ts)): your saved color history, your current health, and a **complementary-color hint** — a VFX swatch ([`ColorHint.prefab`](Assets/Prefabs/ColorHint.prefab)) showing the hue opposite the lamp's current color (the one that will damage it), computed by [`GameLogicManager.getContrastingColor`](Assets/Scripts/GameLogicManager.ts) and refreshed each time the lamp recolors.
 
 ### Win / Lose / Restart
 
-<!-- TODO: add win gif -->
-<img src="./README-ref/win.gif" alt="Win state" width="600" />
+<img src="./README-ref/win.gif" alt="Win state" width="300" />
 
-<!-- TODO: add lose gif -->
-<img src="./README-ref/lose.gif" alt="Lose state" width="600" />
+<img src="./README-ref/lose.gif" alt="Lose state" width="300" />
 
 Lamp HP reaches 0 → [`LampHealthManager.onLampDied`](Assets/Scripts/PeripheralLight/LampHealthManager.ts) fires; player HP reaches 0 → [`PlayerHealthManager.onPlayerDied`](Assets/Scripts/PeripheralLight/PlayerHealthManager.ts) fires. Either outcome surfaces the restart button ([`RestartButtonController`](Assets/Scripts/PeripheralLight/RestartButtonController.ts)) which calls back into `GameLogicManager.restartGame()`.
 
@@ -116,20 +123,19 @@ Update guides: [Spectacles & app updates](https://support.spectacles.com/hc/en-u
 
 ## Where to Set the Game Rules
 
-**Every tunable game rule is exposed as an `@input` field on a component in `Assets/Scene.scene`.** Open the scene in Lens Studio and edit the Inspector — no code changes needed for balance.
+**Every tunable game rule is exposed as an `@input` field on a component — either in `Assets/Scene.scene` or on one of the gameplay prefabs (e.g. `pfbLight`, `ColorHistoryBar.prefab`) that are instantiated at runtime.** Open the scene or the relevant prefab in Lens Studio and edit the Inspector — no code changes needed for balance. (Components hosted on runtime prefabs, such as `LampHealthManager`, `AutoColorCycler`, and `ColorHistoryBar`, are edited in the prefab, not the scene.)
 
 | Category | Script | `@input` field(s) | Default |
 |---|---|---|---|
 | Color matching | [`GameLogicManager`](Assets/Scripts/GameLogicManager.ts) | `contrastThreshold` (hue distance required to damage the lamp) | `0.3` |
 | Color matching | [`GameLogicManager`](Assets/Scripts/GameLogicManager.ts) | `similarityThreshold` (hue distance allowed for hand shatter) | `0.15` |
 | Debug | [`GameLogicManager`](Assets/Scripts/GameLogicManager.ts) | `quickTestMode` (bypass all color filters) | `false` |
-| Debug | [`LensInitializer`](Assets/Scripts/Core/LensInitializer.ts) | `isNoBleDebug` (fake BLE scan/connect) | `false` |
 | Lamp HP | [`LampHealthManager`](Assets/Scripts/PeripheralLight/LampHealthManager.ts) | `maxHealth`, `damagePerHit` (%), `invincibilityDuration` (s), `lowHealthThreshold` (%) | `100`, `10`, `0.5`, `25` |
 | Player HP | [`PlayerHealthManager`](Assets/Scripts/PeripheralLight/PlayerHealthManager.ts) | `maxHealth`, `damagePerHit` (%), `invincibilityDuration` (s), `healPerNeutralize` (%), `lowHealthThreshold` (%) | `100`, `10`, `0.5`, `5`, `25` |
 | Lamp color cadence | [`AutoColorCycler`](Assets/Scripts/PeripheralLight/AutoColorCycler.ts) | `intervalSecondsMin`, `intervalSecondsMax`, `autoChangeEnabled` | `2`, `5`, `false` |
 | Lamp ball physics | [`AutoBallShooter`](Assets/Scripts/PeripheralLight/AutoBallShooter.ts) | `delayThrowTime`, `arcHeightMin/Max`, `flightTimeMin/Max`, `ballScale`, `maxActiveBalls`, `shootingEnabled`, `overshootMultiplier` | `0.3`, `15`/`45`, `1.0`/`2.5`, `5`, `5`, `true`, `1.5` |
 | Hand defence | [`AutoBallShooter`](Assets/Scripts/PeripheralLight/AutoBallShooter.ts) | `touchRadius` (cm), `healPercentOnShatter`, `shatterLifetimeSeconds`, `shatterEmissionBoost` | `6`, `5`, `2`, `2` |
-| Player ball extraction | [`ColorPickController`](Assets/Scripts/PeripheralLight/ColorPickController.ts) | `growSpeed`, `finalBallSize`, `handVelocityMultiplier`, `baseThrowForce`, `centerCropScale`, `useLiteModel` | (see Inspector) |
+| Player ball extraction | [`ColorPickController`](Assets/Scripts/PeripheralLight/ColorPickController.ts) | `growSpeed`, `finalBallSize`, `handVelocityMultiplier`, `baseThrowForce`, `centerCropScale`, `useLiteModel` | `1.0`, `3.0`, `0.3`, `800.0`, `0.3`, `false` |
 | Pinch trigger | [`ColorPickPinchDetector`](Assets/Scripts/PeripheralLight/ColorPickPinchDetector.ts) | `holdDuration` (s), `useGracePeriod`, `gracePeriod` (s) | `2`, `true`, `0.3` |
 | Damage feedback | [`DamageFlashOverlay`](Assets/Scripts/PeripheralLight/DamageFlashOverlay.ts) | `flashDuration` (s), `peakAlpha` | `0.5`, `0.5` |
 | Onboarding tips | [`GameOnboardingManager`](Assets/Scripts/Core/GameOnboardingManager.ts) | `tipDurationSeconds`, `tipFadeDurationSeconds`, `autoStart`, `tips[]` | `10`, `0.4`, `true`, *(authored list)* |
@@ -139,7 +145,7 @@ Update guides: [Spectacles & app updates](https://support.spectacles.com/hc/en-u
 Some values are intentionally hardcoded — change them in source if needed.
 
 - The `0.7` "looking at light" dot-product threshold in [`LightHandInputManager`](Assets/Scripts/PeripheralLight/LightHandInputManager.ts).
-- The `"hue"` auto-connect substring filter in [`ScanResultsManager`](Assets/Scripts/Core/ScanResultsManager.ts).
+- The `"hue"` auto-connect substring filter — defined as `HueLightData._commonDeviceNameSubstring` in [`PeripheralTypeData`](Assets/Scripts/Core/PeripheralTypeData.ts) and applied by [`ScanResultsManager`](Assets/Scripts/Core/ScanResultsManager.ts).
 - The 5-slot color history count in [`ColorHistoryBar`](Assets/Scripts/PeripheralLight/ColorHistoryBar.ts) and [`ColorHistoryRing`](Assets/Scripts/PeripheralLight/ColorHistoryRing.ts).
 - The `"Sphere"` SceneObject name expected by [`LampColliderSpawner`](Assets/Scripts/PeripheralLight/LampColliderSpawner.ts) (rename a finger ball and it stops registering hits).
 

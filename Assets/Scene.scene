@@ -14,6 +14,7 @@
     - !<own> 0e1cab31-205e-4036-9020-508d0afa08c5
     - !<own> d63420e7-a9a5-4824-ac9e-1ab121de3bb0
     - !<own> 78a32601-3fcd-4b55-8a52-d1f113cb30d0
+    - !<own> b70b1e54-d92b-4cb1-8545-a55cb1d31d4b
     - !<own> 09a22389-4981-4452-9b3b-17473341edad
     - !<own> 321d8ea5-b9f0-46d3-9329-e47f21f3e667
     - !<own> 52fd50fd-3025-4749-a0bb-587dafb28ea1
@@ -10733,6 +10734,21 @@
     - !<own> fa5929e1-760a-4ff4-8086-4603e9e85080
   Components:
     - !<own> 9ff0e8bb-65a7-49d9-ae78-a1d8febbc490
+- !<SceneObject/b70b1e54-d92b-4cb1-8545-a55cb1d31d4b>
+  PrefabRemaps:
+    []
+  Name: "--------GameManagers--------"
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<ScriptComponent/b73b2516-fa17-4745-8747-87fa2360d55f>
   PrefabRemaps:
     []
